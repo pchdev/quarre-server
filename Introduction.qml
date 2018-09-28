@@ -5,6 +5,7 @@ Item
 {
     WPN114.Node
     {
+        type: WPN114.Type.Bool
         path: "audio/introduction/play"
         onValueReceived:
         {
@@ -27,6 +28,8 @@ Item
         id: introduction_rooms
         parentStream: audio_stream
         configuration: rooms_config
+        active: false
+
         exposePath: "/audio/introduction/rooms"
 
         WPN114.RoomSource //----------------------------------------- 1.DIGIBIRDS (1-2)
