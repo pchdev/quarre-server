@@ -1,3 +1,9 @@
+# custom
+*.aiff
+*.png
+*.wav
+*.DS_Store
+
 # C++ objects and libs
 *.slo
 *.lo
