@@ -16,14 +16,14 @@ GestureViewer
         height: parent.height*0.65
         y: parent.height*0.35
 
-        Image //----------------------------------------------------------------- GUI
+        /*Image //----------------------------------------------------------------- GUI
         {
             id: hand
             antialiasing: true
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
             source: "qrc:/modules/hammer.png"
-        }
+        }*/
     }
 
     Connections

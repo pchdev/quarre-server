@@ -1,0 +1,71 @@
+<RCC>
+    <qresource prefix="/">
+        <file>introduction/digibirds.wav</file>
+        <file>introduction/dragon-hi.wav</file>
+        <file>introduction/dragon-lo.wav</file>
+        <file>introduction/spring.wav</file>
+        <file>introduction/swarms.wav</file>
+        <file>introduction/synth.wav</file>
+        <file>introduction/verb.wav</file>
+        <file>introduction/walking-1.wav</file>
+        <file>introduction/walking-2.wav</file>
+        <file>introduction/water.wav</file>
+
+        <file>stonepath/cendres/ashes.wav</file>
+        <file>stonepath/cendres/boiling.wav</file>
+        <file>stonepath/cendres/burn.wav</file>
+        <file>stonepath/cendres/dragon.wav</file>
+        <file>stonepath/cendres/groundwalk.wav</file>
+        <file>stonepath/cendres/light-background.wav</file>
+        <file>stonepath/cendres/necks.wav</file>
+        <file>stonepath/cendres/quarre.wav</file>
+        <file>stonepath/cendres/redbirds-1.wav</file>
+        <file>stonepath/cendres/redbirds-2.wav</file>
+        <file>stonepath/cendres/waves.wav</file>
+
+        <file>stonepath/diaclases/drone.wav</file>
+        <file>stonepath/diaclases/harmonics.wav</file>
+        <file>stonepath/diaclases/smoke.wav</file>
+        <file>stonepath/diaclases/stonewater.wav</file>
+
+        <file>stonepath/deidarabotchi/background.wav</file>
+        <file>stonepath/deidarabotchi/breath.wav</file>
+        <file>stonepath/deidarabotchi/kaivo.wav</file>
+        <file>stonepath/deidarabotchi/synth.wav</file>
+        <file>stonepath/deidarabotchi/wind.wav</file>
+
+        <file>stonepath/markhor/ambient-light.wav</file>
+        <file>stonepath/markhor/bell-hit.wav</file>
+        <file>stonepath/markhor/soundscape.wav</file>
+
+        <file>stonepath/ammon/broken-radio.wav</file>
+        <file>stonepath/ammon/footsteps.wav</file>
+        <file>stonepath/ammon/harmonics.wav</file>
+        <file>stonepath/ammon/wind.wav</file>
+
+        <file>woodpath/maaaet/birds-background.wav</file>
+        <file>woodpath/maaaet/grasshoppers.wav</file>
+        <file>woodpath/maaaet/groundcreek.wav</file>
+        <file>woodpath/maaaet/leaves.wav</file>
+        <file>woodpath/maaaet/wind.wav</file>
+
+        <file>woodpath/pando/digigreen.wav</file>
+        <file>woodpath/pando/flute.wav</file>
+        <file>woodpath/pando/insects.wav</file>
+        <file>woodpath/pando/leaves.wav</file>
+        <file>woodpath/pando/verb.wav</file>
+        <file>woodpath/pando/woodworks.wav</file>
+
+        <file>woodpath/vare/hammer.wav</file>
+        <file>woodpath/vare/snowfall.wav</file>
+
+        <file>woodpath/jomon/cicadas.wav</file>
+        <file>woodpath/jomon/dmsynth.wav</file>
+        <file>woodpath/jomon/fsynths.wav</file>
+        <file>woodpath/jomon/leaves.wav</file>
+        <file>woodpath/jomon/owl1.wav</file>
+        <file>woodpath/jomon/owl2.wav</file>
+        <file>woodpath/jomon/owl3.wav</file>
+        <file>woodpath/jomon/owl4.wav</file>
+    </qresource>
+</RCC>
