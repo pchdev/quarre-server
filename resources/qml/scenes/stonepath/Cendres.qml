@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
-import "../../"
+import "../.."
 
 Item
 {
@@ -67,7 +67,7 @@ Item
         id: cendres_rooms
         active: false
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_setup
 
         exposePath: "/audio/stone-path/cendres/rooms"
 

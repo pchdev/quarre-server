@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 import WPN114 1.0 as WPN114
 import Quarre 1.0
+import "scenes"
 
 ApplicationWindow
 {
@@ -37,4 +38,16 @@ ApplicationWindow
         sampleRate:     44100
         blockSize:      512
     }
+
+    WPN114.RoomSetup
+    {
+        id: rooms_setup;
+
+        WPN114.CircularSetup
+        {
+
+        }
+    }
+
+    Introduction {}
 }

@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/audio">
         <file>introduction/digibirds.wav</file>
         <file>introduction/dragon-hi.wav</file>
         <file>introduction/dragon-lo.wav</file>

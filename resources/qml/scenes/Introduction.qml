@@ -58,7 +58,7 @@ Item
     {
         id: introduction_rooms
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_setup
         active: false
 
         exposePath: "/audio/introduction/rooms"
