@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import ".."
 
 Item
 {
@@ -20,6 +21,36 @@ Item
             spring.active               = newValue;
             river.active                = newValue;
             verb.active                 = newValue;
+        }
+    }
+
+    Item//------------------------------------------------------------------------------ INTERACTIONS
+    {
+        Interaction //----------------------------------------------------- TUTORIAL
+        {
+            id: tutorial
+            title: "Didacticiel"
+            module: "quarre/Tutorial.qml"
+            broadcast: true
+            length: 50;
+            countdown: 48
+
+            description:
+                "Présentation du fonctionnement global de l'application"
+        }
+
+        Interaction //---------------------------------------------------- CROSSROADS
+        {
+            id: crossroads
+            title: "Croisée des chemins"
+            module: "quarre/Vote.qml"
+            broadcast: true
+            length: 30
+            countdown: 30
+
+            description:
+                "sélectionnez l'un des symboles présentés ci-dessous
+                 ce choix influencera le déroulement du scénario."
         }
     }
 

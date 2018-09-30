@@ -1,9 +1,68 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import "../../"
 
 Item
 {
-    WPN114.Rooms
+    Item //------------------------------------------------------------------------------ INTERACTIONS
+    {
+        id: interactions
+
+        Interaction //--------------------------------------------- ORAGE_HAMMER
+        {
+            id: orage_hammer
+            title: "Orage, déclenchement"
+            description: ""
+
+            countdown:  10
+            length: 20
+
+            path:   "/stonepath/cendres/orage"
+            module: "basics/GestureHammer.qml"
+        }
+
+        Interaction //--------------------------------------------- BOILING_PALM
+        {
+            id: boiling_palm
+            title: "Source volcanique, déclenchement"
+            description: ""
+
+            countdown:  10
+            length: 20
+
+            path:   "/stonepath/cendres/boiling"
+            module: "basics/GesturePalm.qml"
+
+        }
+
+        Interaction //--------------------------------------------- DRAGON_SPAT
+        {
+            id: dragon_spat
+            title: "Dragon, mise en espace"
+            description: ""
+
+            countdown:  10
+            length: 20
+
+            path:   "/stonepath/cendres/dragon"
+            module: "basics/XRotation.qml"
+        }
+
+        Interaction //--------------------------------------------- BIRDS_TRAJECTORIES
+        {
+            id: flying_birds
+            title: "Oiseaux en vol, trajectoires"
+            description: ""
+
+            countdown:  10
+            length: 20
+
+            path:   "/stonepath/cendres/boiling"
+            module: "basics/GesturePalm.qml"
+        }
+    }
+
+    WPN114.Rooms //-------------------------------------------------------------------- AUDIO
     {
         id: cendres_rooms
         active: false

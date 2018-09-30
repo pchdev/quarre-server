@@ -30,5 +30,11 @@ ApplicationWindow
         udpPort: 1234
     }
 
-    AudioServer { }
+    WPN114.AudioStream
+    {
+        id:             audio_stream
+        outDevice:      "Scarlett 2i2 USB"
+        sampleRate:     44100
+        blockSize:      512
+    }
 }

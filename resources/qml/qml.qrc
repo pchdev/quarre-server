@@ -1,21 +1,23 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>AudioServer.qml</file>                                
-        <file>resources/qml/scenes/Introduction.qml</file>
-        <file>resources/qml/scenes/WPN214.qml</file>
-        <file>resources/qml/scenes/Instruments.qml</file>
-        <file>resources/qml/scenes/stonepath/StonePath.qml</file>
-        <file>resources/qml/scenes/stonepath/Cendres.qml</file>
-        <file>resources/qml/scenes/stonepath/Diaclases.qml</file>
-        <file>resources/qml/scenes/stonepath/Deidarabotchi.qml</file>
-        <file>resources/qml/scenes/stonepath/Markhor.qml</file>
-        <file>resources/qml/scenes/stonepath/Ammon.qml</file>
-        <file>resources/qml/scenes/woodpath/WoodPath.qml</file>
-        <file>resources/qml/scenes/woodpath/Maaaet.qml</file>
-        <file>resources/qml/scenes/woodpath/Carre.qml</file>
-        <file>resources/qml/scenes/woodpath/Pando.qml</file>
-        <file>resources/qml/scenes/woodpath/Vare.qml</file>
-        <file>resources/qml/scenes/woodpath/JomonSugi.qml</file>
+        <file>AudioServer.qml</file>
+        <file>scenes/Introduction.qml</file>
+        <file>scenes/WPN214.qml</file>
+        <file>scenes/Instruments.qml</file>
+        <file>scenes/stonepath/StonePath.qml</file>
+        <file>scenes/stonepath/Cendres.qml</file>
+        <file>scenes/stonepath/Diaclases.qml</file>
+        <file>scenes/stonepath/Deidarabotchi.qml</file>
+        <file>scenes/stonepath/Markhor.qml</file>
+        <file>scenes/stonepath/Ammon.qml</file>
+        <file>scenes/woodpath/WoodPath.qml</file>
+        <file>scenes/woodpath/Maaaet.qml</file>
+        <file>scenes/woodpath/Carre.qml</file>
+        <file>scenes/woodpath/Pando.qml</file>
+        <file>scenes/woodpath/Vare.qml</file>
+        <file>scenes/woodpath/JomonSugi.qml</file>
+        <file>Interaction.qml</file>
+        <file>scenes/QuMapping.qml</file>
     </qresource>
 </RCC>

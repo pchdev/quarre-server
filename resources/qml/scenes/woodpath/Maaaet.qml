@@ -1,8 +1,114 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import ".."
+import "../.."
 
 Item
 {
+    Item //------------------------------------------------------------------------------ INTERACTIONS
+    {
+        id: interactions
+
+        Interaction //------------------------------------------------- SHAKE_LEAVES
+        {
+            id: shake_leaves_interaction
+            title: "Feuillages, déclenchement"
+            module: "basics/GestureShake.qml"
+            length: 30
+            countdown: 10
+
+            description:
+                "Exécutez le geste décrit ci-dessous
+                 afin de déclencher des sons de feuillages"
+
+            mappings: QuMapping
+            {
+                source: "gestures/shake/trigger"
+                expression: function(v) { leaves.active = true; shake_leaves_interaction.end() }
+            }
+        }
+
+        Interaction //------------------------------------------------- STATIC_BIRDS
+        {
+            id: static_birds_interaction
+            title: "Chants d'oiseaux, déclenchements"
+            module: "quarre/Birds.qml"
+            length: 60
+            countdown: 20
+
+            description:
+                "Touchez un oiseau lorsqu'il est arrêté pour déclencher son chant,
+                 sa position sera retransmise dans l'espace sonore."
+
+            mappings: QuMapping
+            {
+                source: "modules/birds/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //------------------------------------------------- FLYING_BIRDS
+        {
+            id: flying_birds_interaction
+            title: "Oiseaux en vol, trajectoires"
+            module: "quarre/Trajectories.qml"
+            length: 45
+            countdown: 20
+
+            description:
+                "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
+                 pendant quelques secondes, puis relachez pour déclencher"
+
+            mappings: QuMapping
+            {
+                source: "modules/trajectories/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //------------------------------------------------- WOODRINGER
+        {
+            id: woodringer_interaction
+            title: "Arbres, expirations"
+            module: "basics/GesturePalm.qml"
+            length: 20
+            countdown: 10
+
+            description:
+                "Executez le geste décrit ci-dessous afin de déclencher un son grave"
+
+            mappings: QuMapping
+            {
+                source: "gestures/palm/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //------------------------------------------------- WOODENBIRDS_SPAT
+        {
+            id: woodenbirds_spat_interaction
+            title: "Oiseaux de bois, mise en espace"
+            module: "basics/XRotation.qml"
+            length: 60
+            countdown: 20
+
+            description:
+                "Gardez votre appareil à plat, horizontalement,
+                 puis orientez-le tout autour de vous pour identifier
+                 et déplacer un son dans l'espace sonore."
+
+            mappings: QuMapping
+            {
+                source: "gestures/palm/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+    }
+
     WPN114.Rooms
     {
         id: maaaet_rooms
