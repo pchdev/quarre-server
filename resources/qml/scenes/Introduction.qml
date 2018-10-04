@@ -4,26 +4,6 @@ import ".."
 
 Item
 {
-    WPN114.Node
-    {
-        type: WPN114.Type.Bool
-        path: "audio/introduction/play"
-        onValueReceived:
-        {
-            introduction_rooms.active   = newValue;
-            digibirds.active            = newValue;
-            swarms.active               = newValue;
-            dragon_hi.active            = newValue;
-            dragon_lo.active            = newValue;
-            walking_1.active            = newValue;
-            walking_2.active            = newValue;
-            synth.active                = newValue;
-            spring.active               = newValue;
-            river.active                = newValue;
-            verb.active                 = newValue;
-        }
-    }
-
     Item//------------------------------------------------------------------------------ INTERACTIONS
     {
         Interaction //----------------------------------------------------- TUTORIAL
@@ -54,7 +34,38 @@ Item
         }
     }
 
-    WPN114.Rooms
+    WPN114.Node //------------------------------------------------------------------------- CONTROL
+    {
+        type: WPN114.Type.Bool
+        path: "/audio/introduction/play"
+        onValueReceived:
+        {
+            introduction_rooms.active   = newValue;
+            digibirds.active            = newValue;
+            swarms.active               = newValue;
+            dragon_hi.active            = newValue;
+            dragon_lo.active            = newValue;
+            walking_1.active            = newValue;
+            walking_2.active            = newValue;
+            synth.active                = newValue;
+            spring.active               = newValue;
+            river.active                = newValue;
+            verb.active                 = newValue;
+
+            digibirds.play      ( );
+            swarms.play         ( );
+            dragon_hi.play      ( );
+            dragon_lo.play      ( );
+            walking_1.play      ( );
+            walking_2.play      ( );
+            synth.play          ( );
+            spring.play         ( );
+            river.play          ( );
+            verb.play           ( );
+        }
+    }
+
+    WPN114.Rooms //---------------------------------------------------------------------- AUDIO
     {
         id: introduction_rooms
         parentStream: audio_stream
@@ -71,7 +82,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/digibirds"
 
-            WPN114.Sampler { id: digibirds; stream: true;
+            WPN114.StreamSampler { id: digibirds;
                 path: "audio/introduction/digibirds.wav" }
         }
 
@@ -83,7 +94,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/swarms"
 
-            WPN114.Sampler { id: swarms; stream: true;
+            WPN114.StreamSampler { id: swarms;
                 path: "audio/introduction/swarms.wav" }
         }
 
@@ -95,7 +106,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/dragon-hi"
 
-            WPN114.Sampler { id: dragon_hi; stream: true;
+            WPN114.StreamSampler { id: dragon_hi;
                 path: "audio/introduction/dragon-hi.wav" }
         }
 
@@ -107,7 +118,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/dragon-lo"
 
-            WPN114.Sampler { id: dragon_lo; stream: true;
+            WPN114.StreamSampler { id: dragon_lo;
                 path: "audio/introduction/dragon-lo.wav" }
         }
 
@@ -119,7 +130,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/walking-1"
 
-            WPN114.Sampler { id: walking_1; stream: true;
+            WPN114.StreamSampler { id: walking_1;
                 path: "audio/introduction/walking-1.wav" }
         }
 
@@ -131,7 +142,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/walking-2"
 
-            WPN114.Sampler { id: walking_2; stream: true;
+            WPN114.StreamSampler { id: walking_2;
                 path: "audio/introduction/walking-2.wav" }
         }
 
@@ -143,7 +154,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/synth"
 
-            WPN114.Sampler { id: synth; stream: true;
+            WPN114.StreamSampler { id: synth;
                 path: "audio/introduction/synth.wav" }
         }
 
@@ -153,7 +164,7 @@ Item
             diffuse:    [ 0.7, 0.7 ]
             bias:       [ 0.85, 0.85 ]
 
-            WPN114.Sampler { id: spring; stream: true;
+            WPN114.StreamSampler { id: spring;
                 path: "audio/introduction/spring.wav" }
         }
 
@@ -165,7 +176,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/river"
 
-            WPN114.Sampler { id: river; stream: true;
+            WPN114.StreamSampler { id: river;
                 path: "audio/introduction/river.wav" }
         }
 
@@ -177,7 +188,7 @@ Item
 
             exposePath: "/audio/introduction/rooms/sources/verb"
 
-            WPN114.Sampler { id: verb; stream: true;
+            WPN114.StreamSampler { id: verb;
                 path: "audio/introduction/verb.wav" }
         }
 

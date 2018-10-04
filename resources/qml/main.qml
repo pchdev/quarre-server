@@ -31,22 +31,20 @@ ApplicationWindow
         udpPort: 1234
     }
 
-    WPN114.AudioStream
+    WPN114.AudioStream //------------------------------------------------------------- AUDIO
     {
         id:             audio_stream
         outDevice:      "Scarlett 2i2 USB"
         sampleRate:     44100
         blockSize:      512
+
+        WPN114.Node on dBlevel { path: "/audio/master/level" }
     }
 
-    WPN114.RoomSetup
+    WPN114.RoomSetup // octophonic ring setup for quarrè-angoulême
     {
-        id: rooms_setup;
-
-        WPN114.CircularSetup
-        {
-
-        }
+        id: rooms_setup;        
+        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8 }
     }
 
     Introduction {}

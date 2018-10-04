@@ -23,7 +23,7 @@ Item
     {
         id: deidarabotchi_rooms
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_setup
         active: false
 
         exposePath: "/audio/stone-path/deidarabotchi/rooms"
@@ -36,7 +36,7 @@ Item
 
             exposePath: "/audio/stone-path/deidarabotchi/kaivo"
 
-            WPN114.Sampler { id: kaivo; stream: true;
+            WPN114.Sampler { id: kaivo;
                 path: "audio/stone-path/deidarabotchi/kaivo.wav" }
         }
 
@@ -48,7 +48,7 @@ Item
 
             exposePath: "/audio/stone-path/deidarabotchi/synth"
 
-            WPN114.Sampler { id: synth; stream: true;
+            WPN114.Sampler { id: synth;
                 path: "audio/stone-path/deidarabotchi/synth.wav" }
         }
 
@@ -60,7 +60,7 @@ Item
 
             exposePath: "/audio/stone-path/deidarabotchi/background"
 
-            WPN114.Sampler { id: background; stream: true;
+            WPN114.Sampler { id: background;
                 path: "audio/stone-path/deidarabotchi/background.wav" }
         }
 
@@ -72,7 +72,7 @@ Item
 
             exposePath: "/audio/stone-path/deidarabotchi/breath"
 
-            WPN114.Sampler { id: breath; stream: true;
+            WPN114.Sampler { id: breath;
                 path: "audio/stone-path/deidarabotchi/breath.wav" }
         }
 
@@ -84,7 +84,7 @@ Item
 
             exposePath: "/audio/stone-path/deidarabotchi/wind"
 
-            WPN114.Sampler { id: wind; stream: true;
+            WPN114.Sampler { id: wind;
                 path: "audio/stone-path/deidarabotchi/wind.wav" }
         }
     }

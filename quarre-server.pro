@@ -16,7 +16,8 @@ SOURCES += \
         main.cpp
 
 RESOURCES += resources/qml/qml.qrc \
-    resources/audio/audio.qrc
+    resources/audio/audio.qrc \
+    resources/qml/modules/modules.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -32,22 +33,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS +=
 
 DISTFILES += \
-    resources/qml/modules/basics/GestureViewer.qml \
-    resources/qml/modules/basics/GestureShake.qml \
-    resources/qml/modules/basics/GesturePalm.qml \
-    resources/qml/modules/basics/GestureHammer.qml \
-    resources/qml/modules/basics/GestureBlow.qml \
-    resources/qml/modules/basics/XYTouch.qml \
-    resources/qml/modules/basics/YRotation.qml \
-    resources/qml/modules/basics/ZRotation.qml \
-    resources/qml/modules/basics/XRotation.qml \
-    resources/qml/modules/basics/TextViewer.qml \
-    resources/qml/modules/basics/XYZRotation.qml \
-    resources/qml/modules/basics/XYZAccel.qml \
-    resources/qml/modules/basics/Pads.qml \
-    resources/qml/modules/basics/Sliders.qml \
-    resources/qml/modules/basics/items/QuarrePad.qml \
-    resources/qml/modules/basics/items/QuarreSlider.qml \
-    resources/qml/modules/basics/items/QuarreWheelSlider.qml \
-    resources/qml/modules/basics/items/TriggerAnimation.qml \
-    resources/qml/modules/basics/items/QuarrePadToggle.qml

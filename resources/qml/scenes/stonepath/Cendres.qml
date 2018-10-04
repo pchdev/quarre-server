@@ -79,7 +79,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/ashes/spatialization"
 
-            WPN114.Sampler { id: ashes; stream: true;
+            WPN114.Sampler { id: ashes;
                 exposePath: "/audio/stone-path/cendres/ashes"
                 path: "audio/stone-path/cendres/ashes.wav" }
         }
@@ -92,7 +92,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/redbirds-1/spatialization"
 
-            WPN114.Sampler { id: redbirds_1; stream: true;
+            WPN114.Sampler { id: redbirds_1;
                 exposePath: "/audio/stone-path/cendres/redbirds-1"
                 path: "audio/stone-path/cendres/redbirds-1.wav" }
         }
@@ -105,7 +105,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/redbirds-2/spatialization"
 
-            WPN114.Sampler { id: redbirds_2; stream: true;
+            WPN114.Sampler { id: redbirds_2;
                 exposePath: "/audio/stone-path/cendres/redbirds-2"
                 path: "audio/stone-path/cendres/redbirds-2.wav" }
         }
@@ -118,7 +118,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/light-background/spatialization"
 
-            WPN114.Sampler { id: light_background; stream: true;
+            WPN114.Sampler { id: light_background;
                 exposePath: "/audio/stone-path/cendres/light-background"
                 path: "audio/stone-path/cendres/light-background.wav" }
         }
@@ -131,7 +131,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/burn/spatialization"
 
-            WPN114.Sampler { id: burn; stream: true;
+            WPN114.Sampler { id: burn;
                 exposePath: "/audio/stone-path/cendres/burn"
                 path: "audio/stone-path/cendres/burn.wav" }
         }
@@ -144,7 +144,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/waves/spatialization"
 
-            WPN114.Sampler { id: waves; stream: true;
+            WPN114.Sampler { id: waves;
                 exposePath: "/audio/stone-path/cendres/waves"
                 path: "audio/stone-path/cendres/waves.wav" }
         }
@@ -157,7 +157,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/thunder/spatialization"
 
-            WPN114.Sampler { id: thunder; stream: true;
+            WPN114.Sampler { id: thunder;
                 exposePath: "/audio/stone-path/cendres/redbirds-2"
                 path: "audio/stone-path/cendres/redbirds-2.wav" }
         }
@@ -170,7 +170,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/marmots/spatialization"
 
-            WPN114.Sampler { id: marmots; stream: true;
+            WPN114.Sampler { id: marmots;
                 exposePath: "/audio/stone-path/cendres/marmots"
                 path: "audio/stone-path/cendres/marmots.wav" }
         }
@@ -183,7 +183,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/boiling/spatialization"
 
-            WPN114.Sampler { id: boiling; stream: true;
+            WPN114.Sampler { id: boiling;
                 exposePath: "/audio/stone-path/cendres/boiling"
                 path: "audio/stone-path/cendres/boiling.wav" }
         }
@@ -196,7 +196,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/quarre/spatialization"
 
-            WPN114.Sampler { id: quarre; stream: true;
+            WPN114.Sampler { id: quarre;
                 exposePath: "/audio/stone-path/cendres/quarre"
                 path: "audio/stone-path/cendres/quarre.wav" }
         }
@@ -209,7 +209,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/groundwalk/spatialization"
 
-            WPN114.Sampler { id: groundwalk; stream: true;
+            WPN114.Sampler { id: groundwalk;
                 exposePath: "/audio/stone-path/cendres/groundwalk"
                 path: "audio/stone-path/cendres/groundwalk.wav" }
         }
@@ -222,7 +222,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/necks/spatialization"
 
-            WPN114.Sampler { id: necks; stream: true;
+            WPN114.Sampler { id: necks;
                 exposePath: "/audio/stone-path/cendres/necks"
                 path: "audio/stone-path/cendres/necks.wav" }
         }
@@ -235,7 +235,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/dragon/spatialization"
 
-            WPN114.Sampler { id: dragon; stream: true;
+            WPN114.Sampler { id: dragon;
                 exposePath: "/audio/stone-path/cendres/dragon"
                 path: "audio/stone-path/cendres/dragon.wav" }
         }
@@ -248,7 +248,7 @@ Item
 
             exposePath: "/audio/stone-path/cendres/birds/spatialization"
 
-            WPN114.Sampler { id: birds; stream: true;
+            WPN114.Sampler { id: birds;
                 exposePath: "/audio/stone-path/cendres/birds"
                 path: "audio/stone-path/cendres/birds.wav" }
         }

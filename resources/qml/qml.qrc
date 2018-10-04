@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>AudioServer.qml</file>
         <file>scenes/Introduction.qml</file>
         <file>scenes/WPN214.qml</file>
         <file>scenes/Instruments.qml</file>
