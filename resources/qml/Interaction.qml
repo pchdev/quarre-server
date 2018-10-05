@@ -20,6 +20,13 @@ Item
 
     }
 
+    WPN114.Node on title        { path: "/interactions/"+root.path+"/title" }
+    WPN114.Node on description  { path: "/interactions/"+root.path+"/description" }
+    WPN114.Node on length       { path: "/interactions/"+root.path+"/length" }
+    WPN114.Node on countdown    { path: "/interactions/"+root.path+"/countdown" }
+    WPN114.Node on module       { path: "/interactions/"+root.path+"/module" }
+    WPN114.Node on broadcast    { path: "/interactions/"+root.path+"/broadcast" }
+
     WPN114.Node
     {
         path: "/interactions/"+root.path+"/notify"

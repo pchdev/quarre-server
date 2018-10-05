@@ -34,6 +34,7 @@ ApplicationWindow
     {
         id:             audio_stream
         outDevice:      "Scarlett 2i2 USB"
+        numOutputs:     2
         sampleRate:     44100
         blockSize:      512
 

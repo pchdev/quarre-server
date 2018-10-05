@@ -9,6 +9,8 @@ Item
         Interaction //----------------------------------------------------- TUTORIAL
         {
             id: tutorial
+            path: "introduction/tutorial"
+
             title: "Didacticiel"
             module: "quarre/Tutorial.qml"
             broadcast: true
@@ -22,6 +24,8 @@ Item
         Interaction //---------------------------------------------------- CROSSROADS
         {
             id: crossroads
+            path: "introduction/crossroads"
+
             title: "Croisée des chemins"
             module: "quarre/Vote.qml"
             broadcast: true
