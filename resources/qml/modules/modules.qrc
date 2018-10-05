@@ -28,10 +28,10 @@
     <file>quarre/JomonPalm.qml</file>
     <file>quarre/JomonPalmZ.qml</file>
     <file>quarre/JomonRhythm.qml</file>
-    <file>quarre/MakhorBody.qml</file>
-    <file>quarre/MakhorGranular.qml</file>
-    <file>quarre/MakhorPads.qml</file>
-    <file>quarre/MakhorResonator.qml</file>
+    <file>quarre/MarkhorBody.qml</file>
+    <file>quarre/MarkhorGranular.qml</file>
+    <file>quarre/MarkhorPads.qml</file>
+    <file>quarre/MarkhorResonator.qml</file>
     <file>quarre/OssiaModuleParameters.qml</file>
     <file>quarre/Strings.qml</file>
     <file>quarre/Strings2.qml</file>

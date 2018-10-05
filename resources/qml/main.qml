@@ -2,7 +2,6 @@ import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 import WPN114 1.0 as WPN114
-import Quarre 1.0
 import "scenes"
 
 ApplicationWindow
@@ -39,12 +38,14 @@ ApplicationWindow
         blockSize:      512
 
         WPN114.Node on dBlevel { path: "/audio/master/level" }
+        WPN114.Node on active { path: "/audio/master/active" }
+        WPN114.Node on mute { path: "/audio/master/muted" }
     }
 
     WPN114.RoomSetup // octophonic ring setup for quarrè-angoulême
     {
         id: rooms_setup;        
-        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8 }
+        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.5 }
     }
 
     Introduction {}

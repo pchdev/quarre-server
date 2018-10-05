@@ -3,6 +3,7 @@ import WPN114 1.0 as WPN114
 
 Item
 {
+    id: root
     property int idkey: 0
     property string title: ""
     property string description: ""
@@ -21,7 +22,7 @@ Item
 
     WPN114.Node
     {
-        path: "/interactions/"+path+"/notify"
+        path: "/interactions/"+root.path+"/notify"
         type: WPN114.Type.Impulse
 
         onValueReceived: ;// incoming interaction
@@ -29,7 +30,7 @@ Item
 
     WPN114.Node
     {
-        path: "/interactions/"+path+"/begin"
+        path: "/interactions/"+root.path+"/begin"
         type: WPN114.Type.Impulse
 
         onValueReceived: ;// trigger interaction
@@ -37,7 +38,7 @@ Item
 
     WPN114.Node
     {
-        path: "/interactions/"+path+"/end"
+        path: "/interactions/"+root.path+"/end"
         type: WPN114.Type.Impulse
 
         onValueReceived: ;// end interaction
