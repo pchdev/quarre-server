@@ -5,6 +5,9 @@ Item
 {
     id: root
     property int idkey: 0
+
+    property QuarreClient owner;
+
     property string title: ""
     property string description: ""
     property int length: 0
@@ -13,7 +16,6 @@ Item
     property string path: ""
     property bool broadcast: false
     property var mappings
-
 
     function end()
     {

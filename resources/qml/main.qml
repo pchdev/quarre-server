@@ -10,8 +10,6 @@ ApplicationWindow
     width: 640
     height: 480
 
-    WPN114.OSCQueryClient { zeroConfHost: "quarre-remote" }
-
     WPN114.FolderNode
     {
         device: query_server

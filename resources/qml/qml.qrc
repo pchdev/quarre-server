@@ -18,5 +18,7 @@
         <file>scenes/woodpath/JomonSugi.qml</file>
         <file>Interaction.qml</file>
         <file>scenes/QuMapping.qml</file>
+        <file>ClientManager.qml</file>
+        <file>QuarreClient.qml</file>
     </qresource>
 </RCC>
