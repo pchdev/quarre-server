@@ -4,6 +4,7 @@ import ".."
 
 Item
 {
+    property alias rooms: introduction_rooms
     Item//------------------------------------------------------------------------------ INTERACTIONS
     {
         Interaction //----------------------------------------------------- TUTORIAL
@@ -32,9 +33,8 @@ Item
             length: 30
             countdown: 30
 
-            description:
-                "sélectionnez l'un des symboles présentés ci-dessous
-                 ce choix influencera le déroulement du scénario."
+            description: "sélectionnez l'un des symboles présentés ci-dessous. " +
+            "Ce choix influencera le déroulement du scénario."
         }
     }
 
@@ -55,16 +55,32 @@ Item
             river.active         = newValue;
             verb.active          = newValue;
 
-            digibirds.play      ( );
-            swarms.play         ( );
-            dragon_hi.play      ( );
-            dragon_lo.play      ( );
-            walking_1.play      ( );
-            walking_2.play      ( );
-            synth.play          ( );
-            spring.play         ( );
-            river.play          ( );
-            verb.play           ( );
+            if ( newValue )
+            {
+                digibirds.play      ( );
+                swarms.play         ( );
+                dragon_hi.play      ( );
+                dragon_lo.play      ( );
+                walking_1.play      ( );
+                walking_2.play      ( );
+                synth.play          ( );
+                spring.play         ( );
+                river.play          ( );
+                verb.play           ( );
+            }
+            else
+            {
+                digibirds.stop      ( );
+                swarms.stop         ( );
+                dragon_hi.stop      ( );
+                dragon_lo.stop      ( );
+                walking_1.stop      ( );
+                walking_2.stop      ( );
+                synth.stop          ( );
+                spring.stop         ( );
+                river.stop          ( );
+                verb.stop           ( );
+            }
 
             // for synchronization purposes, active the container in last
             introduction_rooms.active   = newValue;
@@ -85,8 +101,8 @@ Item
         {
             position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
             diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/digibirds/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/digibirds/diffuse" }
@@ -102,8 +118,8 @@ Item
         {
             position:   [ [ 0.232, 0.884, 0.5], [ 0.774, 0.881, 0.5 ] ]
             diffuse:    [ 0.17, 0.17 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/swarms/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/swarms/diffuse" }
@@ -119,8 +135,8 @@ Item
         {
             position:   [ [ 0.22, 0.65, 0.5 ], [ 0.783, 0.637, 0.5 ]]
             diffuse:    [ 0.0, 0.0 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/dragon-hi/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/dragon-hi/diffuse" }
@@ -136,8 +152,6 @@ Item
         {
             position:   [ [0.227, 0.25, 0.5], [0.774, 0.257, 0.5] ]
             diffuse:    [ 0.00, 0.00 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
 
             fixed:      true
 
@@ -155,8 +169,8 @@ Item
         {
             position:   [ [0.407, 0.5, 0.5], [0.587, 0.5, 0.5] ]
             diffuse:    [ 0.00, 0.00 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/walking-1/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/walking-1/diffuse" }
@@ -172,8 +186,8 @@ Item
         {
             position:   [ [0.43, 0.431, 0.5], [ 0.554, 0.431, 0.5]]
             diffuse:    [ 0.00, 0.00 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/walking-2/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/walking-2/diffuse" }
@@ -189,8 +203,8 @@ Item
         {
             position:   [ [0.245, 0.837, 0.5], [0.749, 0.84, 0.5]]
             diffuse:    [ 0.00, 0.00 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/synth/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/synth/diffuse" }
@@ -207,7 +221,8 @@ Item
             position:   [ [0.5, 0.776, 0.5], [0.5, 0.169, 0.5] ]
             diffuse:    [ 0.7, 0.7 ]
             bias:       [ 0.85, 0.85 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/spring/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/spring/diffuse" }
@@ -223,8 +238,8 @@ Item
         {
             position:   [ [0.493, 0.788, 0.5], [0.497, 0.251, 0.5] ]
             diffuse:    [ 0.54, 0.54 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/river/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/river/diffuse" }
@@ -240,8 +255,8 @@ Item
         {
             position:   [ [0.259, 0.502, 0.5], [0.713, 0.5, 0.5]]
             diffuse:    [ 0.6, 0.6 ]
-            bias:       [ 0.5, 0.5 ]
-            rotate:     [ 0.5, 0.5 ]
+
+            fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/verb/position" }
             WPN114.Node on diffuse { path: "/audio/introduction/verb/diffuse" }

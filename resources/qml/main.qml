@@ -33,10 +33,16 @@ ApplicationWindow
     WPN114.AudioStream //------------------------------------------------------------- AUDIO
     {
         id:             audio_stream
-        outDevice:      "Scarlett 2i2 USB"
-        numOutputs:     2
+        outDevice:      "Soundflower (64ch)"
+        numOutputs:     8
         sampleRate:     44100
         blockSize:      512
+
+        Component.onCompleted:
+        {
+            introduction.rooms.setup = rooms_setup
+            start();
+        }
 
         WPN114.Node on dBlevel { path: "/audio/master/level" }
         WPN114.Node on active { path: "/audio/master/active" }
@@ -49,5 +55,5 @@ ApplicationWindow
         WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.5 }
     }
 
-    Introduction {}
+    Introduction { id: introduction }
 }
