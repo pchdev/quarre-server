@@ -10,13 +10,13 @@ ApplicationWindow
     width: 640
     height: 480
 
-    WPN114.FolderNode
+    WPN114.FolderNode //------------------------------------------------------------- NETSERVER
     {
         device: query_server
         recursive: true
         folderPath: "/Users/pchd/Repositories/quarre-server/resources/qml/modules"
         path: "/modules"
-        filters: ["*.png", "*.qml"]
+        filters: ["*.qml"]
     }
 
     WPN114.OSCQueryServer
@@ -53,5 +53,6 @@ ApplicationWindow
         WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.5 }
     }
 
-    Introduction { id: introduction }
+    ClientManager   { id: client_manager; maxClients: 4 }
+    Introduction    { id: introduction }
 }

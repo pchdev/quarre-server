@@ -6,7 +6,7 @@ Item
     id: root
     property int idkey: 0
 
-    property QuarreClient owner;
+    property var owners: [];
 
     property string title: ""
     property string description: ""
@@ -17,10 +17,9 @@ Item
     property bool broadcast: false
     property var mappings
 
-    function end()
-    {
-
-    }
+    function notify()   { interaction_notify.value = 0; }
+    function begin()    { interaction_begin.value = 0; }
+    function end()      { interaction_end.value = 0; }
 
     WPN114.Node on title        { path: "/interactions/"+root.path+"/title" }
     WPN114.Node on description  { path: "/interactions/"+root.path+"/description" }
@@ -29,27 +28,41 @@ Item
     WPN114.Node on module       { path: "/interactions/"+root.path+"/module" }
     WPN114.Node on broadcast    { path: "/interactions/"+root.path+"/broadcast" }
 
-    WPN114.Node
+    WPN114.Node //------------------------------------------------------------ INTERACTION_NOTIFY
     {
+        id: interaction_notify
         path: "/interactions/"+root.path+"/notify"
         type: WPN114.Type.Impulse
 
-        onValueReceived: ;// incoming interaction
+        onValueReceived:
+            client_manager.dispatch(undefined, root)
     }
 
-    WPN114.Node
+    WPN114.Node //------------------------------------------------------------ INTERACTION_BEGIN
     {
+        id: interaction_begin
         path: "/interactions/"+root.path+"/begin"
         type: WPN114.Type.Impulse
 
-        onValueReceived: ;// trigger interaction
+        onValueReceived:
+        {
+            owners.forEach(function(owner) {
+                owner.beginInteraction(root);
+            })
+        }
     }
 
-    WPN114.Node
+    WPN114.Node //------------------------------------------------------------ INTERACTION_END
     {
+        id: interaction_end
         path: "/interactions/"+root.path+"/end"
         type: WPN114.Type.Impulse
 
-        onValueReceived: ;// end interaction
+        onValueReceived:
+        {
+            owners.forEach(function(owner) {
+                owner.endInteraction(root);
+            })
+        }
     }
 }

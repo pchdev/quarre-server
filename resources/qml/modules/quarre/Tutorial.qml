@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import "items"
+import "../basics/items"
 
 Rectangle
 {

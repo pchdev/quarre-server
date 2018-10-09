@@ -31,7 +31,9 @@ Item
     {
         var interaction_arr = getInteractionMessage(interaction);
         remote.sendMessage("/interactions/next/incoming", interaction_arr, true);
-        interaction.owner = root;
+
+        interaction.owners.push(root);
+        root.interaction_count++;
         if ( status === "active") root.status = "active_incoming";
         else root.status = "incoming";
     }
@@ -55,8 +57,10 @@ Item
 
     WPN114.OSCQueryClient
     {
+        // when connected, remote will download the different module files
+        // then go into idle state
         id: remote
-        zeroConfHost: "quarre-remote"
+        zeroConfHost: number ? "quarre-remote"+"("+number+")" : "quarre-remote"
 
         onConnected:
         {

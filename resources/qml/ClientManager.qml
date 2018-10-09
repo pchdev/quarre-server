@@ -7,15 +7,20 @@ Item
 
     function dispatch(target, interaction)
     {
+        console.log("Dispatching interaction:", interaction.title)
+
         var candidates = [];
+        var priorities = [];
+
+        if ( interaction.broadcast )
+            for ( var u = 0; u < maxClients; ++u )
+                if ( clients.itemAt(u).connected )
+                    clients.itemAt(u).notifyInteraction(interaction);
 
         for ( var c = 0; c < maxClients; ++c )
         {
-            var candidate;
-            var client = clients.itemAt(c);
-
-            candidate["target"]    = client;
-            candidate["priority"]  = 0;
+            var client = clients.itemAt(c);           
+            var priority = 0;
 
             if ( !client.connected ) continue;
             if ( client.status === "incoming" ) continue;
@@ -25,16 +30,18 @@ Item
                 var acd = client.getActiveCountdown();
                 if ( interaction.countdown < acd+5 ) continue;
 
-                candidate["priority"] = 1;
+                priority = 1;
             }
             else if ( client.status === "idle" );
             else continue;
 
-            candidate["priority"] += client.interaction_count;
-            candidates.push(candidate);
+            priority += client.interaction_count;
+            candidates.push(client);
+            priorities.push(priority);
         }
 
         var winner;
+        var winner_priority = 0;
 
         for ( var i = 0; i < candidates.length; ++i )
         {
@@ -42,19 +49,22 @@ Item
             if ( winner === undefined )
             {
                 winner = select;
+                winner_priority = priorities[i];
                 continue;
             }
 
-            if ( select["priority"] === winner["priority"] )
+            if ( priorities[i] === winner_priority )
             {
                 var r = Math.random();
                 if ( r > 0.5 ) winner = select;
             }
-            else if ( select["priority"] < winner["priority"] )
+            else if ( priorities[i] < winner_priority )
                 winner = select;
         }
 
-        winner["target"].notifyInteraction(interaction);
+        console.log("Dispatching to:", winner.number)
+
+        winner.notifyInteraction(interaction);
     }
 
     Repeater
