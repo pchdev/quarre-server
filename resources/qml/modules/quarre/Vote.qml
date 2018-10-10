@@ -1,10 +1,19 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 
 Rectangle
 {
     id: frame
     anchors.fill: parent
     color: "transparent"
+
+    WPN114.Node
+    {
+        id: selection
+        path: "/modules/crossroads/selection"
+        type: WPN114.Type.Int
+        value: 0
+    }
 
     Rectangle
     {
@@ -27,12 +36,13 @@ Rectangle
             {
                 color = "darkgray";
                 mountain_rect.selected = false;
-                ossia_modules.vote_choice = 1;
+                selection.value = 1;
             }
             else
             {
                 color = "#282a2d"
-                if ( !mountain_rect.selected ) ossia_modules.vote_choice = 0;
+                if ( !mountain_rect.selected )
+                    selection.value = 0;
             }
         }
 
@@ -60,7 +70,7 @@ Rectangle
         }
     }
 
-    Text
+    Text //--------------------------------------------------------------------- WOOD_LABEL
     {
         text:       "bois"
         color:      "#ffffff"
@@ -69,11 +79,11 @@ Rectangle
         x:          tree_rect.x
         y:          parent.height * 0.55
 
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        font.pointSize: 16 * root.fontRatio
-        textFormat: Text.PlainText
-        font.family: font_lato_light.name
+        horizontalAlignment:    Text.AlignHCenter
+        verticalAlignment:      Text.AlignVCenter
+        textFormat:             Text.PlainText
+        font.pointSize:         16 * root.fontRatio
+        font.family:            font_lato_light.name
     }
 
     Rectangle
@@ -97,12 +107,12 @@ Rectangle
             {
                 color = "darkgray";
                 tree_rect.selected = false;
-                ossia_modules.vote_choice = 2;
+                selection.value = 2;
             }
             else
             {
                 color = "#282a2d"
-                if ( !tree_rect.selected ) ossia_modules.vote_choice = 0;
+                if ( !tree_rect.selected ) selection.value = 0;
             }
         }
 
@@ -130,7 +140,7 @@ Rectangle
         }
     }
 
-    Text
+    Text //--------------------------------------------------------------------- STONE_LABEL
     {
         text:       "pierre"
         color:      "#ffffff"
@@ -139,11 +149,11 @@ Rectangle
         x:          mountain_rect.x
         y:          parent.height * 0.55
 
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        font.pointSize: 16 * root.fontRatio
-        textFormat: Text.PlainText
-        font.family: font_lato_light.name
+        horizontalAlignment:    Text.AlignHCenter
+        verticalAlignment:      Text.AlignVCenter
+        textFormat:             Text.PlainText
+        font.pointSize:         16 * root.fontRatio
+        font.family:            font_lato_light.name
     }
 
 

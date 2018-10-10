@@ -4,6 +4,7 @@ import WPN114 1.0 as WPN114
 Item
 {
     property int maxClients;
+    property alias clients: clients
 
     function dispatch(target, interaction)
     {
@@ -13,9 +14,12 @@ Item
         var priorities = [];
 
         if ( interaction.broadcast )
+        {
             for ( var u = 0; u < maxClients; ++u )
                 if ( clients.itemAt(u).connected )
                     clients.itemAt(u).notifyInteraction(interaction);
+            return;
+        }
 
         for ( var c = 0; c < maxClients; ++c )
         {

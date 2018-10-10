@@ -8,6 +8,7 @@ Item
     property int interaction_count: 0
     property bool connected: false
     property string status: "disconnected"
+    property alias remote: remote
 
     function getInteractionMessage(interaction)
     {

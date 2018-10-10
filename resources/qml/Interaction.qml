@@ -17,6 +17,10 @@ Item
     property bool broadcast: false
     property var mappings
 
+    signal interactionNotify    ( );
+    signal interactionBegin     ( );
+    signal interactionEnd       ( );
+
     function notify()   { interaction_notify.value = 0; }
     function begin()    { interaction_begin.value = 0; }
     function end()      { interaction_end.value = 0; }
@@ -35,7 +39,10 @@ Item
         type: WPN114.Type.Impulse
 
         onValueReceived:
+        {
             client_manager.dispatch(undefined, root)
+            root.interactionNotify();
+        }
     }
 
     WPN114.Node //------------------------------------------------------------ INTERACTION_BEGIN
@@ -48,7 +55,9 @@ Item
         {
             owners.forEach(function(owner) {
                 owner.beginInteraction(root);
-            })
+            });
+
+            root.interactionBegin();
         }
     }
 
@@ -62,7 +71,9 @@ Item
         {
             owners.forEach(function(owner) {
                 owner.endInteraction(root);
-            })
+            });
+
+            root.interactionEnd();
         }
     }
 }

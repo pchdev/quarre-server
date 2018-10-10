@@ -50,7 +50,7 @@ ApplicationWindow
     WPN114.RoomSetup // octophonic ring setup for quarrè-angoulême
     {
         id: rooms_setup;        
-        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.5 }
+        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.6 }
     }
 
     ClientManager   { id: client_manager; maxClients: 4 }

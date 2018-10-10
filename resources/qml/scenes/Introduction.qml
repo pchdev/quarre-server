@@ -35,7 +35,42 @@ Item
 
             description: "sélectionnez l'un des symboles présentés ci-dessous. " +
             "Ce choix influencera le déroulement du scénario."
+
+            onInteractionEnd:
+            {
+                // parse selection for each connected client
+                var res_zero = 0, res_one = 0, res_two = 0, total = 0;
+
+                for ( var c = 0; c < client_manager.clients.size(); c++ )
+                {
+                    var client = client_manager.clients.itemAt(c);
+                    if ( client.connected )
+                    {
+                        var res = client.remote.get("/modules/crossroads/selection");
+                        if ( res === 0 ) res_zero++;
+                        else if ( res === 1 ) res_one++;
+                        else if ( res === 2 ) res_two++;
+                    }
+                }
+
+                if ( res_one > res_zero && res_one > res_two )
+                    total = 0;
+
+                else if ( res_two > res_zero && res_two > res_one )
+                    total = 1;
+
+                else total = Math.floor(Math.random()*2);
+                crossroads_result.value = total;
+            }
         }
+    }
+
+    WPN114.Node //--------------------------------------------------------------- CROSSROADS_RESULT
+    {
+        id: crossroads_result
+        type: WPN114.Type.Int
+        path: "/modules/crossroads/result"
+        value: 0
     }
 
     WPN114.Node //------------------------------------------------------------------------- CONTROL
@@ -134,8 +169,6 @@ Item
         WPN114.RoomSource //----------------------------------------- 3.DRAGON_HIGH (5-6)
         {
             position:   [ [ 0.22, 0.65, 0.5 ], [ 0.783, 0.637, 0.5 ]]
-            diffuse:    [ 0.0, 0.0 ]
-
             fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/dragon-hi/position" }
@@ -151,8 +184,6 @@ Item
         WPN114.RoomSource //----------------------------------------- 4.DRAGON_LOW (7-8)
         {
             position:   [ [0.227, 0.25, 0.5], [0.774, 0.257, 0.5] ]
-            diffuse:    [ 0.00, 0.00 ]
-
             fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/dragon-lo/position" }
@@ -168,8 +199,6 @@ Item
         WPN114.RoomSource //----------------------------------------- 5.WALKING_1 (9-10)
         {
             position:   [ [0.407, 0.5, 0.5], [0.587, 0.5, 0.5] ]
-            diffuse:    [ 0.00, 0.00 ]
-
             fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/walking-1/position" }
@@ -185,8 +214,6 @@ Item
         WPN114.RoomSource //----------------------------------------- 6.WALKING_2 (11-12)
         {
             position:   [ [0.43, 0.431, 0.5], [ 0.554, 0.431, 0.5]]
-            diffuse:    [ 0.00, 0.00 ]
-
             fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/walking-2/position" }
@@ -202,8 +229,6 @@ Item
         WPN114.RoomSource //----------------------------------------- 7.SYNTH (13-14)
         {
             position:   [ [0.245, 0.837, 0.5], [0.749, 0.84, 0.5]]
-            diffuse:    [ 0.00, 0.00 ]
-
             fixed:      true
 
             WPN114.Node on position { path: "/audio/introduction/synth/position" }
