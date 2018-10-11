@@ -23,7 +23,8 @@ Item
 
     function notify()   { interaction_notify.value = 0; }
     function begin()    { interaction_begin.value = 0; }
-    function end()      { interaction_end.value = 0; }
+    function end()      { interaction_end.value = 0; }    
+    function execute()  { executor.start() }
 
     WPN114.Node on title        { path: "/interactions/"+root.path+"/title" }
     WPN114.Node on description  { path: "/interactions/"+root.path+"/description" }
@@ -31,6 +32,30 @@ Item
     WPN114.Node on countdown    { path: "/interactions/"+root.path+"/countdown" }
     WPN114.Node on module       { path: "/interactions/"+root.path+"/module" }
     WPN114.Node on broadcast    { path: "/interactions/"+root.path+"/broadcast" }
+
+    Timer //------------------------------------------------------------ EXECUTOR
+    {
+        property int count: 0
+        id: executor
+        repeat: true
+        interval: 1000
+        triggeredOnStart: true
+
+        onTriggered:
+        {
+            if ( !count ) interaction_notify.value = 0;
+            else if ( count === root.countdown ) interaction_begin.value = 0;
+
+            if ( count === root.countdown+root.length )
+            {
+                interaction_end.value = 0;
+                stop();
+                count = 0;
+            }
+
+            else ++count;
+        }
+    }
 
     WPN114.Node //------------------------------------------------------------ INTERACTION_NOTIFY
     {

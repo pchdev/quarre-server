@@ -5,6 +5,9 @@ import ".."
 Item
 {
     property alias rooms: introduction_rooms
+    property alias crossroads: crossroads
+    property alias tutorial: tutorial
+
     Item//------------------------------------------------------------------------------ INTERACTIONS
     {
         Interaction //----------------------------------------------------- TUTORIAL
@@ -20,6 +23,13 @@ Item
 
             description:
                 "Présentation du fonctionnement global de l'application"
+
+            onInteractionNotify:
+            {
+                owners.forEach(function(owner) {
+                    if ( owner.connected ) owner.remote.listen("/scenario/name");
+                });
+            }
         }
 
         Interaction //---------------------------------------------------- CROSSROADS
@@ -34,24 +44,29 @@ Item
             countdown: 30
 
             description: "sélectionnez l'un des symboles présentés ci-dessous. " +
-            "Ce choix influencera le déroulement du scénario."
+                         "Ce choix influencera le déroulement du scénario."
+
+            onInteractionBegin:
+            {
+                owners.forEach(function(owner) {
+                    if ( owner.connected ) owner.remote.listen("/modules/crossroads/selection");
+                });
+            }
 
             onInteractionEnd:
             {
                 // parse selection for each connected client
                 var res_zero = 0, res_one = 0, res_two = 0, total = 0;
 
-                for ( var c = 0; c < client_manager.clients.size(); c++ )
-                {
-                    var client = client_manager.clients.itemAt(c);
-                    if ( client.connected )
+                owners.forEach(function(owner){
+                    if ( owner.connected )
                     {
-                        var res = client.remote.get("/modules/crossroads/selection");
+                        var res = owner.remote.value("/modules/crossroads/selection");
                         if ( res === 0 ) res_zero++;
                         else if ( res === 1 ) res_one++;
                         else if ( res === 2 ) res_two++;
                     }
-                }
+                });
 
                 if ( res_one > res_zero && res_one > res_two )
                     total = 0;
@@ -69,7 +84,7 @@ Item
     {
         id: crossroads_result
         type: WPN114.Type.Int
-        path: "/modules/crossroads/result"
+        path: "/interactions/introduction/crossroads/result"
         value: 0
     }
 
