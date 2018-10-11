@@ -71,6 +71,7 @@ Item
             mappings.forEach(function(mapping){
                 // for each mapping, get the owner's target node
                 // set mapping's function
+                owners[0].remote.listen(mapping.source);
                 var node = owners[0].remote.get(mapping.source);
                 node.valueReceived.connect(mapping.expression);
             });
@@ -110,6 +111,7 @@ Item
             mappings.forEach(function(mapping){
                 // for each mapping, get the owner's target node
                 // set mapping's function
+                owners[0].remote.ignore(mapping.source);
                 var node = owners[0].remote.get(mapping.source);
                 node.valueReceived.disconnect(mapping.expression);
             });
