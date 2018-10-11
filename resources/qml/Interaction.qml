@@ -66,7 +66,14 @@ Item
         onValueReceived:
         {
             client_manager.dispatch(undefined, root)
-            root.interactionNotify();
+            root.interactionNotify();           
+
+            mappings.forEach(function(mapping){
+                // for each mapping, get the owner's target node
+                // set mapping's function
+                var node = owners[0].remote.get(mapping.source);
+                node.valueReceived.connect(mapping.expression);
+            });
         }
     }
 
@@ -80,7 +87,7 @@ Item
         {
             owners.forEach(function(owner) {
                 owner.beginInteraction(root);
-            });
+            });                        
 
             root.interactionBegin();
         }
@@ -99,6 +106,13 @@ Item
             });
 
             root.interactionEnd();
+
+            mappings.forEach(function(mapping){
+                // for each mapping, get the owner's target node
+                // set mapping's function
+                var node = owners[0].remote.get(mapping.source);
+                node.valueReceived.disconnect(mapping.expression);
+            });
         }
     }
 }
