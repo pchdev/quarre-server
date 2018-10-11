@@ -146,121 +146,131 @@ Item
 
         exposePath: "/audio/introduction/rooms"
 
-        WPN114.RoomSource //----------------------------------------- 1.DIGIBIRDS (1-2)
+        WPN114.RoomStereoSource //----------------------------------------- 1.DIGIBIRDS (1-2)
         {
-            exposePath: "/audio/introduction/digibirds/rooms"
+            exposePath: "/audio/introduction/digibirds/source"
 
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            fixed:      true
+            xspread: 0.35
+            diffuse: 0.49
+            fixed: true
 
             WPN114.StreamSampler { id: digibirds;
                 exposePath: "/audio/introduction/digibirds"
                 path: "audio/introduction/digibirds.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 2.SWARMS (3-4)
+        WPN114.RoomStereoSource //----------------------------------------- 2.SWARMS (3-4)
         {
-            exposePath: "/audio/introduction/swarms/rooms"
+            exposePath: "/audio/introduction/swarms/source"
 
-            position:   [ [ 0.232, 0.884, 0.5], [ 0.774, 0.881, 0.5 ] ]
-            diffuse:    [ 0.17, 0.17 ]
-            fixed:      true
+            xspread: 0.27
+            diffuse: 0.17
+            fixed: true
+            y: 0.9
 
             WPN114.StreamSampler { id: swarms;
                 exposePath: "/audio/introduction/swarms"
                 path: "audio/introduction/swarms.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 3.DRAGON_HIGH (5-6)
+        WPN114.RoomStereoSource //----------------------------------------- 3.DRAGON_HIGH (5-6)
         {
-            exposePath: "/audio/introduction/dragon-hi/rooms"
-            position:   [ [ 0.22, 0.65, 0.5 ], [ 0.783, 0.637, 0.5 ]]
-            fixed:      true
+            exposePath: "/audio/introduction/dragon-hi/source"
+
+            xspread: 0.28
+            fixed: true
+            y: 0.65
 
             WPN114.StreamSampler { id: dragon_hi;
                 exposePath: "/audio/introduction/dragon-hi"
                 path: "audio/introduction/dragon-hi.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 4.DRAGON_LOW (7-8)
+        WPN114.RoomStereoSource //----------------------------------------- 4.DRAGON_LOW (7-8)
         {
-            exposePath: "/audio/introduction/dragon-lo/rooms"
-            position:   [ [0.227, 0.25, 0.5], [0.774, 0.257, 0.5] ]
-            fixed:      true
+            exposePath: "/audio/introduction/dragon-lo/source"
+
+            xspread: 0.28
+            fixed: true
+            y: 0.25
 
             WPN114.StreamSampler { id: dragon_lo;
                 exposePath: "/audio/introduction/dragon-lo"
                 path: "audio/introduction/dragon-lo.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 5.WALKING_1 (9-10)
+        WPN114.RoomStereoSource //----------------------------------------- 5.WALKING_1 (9-10)
         {
-            exposePath: "/audio/introduction/walking-1/rooms"
-            position:   [ [0.407, 0.5, 0.5], [0.587, 0.5, 0.5] ]
-            fixed:      true
+            exposePath: "/audio/introduction/walking-1/source"
+
+            xspread: 0.2
+            fixed: true
 
             WPN114.StreamSampler { id: walking_1;
                 exposePath: "/audio/introduction/walking-1"
                 path: "audio/introduction/walking-1.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 6.WALKING_2 (11-12)
+        WPN114.RoomStereoSource //----------------------------------------- 6.WALKING_2 (11-12)
         {
-            exposePath: "/audio/introduction/walking-2/rooms"
-            position:   [ [0.43, 0.431, 0.5], [ 0.554, 0.431, 0.5]]
-            fixed:      true
+            exposePath: "/audio/introduction/walking-2/source"
+
+            xspread: 0.15
+            fixed: true
+            y: 0.43
 
             WPN114.StreamSampler { id: walking_2;
                 exposePath: "/audio/introduction/walking-2"
                 path: "audio/introduction/walking-2.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 7.SYNTH (13-14)
+        WPN114.RoomStereoSource //----------------------------------------- 7.SYNTH (13-14)
         {
-            exposePath: "/audio/introduction/synth/rooms"
-            position:   [ [0.245, 0.837, 0.5], [0.749, 0.84, 0.5]]
-            fixed:      true
+            exposePath: "/audio/introduction/synth/source"
+
+            xspread: 0.25
+            fixed: true
+            y: 0.85
 
             WPN114.StreamSampler { id: synth;
                 exposePath: "/audio/introduction/synth"
                 path: "audio/introduction/synth.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 8.SPRING (15-16)
+        WPN114.RoomStereoSource //----------------------------------------- 8.SPRING (15-16)
         {
-            exposePath: "/audio/introduction/spring/rooms"
-            position:   [ [0.5, 0.776, 0.5], [0.5, 0.169, 0.5] ]
-            diffuse:    [ 0.7, 0.7 ]
-            bias:       [ 0.85, 0.85 ]
+            exposePath: "/audio/introduction/spring/source"
 
-            fixed:      true
+            yspread: 0.25
+            diffuse: 0.7
+            bias: 0.85
+            fixed: true
 
             WPN114.StreamSampler { id: spring;
                 exposePath: "/audio/introduction/spring"
                 path: "audio/introduction/spring.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 9.RIVER (17-18)
+        WPN114.RoomStereoSource //----------------------------------------- 9.RIVER (17-18)
         {
-            exposePath: "/audio/introduction/river/rooms"
-            position:   [ [0.493, 0.788, 0.5], [0.497, 0.251, 0.5] ]
-            diffuse:    [ 0.54, 0.54 ]
+            exposePath: "/audio/introduction/river/source"
 
-            fixed:      true
+            yspread: 0.25
+            diffuse: 0.55
+            fixed: true
 
             WPN114.StreamSampler { id: river;
                 exposePath: "/audio/introduction/river"
                 path: "audio/introduction/river.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 10.VERB (19-20)
+        WPN114.RoomStereoSource //----------------------------------------- 10.VERB (19-20)
         {
-            exposePath: "/audio/introduction/verb/rooms"
-            position:   [ [0.259, 0.502, 0.5], [0.713, 0.5, 0.5]]
-            diffuse:    [ 0.6, 0.6 ]
+            exposePath: "/audio/introduction/verb/source"
 
-            fixed:      true
+            xspread: 0.25
+            diffuse: 0.6
+            fixed: true
 
             WPN114.StreamSampler { id: verb;
                 exposePath: "/audio/introduction/verb"

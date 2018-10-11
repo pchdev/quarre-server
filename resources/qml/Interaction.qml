@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import "scenes"
 
 Item
 {
@@ -15,7 +16,7 @@ Item
     property string module: ""
     property string path: ""
     property bool broadcast: false
-    property var mappings
+    property list<QuMapping> mappings
 
     signal interactionNotify    ( );
     signal interactionBegin     ( );

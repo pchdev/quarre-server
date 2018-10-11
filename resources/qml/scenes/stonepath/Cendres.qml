@@ -5,6 +5,8 @@ import ".."
 
 Item
 {
+    property alias rooms: cendres_rooms
+
     Item //------------------------------------------------------------------------------ INTERACTIONS
     {
         id: interactions
@@ -152,87 +154,95 @@ Item
 
         exposePath: "/audio/stonepath/cendres/rooms"
 
-        WPN114.RoomSource //----------------------------------------- 1.ASHES (1-2)
+        WPN114.RoomStereoSource //----------------------------------------- 1.ASHES (1-2)
         {
-            exposePath: "/audio/stonepath/cendres/ashes/rooms"
+            exposePath: "/audio/stonepath/cendres/ashes/source"
 
-            position:   [ [0.261, 0.294, 0.5], [ 0.754, 0.705, 0.5 ] ]
-            diffuse:    [ 0.47, 0.47 ]
-            fixed:      true
+            fixed:   true
+            xspread: 0.25
+            yspread: 0.2
+            diffuse: 0.47
 
             WPN114.StreamSampler { id: ashes;
                 exposePath: "/audio/stonepath/cendres/ashes"
                 path: "audio/stonepath/cendres/ashes.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 2.REBIRDS_1 (3-4)
+        WPN114.RoomStereoSource //----------------------------------------- 2.REBIRDS_1 (3-4)
         {
-            exposePath: "/audio/stonepath/cendres/redbirds-1/rooms"
-            position:   [ [0.225, 0.9, 0.5], [ 0.8, 0.9, 0.5 ] ]
+            exposePath: "/audio/stonepath/cendres/redbirds-1/source"
+
             fixed:      true
+            xspread:    0.3
+            y:          0.9
 
             WPN114.StreamSampler { id: redbirds_1;
                 exposePath: "/audio/stonepath/cendres/redbirds-1"
                 path: "audio/stonepath/cendres/redbirds-1.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 3.REBIRDS_2 (5-6)
+        WPN114.RoomStereoSource //----------------------------------------- 3.REBIRDS_2 (5-6)
         {
-            exposePath: "/audio/stonepath/cendres/redbirds-2/rooms"
-            position:   [ [0.2, 0.09, 0.5], [ 0.8, 0.08, 0.5 ] ]
+            exposePath: "/audio/stonepath/cendres/redbirds-2/source"
+
             fixed:      true
+            xspread:    0.3
+            y:          0.1
 
             WPN114.StreamSampler { id: redbirds_2;
                 exposePath: "/audio/stonepath/cendres/redbirds-2"
                 path: "audio/stonepath/cendres/redbirds-2.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 4.LIGHT-BACKGROUND (7-8)
+        WPN114.RoomStereoSource //----------------------------------------- 4.LIGHT-BACKGROUND (7-8)
         {            
-            exposePath: "/audio/stonepath/cendres/light-background/rooms"
+            exposePath: "/audio/stonepath/cendres/light-background/source"
 
-            position:   [ [0.25, 0.25, 0.5], [ 0.75, 0.75, 0.5 ] ]
-            diffuse:    [ 0.5, 0.5 ]
-            fixed:      true
+            xspread: 0.25
+            yspread: 0.25
+            diffuse: 0.5
+            fixed: true
 
             WPN114.Sampler { id: light_background;
                 exposePath: "/audio/stonepath/cendres/light-background"
                 path: "audio/stonepath/cendres/light-background.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 5.BURN (9-10)
+        WPN114.RoomStereoSource //----------------------------------------- 5.BURN (9-10)
         {
-            exposePath: "/audio/stonepath/cendres/burn/rooms"
+            exposePath: "/audio/stonepath/cendres/burn/source"
 
-            position:   [ [0.2, 0.09, 0.5], [ 0.8, 0.08, 0.5 ] ]
-            diffuse:    [ 0.7, 0.7 ]
-            fixed:      true
+            xspread: 0.3
+            diffuse: 0.7
+            fixed: true
+            y: 0.1
 
             WPN114.StreamSampler { id: burn;
                 exposePath: "/audio/stonepath/cendres/burn"
                 path: "audio/stonepath/cendres/burn.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 6.WAVES (11-12)
+        WPN114.RoomStereoSource //----------------------------------------- 6.WAVES (11-12)
         {
-            exposePath: "/audio/stonepath/cendres/waves/rooms"
+            exposePath: "/audio/stonepath/cendres/waves/source"
 
-            position:   [ [0.08, 0.5, 0.5], [ 0.92, 0.5, 0.5 ] ]
-            diffuse:    [ 0.3, 0.4 ]
-            fixed:      true
+            xspread: 0.42
+            diffuse: 0.35
+            fixed: true
 
             WPN114.Sampler { id: waves;
                 exposePath: "/audio/stonepath/cendres/waves"
                 path: "audio/stonepath/cendres/waves.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 7.THUNDER (13-14)
+        WPN114.RoomStereoSource //----------------------------------------- 7.THUNDER (13-14)
         {
-            exposePath: "/audio/stonepath/cendres/thunder/rooms"
+            exposePath: "/audio/stonepath/cendres/thunder/source"
 
-            position:   [ [0.25, 0.75, 0.5], [ 0.75, 0.75, 0.5 ] ]
-            diffuse:    [ 0.6, 0.6 ]
-            fixed:      true
+            xspread: 0.25
+            diffuse: 0.6
+            fixed: true
+            y: 0.75
 
             WPN114.MultiSampler { id: thunder;
                 exposePath: "/audio/stonepath/cendres/thunder"
@@ -243,33 +253,35 @@ Item
         WPN114.RoomSource //----------------------------------------- 8.MARMOTS (15-16)
         {
             id:         marmots_source;
-            exposePath: "/audio/stonepath/cendres/marmots/rooms"
+            exposePath: "/audio/stonepath/cendres/marmots/source"
 
             WPN114.MultiSampler { id: marmots;
                 exposePath: "/audio/stonepath/cendres/marmots"
                 path: "audio/stonepath/cendres/marmots" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 9.BOILING (17-18)
+        WPN114.RoomStereoSource //----------------------------------------- 9.BOILING (17-18)
         {
-            exposePath: "/audio/stonepath/cendres/boiling/rooms"
-            position:   [ [0.4, 0.55, 0.5], [ 0.6, 0.55, 0.5 ] ]
-            fixed:      true
+            exposePath: "/audio/stonepath/cendres/boiling/source"
+
+            xspread: 0.5
+            fixed: true
+            y: 0.55
 
             WPN114.Sampler { id: boiling;
                 exposePath: "/audio/stonepath/cendres/boiling"
                 path: "audio/stonepath/cendres/boiling.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 10.QUARRE (19-20)
+        WPN114.RoomStereoSource //----------------------------------------- 10.QUARRE (19-20)
         {
-            exposePath: "/audio/stonepath/cendres/quarre/rooms"
+            exposePath: "/audio/stonepath/cendres/quarre/source"
 
-            position:   [ [0.08, 0.45, 0.5], [ 0.92, 0.45, 0.5 ] ]
-            diffuse:    [ 1.0, 1.0 ]
-            bias:       [ 0.82, 0.82 ]
-
-            fixed:      true
+            xspread: 0.42
+            diffuse: 1.0
+            bias: 0.82
+            fixed: true
+            y: 0.45
 
             WPN114.Sampler { id: quarre;
                 exposePath: "/audio/stonepath/cendres/quarre"
@@ -279,18 +291,20 @@ Item
         WPN114.RoomSource //----------------------------------------- 11.GROUNDWALK (21-22)
         {
             id:         groundwalk_source
-            exposePath: "/audio/stonepath/cendres/groundwalk/rooms"
+            exposePath: "/audio/stonepath/cendres/groundwalk/source"
 
             WPN114.StreamSampler { id: groundwalk;
                 exposePath: "/audio/stonepath/cendres/groundwalk"
                 path: "audio/stonepath/cendres/groundwalk.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 12.NECKS (25-26)
+        WPN114.RoomStereoSource //----------------------------------------- 12.NECKS (25-26)
         {
-            exposePath: "/audio/stonepath/cendres/necks/rooms"
-            position:   [ [0.45, 0.52, 0.5], [ 0.55, 0.52, 0.5 ] ]
-            fixed:      true
+            exposePath: "/audio/stonepath/cendres/necks/source"
+
+            xspread: 0.05
+            fixed: true
+            y: 0.52
 
             WPN114.Sampler { id: necks;
                 exposePath: "/audio/stonepath/cendres/necks"
