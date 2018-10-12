@@ -146,7 +146,7 @@ Item
 
         exposePath: "/audio/introduction/rooms"
 
-        WPN114.RoomStereoSource //----------------------------------------- 1.DIGIBIRDS (1-2)
+        WPN114.StereoSource //----------------------------------------- 1.DIGIBIRDS (1-2)
         {
             exposePath: "/audio/introduction/digibirds/source"
 
@@ -159,7 +159,7 @@ Item
                 path: "audio/introduction/digibirds.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 2.SWARMS (3-4)
+        WPN114.StereoSource //----------------------------------------- 2.SWARMS (3-4)
         {
             exposePath: "/audio/introduction/swarms/source"
 
@@ -173,7 +173,7 @@ Item
                 path: "audio/introduction/swarms.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 3.DRAGON_HIGH (5-6)
+        WPN114.StereoSource //----------------------------------------- 3.DRAGON_HIGH (5-6)
         {
             exposePath: "/audio/introduction/dragon-hi/source"
 
@@ -186,7 +186,7 @@ Item
                 path: "audio/introduction/dragon-hi.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 4.DRAGON_LOW (7-8)
+        WPN114.StereoSource //----------------------------------------- 4.DRAGON_LOW (7-8)
         {
             exposePath: "/audio/introduction/dragon-lo/source"
 
@@ -199,7 +199,7 @@ Item
                 path: "audio/introduction/dragon-lo.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 5.WALKING_1 (9-10)
+        WPN114.StereoSource //----------------------------------------- 5.WALKING_1 (9-10)
         {
             exposePath: "/audio/introduction/walking-1/source"
 
@@ -211,7 +211,7 @@ Item
                 path: "audio/introduction/walking-1.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 6.WALKING_2 (11-12)
+        WPN114.StereoSource //----------------------------------------- 6.WALKING_2 (11-12)
         {
             exposePath: "/audio/introduction/walking-2/source"
 
@@ -224,7 +224,7 @@ Item
                 path: "audio/introduction/walking-2.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 7.SYNTH (13-14)
+        WPN114.StereoSource //----------------------------------------- 7.SYNTH (13-14)
         {
             exposePath: "/audio/introduction/synth/source"
 
@@ -237,7 +237,7 @@ Item
                 path: "audio/introduction/synth.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 8.SPRING (15-16)
+        WPN114.StereoSource //----------------------------------------- 8.SPRING (15-16)
         {
             exposePath: "/audio/introduction/spring/source"
 
@@ -251,7 +251,7 @@ Item
                 path: "audio/introduction/spring.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 9.RIVER (17-18)
+        WPN114.StereoSource //----------------------------------------- 9.RIVER (17-18)
         {
             exposePath: "/audio/introduction/river/source"
 
@@ -264,7 +264,7 @@ Item
                 path: "audio/introduction/river.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 10.VERB (19-20)
+        WPN114.StereoSource //----------------------------------------- 10.VERB (19-20)
         {
             exposePath: "/audio/introduction/verb/source"
 

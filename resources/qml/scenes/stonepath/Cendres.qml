@@ -29,7 +29,7 @@ Item
                 source: "/gestures/whip/trigger"
                 expression: function(v) {
                     thunder.play(Math.floor(Math.random()*thunder.files.length));
-                    interaction_thunder.end()
+                    interaction_thunder.end();
                 }
             }
         }
@@ -52,7 +52,7 @@ Item
                 source: "/gestures/cover/trigger"
                 expression: function(v) {
                     boiling.play();
-                    interaction_boiling.end()
+                    interaction_boiling.end();
                 }
             }
         }
@@ -154,7 +154,7 @@ Item
 
         exposePath: "/audio/stonepath/cendres/rooms"
 
-        WPN114.RoomStereoSource //----------------------------------------- 1.ASHES (1-2)
+        WPN114.StereoSource //----------------------------------------- 1.ASHES (1-2)
         {
             exposePath: "/audio/stonepath/cendres/ashes/source"
 
@@ -168,7 +168,7 @@ Item
                 path: "audio/stonepath/cendres/ashes.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 2.REBIRDS_1 (3-4)
+        WPN114.StereoSource //----------------------------------------- 2.REBIRDS_1 (3-4)
         {
             exposePath: "/audio/stonepath/cendres/redbirds-1/source"
 
@@ -181,7 +181,7 @@ Item
                 path: "audio/stonepath/cendres/redbirds-1.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 3.REBIRDS_2 (5-6)
+        WPN114.StereoSource //----------------------------------------- 3.REBIRDS_2 (5-6)
         {
             exposePath: "/audio/stonepath/cendres/redbirds-2/source"
 
@@ -194,7 +194,7 @@ Item
                 path: "audio/stonepath/cendres/redbirds-2.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 4.LIGHT-BACKGROUND (7-8)
+        WPN114.StereoSource //----------------------------------------- 4.LIGHT-BACKGROUND (7-8)
         {            
             exposePath: "/audio/stonepath/cendres/light-background/source"
 
@@ -208,7 +208,7 @@ Item
                 path: "audio/stonepath/cendres/light-background.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 5.BURN (9-10)
+        WPN114.StereoSource //----------------------------------------- 5.BURN (9-10)
         {
             exposePath: "/audio/stonepath/cendres/burn/source"
 
@@ -222,7 +222,7 @@ Item
                 path: "audio/stonepath/cendres/burn.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 6.WAVES (11-12)
+        WPN114.StereoSource //----------------------------------------- 6.WAVES (11-12)
         {
             exposePath: "/audio/stonepath/cendres/waves/source"
 
@@ -235,7 +235,7 @@ Item
                 path: "audio/stonepath/cendres/waves.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 7.THUNDER (13-14)
+        WPN114.StereoSource //----------------------------------------- 7.THUNDER (13-14)
         {
             exposePath: "/audio/stonepath/cendres/thunder/source"
 
@@ -250,7 +250,7 @@ Item
 
         }
 
-        WPN114.RoomSource //----------------------------------------- 8.MARMOTS (15-16)
+        WPN114.MonoSource //----------------------------------------- 8.MARMOTS (15-16)
         {
             id:         marmots_source;
             exposePath: "/audio/stonepath/cendres/marmots/source"
@@ -260,7 +260,7 @@ Item
                 path: "audio/stonepath/cendres/marmots" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 9.BOILING (17-18)
+        WPN114.StereoSource //----------------------------------------- 9.BOILING (17-18)
         {
             exposePath: "/audio/stonepath/cendres/boiling/source"
 
@@ -273,7 +273,7 @@ Item
                 path: "audio/stonepath/cendres/boiling.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 10.QUARRE (19-20)
+        WPN114.StereoSource //----------------------------------------- 10.QUARRE (19-20)
         {
             exposePath: "/audio/stonepath/cendres/quarre/source"
 
@@ -288,7 +288,7 @@ Item
                 path: "audio/stonepath/cendres/quarre.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 11.GROUNDWALK (21-22)
+        WPN114.MonoSource //----------------------------------------- 11.GROUNDWALK (21-22)
         {
             id:         groundwalk_source
             exposePath: "/audio/stonepath/cendres/groundwalk/source"
@@ -298,7 +298,7 @@ Item
                 path: "audio/stonepath/cendres/groundwalk.wav" }
         }
 
-        WPN114.RoomStereoSource //----------------------------------------- 12.NECKS (25-26)
+        WPN114.StereoSource //----------------------------------------- 12.NECKS (25-26)
         {
             exposePath: "/audio/stonepath/cendres/necks/source"
 
@@ -311,7 +311,7 @@ Item
                 path: "audio/stonepath/cendres/necks.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 13.DRAGON (27-28)
+        WPN114.MonoSource //----------------------------------------- 13.DRAGON (27-28)
         {
             id:         dragon_source
             exposePath: "/audio/stonepath/cendres/dragon/rooms"
@@ -321,7 +321,7 @@ Item
                 path: "audio/stonepath/cendres/dragon.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 14.BIRDS (29-30)
+        WPN114.MonoSource //----------------------------------------- 14.BIRDS (29-30)
         {
             id:         birds_source
             exposePath: "/audio/stonepath/cendres/birds/rooms"

@@ -24,7 +24,9 @@ Item
             mappings: QuMapping
             {
                 source: "gestures/shake/trigger"
-                expression: function(v) { leaves.active = true; shake_leaves_interaction.end() }
+                expression: function(v) {
+                    leaves.active = true; shake_leaves_interaction.end()
+                }
             }
         }
 
@@ -114,209 +116,187 @@ Item
         id: maaaet_rooms
         active: false
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_setup
 
-        WPN114.RoomSource //----------------------------------------- 1.WIND (1-2)
+        WPN114.StereoSource //----------------------------------------- 1.WIND (1-2)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            yspread: 0.35
+            diffuse: 0.8
+            fixed: true
 
-            exposePath: "/audio/wood-path/maaaet/wind/spatialization"
+            exposePath: "/audio/woodpath/maaaet/wind/source"
 
-            WPN114.Sampler { id: wind; stream: true;
-                exposePath: "/audio/wood-path/maaaet/wind"
-                path: "audio/wood-path/maaaet/wind.wav" }
+            WPN114.StreamSampler { id: wind;
+                exposePath: "/audio/woodpath/maaaet/wind"
+                path: "audio/woodpath/maaaet/wind.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 2.LIGHT_BACKGROUND (3-4)
-        {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+        WPN114.StereoSource //----------------------------------------- 2.LIGHT_BACKGROUND (3-4)
+        {            
+            xspread: 0.25
+            yspread: 0.25
+            diffuse: 0.55
+            fixed: true
 
-            exposePath: "/audio/wood-path/maaaet/light-background/spatialization"
+            exposePath: "/audio/woodpath/maaaet/light-background/source"
 
-            WPN114.Sampler { id: light_background; stream: true;
-                exposePath: "/audio/wood-path/maaaet/light-background"
-                path: "audio/wood-path/maaaet/light-background.wav" }
+            WPN114.Sampler { id: light_background;
+                exposePath: "/audio/woodpath/maaaet/light-background"
+                path: "audio/woodpath/maaaet/light-background.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 3.GRASSHOPPERS (5-6)
+        WPN114.MonoSource //----------------------------------------- 3.GRASSHOPPERS (5-6)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            y: 0.82
 
-            exposePath: "/audio/wood-path/maaaet/grasshoppers/spatialization"
+            exposePath: "/audio/woodpath/maaaet/grasshoppers/source"
 
-            WPN114.Sampler { id: grasshoppers; stream: true;
-                exposePath: "/audio/wood-path/maaaet/grasshoppers"
-                path: "audio/wood-path/maaaet/grasshoppers.wav" }
+            WPN114.Sampler { id: grasshoppers;
+                exposePath: "/audio/woodpath/maaaet/grasshoppers"
+                path: "audio/woodpath/maaaet/grasshoppers.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 4.GROUND_CREEEK (7-8)
+        WPN114.StereoSource //----------------------------------------- 4.GROUND_CREEEK (7-8)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            diffuse: 0.5
+            xspread: 0.25
+            y: 0.75
 
-            exposePath: "/audio/wood-path/maaaet/groundcreek/spatialization"
+            exposePath: "/audio/woodpath/maaaet/groundcreek/source"
 
-            WPN114.Sampler { id: groundcreek; stream: true;
-                exposePath: "/audio/wood-path/maaaet/groundcreek"
-                path: "audio/wood-path/maaaet/groundcreek.wav" }
+            WPN114.Sampler { id: groundcreek;
+                exposePath: "/audio/woodpath/maaaet/groundcreek"
+                path: "audio/woodpath/maaaet/groundcreek.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 5.LEAVES (9-10)
+        WPN114.StereoSource //----------------------------------------- 5.LEAVES (9-10)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            diffuse: 0.4
+            xspread: 0.25
+            y: 0.75
 
-            exposePath: "/audio/wood-path/maaaet/leaves/spatialization"
+            exposePath: "/audio/woodpath/maaaet/leaves/source"
 
-            WPN114.Sampler { id: leaves; stream: true;
-                exposePath: "/audio/wood-path/maaaet/leaves"
-                path: "audio/wood-path/maaaet/leaves.wav" }
+            WPN114.Sampler { id: leaves;
+                exposePath: "/audio/woodpath/maaaet/leaves"
+                path: "audio/woodpath/maaaet/leaves.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 6.BLACKCAP (11-12)
+        WPN114.MonoSource //----------------------------------------- 6.BLACKCAP (11-12)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            exposePath: "/audio/woodpath/maaaet/blackcap/source"
 
-            exposePath: "/audio/wood-path/maaaet/blackcap/spatialization"
-
-            WPN114.Sampler { id: blackcap; stream: true;
-                exposePath: "/audio/wood-path/maaaet/blackcap"
-                path: "audio/wood-path/maaaet/blackcap.wav" }
+            WPN114.Sampler { id: blackcap;
+                exposePath: "/audio/woodpath/maaaet/blackcap"
+                path: "audio/woodpath/maaaet/blackcap" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 7.WOODPECKER (13-14)
+        WPN114.MonoSource //----------------------------------------- 7.WOODPECKER (13-14)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            exposePath: "/audio/woodpath/maaaet/woodpecker/source"
 
-            exposePath: "/audio/wood-path/maaaet/woodpecker/spatialization"
-
-            WPN114.Sampler { id: woodpecker; stream: true;
-                exposePath: "/audio/wood-path/maaaet/woodpecker"
-                path: "audio/wood-path/maaaet/woodpecker.wav" }
+            WPN114.Sampler { id: woodpecker;
+                exposePath: "/audio/woodpath/maaaet/woodpecker"
+                path: "audio/woodpath/maaaet/woodpecker" }
         }
 
 
-        WPN114.RoomSource //----------------------------------------- 8.ORIOLE (15-16)
+        WPN114.MonoSource //----------------------------------------- 8.ORIOLE (15-16)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            exposePath: "/audio/woodpath/maaaet/oriole/source"
 
-            exposePath: "/audio/wood-path/maaaet/oriole/spatialization"
+            WPN114.Sampler { id: oriole;
+                exposePath: "/audio/woodpath/maaaet/oriole"
+                path: "audio/woodpath/maaaet/oriole" }
+        }
 
-            WPN114.Sampler { id: oriole; stream: true;
-                exposePath: "/audio/wood-path/maaaet/oriole"
-                path: "audio/wood-path/maaaet/oriole.wav" }
+        WPN114.MonoSource //----------------------------------------- 9.NIGHTINGALE (17-18)
+        {
+            exposePath: "/audio/woodpath/maaaet/nightingale/source"
+
+            WPN114.Sampler { id: nightingale;
+                exposePath: "/audio/woodpath/maaaet/nightingale"
+                path: "audio/woodpath/maaaet/nightingale" }
         }
 
 
-        WPN114.RoomSource //----------------------------------------- 9.NIGHTINGALE (17-18)
+        WPN114.MonoSource //----------------------------------------- 10.FLYING_BIRDS (19-20)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            exposePath: "/audio/woodpath/maaaet/flying-birds/source"
 
-            exposePath: "/audio/wood-path/maaaet/nightingale/spatialization"
-
-            WPN114.Sampler { id: nightingale; stream: true;
-                exposePath: "/audio/wood-path/maaaet/nightingale"
-                path: "audio/wood-path/maaaet/nightingale.wav" }
+            WPN114.Sampler { id: flying_birds;
+                exposePath: "/audio/woodpath/maaaet/flying-birds"
+                path: "audio/woodpath/maaaet/flying-birds" }
         }
 
 
-        WPN114.RoomSource //----------------------------------------- 10.FLYING_BIRDS (19-20)
+        WPN114.StereoSource //----------------------------------------- 11.WOODRINGER_LOW (21-22)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            yspread: 0.3
+            diffuse: 0.6
 
-            exposePath: "/audio/wood-path/maaaet/flying-birds/spatialization"
+            exposePath: "/audio/woodpath/maaaet/woodringer-low/source"
 
-            WPN114.Sampler { id: flying_birds; stream: true;
-                exposePath: "/audio/wood-path/maaaet/flying-birds"
-                path: "audio/wood-path/maaaet/flying-birds.wav" }
+            WPN114.Sampler { id: woodringer_low;
+                exposePath: "/audio/woodpath/maaaet/woodringer-low"
+                path: "audio/woodpath/maaaet/woodringer-low.wav" }
         }
 
 
-        WPN114.RoomSource //----------------------------------------- 11.WOODRINGER_LOW (21-22)
+        WPN114.StereoSource //----------------------------------------- 12.WOODRINGER_LOW_RISE (23-24)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.3
+            diffuse: 0.25
+            y: 0.85
 
-            exposePath: "/audio/wood-path/maaaet/woodringer-low/spatialization"
+            exposePath: "/audio/woodpath/maaaet/woodringer-low-rise/source"
 
-            WPN114.Sampler { id: woodringer_low; stream: true;
-                exposePath: "/audio/wood-path/maaaet/woodringer-low"
-                path: "audio/wood-path/maaaet/woodringer-low.wav" }
+            WPN114.Sampler { id: woodringer_low_rise;
+                exposePath: "/audio/woodpath/maaaet/woodringer-low-rise"
+                path: "audio/woodpath/maaaet/woodringer-low-rise.wav" }
         }
 
 
-        WPN114.RoomSource //----------------------------------------- 12.WOODRINGER_LOW_RISE (23-24)
+        WPN114.StereoSource //----------------------------------------- 13.WOODRINGER_HI (25-26)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.3
+            y: 0.8
 
-            exposePath: "/audio/wood-path/maaaet/woodringer-low-rise/spatialization"
+            exposePath: "/audio/woodpath/maaaet/woodringer-high/source"
 
-            WPN114.Sampler { id: woodringer_low_rise; stream: true;
-                exposePath: "/audio/wood-path/maaaet/woodringer-low-rise"
-                path: "audio/wood-path/maaaet/woodringer-low-rise.wav" }
+            WPN114.Sampler { id: woodringer_high;
+                exposePath: "/audio/woodpath/maaaet/woodringer-high"
+                path: "audio/woodpath/maaaet/woodringer-high.wav" }
         }
 
 
-        WPN114.RoomSource //----------------------------------------- 13.WOODRINGER_HI (25-26)
+        WPN114.MonoSource //----------------------------------------- 14.WOODEN_BIRDS (27-28)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            exposePath: "/audio/woodpath/maaaet/woodenbirds/source"
 
-            exposePath: "/audio/wood-path/maaaet/woodringer-high/spatialization"
-
-            WPN114.Sampler { id: woodringer_high; stream: true;
-                exposePath: "/audio/wood-path/maaaet/woodringer-high"
-                path: "audio/wood-path/maaaet/woodringer-high.wav" }
+            WPN114.Sampler { id: woodenbirds;
+                exposePath: "/audio/woodpath/maaaet/woodenbirds"
+                path: "audio/woodpath/maaaet/woodenbirds.wav" }
         }
 
 
-        WPN114.RoomSource //----------------------------------------- 14.WOODEN_BIRDS (27-28)
+        WPN114.StereoSource //----------------------------------------- 15.BIRDS_BACKGROUND (29-30)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            yspread: 0.25
+            diffuse: 0.8
 
-            exposePath: "/audio/wood-path/maaaet/woodenbirds/spatialization"
+            exposePath: "/audio/woodpath/maaaet/birds-background/spatialization"
 
-            WPN114.Sampler { id: woodenbirds; stream: true;
-                exposePath: "/audio/wood-path/maaaet/woodenbirds"
-                path: "audio/wood-path/maaaet/woodenbirds.wav" }
-        }
-
-
-        WPN114.RoomSource //----------------------------------------- 15.BIRDS_BACKGROUND (29-30)
-        {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
-
-            exposePath: "/audio/wood-path/maaaet/birds-background/spatialization"
-
-            WPN114.Sampler { id: birds_background; stream: true;
-                exposePath: "/audio/wood-path/maaaet/birds-background"
-                path: "audio/wood-path/maaaet/birds-background.wav" }
+            WPN114.Sampler { id: birds_background;
+                exposePath: "/audio/woodpath/maaaet/birds-background"
+                path: "audio/woodpath/maaaet/birds-background.wav" }
         }
     }
 
