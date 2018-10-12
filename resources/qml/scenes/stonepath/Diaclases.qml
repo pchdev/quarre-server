@@ -8,61 +8,59 @@ Item
         id: diaclases_rooms
         active: false
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_setup
 
-        exposePath: "/audio/stone-path/diaclases/rooms"
+        exposePath: "/audio/stonepath/diaclases/rooms"
 
-        WPN114.RoomSource //----------------------------------------- 1.STONEWATER (1-2)
+        WPN114.StereoSource //----------------------------------------- 1.STONEWATER (1-2)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.25
+            diffuse: 0.5
+            y: 0.25
 
-            exposePath: "/audio/stone-path/diaclases/stonewater/spatialization"
+            exposePath: "/audio/stonepath/diaclases/stonewater/source"
 
-            WPN114.Sampler { id: stonewater; stream: true;
-                exposePath: "/audio/stone-path/diaclases/stonewater"
-                path: "audio/stone-path/diaclases/stonewater.wav" }
+            WPN114.StreamSampler { id: stonewater;
+                exposePath: "/audio/stonepath/diaclases/stonewater"
+                path: "audio/stonepath/diaclases/stonewater.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 2.HARMONICS (3-4)
-        {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+        WPN114.StereoSource //----------------------------------------- 2.HARMONICS (3-4)
+        {            
+            fixed: true
+            xspread: 0.25
+            diffuse: 0.5
+            y: 0.25
 
-            exposePath: "/audio/stone-path/diaclases/harmonics/spatialization"
+            exposePath: "/audio/stonepath/diaclases/harmonics/source"
 
-            WPN114.Sampler { id: harmonics; stream: true;
-                exposePath: "/audio/stone-path/diaclases/harmonics"
-                path: "audio/stone-path/diaclases/harmonics.wav" }
+            WPN114.StreamSampler { id: harmonics;
+                exposePath: "/audio/stonepath/diaclases/harmonics"
+                path: "audio/stonepath/diaclases/harmonics.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 3.DRONE (5-6)
+        WPN114.StereoSource //----------------------------------------- 3.DRONE (5-6)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.25
+            diffuse: 0.6
+            y: 0.85
 
-            exposePath: "/audio/stone-path/diaclases/drone/spatialization"
+            exposePath: "/audio/stonepath/diaclases/drone/source"
 
-            WPN114.Sampler { id: drone; stream: true;
-                exposePath: "/audio/stone-path/diaclases/drone"
-                path: "audio/stone-path/diaclases/drone.wav" }
+            WPN114.StreamSampler { id: drone;
+                exposePath: "/audio/stonepath/diaclases/drone"
+                path: "audio/stonepath/diaclases/drone.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 4.SMOKE (7-8)
+        WPN114.MonoSource //----------------------------------------- 4.SMOKE (7-8)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            exposePath: "/audio/stonepath/diaclases/smoke/source"
 
-            exposePath: "/audio/stone-path/diaclases/smoke/spatialization"
-
-            WPN114.Sampler { id: smoke; stream: true;
-                exposePath: "/audio/stone-path/diaclases/smoke"
-                path: "audio/stone-path/diaclases/smoke.wav" }
+            WPN114.Sampler { id: smoke;
+                exposePath: "/audio/stonepath/diaclases/smoke"
+                path: "audio/stonepath/diaclases/smoke.wav" }
         }
     }
-
 }

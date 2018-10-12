@@ -85,7 +85,6 @@ Item
         id: crossroads_result
         type: WPN114.Type.Int
         path: "/interactions/introduction/crossroads/result"
-        value: 0
     }
 
     WPN114.Node //------------------------------------------------------------------------- CONTROL
@@ -148,11 +147,12 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 1.DIGIBIRDS (1-2)
         {
-            exposePath: "/audio/introduction/digibirds/source"
-
+            dBlevel: 0
             xspread: 0.35
             diffuse: 0.49
             fixed: true
+
+            exposePath: "/audio/introduction/digibirds/source"
 
             WPN114.StreamSampler { id: digibirds;
                 exposePath: "/audio/introduction/digibirds"
@@ -161,12 +161,13 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 2.SWARMS (3-4)
         {
-            exposePath: "/audio/introduction/swarms/source"
-
+            dBlevel: 0
             xspread: 0.27
             diffuse: 0.17
             fixed: true
             y: 0.9
+
+            exposePath: "/audio/introduction/swarms/source"
 
             WPN114.StreamSampler { id: swarms;
                 exposePath: "/audio/introduction/swarms"
@@ -175,11 +176,12 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 3.DRAGON_HIGH (5-6)
         {
-            exposePath: "/audio/introduction/dragon-hi/source"
-
+            dBlevel: 3.00
             xspread: 0.28
             fixed: true
             y: 0.65
+
+            exposePath: "/audio/introduction/dragon-hi/source"
 
             WPN114.StreamSampler { id: dragon_hi;
                 exposePath: "/audio/introduction/dragon-hi"
@@ -188,11 +190,12 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 4.DRAGON_LOW (7-8)
         {
-            exposePath: "/audio/introduction/dragon-lo/source"
-
+            dBlevel: 6.00
             xspread: 0.28
             fixed: true
             y: 0.25
+
+            exposePath: "/audio/introduction/dragon-lo/source"
 
             WPN114.StreamSampler { id: dragon_lo;
                 exposePath: "/audio/introduction/dragon-lo"
@@ -201,10 +204,11 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 5.WALKING_1 (9-10)
         {
-            exposePath: "/audio/introduction/walking-1/source"
-
+            dBlevel: 0.0
             xspread: 0.2
             fixed: true
+
+            exposePath: "/audio/introduction/walking-1/source"
 
             WPN114.StreamSampler { id: walking_1;
                 exposePath: "/audio/introduction/walking-1"
@@ -213,11 +217,12 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 6.WALKING_2 (11-12)
         {
-            exposePath: "/audio/introduction/walking-2/source"
-
+            dBlevel: 0.00
             xspread: 0.15
             fixed: true
             y: 0.43
+
+            exposePath: "/audio/introduction/walking-2/source"
 
             WPN114.StreamSampler { id: walking_2;
                 exposePath: "/audio/introduction/walking-2"
@@ -226,11 +231,12 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 7.SYNTH (13-14)
         {
-            exposePath: "/audio/introduction/synth/source"
-
+            dBlevel: 6.00
             xspread: 0.25
             fixed: true
             y: 0.85
+
+            exposePath: "/audio/introduction/synth/source"
 
             WPN114.StreamSampler { id: synth;
                 exposePath: "/audio/introduction/synth"
@@ -238,13 +244,13 @@ Item
         }
 
         WPN114.StereoSource //----------------------------------------- 8.SPRING (15-16)
-        {
-            exposePath: "/audio/introduction/spring/source"
-
+        {            
             yspread: 0.25
             diffuse: 0.7
             bias: 0.85
             fixed: true
+
+            exposePath: "/audio/introduction/spring/source"
 
             WPN114.StreamSampler { id: spring;
                 exposePath: "/audio/introduction/spring"
@@ -253,11 +259,11 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 9.RIVER (17-18)
         {
-            exposePath: "/audio/introduction/river/source"
-
             yspread: 0.25
             diffuse: 0.55
             fixed: true
+
+            exposePath: "/audio/introduction/river/source"
 
             WPN114.StreamSampler { id: river;
                 exposePath: "/audio/introduction/river"
@@ -266,11 +272,11 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 10.VERB (19-20)
         {
-            exposePath: "/audio/introduction/verb/source"
-
             xspread: 0.25
             diffuse: 0.6
             fixed: true
+
+            exposePath: "/audio/introduction/verb/source"
 
             WPN114.StreamSampler { id: verb;
                 exposePath: "/audio/introduction/verb"

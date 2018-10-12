@@ -85,6 +85,7 @@ Item
             {
                 source: "gestures/palm/trigger"
                 expression: function(v) {
+                    woodringer_low_rise.play();
                 }
             }
         }
@@ -243,7 +244,7 @@ Item
 
             WPN114.Sampler { id: woodringer_low;
                 exposePath: "/audio/woodpath/maaaet/woodringer-low"
-                path: "audio/woodpath/maaaet/woodringer-low.wav" }
+                path: "audio/woodpath/maaaet/low-woodringer-static.wav" }
         }
 
 
@@ -256,9 +257,9 @@ Item
 
             exposePath: "/audio/woodpath/maaaet/woodringer-low-rise/source"
 
-            WPN114.Sampler { id: woodringer_low_rise;
+            WPN114.MultiSampler { id: woodringer_low_rise;
                 exposePath: "/audio/woodpath/maaaet/woodringer-low-rise"
-                path: "audio/woodpath/maaaet/woodringer-low-rise.wav" }
+                path: "audio/woodpath/maaaet/low-woodringer-rise" }
         }
 
 
@@ -272,7 +273,7 @@ Item
 
             WPN114.Sampler { id: woodringer_high;
                 exposePath: "/audio/woodpath/maaaet/woodringer-high"
-                path: "audio/woodpath/maaaet/woodringer-high.wav" }
+                path: "audio/woodpath/maaaet/hi-woodringer-rise.wav" }
         }
 
 
@@ -284,7 +285,6 @@ Item
                 exposePath: "/audio/woodpath/maaaet/woodenbirds"
                 path: "audio/woodpath/maaaet/woodenbirds.wav" }
         }
-
 
         WPN114.StereoSource //----------------------------------------- 15.BIRDS_BACKGROUND (29-30)
         {

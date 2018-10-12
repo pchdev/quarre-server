@@ -8,71 +8,77 @@ Item
         id: markhor_rooms
         active: false
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_setup
 
-        WPN114.RoomSource //----------------------------------------- 1.DOOMSDAY (1-2)
+        exposePath: "/audio/stonepath/markhor/rooms"
+
+        WPN114.StereoSource //----------------------------------------- 1.DOOMSDAY (1-2)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.25
+            diffuse: 0.55
 
-            exposePath: "/audio/stone-path/markhor/doomsday/spatialization"
+            exposePath: "/audio/stonepath/markhor/doomsday/source"
 
-            WPN114.Sampler { id: doomsday; stream: true;
-                exposePath: "/audio/stone-path/markhor/doomsday"
-                path: "audio/stone-path/markhor/doomsday.wav" }
+            WPN114.MultiSampler { id: doomsday;
+                exposePath: "/audio/stonepath/markhor/doomsday"
+                path: "audio/stonepath/markhor/doomsday" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 2.AMBIENT-LIGHT (3-4)
+        WPN114.StereoSource //----------------------------------------- 2.AMBIENT-LIGHT (3-4)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.15
+            diffuse: 0.3
+            y: 0.85
 
-            exposePath: "/audio/stone-path/markhor/ambient-light/spatialization"
+            exposePath: "/audio/stonepath/markhor/ambient-light/source"
 
-            WPN114.Sampler { id: ambient_light; stream: true;
-                exposePath: "/audio/stone-path/markhor/ambient-light"
-                path: "audio/stone-path/markhor/ambient-light.wav" }
+            WPN114.Sampler { id: ambient_light;
+                exposePath: "/audio/stonepath/markhor/ambient-light"
+                path: "audio/stonepath/markhor/ambient-light.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 3.PARORAL (5-6)
+        WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.35
+            diffuse: 0.65
+            y: 0.7
 
-            exposePath: "/audio/stone-path/markhor/paroral/spatialization"
+            exposePath: "/audio/stonepath/markhor/paroral/source"
 
-            WPN114.Sampler { id: paroral; stream: true;
-                exposePath: "/audio/stone-path/markhor/paroral"
-                path: "audio/stone-path/markhor/paroral.wav" }
+            WPN114.Sampler { id: paroral;
+                exposePath: "/audio/stonepath/markhor/paroral"
+                path: "audio/stonepath/markhor/paroral.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 4.SOUNDSCAPE (7-8)
+        WPN114.StereoSource //----------------------------------------- 4.SOUNDSCAPE (7-8)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.25
+            diffuse: 1.0
+            y: 0.4
 
-            exposePath: "/audio/stone-path/markhor/soundscape/spatialization"
+            exposePath: "/audio/stonepath/markhor/soundscape/source"
 
-            WPN114.Sampler { id: soundscape; stream: true;
-                exposePath: "/audio/stone-path/markhor/soundscape"
-                path: "audio/stone-path/markhor/soundscape.wav" }
+            WPN114.Sampler { id: soundscape;
+                exposePath: "/audio/stonepath/markhor/soundscape"
+                path: "audio/stonepath/markhor/soundscape.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 5.BELL_HIT (9-10)
+        WPN114.StereoSource //----------------------------------------- 5.BELL_HIT (9-10)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            fixed: true
+            xspread: 0.05
+            diffuse: 0.2
+            y: 0.55
 
-            exposePath: "/audio/stone-path/markhor/bell-hit/spatialization"
+            exposePath: "/audio/stonepath/markhor/bell-hit/source"
 
-            WPN114.Sampler { id: bell_hit; stream: true;
-                exposePath: "/audio/stone-path/markhor/bell-hit"
-                path: "audio/stone-path/markhor/bell-hit.wav" }
+            WPN114.Sampler { id: bell_hit;
+                exposePath: "/audio/stonepath/markhor/bell-hit"
+                path: "audio/stonepath/markhor/bell-hit.wav" }
         }
     }
 
