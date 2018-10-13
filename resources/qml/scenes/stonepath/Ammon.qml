@@ -1,8 +1,104 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import "../.."
+import ".."
 
 Item
 {
+    Item
+    {
+        id: interactions
+
+        Interaction //--------------------------------------------- STRING_SWEEP
+        {
+            id:     interaction_string_sweep
+
+            title:  "Cordes, déclenchement"
+            path:   "/stonepath/ammon/strings"
+            module: "quarre/Strings.qml"
+
+            description: "Frottez les cordes avec votre doigt au fur
+ et à mesure de leur apparition"
+
+            length: 360
+            countdown: 10
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- INHARM_SYNTH
+        {
+            id:     interaction_inharm_synth
+
+            title:  "Inharmonie"
+            path:   "/stonepath/ammon/inharmonic"
+            module: "quarre/JomonPalmZ.qml"
+
+            description: "Approchez et maintenez la paume de votre main
+ à quelques centimètres de l'écran pour produire une nappe inharmonique,
+ retirez-la pour la faire disparaître. Préférez les notes longues."
+
+            length: 300
+            countdown: 10
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- STRINGS_TIMBRE
+        {
+            id:     interaction_strings_timbre
+
+            title:  "Guitare primitive, timbre"
+            path:   "/stonepath/ammon/strings-timbre"
+            module: "basics/XYZRotation.qml"
+
+            description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler
+ la brillance (axe Y) et la hauteur (axe X) de l'instrument déclenché par votre partenaire."
+
+            length: 360
+            countdown: 10
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- BELLS
+        {
+            id:     interaction_bells
+
+            title:  "Cloches, pré-rythmiques"
+            path:   "/stonepath/ammon/bells"
+            module: "quarre/AmmonBells.qml"
+
+            description: "Exécutez un geste de frappe verticale pour
+ déclencher des sons de cloches"
+
+            length: 360
+            countdown: 10
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+    }
+
     WPN114.Rooms
     {
         id: ammon_rooms

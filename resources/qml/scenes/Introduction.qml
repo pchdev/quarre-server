@@ -23,13 +23,6 @@ Item
 
             description:
                 "Présentation du fonctionnement global de l'application"
-
-            onInteractionNotify:
-            {
-                owners.forEach(function(owner) {
-                    if ( owner.connected ) owner.remote.listen("/scenario/name");
-                });
-            }
         }
 
         Interaction //---------------------------------------------------- CROSSROADS
@@ -49,7 +42,8 @@ Item
             onInteractionBegin:
             {
                 owners.forEach(function(owner) {
-                    if ( owner.connected ) owner.remote.listen("/modules/crossroads/selection");
+                    if ( owner.connected )
+                         owner.remote.listen("/modules/crossroads/selection");
                 });
             }
 
@@ -58,7 +52,7 @@ Item
                 // parse selection for each connected client
                 var res_zero = 0, res_one = 0, res_two = 0, total = 0;
 
-                owners.forEach(function(owner){
+                owners.forEach(function(owner) {
                     if ( owner.connected )
                     {
                         var res = owner.remote.value("/modules/crossroads/selection");

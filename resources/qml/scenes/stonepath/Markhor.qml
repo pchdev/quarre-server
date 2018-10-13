@@ -1,8 +1,214 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import "../.."
+import ".."
 
 Item
 {
+    Item
+    {
+        id: interactions
+
+        Interaction //--------------------------------------------- CLOCK_BELLS
+        {
+            id:     interaction_clock_bells
+
+            title:  "Cloches, pré-rythmiques"
+            path:   "/stonepath/markhor/clock-bells"
+            module: "quarre/VareRainbells.qml"
+
+            description: "Passez la main devant l'appareil pour ajouter et changer
+ les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation
+ afin de changer leurs propriétés."
+
+            length: 45
+            countdown:  15
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- MARKHOR_GRANULAR
+        {
+            id:     interaction_granular_models
+
+            title:  "Impulsions (essais)"
+            path:   "/stonepath/markhor/granular-1"
+            module: "quarre/MarkhorGranular.qml"
+
+            description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
+ des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
+
+            length: 60
+            countdown:  15
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- MARKHOR_RESONATORS
+        {
+            id:     interaction_resonators_1
+
+            title:  "Résonances (essais)"
+            path:   "/stonepath/markhor/resonator-1"
+            module: "quarre/MarkhorResonator.qml"
+
+            description: "Manipulez les sliders afin d'altérer la résonance
+ des percussions. Choisissez le son qui vous convient. Attention au temps !"
+
+            length: 60
+            countdown:  15
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- MARKHOR_BODY
+        {
+            id:     interaction_body_1
+
+            title:  "Corps de résonance (essais)"
+            path:   "/stonepath/markhor/body-1"
+            module: "quarre/MarkhorBody.qml"
+
+            description: "Manipulez les sliders afin d'altérer le corps de résonance
+ des percussions. Choisissez le son qui vous convient. Attention au temps !"
+
+            length: 60
+            countdown:  15
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- MARKHOR_PADS
+        {
+            id:     interaction_pads_1
+
+            title:  "Temps et Contretemps (essais)"
+            path:   "/stonepath/markhor/pads-1"
+            module: "quarre/MarkhorPads.qml"
+
+            description: "Appuyez et maintenez l'un des pads (un seul à la fois)
+ pour ajouter des compléments rythmiques."
+
+            length: 175
+            countdown:  15
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- MARKHOR_GRANULAR_2
+        {
+            id:     interaction_granular_models_2
+
+            title:  "Impulsions (tutti)"
+            path:   "/stonepath/markhor/granular-2"
+            module: "quarre/MarkhorGranular.qml"
+
+            description: "Vous jouez maintenant tous ensemble, collaborez,
+ laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+
+            length: 180
+            countdown: 10
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- MARKHOR_RESONATORS_2
+        {
+            id:     interaction_resonators_2
+
+            title:  "Résonances (tutti)"
+            path:   "/stonepath/markhor/resonator-2"
+            module: "quarre/MarkhorResonator.qml"
+
+            description: "Vous jouez maintenant tous ensemble, collaborez,
+ laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+
+            length: 180
+            countdown: 10
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- MARKHOR_BODY_2
+        {
+            id:     interaction_body_2
+
+            title:  "Corps de résonance (tutti)"
+            path:   "/stonepath/markhor/body-2"
+            module: "quarre/MarkhorBody.qml"
+
+            description: "Vous jouez maintenant tous ensemble, collaborez,
+ laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+
+            length: 180
+            countdown: 10
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+
+        Interaction //--------------------------------------------- MARKHOR_PADS_2
+        {
+            id:     interaction_pads_2
+
+            title:  "Temps et Contretemps (tutti)"
+            path:   "/stonepath/markhor/pads-2"
+            module: "quarre/MarkhorPads.qml"
+
+            description: "Vous jouez maintenant tous ensemble, collaborez,
+ laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+
+            length: 180
+            countdown:  10
+
+            mappings: QuMapping
+            {
+                source: "/gestures/cover/trigger"
+                expression: function(v) {
+                }
+            }
+        }
+    }
+
     WPN114.Rooms
     {
         id: markhor_rooms
