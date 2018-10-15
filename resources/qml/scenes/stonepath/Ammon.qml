@@ -9,6 +9,8 @@ Item
     {
         id: interactions
 
+        AmmonScore { id: ammon_score }
+
         Interaction //--------------------------------------------- STRING_SWEEP
         {
             id:     interaction_string_sweep
@@ -22,13 +24,6 @@ Item
 
             length: 360
             countdown: 10
-
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
         }
 
         Interaction //--------------------------------------------- INHARM_SYNTH
@@ -46,10 +41,25 @@ Item
             length: 300
             countdown: 10
 
+            property int current_note: 0
+
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
                 expression: function(v) {
+                    if ( v )
+                    {
+                        var index       = Math.random()*40+40;
+                        current_note    = index;
+
+                        instruments.absynth.noteOn(0, index, 100);
+                        instruments.absynth.noteOn(0, index+5, 100);
+                    }
+                    else
+                    {
+                        instruments.absynth.noteOff(0, index, 100);
+                        instruments.absynth.noteOff(0, index+5, 100);
+                    }
                 }
             }
         }
@@ -70,8 +80,11 @@ Item
 
             mappings: QuMapping
             {
-                source: "/gestures/cover/trigger"
+                source: "/sensors/rotation/xyz/data"
                 expression: function(v) {
+                    instruments.kaivo_1.set("res_pitch", 440+v[0]/90*10);
+                    instruments.kaivo_1.set("res_brightness", (v[1]+180)/360);
+                    instruments.kaivo_1.set("res_position", (v[2]+180)/360);
                 }
             }
         }
@@ -90,12 +103,27 @@ Item
             length: 360
             countdown: 10
 
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
+            mappings:
+            [
+                QuMapping {
+                    source: "/gestures/whip/trigger"
+                    expression: function(v) {
+                        var index       = Math.floor(Math.random()*40)+40;
+                        var velocity    = Math.floor(Math.random()*40)+20;
+
+                        instruments.kaivo_2.noteOn(0, index, velocity);
+                        functions.setTimeout(function(v){
+                            instruments.kaivo_2.noteOff(0, index, velocity);
+                        }, 5000)}},
+
+                QuMapping {
+                    source: "/sensors/rotation/xyz/data"
+                    expression: function(v) {
+                        instruments.kaivo_2.set("res_brightness", (v[0]+90)/180);
+                        instruments.kaivo_2.set("res_position", (v[2]+180)/360);
+                        instruments.kaivo_2.set("res_sustain", (v[1]+180)/360*0.1);
+                        instruments.kaivo_2.set("env1_attack", (v[1]+180)/360*0.5)}}
+            ]
         }
     }
 

@@ -5,7 +5,20 @@ import ".."
 
 Item
 {
-    Item
+    WPN114.Node
+    {
+        path: "/interactions/stonepath/diaclases/setup"
+        type: WPN114.Type.Impulse
+
+        onValueReceived:
+        {
+            instruments.kaivo_1.active = true;
+            instruments.kaivo_2.active = false;
+            instruments.kaivo_1.setPreset("spring");
+        }
+    }
+
+    Item //-------------------------------------------------------------------- INTERACTIONS
     {
         id: interactions
 
@@ -25,7 +38,14 @@ Item
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
-                expression: function(v) {
+                expression: function(v)
+                {
+                    var rdm = Math.floor(Math.random()*14+40);
+
+                    instruments.kaivo_1.noteOn(0, rdm, 10);
+                    functions.setTimeout(function(){
+                        instruments.kaivo_1.noteOff(0, rdm, 10);
+                    }, 5000);
                 }
             }
         }
@@ -47,6 +67,12 @@ Item
             {
                 source: "/gestures/cover/trigger"
                 expression: function(v) {
+                    var rdm = Math.floor(Math.random()*14+60);
+
+                    instruments.kaivo_1.noteOn(0, rdm, 10);
+                    functions.setTimeout(function() {
+                        instruments.kaivo_1.noteOff(0, rdm, 10);
+                    }, 5000);
                 }
             }
         }
@@ -68,7 +94,12 @@ Item
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
-                expression: function(v) {
+                expression: function(v)
+                {
+                    var y = Math.abs(v[1])/180;
+                    var x = Math.abs(v[0])/90;
+                    instruments.kaivo_1.set("res_brightness", y);
+                    instruments.kaivo_1.set("res_pitch", x);
                 }
             }
         }
@@ -89,6 +120,12 @@ Item
             {
                 source: "/gestures/whip/trigger"
                 expression: function(v) {
+                    var rdm = Math.floor(Math.random()*14+45);
+
+                    instruments.kaivo_1.noteOn(0, rdm, 50);
+                    functions.setTimeout(function(){
+                        instruments.kaivo_1.noteOff(0, rdm, 50);
+                    }, 5000);
                 }
             }
         }
@@ -110,6 +147,12 @@ Item
             {
                 source: "/gestures/whip/trigger"
                 expression: function(v) {
+                    var rdm = Math.floor(Math.random()*14+60);
+
+                    instruments.kaivo_1.noteOn(0, rdm, 50);
+                    functions.setTimeout(function(){
+                        instruments.kaivo_1.noteOff(0, rdm, 50);
+                    }, 5000);
                 }
             }
         }
@@ -132,6 +175,10 @@ Item
             {
                 source: "/sensors/rotation/xyz/data"
                 expression: function(v) {
+                    var y = Math.abs(v[1])/180;
+                    var x = Math.abs(v[0])/90;
+                    instruments.kaivo_1.set("res_brightness", y);
+                    instruments.kaivo_1.set("res_pitch", x);
                 }
             }
         }
@@ -152,9 +199,8 @@ Item
 
             mappings: QuMapping
             {
-                source: "/sensors/rotation/z/data"
-                expression: function(v) {
-                }
+                source: "/modules/zrotation/position2D"
+                expression: function(v) { smoke_source.position = v }
             }
         }
     }
@@ -212,6 +258,7 @@ Item
 
         WPN114.MonoSource //----------------------------------------- 4.SMOKE (7-8)
         {
+            id: smoke_source;
             exposePath: "/audio/stonepath/diaclases/smoke/source"
 
             WPN114.Sampler { id: smoke;

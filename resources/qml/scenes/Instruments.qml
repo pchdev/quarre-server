@@ -3,118 +3,113 @@ import WPN114 1.0 as WPN114
 
 Item
 {
+    property alias rooms: instruments_rooms
+    property alias kaivo_1: kaivo_1
+    property alias kaivo_2: kaivo_2
+    property alias absynth: absynth
+
+    // KAIVO - PRESETS
+
+    // 34 - SPRING_GENERIC
+
+    property var kaivo_presets
+
+    Component.onCompleted:
+    {
+        kaivo_presets["spring"]         = 34;
+        kaivo_presets["markhor"]        = 21;
+        kaivo_presets["rainbells"]      = 35;
+        kaivo_presets["churchbells"]    = 38;
+        kaivo_presets["jguitar"]        = 37;
+        kaivo_presets["tguitar"]        = 20;
+        kaivo_presets["insects"]        = 6;
+    }
+
     WPN114.Rooms
     {
         id: instruments_rooms
         active: false
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_setup
         exposePath: "/audio/instruments/rooms"
 
-        WPN114.RoomSource
+        WPN114.StereoSource //----------------------------------------------------- KAIVO_1
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+            xspread: 0.25
+            diffuse: 0.55
+            y: 0.75
 
-            exposePath: "/audio/instruments/kaivo-1/spatialization"
+            exposePath: "/audio/instruments/kaivo-1/source"
 
             WPN114.AudioPlugin
             {
                 id: kaivo_1
                 active: false
-                path: "Kaivo.vst"
+                path: "/Library/Audio/Plug-Ins/VST/Kaivo.vst"
                 exposePath: "/audio/instruments/kaivo-1"
 
-                WPN114.Fork { target: altiverb; leveldB: -6.0
-                    exposePath: "/audio/instruments/kaivo-1/sends/altiverb" }
+                function setPreset(str) {
+                    kaivo_1.programChange(0, kaivo_presets[str]);
+                }
 
-                WPN114.Fork { target: amplitube; leveldB: -6.0; active: false
-                    exposePath: "/audio/instruments/kaivo-1/sends/amplitube"
+                WPN114.Fork { target: effects.reverb; dBlevel: -6.0
+                    exposePath: "/audio/instruments/kaivo-1/forks/altiverb" }
+
+                WPN114.Fork { target: effects.amplitube; dBlevel: -6.0; active: false
+                    exposePath: "/audio/instruments/kaivo-1/forks/amplitube"
                 }
             }
+        }
 
-            WPN114.RoomSource
+        WPN114.StereoSource //----------------------------------------------------- KAIVO_2
+        {
+            xspread: 0.25
+            diffuse: 0.55
+            y: 0.75
+
+            exposePath: "/audio/instruments/kaivo-2/source"
+
+            WPN114.AudioPlugin
             {
-                position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-                diffuse:    [ 0.49, 0.49 ]
-                bias:       [ 0.5, 0.5 ]
+                id: kaivo_2
+                active: false
+                path: "/Library/Audio/Plug-Ins/VST/Kaivo.vst"
+                exposePath: "/audio/instruments/kaivo-2"
 
-                exposePath: "/audio/instruments/kaivo-2/spatialization"
-
-                WPN114.AudioPlugin
-                {
-                    id: kaivo_2
-                    active: false
-                    path: "Kaivo.vst"
-                    exposePath: "/audio/instruments/kaivo-2"
-
-                    WPN114.Fork { target: altiverb; leveldB: -6.0
-                        exposePath: "/audio/instruments/kaivo-2/sends/altiverb" }
-
-                    WPN114.Fork { target: amplitube; leveldB: -6.0; active: false
-                        exposePath: "/audio/instruments/kaivo-2/sends/amplitube"
-                    }
+                function setPreset(str) {
+                    kaivo_2.programChange(0, kaivo_presets[str]);
                 }
 
-                WPN114.RoomSource
-                {
-                    position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-                    diffuse:    [ 0.49, 0.49 ]
-                    bias:       [ 0.5, 0.5 ]
+                WPN114.Fork { target: effects.reverb; dBlevel: -6.0
+                    exposePath: "/audio/instruments/kaivo-2/forks/altiverb" }
 
-                    exposePath: "/audio/instruments/absynth/spatialization"
-
-                    WPN114.AudioPlugin
-                    {
-                        id: absynth
-                        active: false
-                        path: "Absynth 5.vst"
-                        exposePath: "/audio/instruments/absynth"
-
-                        WPN114.Fork { target: altiverb; leveldB: -6.0
-                            exposePath: "/audio/instruments/absynth/sends/altiverb" }
-
-                        WPN114.Fork { target: amplitube; leveldB: -6.0; active: false
-                            exposePath: "/audio/instruments/absynth/sends/amplitube"
-                        }
-                    }
-
-                    WPN114.RoomSource
-                    {
-                        position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-                        diffuse:    [ 0.49, 0.49 ]
-                        bias:       [ 0.5, 0.5 ]
-
-                        exposePath: "/audio/instruments/altiverb/spatialization"
-
-                        WPN114.AudioPlugin
-                        {
-                            id: altiverb
-                            active: true
-                            path: "Altiverb 7.vst"
-                            exposePath: "/audio/instruments/altiverb"
-                        }
-                    }
-
-                    WPN114.RoomSource
-                    {
-                        position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-                        diffuse:    [ 0.49, 0.49 ]
-                        bias:       [ 0.5, 0.5 ]
-
-                        exposePath: "/audio/instruments/amplitube/spatialization"
-
-                        WPN114.AudioPlugin
-                        {
-                            id: amplitube
-                            active: false
-                            path: "Amplitube 4.vst"
-                            exposePath: "/audio/instruments/amplitube"
-                        }
-                    }
+                WPN114.Fork { target: effects.amplitube; dBlevel: -6.0; active: false
+                    exposePath: "/audio/instruments/kaivo-2/forks/amplitube"
                 }
+            }
+        }
 
+        WPN114.StereoSource //----------------------------------------------------- ABSYNTH
+        {
+            xspread: 0.25
+            diffuse: 0.55
+            y: 0.75
+
+            exposePath: "/audio/instruments/absynth/source"
+
+            WPN114.AudioPlugin
+            {
+                id: absynth
+                active: false
+                path: "/Library/Audio/Plug-Ins/VST/Absynth 5.vst"
+                exposePath: "/audio/instruments/absynth"
+
+                WPN114.Fork { target: effects.reverb; dBlevel: -6.0
+                    exposePath: "/audio/instruments/absynth/sends/altiverb" }
+
+                WPN114.Fork { target: effects.amplitube; dBlevel: -6.0; active: false
+                    exposePath: "/audio/instruments/absynth/sends/amplitube"
+                }
             }
         }
     }

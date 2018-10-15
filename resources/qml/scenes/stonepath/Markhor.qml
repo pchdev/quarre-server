@@ -5,7 +5,21 @@ import ".."
 
 Item
 {
-    Item
+    WPN114.Node
+    {
+        path: "/interactions/stonepath/markhor/setup"
+        type: WPN114.Type.Impulse
+
+        onValueReceived:
+        {
+            instruments.kaivo_1.active = true;
+            instruments.kaivo_2.active = true;
+            instruments.kaivo_1.setPreset("zzzbells");
+            instruments.kaivo_2.setPreset("markhor");
+        }
+    }
+
+    Item //-------------------------------------------------------------------- INTERACTIONS
     {
         id: interactions
 
@@ -24,12 +38,32 @@ Item
             length: 45
             countdown:  15
 
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
+            mappings:
+            [
+                QuMapping // ---------------------------------------------- proximity mapping
+                {
+                    source: "/sensors/proximity/close"
+                    expression: function(v) {
+                        var rdm_note = 35 + Math.floor(Math.random()*40);
+                        var rdm_p = Math.floor(Math.random()*15)+2;
+
+                        instruments.kaivo_1.noteOn(0, rdm_note, rdm_p);
+                        instruments.kaivo_1.noteOff(0, rdm_note, rdm_p);
+                   }
+                },
+
+                QuMapping // ---------------------------------------------- rotation mapping
+                {
+                    source: "/sensors/rotation/xyz/data"
+                    expression: function(v) {
+
+                        instruments.kaivo_1.set("res_brightness", v[0]+90/180);
+                        instruments.kaivo_1.set("res_position", (v[2]+180)/360);
+                        instruments.kaivo_1.set("res_sustain", (v[1]+180)/360*0.1);
+                        instruments.kaivo_1.set("env1_attack", (v[1]+180)/360*0.5);
+                   }
                 }
-            }
+            ]
         }
 
         Interaction //--------------------------------------------- MARKHOR_GRANULAR
@@ -46,12 +80,20 @@ Item
             length: 60
             countdown:  15
 
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
+            mappings:
+            [
+                QuMapping {
+                    source: "/modules/markhor/granular/overlap"
+                    expression: function(v) { instruments.kaivo_2.set("gran_density", v) }},
+
+                QuMapping {
+                    source: "/modules/markhor/granular/pitch"
+                    expression: function(v) { instruments.kaivo_2.set("gran_pitch", v) }},
+
+                QuMapping {
+                    source: "/modules/markhor/granular/pitch_env"
+                    expression: function(v) { instruments.kaivo_2.set("gran_pitch_env", v) }}
+            ]
         }
 
         Interaction //--------------------------------------------- MARKHOR_RESONATORS
@@ -68,12 +110,24 @@ Item
             length: 60
             countdown:  15
 
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
+            mappings:
+            [
+                QuMapping {
+                    source: "/modules/markhor/resonator/brightness"
+                    expression: function(v) { instruments.kaivo_2.set("res_brightness", v) }},
+
+                QuMapping {
+                    source: "/modules/markhor/resonator/inpos"
+                    expression: function(v) { instruments.kaivo_2.set("res_position", v) }},
+
+                QuMapping {
+                    source: "/modules/markhor/resonator/pitch_p"
+                    expression: function(v) { instruments.kaivo_2.set("res_pitch_p", v) }},
+
+                QuMapping {
+                    source: "/modules/markhor/resonator/sustain"
+                    expression: function(v) { instruments.kaivo_2.set("res_sustain", v) }}
+            ]
         }
 
         Interaction //--------------------------------------------- MARKHOR_BODY
@@ -90,12 +144,22 @@ Item
             length: 60
             countdown:  15
 
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
+            mappings:
+            [
+                QuMapping {
+                    source: "/modules/markhor/body/tone"
+                    expression: function(v) { instruments.kaivo_2.set("body_tone", v) }},
+
+                QuMapping {
+                    source: "/modules/markhor/body/pitch"
+                    expression: function(v) { instruments.kaivo_2.set("body_pitch", v) }},
+
+                QuMapping {
+                    source: "/modules/markhor/body/xy"
+                    expression: function(v) {
+                        instruments.kaivo_2.set("body_position_x", v[0]);
+                        instruments.kaivo_2.set("body_position_y", v[1])}}
+            ]
         }
 
         Interaction //--------------------------------------------- MARKHOR_PADS
@@ -112,10 +176,14 @@ Item
             length: 175
             countdown:  15
 
+            property var pads: [ 81, 82, 83, 85, 73, 77, 78, 79, 65, 67, 68, 72 ]
+
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
-                expression: function(v) {
+                expression: function(v) {                                                                              
+                    if ( v === 0 ) instruments.kaivo_2.allNotesOff();
+                    else instruments.kaivo_2.noteOn(0, pads[v-1], 127);
                 }
             }
         }
@@ -134,12 +202,7 @@ Item
             length: 180
             countdown: 10
 
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
+            mappings: interaction_granular_models.mappings
         }
 
         Interaction //--------------------------------------------- MARKHOR_RESONATORS_2
@@ -150,18 +213,11 @@ Item
             path:   "/stonepath/markhor/resonator-2"
             module: "quarre/MarkhorResonator.qml"
 
-            description: "Vous jouez maintenant tous ensemble, collaborez,
- laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+            description: interaction_granular_models_2.description
+            mappings: interaction_resonators_1.mappings
 
             length: 180
-            countdown: 10
-
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
+            countdown: 10            
         }
 
         Interaction //--------------------------------------------- MARKHOR_BODY_2
@@ -172,18 +228,11 @@ Item
             path:   "/stonepath/markhor/body-2"
             module: "quarre/MarkhorBody.qml"
 
-            description: "Vous jouez maintenant tous ensemble, collaborez,
- laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+            description: interaction_granular_models_2.description
+            mappings: interaction_body_1.mappings
 
             length: 180
             countdown: 10
-
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
         }
 
         Interaction //--------------------------------------------- MARKHOR_PADS_2
@@ -194,18 +243,11 @@ Item
             path:   "/stonepath/markhor/pads-2"
             module: "quarre/MarkhorPads.qml"
 
-            description: "Vous jouez maintenant tous ensemble, collaborez,
- laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+            description: interaction_granular_models_2.description
+            mappings: interaction_pads_1.mappings
 
             length: 180
             countdown:  10
-
-            mappings: QuMapping
-            {
-                source: "/gestures/cover/trigger"
-                expression: function(v) {
-                }
-            }
         }
     }
 

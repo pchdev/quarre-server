@@ -27,10 +27,7 @@ Item
             mappings: QuMapping
             {
                 source: "/gestures/whip/trigger"
-                expression: function(v) {
-                    thunder.play(Math.floor(Math.random()*thunder.files.length));
-                    interaction_thunder.end();
-                }
+                expression: function(v) { interaction_thunder.end() }
             }
         }
 
@@ -50,10 +47,7 @@ Item
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
-                expression: function(v) {
-                    boiling.play();
-                    interaction_boiling.end();
-                }
+                expression: function(v) { interaction_boiling.end() }
             }
         }
 
@@ -73,9 +67,9 @@ Item
 
             mappings: QuMapping
             {
-                source: "/modules/marmots/trigger"
+                source: "/modules/xytouch/trigger"
                 expression: function(v) {
-                    marmots.play(Math.floor(Math.random()*marmots.files.length));
+                    marmots.playRandom();
                     marmots_source.position = [v[1], v[2]];
                 }
             }
@@ -97,7 +91,7 @@ Item
 
             mappings: QuMapping
             {
-                source: "/sensors/rotation/position2D"
+                source: "/modules/zrotation/position2D"
                 expression: function(v) { dragon_source.position = v; }
             }
         }
@@ -118,7 +112,7 @@ Item
 
             mappings: QuMapping
             {
-                source: "/sensors/rotation/position2D"
+                source: "/modules/zrotation/position2D"
                 expression: function(v) { groundwalk_source.position = v; }
             }
         }
@@ -138,9 +132,12 @@ Item
             length: 60
 
             mappings: [
-                QuMapping { source: "/modules/trajectories/trigger"
+                QuMapping {
+                    source: "/modules/trajectories/trigger"
                     expression: function(v) { birds.play(Math.random()*birds.files.length) }},
-                QuMapping { source: "/modules/trajectories/position"
+
+                QuMapping {
+                    source: "/modules/trajectories/position"
                     expression: function(v) { birds_source.position = v; }} ]
         }
     }
@@ -165,7 +162,9 @@ Item
 
             WPN114.StreamSampler { id: ashes;
                 exposePath: "/audio/stonepath/cendres/ashes"
-                path: "audio/stonepath/cendres/ashes.wav" }
+                path: "audio/stonepath/cendres/ashes.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 2.REBIRDS_1 (3-4)
@@ -178,7 +177,8 @@ Item
 
             WPN114.StreamSampler { id: redbirds_1;
                 exposePath: "/audio/stonepath/cendres/redbirds-1"
-                path: "audio/stonepath/cendres/redbirds-1.wav" }
+                path: "audio/stonepath/cendres/redbirds-1.wav"
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 3.REBIRDS_2 (5-6)
@@ -219,7 +219,9 @@ Item
 
             WPN114.StreamSampler { id: burn;
                 exposePath: "/audio/stonepath/cendres/burn"
-                path: "audio/stonepath/cendres/burn.wav" }
+                path: "audio/stonepath/cendres/burn.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -9 }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 6.WAVES (11-12)
@@ -232,7 +234,9 @@ Item
 
             WPN114.Sampler { id: waves;
                 exposePath: "/audio/stonepath/cendres/waves"
-                path: "audio/stonepath/cendres/waves.wav" }
+                path: "audio/stonepath/cendres/waves.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 7.THUNDER (13-14)
@@ -246,8 +250,9 @@ Item
 
             WPN114.MultiSampler { id: thunder;
                 exposePath: "/audio/stonepath/cendres/thunder"
-                path: "audio/stonepath/cendres/thunder" }
-
+                path: "audio/stonepath/cendres/thunder"
+                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            }
         }
 
         WPN114.MonoSource //----------------------------------------- 8.MARMOTS (15-16)
@@ -285,7 +290,9 @@ Item
 
             WPN114.Sampler { id: quarre;
                 exposePath: "/audio/stonepath/cendres/quarre"
-                path: "audio/stonepath/cendres/quarre.wav" }
+                path: "audio/stonepath/cendres/quarre.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            }
         }
 
         WPN114.MonoSource //----------------------------------------- 11.GROUNDWALK (21-22)
@@ -295,7 +302,9 @@ Item
 
             WPN114.StreamSampler { id: groundwalk;
                 exposePath: "/audio/stonepath/cendres/groundwalk"
-                path: "audio/stonepath/cendres/groundwalk.wav" }
+                path: "audio/stonepath/cendres/groundwalk.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 12.NECKS (25-26)
@@ -308,7 +317,9 @@ Item
 
             WPN114.Sampler { id: necks;
                 exposePath: "/audio/stonepath/cendres/necks"
-                path: "audio/stonepath/cendres/necks.wav" }
+                path: "audio/stonepath/cendres/necks.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
+            }
         }
 
         WPN114.MonoSource //----------------------------------------- 13.DRAGON (27-28)
@@ -318,7 +329,9 @@ Item
 
             WPN114.StreamSampler { id: dragon;
                 exposePath: "/audio/stonepath/cendres/dragon"
-                path: "audio/stonepath/cendres/dragon.wav" }
+                path: "audio/stonepath/cendres/dragon.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
+            }
         }
 
         WPN114.MonoSource //----------------------------------------- 14.BIRDS (29-30)
@@ -328,7 +341,9 @@ Item
 
             WPN114.MultiSampler { id: birds;
                 exposePath: "/audio/stonepath/cendres/birds"
-                path: "audio/stonepath/cendres/birds" }
+                path: "audio/stonepath/cendres/birds"
+                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            }
         }
     }
 }

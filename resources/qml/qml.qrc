@@ -16,9 +16,17 @@
         <file>scenes/woodpath/Pando.qml</file>
         <file>scenes/woodpath/Vare.qml</file>
         <file>scenes/woodpath/JomonSugi.qml</file>
+        <file>views/Mainview.qml</file>
+        <file>views/Introduction.qml</file>
+        <file>views/Stone.qml</file>
+        <file>views/Wood.qml</file>
+        <file>views/stonepath/Cendres.qml</file>
         <file>Interaction.qml</file>
         <file>scenes/QuMapping.qml</file>
         <file>ClientManager.qml</file>
         <file>QuarreClient.qml</file>
+        <file>scenes/Effects.qml</file>
+        <file>Functions.qml</file>
+        <file>scenes/stonepath/AmmonScore.qml</file>
     </qresource>
 </RCC>
