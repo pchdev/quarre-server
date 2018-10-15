@@ -1,5 +1,5 @@
-QT += quick
-CONFIG += c++11
+QT += quick quickwidgets widgets
+CONFIG += c++11 qtquickcompiler
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -28,8 +28,6 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-INSTALLS += audio_files
 
 DISTFILES += \
 resources/audio/introduction/digibirds.wav \
