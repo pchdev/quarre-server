@@ -25,7 +25,7 @@ Rectangle
                 id:         target
                 width:      module.width/6
                 height:     module.width/6
-                index:      index
+                pad_index:  index
 
                 onPressedChanged:
                 {

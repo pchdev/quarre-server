@@ -16,11 +16,7 @@ Rectangle
         Repeater
         {
             model: num_sliders
-
-            QuarreSlider
-            {
-                slider_index: index
-            }
+            QuarreSlider { slider_index: index }
         }
     }
 }

@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 import "items"
 
 Rectangle
@@ -7,7 +8,13 @@ Rectangle
     color:      "#232426"
     opacity:    0.8
 
-    property vector2d rtouchpoints: Qt.vector2d(0, 0)
+    WPN114.Node
+    {
+        id:     xytouch_node
+        path:   "/modules/xytouch/position2D"
+        type:   WPN114.Type.Vec2f
+
+    }
 
     SpatializationSphere {}
 
@@ -18,7 +25,7 @@ Rectangle
         onPressed:
         {
             rtouchpoints = Qt.vector2d  ( mouseX, mouseY );
-            ossia_modules.touch_xy_points = Qt.vector2d ( mouseX/width, 1-mouseY/height );
+            xytouch_node.value = Qt.vector2d ( mouseX/width, 1-mouseY/height );
 
             if ( touch_animation.running )
                 touch_animation.running = false;

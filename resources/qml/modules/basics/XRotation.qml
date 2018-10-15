@@ -1,9 +1,17 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 
 Rectangle
 {
     anchors.fill: parent
     color: "transparent"
+
+    WPN114.Node
+    {
+        id:     xrotation_node
+        path:   "/modules/xrotation/normalized"
+        type:   WPN114.Type.Float
+    }
 
     onEnabledChanged:
     {
@@ -53,7 +61,7 @@ Rectangle
         repeat: true
 
         onTriggered:
-            ossia_modules.sensors_rotation_x_angle = sensor_manager.rotation.reading.x
+            xrotation_node.value = sensor_manager.rotation.reading.x/90
 
     }
 
@@ -76,7 +84,7 @@ Rectangle
                 origin.x: width/2
                 origin.y: height/2
                 axis { x: 1; y: 0; z: 0 }
-                angle: -ossia_modules.sensors_rotation_x_angle
+                angle: -sensor_manager.rotation.reading.x
             },
 
             Scale
@@ -94,7 +102,7 @@ Rectangle
     {
         id:         rotation_print
 
-        text:       "rotation: " + Math.floor(ossia_modules.sensors_rotation_x_angle) + " degrees"
+        text:       "rotation: " + Math.floor(sensor_manager.rotation.reading.x) + " degrees"
         color:      "#ffffff"
         width:      parent.width
         height:     parent.height * 0.2

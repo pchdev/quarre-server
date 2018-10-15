@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 
 Rectangle
 {
@@ -13,6 +14,13 @@ Rectangle
         polling_timer.running = enabled;
     }
 
+    WPN114.Node
+    {
+        id:     node
+        path:   "/modules/zrotation/position2D"
+        type:   WPN114.Type.Vec2f
+    }
+
     Timer
     {
         id: polling_timer
@@ -25,9 +33,12 @@ Rectangle
             if ( offseted > 180 ) offseted -=360;
             else if ( offseted < -180 ) offseted += 360;
 
-            ossia_modules.sensors_rotation_z_angle = -offseted;
-        }
+            offseted /= 360;
+            offseted *= Math.PI*2
 
+            var vec = Qt.vector2d((Math.sin(offseted)+1)/2, (Math.cos(offseted)+1)/2);
+            node.value = vec;
+        }
     }
 
     Image
@@ -54,7 +65,7 @@ Rectangle
                 id: rotation
                 origin.x: parent.width/2
                 origin.y: parent.height/2
-                angle: ossia_modules.sensors_rotation_z_angle
+                angle: sensor_manager.rotation.reading.z
             },
 
             Scale
@@ -72,7 +83,7 @@ Rectangle
     {
         id:         rotation_print
 
-        text:       "rotation: " + Math.floor(ossia_modules.sensors_rotation_z_angle) + " degrees"
+        text:       "rotation: " + Math.floor(sensor_manager.rotation.reading.z) + " degrees"
         color:      "#ffffff"
         width:      parent.width
         height:     parent.height * 0.2

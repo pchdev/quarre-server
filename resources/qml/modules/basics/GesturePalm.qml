@@ -29,8 +29,8 @@ GestureViewer
         target: gesture_manager.backend
         onDetected:
         {
-            ossia_modules.gestures_palm_trigger = !ossia_modules.gestures_palm_trigger;
-            trigger_animation.running = true
+            server.get("/gestures/cover/trigger").value = 1;
+            trigger_animation.animation.running = true
         }
     }
 }

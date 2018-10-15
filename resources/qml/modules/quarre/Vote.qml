@@ -9,10 +9,10 @@ Rectangle
 
     WPN114.Node
     {
-        id: selection
-        path: "/modules/crossroads/selection"
-        type: WPN114.Type.Int
-        value: 0
+        id:     selection
+        path:   "/modules/crossroads/selection"
+        type:   WPN114.Type.Int
+        value:  0
     }
 
     Rectangle

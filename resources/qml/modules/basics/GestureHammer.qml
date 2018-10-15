@@ -31,8 +31,8 @@ GestureViewer
         target: gesture_manager.backend
         onDetected:
         {
-            ossia_modules.gestures_hammer_trigger = !ossia_modules.gestures_hammer_trigger;
-            trigger_animation.running = true
+            server.get("/gestures/whip/trigger").value = 1;
+            trigger_animation.animation.running = true
         }
     }
 }

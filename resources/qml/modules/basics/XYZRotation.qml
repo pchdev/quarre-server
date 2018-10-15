@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 
 Rectangle
 {
@@ -9,6 +10,13 @@ Rectangle
     {
         sensor_manager.rotation.active = enabled;
         polling_timer.running = enabled;
+    }
+
+    WPN114.Node
+    {
+        id:     node
+        path:   "/modules/xyzrotation/data"
+        type:   WPN114.Type.Vec3f
     }
 
     Item
@@ -37,7 +45,7 @@ Rectangle
                                   sensor_manager.rotation.reading.y,
                                   sensor_manager.rotation.reading.z)
 
-            ossia_modules.sensors_rotation_xyz_data = xyz
+            node.value = xyz
         }
     }
 }

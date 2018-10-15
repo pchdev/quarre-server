@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 
 Rectangle
 {
@@ -11,15 +12,20 @@ Rectangle
         polling_timer.running = enabled;
     }
 
+    WPN114.Node
+    {
+        id:     node
+        path:   "/modules/yrotation/data"
+        type:   WPN114.Type.Float
+    }
+
     Timer
     {
-        id: polling_timer
-        interval: 50
-        repeat: true
+        id:         polling_timer
+        interval:   50
+        repeat:     true
 
-        onTriggered:
-            ossia_modules.sensors_rotation_y_angle = sensor_manager.rotation.reading.y
-
+        onTriggered: node.value = sensor_manager.rotation.reading.y/180
     }
 
     Image
@@ -39,7 +45,7 @@ Rectangle
             {
                 id: rotation
                 axis { x: 0; y: 0; z: 1 }
-                angle: ossia_modules.sensors_rotation_y_angle
+                angle: sensor_manager.rotation.reading.y
             },
 
             Scale
@@ -57,7 +63,7 @@ Rectangle
     {
         id:         rotation_print
 
-        text:       "rotation: " + Math.floor(ossia_modules.sensors_rotation_y_angle) + " degrees"
+        text:       "rotation: " + Math.floor(sensor_manager.rotation.reading.y) + " degrees"
         color:      "#ffffff"
         width:      parent.width
         height:     parent.height * 0.2
