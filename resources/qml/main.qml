@@ -46,9 +46,10 @@ ApplicationWindow
         {
             //introduction.rooms.setup        = rooms_setup
             stonepath.cendres.rooms.setup   = rooms_setup
+            stonepath.cendres.rooms.active  = true
             //instruments.rooms.setup     = rooms_setup
 
-            //start();
+            start();
         }
 
         WPN114.Node on dBlevel { path: "/audio/master/level" }

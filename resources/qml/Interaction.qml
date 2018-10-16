@@ -5,17 +5,17 @@ import "scenes"
 Item
 {
     id: root
-    property int idkey: 0
 
-    property var owners: [];
+    property int idkey:             0
+    property var owners:            [];
+    property string title:          ""
+    property string description:    ""
+    property int length:            0
+    property int countdown:         0
+    property string module:         ""
+    property string path:           ""
+    property bool broadcast:        false
 
-    property string title: ""
-    property string description: ""
-    property int length: 0
-    property int countdown: 0
-    property string module: ""
-    property string path: ""
-    property bool broadcast: false
     property list<QuMapping> mappings
 
     property alias dispatched: interaction_dispatched
@@ -26,7 +26,7 @@ Item
 
     function notify()   { interaction_notify.value = 0; }
     function begin()    { interaction_begin.value = 0; }
-    function end()      { interaction_end.value = 0; }    
+    function end()      { interaction_end.value = 0; }
     function execute()  { executor.start() }
 
     WPN114.Node on title        { path: "/interactions/"+root.path+"/title" }
@@ -43,6 +43,8 @@ Item
         repeat: true
         interval: 1000
         triggeredOnStart: true
+
+        onIntervalChanged: console.log("interval changed", interval)
 
         onTriggered:
         {
@@ -71,21 +73,10 @@ Item
             client_manager.dispatch(undefined, root)
             root.interactionNotify();
 
-            owners[0].remote.explore();
-
-            for ( var i = 0; i < mappings.length; ++i )
-            {
-                var mapping = mappings[i];
-                // for each mapping, get the owner's target node
-                // set mapping's function
-                owners[0].remote.listen(mapping.source);
-                var node = owners[0].remote.get(mapping.source);
-                node.valueReceived.connect(mapping.expression);
-            }
-
-//            mappings.forEach(function(mapping){
-
-//            });
+            owners.forEach(function(owner) {
+                for ( var i = 0; i < mappings.length; ++i )
+                owner.remote.listen(mappings[i].source);
+            });
         }
     }
 
@@ -97,9 +88,16 @@ Item
 
         onValueReceived:
         {
+            console.log("Beginning interaction:", root.title);
             owners.forEach(function(owner) {
+                for ( var i = 0; i < mappings.length; ++i )
+                {
+                    var mapping = mappings[i];
+                    var node = owner.remote.get(mapping.source);
+                    node.valueReceived.connect(mapping.expression);
+                }
                 owner.beginInteraction(root);
-            });                        
+            });
 
             root.interactionBegin();
         }
@@ -113,23 +111,22 @@ Item
 
         onValueReceived:
         {
+            console.log("Ending interaction:", root.title);
             owners.forEach(function(owner) {
+                for ( var i = 0; i < mappings.length; ++i )
+                {
+                    var mapping = mappings[i];
+                    owner.remote.ignore(mapping.source);
+                    var node = owner.remote.get(mapping.source);
+                    node.valueReceived.disconnect(mapping.expression);
+                }
                 owner.endInteraction(root);
             });
 
             root.interactionEnd();
-
-            for ( var i = 0; i < mappings.length; ++i )
-            {
-                var mapping = mappings[i];
-                // for each mapping, get the owner's target node
-                // set mapping's function
-                owners[0].remote.ignore(mapping.source);
-                var node = owners[0].remote.get(mapping.source);
-                node.valueReceived.disconnect(mapping.expression);
-            }
-
             interaction_dispatched.value = false;
+            executor.running = false;
+            executor.count = 0;
         }
     }
 

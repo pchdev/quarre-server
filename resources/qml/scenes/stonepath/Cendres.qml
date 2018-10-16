@@ -6,12 +6,12 @@ import ".."
 Item
 {
     property alias rooms: cendres_rooms
-    property alias interaction_thunder: interaction_thunder
-    property alias interaction_boiling: interaction_boiling
-    property alias interaction_marmottes: interaction_marmottes
-    property alias interaction_dragon: interaction_dragon
-    property alias interaction_groundwalk: interaction_groundwalk
-    property alias interaction_birds: interaction_flying_birds
+    property alias interaction_thunder:     interaction_thunder
+    property alias interaction_boiling:     interaction_boiling
+    property alias interaction_marmottes:   interaction_marmottes
+    property alias interaction_dragon:      interaction_dragon
+    property alias interaction_groundwalk:  interaction_groundwalk
+    property alias interaction_birds:       interaction_flying_birds
 
     Item //------------------------------------------------------------------------------ INTERACTIONS
     {
@@ -33,7 +33,10 @@ Item
             mappings: QuMapping
             {
                 source: "/gestures/whip/trigger"
-                expression: function(v) { interaction_thunder.end() }
+                expression: function(v) {
+                    interaction_thunder.end();
+                    thunder.playRandom();
+                }
             }
         }
 
@@ -53,7 +56,10 @@ Item
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
-                expression: function(v) { interaction_boiling.end() }
+                expression: function(v) {
+                    boiling.play();
+                    interaction_boiling.end()
+                }
             }
         }
 
@@ -73,10 +79,10 @@ Item
 
             mappings: QuMapping
             {
-                source: "/modules/xytouch/trigger"
+                source: "/modules/xytouch/position2D"
                 expression: function(v) {
                     marmots.playRandom();
-                    marmots_source.position = [v[1], v[2]];
+                    marmots_source.position = Qt.vector3d(v[0], v[1], 0.5);
                 }
             }
         }
@@ -95,10 +101,15 @@ Item
             countdown:  20
             length: 80
 
+            onInteractionNotify: dragon.play();
+            onInteractionEnd:    dragon.stop();
+
             mappings: QuMapping
             {
                 source: "/modules/zrotation/position2D"
-                expression: function(v) { dragon_source.position = v; }
+                expression: function(v) {
+                    dragon_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                }
             }
         }
 
@@ -116,10 +127,15 @@ Item
             countdown: 20
             length: 60
 
+            onInteractionNotify: groundwalk.play();
+            onInteractionEnd:    groundwalk.stop();
+
             mappings: QuMapping
             {
                 source: "/modules/zrotation/position2D"
-                expression: function(v) { groundwalk_source.position = v; }
+                expression: function(v) {
+                    groundwalk_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                }
             }
         }
 
@@ -140,11 +156,15 @@ Item
             mappings: [
                 QuMapping {
                     source: "/modules/trajectories/trigger"
-                    expression: function(v) { birds.play(Math.random()*birds.files.length) }},
+                    expression: function(v) { birds.playRandom() }},
 
                 QuMapping {
-                    source: "/modules/trajectories/position"
-                    expression: function(v) { birds_source.position = v; }} ]
+                    source: "/modules/trajectories/position2D"
+                    expression: function(v) {
+                        birds_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                    }
+                }
+            ]
         }
     }
 
