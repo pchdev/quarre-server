@@ -59,7 +59,7 @@ Rectangle
 
         onTriggered:
         {
-            node_position2D = trajectory[sending_phase];
+            node_position2D.value = trajectory[sending_phase];
             sending_phase++;
 
             trajectory_canvas.requestPaint();
@@ -95,7 +95,7 @@ Rectangle
             // send trigger
             // start sender timer, poll recorded data
             trajectory_canvas.getContext('2d').reset();
-            node_trigger = 0;
+            node_trigger.value = 0;
             record_timer.running = false;
             send_timer.running = true;
             recording = false;

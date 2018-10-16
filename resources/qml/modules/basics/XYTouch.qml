@@ -9,12 +9,14 @@ Rectangle
     color:      "#232426"
     opacity:    0.8
 
+    property vector2d rtouchpoints: Qt.vector2d(0, 0)
+
     WPN114.Node
     {
         id:     xytouch_node
         path:   "/modules/xytouch/position2D"
         type:   WPN114.Type.Vec2f
-
+        value:  Qt.vector2d(0, 0)
     }
 
     SpatializationSphere {}
