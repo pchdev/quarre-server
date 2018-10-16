@@ -32,7 +32,6 @@
     <file>quarre/MarkhorGranular.qml</file>
     <file>quarre/MarkhorPads.qml</file>
     <file>quarre/MarkhorResonator.qml</file>
-    <file>quarre/OssiaModuleParameters.qml</file>
     <file>quarre/Strings.qml</file>
     <file>quarre/Strings2.qml</file>
     <file>quarre/Trajectories.qml</file>

@@ -6,6 +6,12 @@ import ".."
 Item
 {
     property alias rooms: cendres_rooms
+    property alias interaction_thunder: interaction_thunder
+    property alias interaction_boiling: interaction_boiling
+    property alias interaction_marmottes: interaction_marmottes
+    property alias interaction_dragon: interaction_dragon
+    property alias interaction_groundwalk: interaction_groundwalk
+    property alias interaction_birds: interaction_flying_birds
 
     Item //------------------------------------------------------------------------------ INTERACTIONS
     {
@@ -81,7 +87,7 @@ Item
 
             title:  "Dragon, mise en espace"
             path:   "/stonepath/cendres/dragon"
-            module: "basics/XRotation.qml"
+            module: "basics/ZRotation.qml"
 
             description: "Orientez votre appareil horizontalement, à 360 degrés
  autour de vous pour identifier et déplacer le son dans l'espace."
@@ -102,7 +108,7 @@ Item
 
             title:  "Bruits de pas, mise en espace"
             path:   "/stonepath/cendres/groundwalk"
-            module: "basics/XRotation.qml"
+            module: "basics/ZRotation.qml"
 
             description: "Orientez votre appareil horizontalement, à 360 degrés
  autour de vous pour identifier et déplacer le son dans l'espace."
@@ -123,7 +129,7 @@ Item
 
             title:  "Oiseaux en vol, trajectoires"
             path:   "/stonepath/cendres/boiling"
-            module: "basics/GesturePalm.qml"
+            module: "quarre/Trajectories.qml"
 
             description: "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
  pendant quelques secondes, puis relachez pour déclencher"

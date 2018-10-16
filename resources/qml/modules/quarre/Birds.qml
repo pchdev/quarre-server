@@ -14,11 +14,7 @@ Rectangle
         Repeater
         {
             model: birds
-            QuarreBird
-            {
-                name: modelData
-                number_id: index
-            }
+            QuarreBird { name: modelData; number_id: index }
         }
     }
 }

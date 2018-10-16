@@ -17,10 +17,10 @@
         <file>scenes/woodpath/Vare.qml</file>
         <file>scenes/woodpath/JomonSugi.qml</file>
         <file>views/Mainview.qml</file>
-        <file>views/Introduction.qml</file>
-        <file>views/Stone.qml</file>
-        <file>views/Wood.qml</file>
-        <file>views/stonepath/Cendres.qml</file>
+        <file>views/IntroductionView.qml</file>
+        <file>views/StonepathView.qml</file>
+        <file>views/WoodpathView.qml</file>
+        <file>views/stonepath/CendresView.qml</file>
         <file>Interaction.qml</file>
         <file>scenes/QuMapping.qml</file>
         <file>ClientManager.qml</file>

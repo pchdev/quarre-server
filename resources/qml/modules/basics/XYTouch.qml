@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
 import "items"
+import "../quarre/items"
 
 Rectangle
 {
@@ -31,7 +32,7 @@ Rectangle
                 touch_animation.running = false;
 
             touch_animation.running = true;
-            ossia_net.oshdl.vibrate(50);
+            system.vibrate(50);
         }
 
         Rectangle

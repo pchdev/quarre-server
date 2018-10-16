@@ -66,9 +66,11 @@ Item
                 winner = select;
         }
 
-        console.log("Dispatching to:", winner.number)
-
-        winner.notifyInteraction(interaction);
+        if ( winner !== undefined )
+        {
+            winner.notifyInteraction(interaction);
+            interaction.dispatched.value = true;
+        }
     }
 
     Repeater

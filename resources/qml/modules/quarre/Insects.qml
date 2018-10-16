@@ -1,10 +1,19 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 import "items"
+import "../basics"
+import "../basics/items"
 
 Rectangle
 {
     anchors.fill: parent
     color: "transparent"
+
+    WPN114.Node
+    {
+        id:     node
+        path:   "/modules/insects/trigger"
+    }
 
     onEnabledChanged:
     {

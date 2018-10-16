@@ -44,9 +44,9 @@ ApplicationWindow
 
         Component.onCompleted:
         {
-            introduction.rooms.setup    = rooms_setup
-            cendres.rooms.setup         = rooms_setup
-            instruments.rooms.setup     = rooms_setup
+            //introduction.rooms.setup        = rooms_setup
+            stonepath.cendres.rooms.setup   = rooms_setup
+            //instruments.rooms.setup     = rooms_setup
 
             //start();
         }
@@ -65,13 +65,12 @@ ApplicationWindow
 
     ClientManager   { id: client_manager; maxClients: 4 }
     //Introduction    { id: introduction }
-    Cendres         { id: cendres }
-    //Diaclases       { id: diaclases }
+    //WoodPath        { id: woodpath }
 
-    //Markhor         { id: markhor }
-    //Ammon           { id: ammon }
+    StonePath       { id: stonepath }
+
     //Instruments     { id: instruments }
-    //Effects         { id: effects }
+    Effects         { id: effects }
     Functions       { id: functions }
 
     Mainview        { id: mainview }

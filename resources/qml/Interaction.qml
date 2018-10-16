@@ -18,6 +18,8 @@ Item
     property bool broadcast: false
     property list<QuMapping> mappings
 
+    property alias dispatched: interaction_dispatched
+
     signal interactionNotify    ( );
     signal interactionBegin     ( );
     signal interactionEnd       ( );
@@ -67,15 +69,23 @@ Item
         onValueReceived:
         {
             client_manager.dispatch(undefined, root)
-            root.interactionNotify();           
+            root.interactionNotify();
 
-            mappings.forEach(function(mapping){
+            owners[0].remote.explore();
+
+            for ( var i = 0; i < mappings.length; ++i )
+            {
+                var mapping = mappings[i];
                 // for each mapping, get the owner's target node
                 // set mapping's function
                 owners[0].remote.listen(mapping.source);
                 var node = owners[0].remote.get(mapping.source);
                 node.valueReceived.connect(mapping.expression);
-            });
+            }
+
+//            mappings.forEach(function(mapping){
+
+//            });
         }
     }
 
@@ -109,13 +119,25 @@ Item
 
             root.interactionEnd();
 
-            mappings.forEach(function(mapping){
+            for ( var i = 0; i < mappings.length; ++i )
+            {
+                var mapping = mappings[i];
                 // for each mapping, get the owner's target node
                 // set mapping's function
                 owners[0].remote.ignore(mapping.source);
                 var node = owners[0].remote.get(mapping.source);
                 node.valueReceived.disconnect(mapping.expression);
-            });
+            }
+
+            interaction_dispatched.value = false;
         }
+    }
+
+    WPN114.Node
+    {
+        id:     interaction_dispatched
+        path:   "/interactions/"+root.path+"/dispatched"
+        type:   WPN114.Type.Bool
+        value:  false
     }
 }

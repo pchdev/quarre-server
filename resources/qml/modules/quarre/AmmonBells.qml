@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "../basics"
 
 Rectangle
 {
@@ -11,6 +12,6 @@ Rectangle
     color: "transparent"
     anchors.fill: parent
 
-    XYZRotation { id: xyz_rotation; visible: false }
+    XYZRotation   { id: xyz_rotation; visible: false }
     GestureHammer { id: hammer; visible: true }
 }
