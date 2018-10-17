@@ -28,6 +28,7 @@ Rectangle
         id:     node_position2D
         path:   "/modules/trajectories/position2D"
         type:   WPN114.Type.Vec2f
+        value:  Qt.vector2d(0.5, 0.5)
     }
 
     Timer

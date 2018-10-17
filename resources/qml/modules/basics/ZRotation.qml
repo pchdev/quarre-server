@@ -4,6 +4,7 @@ import WPN114 1.0 as WPN114
 Rectangle
 {
     property real offset: 0.0
+    property real real_angle: 0.0
 
     anchors.fill: parent
     color: "transparent"
@@ -30,8 +31,12 @@ Rectangle
         onTriggered:
         {
             var offseted = sensor_manager.rotation.reading.z + offset;
+
             if ( offseted > 180 ) offseted -=360;
             else if ( offseted < -180 ) offseted += 360;
+
+            offseted = -offseted;
+            real_angle = offseted;
 
             offseted /= 360;
             offseted *= Math.PI*2
@@ -65,7 +70,7 @@ Rectangle
                 id: rotation
                 origin.x: parent.width/2
                 origin.y: parent.height/2
-                angle: sensor_manager.rotation.reading.z
+                angle: real_angle
             },
 
             Scale
@@ -83,7 +88,7 @@ Rectangle
     {
         id:         rotation_print
 
-        text:       "rotation: " + Math.floor(sensor_manager.rotation.reading.z) + " degrees"
+        text:       "rotation: " + Math.floor(real_angle) + " degrees"
         color:      "#ffffff"
         width:      parent.width
         height:     parent.height * 0.2

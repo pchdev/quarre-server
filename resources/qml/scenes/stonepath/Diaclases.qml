@@ -109,7 +109,7 @@ Item
 
             title:  "Gong primitif, percussif (1)"
             path:   "/stonepath/diaclases/spring-low-2"
-            module: "basics/GesturePalm.qml"
+            module: "basics/GestureHammer.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
 
@@ -136,7 +136,7 @@ Item
 
             title:  "Gong primitif, percussif (2)"
             path:   "/stonepath/diaclases/spring-hi-2"
-            module: "basics/GesturePalm.qml"
+            module: "basics/GestureHammer.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
 
@@ -200,7 +200,9 @@ Item
             mappings: QuMapping
             {
                 source: "/modules/zrotation/position2D"
-                expression: function(v) { smoke_source.position = v }
+                expression: function(v) {
+                    smoke_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                }
             }
         }
     }

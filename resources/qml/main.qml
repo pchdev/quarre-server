@@ -61,7 +61,7 @@ ApplicationWindow
     {
         id: rooms_setup;        
         //WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
-        WPN114.SpeakerPair { xspread: 0.5; y: 0.5; influence: 0.55 }
+        WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.5 }
     }
 
     ClientManager   { id: client_manager; maxClients: 4 }
