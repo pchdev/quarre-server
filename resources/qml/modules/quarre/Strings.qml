@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 
 Rectangle
 {
@@ -10,9 +11,27 @@ Rectangle
         onValueChanged: string_canvas.requestPaint();
     }
 
+    WPN114.Node
+    {
+        id:     node_strings
+        path:   "/modules/strings/display"
+        type:   WPN114.Type.Int
+        value:  0
+
+        onValueReceived: string_canvas.requestPaint();
+    }
+
+    WPN114.Node
+    {
+        id:     node_trigger
+        path:   "/modules/strings/trigger"
+        type:   WPN114.Type.Impulse
+    }
+
     Canvas
     {
         id: string_canvas
+
         anchors.fill: parent
         property real spacing: width*0.1
         property real left_edge: 0
@@ -21,7 +40,7 @@ Rectangle
         onPaint:
         {
             var ctx        = string_canvas.getContext('2d');
-            var nstrings   = ossia_modules.strings.value;
+            var nstrings   = node_strings.value;
 
             ctx.reset( );
             if ( !nstrings ) return;
@@ -57,7 +76,7 @@ Rectangle
                         mouse.x >= string_canvas.right_edge )
                 {
                     system.vibrate(100);
-                    ossia_modules.strings_trigger = !ossia_modules.strings_trigger;
+                    node_trigger.value = 0;
                     origin = string_canvas.width;
                 }
 
@@ -65,7 +84,7 @@ Rectangle
                          mouse.x <= string_canvas.left_edge )
                 {
                     system.vibrate(100);
-                    ossia_modules.strings_trigger = !ossia_modules.strings_trigger;
+                    node_trigger.value = 0;
                     origin = 0;
                 }
             }

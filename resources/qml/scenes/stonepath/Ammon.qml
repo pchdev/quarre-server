@@ -5,6 +5,8 @@ import ".."
 
 Item
 {
+    property alias rooms: ammon_rooms
+
     Item
     {
         id: interactions
@@ -24,6 +26,39 @@ Item
 
             length: 360
             countdown: 10
+
+            property int index: 0
+
+            mappings: QuMapping
+            {
+                source: "/modules/strings/trigger"
+                expression: function(v) {
+
+                    var chord = ammon_score.score[index];
+
+                    for ( var i = 0; i < chord['notes'].length; ++i )
+                    {
+                        ( function(i) {
+
+                            console.log(chord['notes'][i], chord['velocity'][i], chord['times'][i]);
+
+                            functions.setTimeout( function() {
+                                instruments.kaivo_1.noteOn(0, chord['notes'][i], chord['velocity'][i]); }, chord['times'][i]);
+
+                            functions.setTimeout( function() {
+                                instruments.kaivo_1.noteOff(0, chord['notes'][i], chord['velocity'][i]);
+                            }, chord['duration']); })(i);
+                    }
+
+                    interaction_string_sweep.owners.forEach(function(owner) {
+                        var node = owner.remote.get("/modules/strings/display");
+                        node.setValue(ammon_score[index++]["notes"].length);
+                        console.log(node.value);
+                    })
+
+                    index++;
+                }
+            }
         }
 
         Interaction //--------------------------------------------- INHARM_SYNTH
@@ -45,7 +80,7 @@ Item
 
             mappings: QuMapping
             {
-                source: "/gestures/cover/trigger"
+                source: "/modules/jomon-palmz/cover"
                 expression: function(v) {
                     if ( v )
                     {
@@ -57,8 +92,8 @@ Item
                     }
                     else
                     {
-                        instruments.absynth.noteOff(0, index, 100);
-                        instruments.absynth.noteOff(0, index+5, 100);
+                        instruments.absynth.noteOff(0, current_note, 100);
+                        instruments.absynth.noteOff(0, current_note+5, 100);
                     }
                 }
             }
@@ -80,7 +115,7 @@ Item
 
             mappings: QuMapping
             {
-                source: "/sensors/rotation/xyz/data"
+                source: "/modules/xyzrotation/data"
                 expression: function(v) {
                     instruments.kaivo_1.set("res_pitch", 440+v[0]/90*10);
                     instruments.kaivo_1.set("res_brightness", (v[1]+180)/360);
@@ -117,7 +152,7 @@ Item
                         }, 5000)}},
 
                 QuMapping {
-                    source: "/sensors/rotation/xyz/data"
+                    source: "/modules/xyzrotation/data"
                     expression: function(v) {
                         instruments.kaivo_2.set("res_brightness", (v[0]+90)/180);
                         instruments.kaivo_2.set("res_position", (v[2]+180)/360);

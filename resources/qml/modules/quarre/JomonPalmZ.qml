@@ -1,5 +1,9 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
+
 import "items"
+import "../basics"
+import "../basics/items"
 
 Rectangle
 {
@@ -15,9 +19,17 @@ Rectangle
         z_rotation.enabled = enabled;
     }
 
-    ZRotation { id: z_rotation }
+    WPN114.Node
+    {
+        id:     node_palm_state
+        path:   "/modules/jomon-palmz/cover"
+        type:   WPN114.Type.Bool
+        value:  false
+    }
 
-    TriggerAnimation { id: t_anim; animation.loops: Animation.Infinite; len: 625 }
+
+    ZRotation         { id: z_rotation }
+    TriggerAnimation  { id: t_anim; animation.loops: Animation.Infinite; len: 625 }
 
     Timer
     {
@@ -30,14 +42,14 @@ Rectangle
             if ( sensor_manager.proximity.reading.near && !proximity_state )
             {
                 proximity_state = true;
-                ossia_modules.jomon_palm_state = true;
+                node_palm_state.value = true;
                 t_anim.animation.running = true;
             }
 
             else if ( !sensor_manager.proximity.reading.near && proximity_state )
             {
                 proximity_state = false;
-                ossia_modules.jomon_palm_state = false;
+                node_palm_state.value = false;
                 t_anim.animation.running = false;
                 t_anim.circle.opacity = 0
             }

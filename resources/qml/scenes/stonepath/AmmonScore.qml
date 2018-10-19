@@ -3,29 +3,7 @@ import WPN114 1.0 as WPN114
 
 Item
 {
-    WPN114.Node
-    {
-        path: "/interactions/stonepath/ammon/score"
-        type: WPN114.Type.Int
-
-        onValueReceived:
-        {
-            var chord = ammon_score[newValue];
-
-            for ( var i = 0; i < chord['notes'].length; ++i )
-            {
-                ( function(i)
-                {
-                    console.log(chord['notes'][i], chord['velocity'][i], chord['times'][i]);
-                    functions.setTimeout( function() { instruments.kaivo_1.noteOn(0, chord['notes'][i], chord['velocity'][i]); }, chord['times'][i]);
-                    functions.setTimeout( function() { instruments.kaivo_1.noteOff(0, chord['notes'][i], chord['velocity'][i]); }, chord['duration']);
-                }
-                )(i);
-            }
-        }
-    }
-
-    property var ammon_score: [
+    property var score: [
 
         { notes: [55, 57], velocity: [40, 40], times: [0.0, 25], duration: 3000 },
         { notes: [58], velocity: [40], times: [0.0], duration: 1000 },
