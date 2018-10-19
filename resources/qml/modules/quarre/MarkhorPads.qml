@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import "items"
+import "../basics/items"
+import WPN114 1.0 as WPN114
 
 Rectangle
 {
@@ -9,6 +11,15 @@ Rectangle
 
     id: pads_manager
     color: "transparent"
+
+
+    WPN114.Node
+    {
+        id:     pads_node
+        path:   "/modules/markhor/pads/index"
+        type:   WPN114.Type.Int
+        value:  0
+    }
 
     function pressed(i,b)
     {
@@ -21,7 +32,7 @@ Rectangle
                 pad_repeater.itemAt(pushed_pads[j]).release();
 
             pushed_pads.push(i);
-            ossia_modules.markhor_pads_index = i+1;
+            pads_node.value = i+1;
             pad_repeater.itemAt(i).push();
         }
 
@@ -39,10 +50,10 @@ Rectangle
             if ( pushed_pads.length > 0 )
             {
                 pad_repeater.itemAt(pushed_pads[pushed_pads.length-1]).push();
-                ossia_modules.markhor_pads_index = pushed_pads[pushed_pads.length-1]+1;
+                pads_node.value = pushed_pads[pushed_pads.length-1]+1;
             }
 
-            else ossia_modules.markhor_pads_index = 0;
+            else pads_node.value = 0;
         }
     }
 

@@ -4,7 +4,9 @@ import "../.."
 import ".."
 
 Item
-{
+{    
+    property alias rooms: markhor_rooms
+
     WPN114.Node
     {
         path: "/interactions/stonepath/markhor/setup"
@@ -12,9 +14,9 @@ Item
 
         onValueReceived:
         {
-            instruments.kaivo_1.active = true;
+//            instruments.kaivo_1.active = true;
             instruments.kaivo_2.active = true;
-            instruments.kaivo_1.setPreset("zzzbells");
+//            instruments.kaivo_1.setPreset("autochurch");
             instruments.kaivo_2.setPreset("markhor");
         }
     }
@@ -28,12 +30,12 @@ Item
             id:     interaction_clock_bells
 
             title:  "Cloches, pré-rythmiques"
-            path:   "/stonepath/markhor/clock-bells"
+            path:   "stonepath/markhor/clock-bells"
             module: "quarre/VareRainbells.qml"
 
-            description: "Passez la main devant l'appareil pour ajouter et changer
- les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation
- afin de changer leurs propriétés."
+            description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches,
+pivotez-le doucement dans n'importe quel axe de rotation"
+//afin de changer leurs propriétés."
 
             length: 45
             countdown:  15
@@ -42,10 +44,10 @@ Item
             [
                 QuMapping // ---------------------------------------------- proximity mapping
                 {
-                    source: "/sensors/proximity/close"
+                    source: "/modules/bells/trigger"
                     expression: function(v) {
-                        var rdm_note = 35 + Math.floor(Math.random()*40);
-                        var rdm_p = Math.floor(Math.random()*15)+2;
+                        var rdm_note = 35 + Math.random()*40;
+                        var rdm_p = Math.random()*15+2;
 
                         instruments.kaivo_1.noteOn(0, rdm_note, rdm_p);
                         instruments.kaivo_1.noteOff(0, rdm_note, rdm_p);
@@ -54,7 +56,7 @@ Item
 
                 QuMapping // ---------------------------------------------- rotation mapping
                 {
-                    source: "/sensors/rotation/xyz/data"
+                    source: "/modules/xyzrotation/data"
                     expression: function(v) {
 
                         instruments.kaivo_1.set("res_brightness", v[0]+90/180);
@@ -71,7 +73,7 @@ Item
             id:     interaction_granular_models
 
             title:  "Impulsions (essais)"
-            path:   "/stonepath/markhor/granular-1"
+            path:   "stonepath/markhor/granular-1"
             module: "quarre/MarkhorGranular.qml"
 
             description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
@@ -79,6 +81,15 @@ Item
 
             length: 60
             countdown:  15
+
+            onInteractionNotify:
+            {
+                instruments.kaivo_2.noteOn(0, 70, 127);
+                instruments.kaivo_2.noteOn(0, 75, 127);
+                instruments.kaivo_2.noteOn(0, 80, 127);
+            }
+
+            // TODO: OVERLAP bug
 
             mappings:
             [
@@ -101,11 +112,11 @@ Item
             id:     interaction_resonators_1
 
             title:  "Résonances (essais)"
-            path:   "/stonepath/markhor/resonator-1"
+            path:   "stonepath/markhor/resonator-1"
             module: "quarre/MarkhorResonator.qml"
 
             description: "Manipulez les sliders afin d'altérer la résonance
- des percussions. Choisissez le son qui vous convient. Attention au temps !"
+des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             length: 60
             countdown:  15
@@ -117,11 +128,11 @@ Item
                     expression: function(v) { instruments.kaivo_2.set("res_brightness", v) }},
 
                 QuMapping {
-                    source: "/modules/markhor/resonator/inpos"
+                    source: "/modules/markhor/resonator/position"
                     expression: function(v) { instruments.kaivo_2.set("res_position", v) }},
 
                 QuMapping {
-                    source: "/modules/markhor/resonator/pitch_p"
+                    source: "/modules/markhor/resonator/pitch"
                     expression: function(v) { instruments.kaivo_2.set("res_pitch_p", v) }},
 
                 QuMapping {
@@ -135,7 +146,7 @@ Item
             id:     interaction_body_1
 
             title:  "Corps de résonance (essais)"
-            path:   "/stonepath/markhor/body-1"
+            path:   "stonepath/markhor/body-1"
             module: "quarre/MarkhorBody.qml"
 
             description: "Manipulez les sliders afin d'altérer le corps de résonance
@@ -167,7 +178,7 @@ Item
             id:     interaction_pads_1
 
             title:  "Temps et Contretemps (essais)"
-            path:   "/stonepath/markhor/pads-1"
+            path:   "stonepath/markhor/pads-1"
             module: "quarre/MarkhorPads.qml"
 
             description: "Appuyez et maintenez l'un des pads (un seul à la fois)
@@ -193,7 +204,7 @@ Item
             id:     interaction_granular_models_2
 
             title:  "Impulsions (tutti)"
-            path:   "/stonepath/markhor/granular-2"
+            path:   "stonepath/markhor/granular-2"
             module: "quarre/MarkhorGranular.qml"
 
             description: "Vous jouez maintenant tous ensemble, collaborez,
@@ -210,7 +221,7 @@ Item
             id:     interaction_resonators_2
 
             title:  "Résonances (tutti)"
-            path:   "/stonepath/markhor/resonator-2"
+            path:   "stonepath/markhor/resonator-2"
             module: "quarre/MarkhorResonator.qml"
 
             description: interaction_granular_models_2.description
@@ -225,7 +236,7 @@ Item
             id:     interaction_body_2
 
             title:  "Corps de résonance (tutti)"
-            path:   "/stonepath/markhor/body-2"
+            path:   "stonepath/markhor/body-2"
             module: "quarre/MarkhorBody.qml"
 
             description: interaction_granular_models_2.description
@@ -240,7 +251,7 @@ Item
             id:     interaction_pads_2
 
             title:  "Temps et Contretemps (tutti)"
-            path:   "/stonepath/markhor/pads-2"
+            path:   "stonepath/markhor/pads-2"
             module: "quarre/MarkhorPads.qml"
 
             description: interaction_granular_models_2.description

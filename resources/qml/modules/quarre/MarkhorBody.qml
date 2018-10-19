@@ -1,5 +1,7 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 import "items"
+import "../basics/items"
 
 Rectangle
 {
@@ -8,34 +10,40 @@ Rectangle
 
     QuarreSlider
     {
-        name: "ton"
-        value: ossia_modules.markhor_body_tone
-        onValueChanged: ossia_modules.markhor_body_tone = value
+        name: "ton"        
         y: parent.height*0.2
+
+        WPN114.Node on value { path: "/modules/markhor/body/tone" }
     }
 
     QuarreSlider
     {
         name: "fréquence de résonance"
         min: -1.0; max: 1.0
-        value: ossia_modules.markhor_body_pitch
-        onValueChanged: ossia_modules.markhor_body_pitch = value
         y: parent.height*0.2*2
+
+        WPN114.Node on value { path: "/modules/markhor/body/pitch" }
+    }
+
+    WPN114.Node
+    {
+        id:     body_xy
+        path:   "/modules/markhor/body/xy"
+        type:   WPN114.Type.Vec2f
+        value:  Qt.vector2d(0.0, 0.0)
     }
 
     QuarreSlider
     {
         name: "position horizontale"
-        value: ossia_modules.markhor_body_xy.x
-        onValueChanged: ossia_modules.markhor_body_xy.x = value
+        onValueChanged: body_xy.value.x = value;
         y: parent.height*0.2*3
     }
 
     QuarreSlider
     {
         name: "position verticale"
-        value: ossia_modules.markhor_body_xy.y
-        onValueChanged: ossia_modules.markhor_body_xy.y = value
+        onValueChanged: body_xy.value.x = value;
         y: parent.height*0.2*4
     }
 }

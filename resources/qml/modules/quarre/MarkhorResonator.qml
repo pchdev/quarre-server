@@ -1,5 +1,7 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 import "items"
+import "../basics/items"
 
 Rectangle
 {
@@ -9,34 +11,34 @@ Rectangle
     QuarreSlider
     {
         name: "brillance"
-        value: ossia_modules.markhor_resonator_brightness
-        onValueChanged: ossia_modules.markhor_resonator_brightness = value
         y: parent.height * 0.2
+
+        WPN114.Node on value { path: "/modules/markhor/resonator/brightness" }
     }
 
     QuarreSlider
     {
         name: "position"
-        value: ossia_modules.markhor_resonator_inpos
-        onValueChanged: ossia_modules.markhor_resonator_inpos = value
         y: parent.height*0.2*2
+
+        WPN114.Node on value { path: "/modules/markhor/resonator/position" }
     }
 
     QuarreSlider
     {
         name: "hauteur"
         min: 0.1; max: 2;
-        onValueChanged: ossia_modules.markhor_resonator_pitch = value
-        value: ossia_modules.markhor_resonator_pitch
         y: parent.height*0.2*3;
+
+        WPN114.Node on value { path: "/modules/markhor/resonator/pitch" }
     }
 
     QuarreSlider
     {
         name: "résonance"
         min: 0.0; max: 0.4;
-        onValueChanged: ossia_modules.markhor_resonator_sustain = value
-        value: ossia_modules.markhor_resonator_sustain
         y: parent.height*0.2*4;
+
+        WPN114.Node on value { path: "/modules/markhor/resonator/sustain" }
     }
 }

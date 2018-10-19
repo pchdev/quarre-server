@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
+import WPN114 1.0 as WPN114
 import "items"
+import "../basics/items"
 
 Rectangle
 {
@@ -11,36 +13,26 @@ Rectangle
     {
         name: "hauteur mod"
         min: -2.0; max: 2.0;
-        value: ossia_modules.markhor_granular_pitch_env
-        onValueChanged: ossia_modules.markhor_granular_pitch_env = value
         y: parent.height*0.2
+
+        WPN114.Node on value { path: "/modules/markhor/granular/pitch_env" }
     }
 
     QuarreSlider
     {
         name: "hauteur"
         min: -3; max: 3;
-        value: ossia_modules.markhor_granular_pitch
-        onValueChanged: ossia_modules.markhor_granular_pitch = Math.floor(value)
         y: parent.height*0.2*2
+
+        WPN114.Node on value { path: "/modules/markhor/granular/pitch" }
     }
 
     QuarreSlider
     {
         name: "densité"
-        min: 0.125; max: 0.5
-        value: ossia_modules.markhor_granular_overlap
-        onValueChanged: ossia_modules.markhor_granular_overlap= value
+        min: 0.125; max: 0.35
         y: parent.height*0.2*3
-    }
 
-    /*ComboBox
-    {
-        y: parent.height*0.2*4
-        height: parent.height*0.1
-        width: parent.width*0.65
-        anchors.horizontalCenter: parent.horizontalCenter
-        model: [ "Model 1", "Model 2", "Model 3", "Model 4" ]
-        onCurrentIndexChanged: ossia_modules.markhor_granular_sample = currentIndex;
-    }*/
+        WPN114.Node on value { path: "/modules/markhor/granular/overlap" }
+    }
 }

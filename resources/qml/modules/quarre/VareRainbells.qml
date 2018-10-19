@@ -1,5 +1,8 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 import "items"
+import "../basics/items"
+import "../basics"
 
 Rectangle
 {
@@ -13,6 +16,13 @@ Rectangle
         rotation.enabled = enabled;
         proximity_poll.running = enabled;
         sensor_manager.proximity.active = enabled;
+    }
+
+    WPN114.Node
+    {
+        id: trigger
+        path: "/modules/bells/trigger"
+        type: WPN114.Type.Impulse
     }
 
     Item
@@ -39,7 +49,7 @@ Rectangle
         {
             if ( sensor_manager.proximity.reading.near && !close_triggered )
             {
-                ossia_modules.sensors_proximity_close = !ossia_modules.sensors_proximity_close
+                trigger.value = 0;
                 t_anim.animation.running = true;
             }
 
