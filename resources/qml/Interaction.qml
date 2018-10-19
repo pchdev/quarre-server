@@ -71,12 +71,13 @@ Item
         onValueReceived:
         {
             client_manager.dispatch(undefined, root)
-            root.interactionNotify();
 
             owners.forEach(function(owner) {
                 for ( var i = 0; i < mappings.length; ++i )
                 owner.remote.listen(mappings[i].source);
             });
+
+            root.interactionNotify();
         }
     }
 

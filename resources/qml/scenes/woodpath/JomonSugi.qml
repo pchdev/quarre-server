@@ -8,7 +8,7 @@ Item
         id: jomon_rooms
         active: false
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_config
 
         WPN114.RoomSource //----------------------------------------- 1.CICADAS (1-2)
         {

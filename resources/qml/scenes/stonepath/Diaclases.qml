@@ -5,6 +5,8 @@ import ".."
 
 Item
 {
+    property alias rooms: diaclases_rooms
+
     WPN114.Node
     {
         path: "/interactions/stonepath/diaclases/setup"
@@ -13,8 +15,11 @@ Item
         onValueReceived:
         {
             instruments.kaivo_1.active = true;
-            instruments.kaivo_2.active = false;
-            instruments.kaivo_1.setPreset("spring");
+            instruments.rooms.active = true;
+//            instruments.kaivo_2.active = false;
+           // instruments.kaivo_1.setPreset("spring");
+
+           // instruments.kaivo_1.showEditorWindow();
         }
     }
 
@@ -27,13 +32,15 @@ Item
             id:     interaction_spring_low
 
             title:  "Gong primitif, déclenchements (1)"
-            path:   "/stonepath/diaclases/spring-low"
+            path:   "stonepath/diaclases/spring-low"
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
 
             length: 80
             countdown:  15
+
+            onInteractionNotify: instruments.kaivo_1.programChange(0, 37)
 
             mappings: QuMapping
             {
@@ -55,7 +62,7 @@ Item
             id:     interaction_spring_high
 
             title:  "Gong primitif, déclenchements (2)"
-            path:   "/stonepath/diaclases/spring-hi"
+            path:   "stonepath/diaclases/spring-hi"
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
@@ -82,7 +89,7 @@ Item
             id:     interaction_spring_timbre_1
 
             title:  "Gong primitif, timbre"
-            path:   "/stonepath/diaclases/spring-timbre"
+            path:   "stonepath/diaclases/spring-timbre"
             module: "basics/XYZRotation.qml"
 
             description: "Faites pivoter l'appareil dans ses axes de rotation
@@ -108,7 +115,7 @@ Item
             id:     interaction_spring_low_2
 
             title:  "Gong primitif, percussif (1)"
-            path:   "/stonepath/diaclases/spring-low-2"
+            path:   "stonepath/diaclases/spring-low-2"
             module: "basics/GestureHammer.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
@@ -135,7 +142,7 @@ Item
             id:     interaction_spring_high_2
 
             title:  "Gong primitif, percussif (2)"
-            path:   "/stonepath/diaclases/spring-hi-2"
+            path:   "stonepath/diaclases/spring-hi-2"
             module: "basics/GestureHammer.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
@@ -162,7 +169,7 @@ Item
             id:     interaction_spring_timbre_2
 
             title:  "Gong primitif, timbre (2)"
-            path:   "/stonepath/diaclases/spring-timbre-2"
+            path:   "stonepath/diaclases/spring-timbre-2"
             module: "basics/XYZRotation.qml"
 
             description: "Faites pivoter l'appareil dans ses axes de rotation pour
@@ -188,7 +195,7 @@ Item
             id:     interaction_smoke_spat
 
             title:  "Combustions, mise en espace"
-            path:   "/stonepath/diaclases/smoke"
+            path:   "stonepath/diaclases/smoke"
             module: "basics/ZRotation.qml"
 
             description: "Orientez votre appareil horizontalement, à 360 degrés

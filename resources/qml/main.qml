@@ -6,7 +6,7 @@ import "scenes"
 import "scenes/stonepath"
 import "views"
 
-ApplicationWindow
+Rectangle
 {
     visible: true
     width: 640
@@ -34,25 +34,28 @@ ApplicationWindow
     {
         id:             audio_stream
 
-        outDevice:      "Scarlett 2i2 USB"
-        numOutputs:     2
+//        outDevice:      "Scarlett 2i2 USB"
+//        numOutputs:     2
 
-//        outDevice:      "Soundflower (64ch)"
-//        numOutputs:     8
+        outDevice:      "Soundflower (64ch)"
+        numOutputs:     2
         sampleRate:     44100
         blockSize:      512
 
         Component.onCompleted:
         {
             //introduction.rooms.setup        = rooms_setup
-            stonepath.cendres.rooms.setup   = rooms_setup
-            stonepath.cendres.rooms.active  = true
-            //instruments.rooms.setup     = rooms_setup
+//            stonepath.cendres.rooms.setup   = rooms_setup
+//            stonepath.cendres.rooms.active  = true
 
-            start();
+            //stonepath.diaclases.rooms.setup   = rooms_setup
+            //stonepath.diaclases.rooms.active  = true;
+
+            //instruments.rooms.setup     = rooms_setup
+            //start();
         }
 
-        WPN114.Node on dBlevel { path: "/audio/master/level" }
+        WPN114.Node on dBlevel { path: "/audio/master/level"; onValueChanged: console.log(newValue)}
         WPN114.Node on active { path: "/audio/master/active" }
         WPN114.Node on mute { path: "/audio/master/muted" }
     }
@@ -74,5 +77,7 @@ ApplicationWindow
     Effects         { id: effects }
     Functions       { id: functions }
 
-    Mainview        { id: mainview }
+    SceneView
+    {
+    }
 }

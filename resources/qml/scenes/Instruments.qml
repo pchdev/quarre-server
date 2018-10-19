@@ -12,7 +12,7 @@ Item
 
     // 34 - SPRING_GENERIC
 
-    property var kaivo_presets
+    property var kaivo_presets: new Object
 
     Component.onCompleted:
     {
@@ -21,7 +21,7 @@ Item
         kaivo_presets["rainbells"]      = 35;
         kaivo_presets["churchbells"]    = 38;
         kaivo_presets["jguitar"]        = 37;
-        kaivo_presets["tguitar"]        = 20;
+        kaivo_presets["temples"]        = 20;
         kaivo_presets["insects"]        = 6;
     }
 
