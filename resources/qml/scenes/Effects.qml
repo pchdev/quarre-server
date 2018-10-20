@@ -3,14 +3,14 @@ import WPN114 1.0 as WPN114
 
 Item
 {
-    property alias reverb: altiverb
+    property alias reverb: reverb
     property alias amplitube: amplitube
     property alias rooms: effects_rooms
 
     WPN114.Rooms
     {
         id: effects_rooms
-        active: false
+        active: true
         parentStream: audio_stream
         setup: rooms_setup
         exposePath: "/audio/effects/rooms"
@@ -23,12 +23,12 @@ Item
 
             exposePath: "/audio/instruments/altiverb/source"
 
-            WPN114.AudioPlugin
+            WPN114.Convolver
             {
-                id: altiverb
+                id: reverb
                 active: true
-                path: "/Library/Audio/Plug-Ins/VST/Audio Ease/Altiverb 7.vst"
-                exposePath: "/audio/effects/altiverb"
+                irPath: "/Users/pchd/Desktop/IRS/921.wav"
+                exposePath: "/audio/effects/reverb"
             }
         }
 
@@ -40,7 +40,7 @@ Item
 
             exposePath: "/audio/instruments/amplitube/source"
 
-            WPN114.AudioPlugin
+            WPN114.AudioPlugin // TODO: switch to convolver
             {
                 id: amplitube
                 active: false

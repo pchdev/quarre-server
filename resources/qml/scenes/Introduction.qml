@@ -13,7 +13,7 @@ Item
         Interaction //----------------------------------------------------- TUTORIAL
         {
             id: tutorial
-            path: "introduction/tutorial"
+            path: "/introduction/interactions/tutorial"
 
             title: "Didacticiel"
             module: "quarre/Tutorial.qml"
@@ -28,7 +28,7 @@ Item
         Interaction //---------------------------------------------------- CROSSROADS
         {
             id: crossroads
-            path: "introduction/crossroads"
+            path: "/introduction/interaction/crossroads"
 
             title: "Croisée des chemins"
             module: "quarre/Vote.qml"
@@ -78,13 +78,13 @@ Item
     {
         id: crossroads_result
         type: WPN114.Type.Int
-        path: "/interactions/introduction/crossroads/result"
+        path: "/introduction/interactions/crossroads/result"
     }
 
     WPN114.Node //------------------------------------------------------------------------- CONTROL
     {
         type: WPN114.Type.Bool
-        path: "/audio/introduction/play"
+        path: "/introduction/audio/play"
         onValueReceived:
         {
             digibirds.active     = newValue;
@@ -137,7 +137,7 @@ Item
         setup: rooms_setup
         active: false
 
-        exposePath: "/audio/introduction/rooms"
+        exposePath: "/introduction/audio/rooms"
 
         WPN114.StereoSource //----------------------------------------- 1.DIGIBIRDS (1-2)
         {
@@ -146,10 +146,10 @@ Item
             diffuse: 0.49
             fixed: true
 
-            exposePath: "/audio/introduction/digibirds/source"
+            exposePath: "/introduction/audio/digibirds/source"
 
             WPN114.StreamSampler { id: digibirds;
-                exposePath: "/audio/introduction/digibirds"
+                exposePath: "/introduction/audio/digibirds"
                 path: "audio/introduction/digibirds.wav" }
         }
 
@@ -161,10 +161,10 @@ Item
             fixed: true
             y: 0.9
 
-            exposePath: "/audio/introduction/swarms/source"
+            exposePath: "/introduction/audio/swarms/source"
 
             WPN114.StreamSampler { id: swarms;
-                exposePath: "/audio/introduction/swarms"
+                exposePath: "/introduction/audio/swarms"
                 path: "audio/introduction/swarms.wav" }
         }
 
@@ -175,10 +175,10 @@ Item
             fixed: true
             y: 0.65
 
-            exposePath: "/audio/introduction/dragon-hi/source"
+            exposePath: "/introduction/audio/dragon-hi/source"
 
             WPN114.StreamSampler { id: dragon_hi;
-                exposePath: "/audio/introduction/dragon-hi"
+                exposePath: "/introduction/audio/dragon-hi"
                 path: "audio/introduction/dragon-hi.wav" }
         }
 
@@ -189,10 +189,10 @@ Item
             fixed: true
             y: 0.25
 
-            exposePath: "/audio/introduction/dragon-lo/source"
+            exposePath: "/introduction/audio/dragon-lo/source"
 
             WPN114.StreamSampler { id: dragon_lo;
-                exposePath: "/audio/introduction/dragon-lo"
+                exposePath: "/introduction/audio/dragon-lo"
                 path: "audio/introduction/dragon-lo.wav" }
         }
 
@@ -202,10 +202,10 @@ Item
             xspread: 0.2
             fixed: true
 
-            exposePath: "/audio/introduction/walking-1/source"
+            exposePath: "/introduction/audio/walking-1/source"
 
             WPN114.StreamSampler { id: walking_1;
-                exposePath: "/audio/introduction/walking-1"
+                exposePath: "/introduction/audio/walking-1"
                 path: "audio/introduction/walking-1.wav" }
         }
 
@@ -216,10 +216,10 @@ Item
             fixed: true
             y: 0.43
 
-            exposePath: "/audio/introduction/walking-2/source"
+            exposePath: "/introduction/audio/walking-2/source"
 
             WPN114.StreamSampler { id: walking_2;
-                exposePath: "/audio/introduction/walking-2"
+                exposePath: "/introduction/audio/walking-2"
                 path: "audio/introduction/walking-2.wav" }
         }
 
@@ -230,10 +230,10 @@ Item
             fixed: true
             y: 0.85
 
-            exposePath: "/audio/introduction/synth/source"
+            exposePath: "/introduction/audio/synth/source"
 
             WPN114.StreamSampler { id: synth;
-                exposePath: "/audio/introduction/synth"
+                exposePath: "/introduction/audio/synth"
                 path: "audio/introduction/synth.wav" }
         }
 
@@ -244,10 +244,10 @@ Item
             bias: 0.85
             fixed: true
 
-            exposePath: "/audio/introduction/spring/source"
+            exposePath: "/introduction/audio/spring/source"
 
             WPN114.StreamSampler { id: spring;
-                exposePath: "/audio/introduction/spring"
+                exposePath: "/introduction/audio/spring"
                 path: "audio/introduction/spring.wav" }
         }
 
@@ -257,10 +257,10 @@ Item
             diffuse: 0.55
             fixed: true
 
-            exposePath: "/audio/introduction/river/source"
+            exposePath: "/introduction/audio/river/source"
 
             WPN114.StreamSampler { id: river;
-                exposePath: "/audio/introduction/river"
+                exposePath: "/introduction/audio/river"
                 path: "audio/introduction/river.wav" }
         }
 
@@ -270,10 +270,10 @@ Item
             diffuse: 0.6
             fixed: true
 
-            exposePath: "/audio/introduction/verb/source"
+            exposePath: "/introduction/audio/verb/source"
 
             WPN114.StreamSampler { id: verb;
-                exposePath: "/audio/introduction/verb"
+                exposePath: "/introduction/audio/verb"
                 path: "audio/introduction/verb.wav" }
         }
     }

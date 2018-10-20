@@ -18,7 +18,7 @@ Item
             id:     interaction_string_sweep
 
             title:  "Cordes, déclenchement"
-            path:   "/stonepath/ammon/strings"
+            path:   "/stonepath/ammon/interactions/strings"
             module: "quarre/Strings.qml"
 
             description: "Frottez les cordes avec votre doigt au fur
@@ -66,7 +66,7 @@ Item
             id:     interaction_inharm_synth
 
             title:  "Inharmonie"
-            path:   "/stonepath/ammon/inharmonic"
+            path:   "/stonepath/ammon/interactions/inharmonic"
             module: "quarre/JomonPalmZ.qml"
 
             description: "Approchez et maintenez la paume de votre main
@@ -104,7 +104,7 @@ Item
             id:     interaction_strings_timbre
 
             title:  "Guitare primitive, timbre"
-            path:   "/stonepath/ammon/strings-timbre"
+            path:   "/stonepath/ammon/interactions/strings-timbre"
             module: "basics/XYZRotation.qml"
 
             description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler
@@ -129,7 +129,7 @@ Item
             id:     interaction_bells
 
             title:  "Cloches, pré-rythmiques"
-            path:   "/stonepath/ammon/bells"
+            path:   "/stonepath/ammon/interactions/bells"
             module: "quarre/AmmonBells.qml"
 
             description: "Exécutez un geste de frappe verticale pour
@@ -176,10 +176,10 @@ Item
             diffuse: 0.1
             y: 0.1
 
-            exposePath: "/audio/stonepath/ammon/footsteps/source"
+            exposePath: "/stonepath/ammon/audio/footsteps/source"
 
             WPN114.Sampler { id: footsteps;
-                exposePath: "/audio/stonepath/ammon/footsteps"
+                exposePath: "/stonepath/ammon/audio/footsteps"
                 path: "audio/stonepath/ammon/foosteps.wav" }
         }
 
@@ -189,10 +189,10 @@ Item
             xspread: 0.05
             y: 0.8
 
-            exposePath: "/audio/stonepath/ammon/broken-radio/source"
+            exposePath: "/stonepath/ammon/audio/broken-radio/source"
 
             WPN114.Sampler { id: broken_radio;
-                exposePath: "/audio/stonepath/ammon/broken-radio"
+                exposePath: "/stonepath/ammon/audio/broken-radio"
                 path: "audio/stonepath/ammon/broken-radio.wav" }
         }
 
@@ -203,10 +203,10 @@ Item
             diffuse: 0.3
             y: 0.75
 
-            exposePath: "/audio/stonepath/ammon/harmonics/source"
+            exposePath: "/stonepath/ammon/audio/harmonics/source"
 
             WPN114.StreamSampler { id: harmonics;
-                exposePath: "/audio/stonepath/ammon/harmonics"
+                exposePath: "/stonepath/ammon/audio/harmonics"
                 path: "audio/stonepath/ammon/harmonics.wav" }
         }
 
@@ -216,10 +216,10 @@ Item
             xspread: 0.25
             diffuse: 0.85
 
-            exposePath: "/audio/stonepath/ammon/wind/source"
+            exposePath: "/stonepath/ammon/audio/wind/source"
 
             WPN114.Sampler { id: wind;
-                exposePath: "/audio/stonepath/ammon/wind"
+                exposePath: "/stonepath/ammon/audio/wind"
                 path: "audio/stonepath/ammon/wind.wav" }
         }
     }

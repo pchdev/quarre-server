@@ -26,7 +26,7 @@ Item
         setup: rooms_setup
         active: false
 
-        exposePath: "/audio/stonepath/deidarabotchi/rooms"
+        exposePath: "/stonepath/deidarabotchi/audio/rooms"
 
         WPN114.StereoSource //----------------------------------------- 1.KAIVO (1-2)
         {
@@ -35,10 +35,10 @@ Item
             diffuse: 0.55
             y: 0.55
 
-            exposePath: "/audio/stonepath/deidarabotchi/kaivo/source"
+            exposePath: "/stonepath/deidarabotchi/audio/kaivo/source"
 
             WPN114.StreamSampler { id: kaivo;
-                exposePath: "/audio/stonepath/deidarabotchi/kaivo"
+                exposePath: "/stonepath/deidarabotchi/audio/kaivo"
                 path: "audio/stonepath/deidarabotchi/kaivo.wav" }
         }
 
@@ -49,10 +49,10 @@ Item
             diffuse: 0.3
             y: 0.9
 
-            exposePath: "/audio/stonepath/deidarabotchi/synth/source"
+            exposePath: "/stonepath/deidarabotchi/audio/synth/source"
 
             WPN114.StreamSampler { id: synth;
-                exposePath: "/audio/stonepath/deidarabotchi/synth"
+                exposePath: "/stonepath/deidarabotchi/audio/synth"
                 path: "audio/stonepath/deidarabotchi/synth.wav" }
         }
 
@@ -62,10 +62,10 @@ Item
             xspread: 0.35
             diffuse: 0.9
 
-            exposePath: "/audio/stonepath/deidarabotchi/background/source"
+            exposePath: "/stonepath/deidarabotchi/audio/background/source"
 
             WPN114.StreamSampler { id: background;
-                exposePath: "/audio/stonepath/deidarabotchi/background"
+                exposePath: "/stonepath/deidarabotchi/audio/background"
                 path: "audio/stonepath/deidarabotchi/background.wav" }
         }
 
@@ -76,10 +76,10 @@ Item
             diffuse: 0.25
             y: 0.55
 
-            exposePath: "/audio/stonepath/deidarabotchi/breath/source"
+            exposePath: "/stonepath/deidarabotchi/audio/breath/source"
 
             WPN114.StreamSampler { id: breath;
-                exposePath: "/audio/stonepath/deidarabotchi/breath"
+                exposePath: "/stonepath/deidarabotchi/audio/breath"
                 path: "audio/stonepath/deidarabotchi/breath.wav" }
         }
 
@@ -90,10 +90,10 @@ Item
             diffuse: 0.5
             y: 0.25
 
-            exposePath: "/audio/stonepath/deidarabotchi/wind/source"
+            exposePath: "/stonepath/deidarabotchi/audio/wind/source"
 
             WPN114.StreamSampler { id: wind;
-                exposePath: "/audio/stonepath/deidarabotchi/wind"
+                exposePath: "/stonepath/deidarabotchi/audio/wind"
                 path: "audio/stonepath/deidarabotchi/wind.wav" }
         }
     }

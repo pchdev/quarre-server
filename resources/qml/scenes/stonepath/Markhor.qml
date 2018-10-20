@@ -9,7 +9,7 @@ Item
 
     WPN114.Node
     {
-        path: "/interactions/stonepath/markhor/setup"
+        path: "/stonepath/markhor/setup"
         type: WPN114.Type.Impulse
 
         onValueReceived:
@@ -30,7 +30,7 @@ Item
             id:     interaction_clock_bells
 
             title:  "Cloches, pré-rythmiques"
-            path:   "stonepath/markhor/clock-bells"
+            path:   "/stonepath/markhor/interactions/clock-bells"
             module: "quarre/VareRainbells.qml"
 
             description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches,
@@ -73,7 +73,7 @@ pivotez-le doucement dans n'importe quel axe de rotation"
             id:     interaction_granular_models
 
             title:  "Impulsions (essais)"
-            path:   "stonepath/markhor/granular-1"
+            path:   "/stonepath/markhor/interactions/granular-1"
             module: "quarre/MarkhorGranular.qml"
 
             description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
@@ -112,7 +112,7 @@ pivotez-le doucement dans n'importe quel axe de rotation"
             id:     interaction_resonators_1
 
             title:  "Résonances (essais)"
-            path:   "stonepath/markhor/resonator-1"
+            path:   "/stonepath/markhor/interactions/resonator-1"
             module: "quarre/MarkhorResonator.qml"
 
             description: "Manipulez les sliders afin d'altérer la résonance
@@ -146,7 +146,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_body_1
 
             title:  "Corps de résonance (essais)"
-            path:   "stonepath/markhor/body-1"
+            path:   "/stonepath/markhor/interactions/body-1"
             module: "quarre/MarkhorBody.qml"
 
             description: "Manipulez les sliders afin d'altérer le corps de résonance
@@ -178,7 +178,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_pads_1
 
             title:  "Temps et Contretemps (essais)"
-            path:   "stonepath/markhor/pads-1"
+            path:   "/stonepath/markhor/interactions/pads-1"
             module: "quarre/MarkhorPads.qml"
 
             description: "Appuyez et maintenez l'un des pads (un seul à la fois)
@@ -204,7 +204,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_granular_models_2
 
             title:  "Impulsions (tutti)"
-            path:   "stonepath/markhor/granular-2"
+            path:   "/stonepath/markhor/interactions/granular-2"
             module: "quarre/MarkhorGranular.qml"
 
             description: "Vous jouez maintenant tous ensemble, collaborez,
@@ -221,7 +221,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_resonators_2
 
             title:  "Résonances (tutti)"
-            path:   "stonepath/markhor/resonator-2"
+            path:   "/stonepath/markhor/interactions/resonator-2"
             module: "quarre/MarkhorResonator.qml"
 
             description: interaction_granular_models_2.description
@@ -236,7 +236,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_body_2
 
             title:  "Corps de résonance (tutti)"
-            path:   "stonepath/markhor/body-2"
+            path:   "/stonepath/markhor/interactions/body-2"
             module: "quarre/MarkhorBody.qml"
 
             description: interaction_granular_models_2.description
@@ -251,7 +251,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_pads_2
 
             title:  "Temps et Contretemps (tutti)"
-            path:   "stonepath/markhor/pads-2"
+            path:   "/stonepath/markhor/interactions/pads-2"
             module: "quarre/MarkhorPads.qml"
 
             description: interaction_granular_models_2.description
@@ -269,7 +269,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         parentStream: audio_stream
         setup: rooms_setup
 
-        exposePath: "/audio/stonepath/markhor/rooms"
+        exposePath: "/stonepath/markhor/audio/rooms"
 
         WPN114.StereoSource //----------------------------------------- 1.DOOMSDAY (1-2)
         {
@@ -277,10 +277,10 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             xspread: 0.25
             diffuse: 0.55
 
-            exposePath: "/audio/stonepath/markhor/doomsday/source"
+            exposePath: "/stonepath/markhor/audio/doomsday/source"
 
             WPN114.MultiSampler { id: doomsday;
-                exposePath: "/audio/stonepath/markhor/doomsday"
+                exposePath: "/stonepath/markhor/audio/doomsday"
                 path: "audio/stonepath/markhor/doomsday" }
         }
 
@@ -291,10 +291,10 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             diffuse: 0.3
             y: 0.85
 
-            exposePath: "/audio/stonepath/markhor/ambient-light/source"
+            exposePath: "/stonepath/markhor/audio/ambient-light/source"
 
             WPN114.Sampler { id: ambient_light;
-                exposePath: "/audio/stonepath/markhor/ambient-light"
+                exposePath: "/stonepath/markhor/audio/ambient-light"
                 path: "audio/stonepath/markhor/ambient-light.wav" }
         }
 
@@ -305,10 +305,10 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             diffuse: 0.65
             y: 0.7
 
-            exposePath: "/audio/stonepath/markhor/paroral/source"
+            exposePath: "/stonepath/markhor/audio/paroral/source"
 
             WPN114.Sampler { id: paroral;
-                exposePath: "/audio/stonepath/markhor/paroral"
+                exposePath: "/stonepath/markhor/audio/paroral"
                 path: "audio/stonepath/markhor/paroral.wav" }
         }
 
@@ -319,10 +319,10 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             diffuse: 1.0
             y: 0.4
 
-            exposePath: "/audio/stonepath/markhor/soundscape/source"
+            exposePath: "/stonepath/markhor/audio/soundscape/source"
 
             WPN114.Sampler { id: soundscape;
-                exposePath: "/audio/stonepath/markhor/soundscape"
+                exposePath: "/stonepath/markhor/audio/soundscape"
                 path: "audio/stonepath/markhor/soundscape.wav" }
         }
 
@@ -333,10 +333,10 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             diffuse: 0.2
             y: 0.55
 
-            exposePath: "/audio/stonepath/markhor/bell-hit/source"
+            exposePath: "/stonepath/markhor/audio/bell-hit/source"
 
             WPN114.Sampler { id: bell_hit;
-                exposePath: "/audio/stonepath/markhor/bell-hit"
+                exposePath: "/stonepath/markhor/audio/bell-hit"
                 path: "audio/stonepath/markhor/bell-hit.wav" }
         }
     }
