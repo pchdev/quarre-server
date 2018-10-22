@@ -29,12 +29,12 @@ Item
     function end()      { interaction_end.value = 0; }
     function execute()  { executor.start() }
 
-    WPN114.Node on title        { path: "/interactions/"+root.path+"/title" }
-    WPN114.Node on description  { path: "/interactions/"+root.path+"/description" }
-    WPN114.Node on length       { path: "/interactions/"+root.path+"/length" }
-    WPN114.Node on countdown    { path: "/interactions/"+root.path+"/countdown" }
-    WPN114.Node on module       { path: "/interactions/"+root.path+"/module" }
-    WPN114.Node on broadcast    { path: "/interactions/"+root.path+"/broadcast" }
+    WPN114.Node on title        { path: root.path+"/title" }
+    WPN114.Node on description  { path: root.path+"/description" }
+    WPN114.Node on length       { path: root.path+"/length" }
+    WPN114.Node on countdown    { path: root.path+"/countdown" }
+    WPN114.Node on module       { path: root.path+"/module" }
+    WPN114.Node on broadcast    { path: root.path+"/broadcast" }
 
     Timer //------------------------------------------------------------ EXECUTOR
     {
@@ -65,7 +65,7 @@ Item
     WPN114.Node //------------------------------------------------------------ INTERACTION_NOTIFY
     {
         id: interaction_notify
-        path: "/interactions/"+root.path+"/notify"
+        path: root.path+"/notify"
         type: WPN114.Type.Impulse
 
         onValueReceived:
@@ -84,7 +84,7 @@ Item
     WPN114.Node //------------------------------------------------------------ INTERACTION_BEGIN
     {
         id: interaction_begin
-        path: "/interactions/"+root.path+"/begin"
+        path: root.path+"/begin"
         type: WPN114.Type.Impulse
 
         onValueReceived:
@@ -107,7 +107,7 @@ Item
     WPN114.Node //------------------------------------------------------------ INTERACTION_END
     {
         id: interaction_end
-        path: "/interactions/"+root.path+"/end"
+        path: root.path+"/end"
         type: WPN114.Type.Impulse
 
         onValueReceived:
@@ -134,8 +134,17 @@ Item
     WPN114.Node
     {
         id:     interaction_dispatched
-        path:   "/interactions/"+root.path+"/dispatched"
+        path:   root.path+"/dispatched"
         type:   WPN114.Type.Bool
         value:  false
+    }
+
+    WPN114.Node
+    {
+        id:     interaction_execute
+        path:   root.path+"/execute"
+        type:   WPN114.Type.Impulse
+
+        onValueReceived: root.execute();
     }
 }

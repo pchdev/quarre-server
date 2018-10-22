@@ -8,16 +8,14 @@ Item
 
     function dispatch(target, interaction)
     {
-        console.log("Dispatching interaction:", interaction.title)
-
-        var candidates = [];
-        var priorities = [];
+        var candidates = [ ];
+        var priorities = [ ];
 
         if ( interaction.broadcast )
         {
             for ( var u = 0; u < maxClients; ++u )
                 if ( clients.itemAt(u).connected )
-                    clients.itemAt(u).notifyInteraction(interaction);
+                     clients.itemAt(u).notifyInteraction(interaction);
             return;
         }
 
@@ -26,13 +24,13 @@ Item
             var client = clients.itemAt(c);           
             var priority = 0;
 
-            if ( !client.connected ) continue;
-            if ( client.status === "incoming" ) continue;
-            else if ( client.status === "active_incoming" ) continue;
+            if      ( !client.connected )                    continue;
+            if      ( client.status === "incoming" )         continue;
+            else if ( client.status === "active_incoming" )  continue;
             else if ( client.status === "active" )
             {
                 var acd = client.getActiveCountdown();
-                if ( interaction.countdown < acd+5 ) continue;
+                if ( interaction.countdown < acd+5 )         continue;
 
                 priority = 1;
             }
@@ -40,8 +38,9 @@ Item
             else continue;
 
             priority += client.interaction_count;
-            candidates.push(client);
-            priorities.push(priority);
+
+            candidates.push ( client );
+            priorities.push ( priority );
         }
 
         var winner;
@@ -70,6 +69,25 @@ Item
         {
             winner.notifyInteraction(interaction);
             interaction.dispatched.value = true;
+        }
+    }
+
+    Connections
+    {
+        target: module_server
+        onNewConnection:
+        {
+            var hostaddr  = host.split(":")[0]+':'+'5678'
+
+            for ( var c = 0; c < maxClients; ++c )
+            {
+                var client = clients.itemAt(c);
+                if ( !client.connected )
+                {
+                    client.remote.connect(hostaddr);
+                    break;
+                }
+            }
         }
     }
 

@@ -31,7 +31,7 @@ Item
     function notifyInteraction(interaction)
     {
         var interaction_arr = getInteractionMessage(interaction);
-        remote.sendMessage("/interactions/next/incoming", interaction_arr, true);
+        remote.sendMessage("/interactions/next/incoming", interaction_arr, true);        
 
         interaction.owners.push(root);
         root.interaction_count++;
@@ -61,7 +61,6 @@ Item
         // when connected, remote will download the different module files
         // then go into idle state
         id: remote
-        zeroConfHost: number ? "quarre-remote"+"("+number+")" : "quarre-remote"
 
         onConnected:
         {

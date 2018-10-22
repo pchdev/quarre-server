@@ -14,7 +14,7 @@ Rectangle
 
     WPN114.FolderNode //------------------------------------------------------------- NETSERVER
     {
-        device: query_server
+        device: module_server
         recursive: true
         folderPath: "/Users/pchd/Repositories/quarre-server/resources/qml/modules"
         path: "/modules"
@@ -23,11 +23,19 @@ Rectangle
 
     WPN114.OSCQueryServer
     {
+        id: module_server
+        name: "quarre-modules"
+        tcpPort: 8576
+        udpPort: 4132
+    }
+
+    WPN114.OSCQueryServer
+    {
         id: query_server
         singleDevice: true
         name: "quarre-server"
         tcpPort: 5678
-        udpPort: 1234
+        udpPort: 1234       
     }
 
     WPN114.AudioStream //------------------------------------------------------------- AUDIO
@@ -44,18 +52,18 @@ Rectangle
 
         Component.onCompleted:
         {
-            //introduction.rooms.setup        = rooms_setup
-//            stonepath.cendres.rooms.setup   = rooms_setup
-//            stonepath.cendres.rooms.active  = true
+            introduction.rooms.setup         = rooms_setup
+            stonepath.cendres.rooms.setup    = rooms_setup
+            stonepath.diaclases.rooms.setup  = rooms_setup
+            stonepath.deidarabotchi.rooms.setup  = rooms_setup
+            stonepath.markhor.rooms.setup    = rooms_setup
+            instruments.rooms.setup          = rooms_setup
+            effects.rooms.setup              = rooms_setup
 
-            //stonepath.diaclases.rooms.setup   = rooms_setup
-            //stonepath.diaclases.rooms.active  = true;
-
-            //instruments.rooms.setup     = rooms_setup
-            //start();
+            start();
         }
 
-        WPN114.Node on dBlevel { path: "/audio/master/level"; onValueChanged: console.log(newValue)}
+        WPN114.Node on dBlevel { path: "/audio/master/level" }
         WPN114.Node on active { path: "/audio/master/active" }
         WPN114.Node on mute { path: "/audio/master/muted" }
     }
@@ -68,16 +76,13 @@ Rectangle
     }
 
     ClientManager   { id: client_manager; maxClients: 4 }
-    //Introduction    { id: introduction }
+    Introduction    { id: introduction }
     //WoodPath        { id: woodpath }
-
     StonePath       { id: stonepath }
 
-    //Instruments     { id: instruments }
+    Instruments     { id: instruments }
     Effects         { id: effects }
     Functions       { id: functions }
 
-    SceneView
-    {
-    }
+    //SceneView { }
 }
