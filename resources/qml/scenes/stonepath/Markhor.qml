@@ -9,15 +9,20 @@ Item
 
     WPN114.Node
     {
-        path: "/stonepath/markhor/setup"
-        type: WPN114.Type.Impulse
+        path: "/stonepath/markhor/active"
+        type: WPN114.Type.Bool
 
         onValueReceived:
         {
-//            instruments.kaivo_1.active = true;
-            instruments.kaivo_2.active = true;
-//            instruments.kaivo_1.setPreset("autochurch");
-            instruments.kaivo_2.setPreset("markhor");
+            instruments.kaivo_1.active = newValue;
+            instruments.kaivo_2.active = newValue;
+            markhor_rooms.active = newValue;
+
+            if ( newValue )
+            {
+                instruments.absynth.active = false;
+                effects.amplitube.active = false;
+            }
         }
     }
 
@@ -35,13 +40,13 @@ Item
 
             description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches,
 pivotez-le doucement dans n'importe quel axe de rotation"
-//afin de changer leurs propriétés."
+            //afin de changer leurs propriétés."
 
             length: 45
             countdown:  15
 
             mappings:
-            [
+                [
                 QuMapping // ---------------------------------------------- proximity mapping
                 {
                     source: "/modules/bells/trigger"
@@ -51,7 +56,7 @@ pivotez-le doucement dans n'importe quel axe de rotation"
 
                         instruments.kaivo_1.noteOn(0, rdm_note, rdm_p);
                         instruments.kaivo_1.noteOff(0, rdm_note, rdm_p);
-                   }
+                    }
                 },
 
                 QuMapping // ---------------------------------------------- rotation mapping
@@ -63,7 +68,7 @@ pivotez-le doucement dans n'importe quel axe de rotation"
                         instruments.kaivo_1.set("res_position", (v[2]+180)/360);
                         instruments.kaivo_1.set("res_sustain", (v[1]+180)/360*0.1);
                         instruments.kaivo_1.set("env1_attack", (v[1]+180)/360*0.5);
-                   }
+                    }
                 }
             ]
         }
@@ -92,7 +97,7 @@ pivotez-le doucement dans n'importe quel axe de rotation"
             // TODO: OVERLAP bug
 
             mappings:
-            [
+                [
                 QuMapping {
                     source: "/modules/markhor/granular/overlap"
                     expression: function(v) { instruments.kaivo_2.set("gran_density", v) }},
@@ -122,7 +127,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             countdown:  15
 
             mappings:
-            [
+                [
                 QuMapping {
                     source: "/modules/markhor/resonator/brightness"
                     expression: function(v) { instruments.kaivo_2.set("res_brightness", v) }},
@@ -156,7 +161,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             countdown:  15
 
             mappings:
-            [
+                [
                 QuMapping {
                     source: "/modules/markhor/body/tone"
                     expression: function(v) { instruments.kaivo_2.set("body_tone", v) }},
@@ -192,7 +197,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
-                expression: function(v) {                                                                              
+                expression: function(v) {
                     if ( v === 0 ) instruments.kaivo_2.allNotesOff();
                     else instruments.kaivo_2.noteOn(0, pads[v-1], 127);
                 }
@@ -228,7 +233,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             mappings: interaction_resonators_1.mappings
 
             length: 180
-            countdown: 10            
+            countdown: 10
         }
 
         Interaction //--------------------------------------------- MARKHOR_BODY_2
@@ -257,7 +262,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             description: interaction_granular_models_2.description
             mappings: interaction_pads_1.mappings
 
-            length: 180
+            length: 230
             countdown:  10
         }
     }
@@ -293,7 +298,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             exposePath: "/stonepath/markhor/audio/ambient-light/source"
 
-            WPN114.Sampler { id: ambient_light;
+            WPN114.Sampler { id: ambient_light; loop: true
                 exposePath: "/stonepath/markhor/audio/ambient-light"
                 path: "audio/stonepath/markhor/ambient-light.wav" }
         }

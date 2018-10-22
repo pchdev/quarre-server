@@ -1,21 +1,54 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import "../.."
+import ".."
 
 Item
-{
+{    
+    property alias rooms: deidarabotchi_rooms
+
+    Interaction //----------------------------------------------------- TUTORIAL
+    {
+        id: interaction_transition
+        path: "/stonepath/deidarabotchi/interactions/transition"
+
+        title: "Transition, ダイダラボッチ "
+        module: "quarre/Transitions.qml"
+        broadcast: true
+        length: 152
+        countdown: 5
+        description: "transition, veuillez patienter..."
+    }
 
     WPN114.Node
     {
         type: WPN114.Type.Bool
-        path: "audio/stonepath/deidarabotchi/play"
+        path: "/stonepath/deidarabotchi/active"
         onValueReceived:
-        {
+        {            
+            if ( newValue )
+            {
+                kaivo.play();
+                synth.play();
+                background.play();
+                breath.play();
+                wind.play();
+
+                instruments.kaivo_1.active = false;
+                instruments.kaivo_2.active = false;
+                instruments.absynth.active = false;
+                effects.amplitube.active = false;
+            }
+            else
+            {
+                kaivo.stop();
+                synth.stop();
+                background.stop();
+                breath.stop();
+                wind.stop();
+            }
+
             deidarabotchi_rooms.active = newValue;
-            kaivo.active = newValue;
-            synth.active = newValue;
-            background.active = newValue;
-            breath.active = newValue;
-            wind.wactive = newValue;
         }
     }
 

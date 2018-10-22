@@ -13,6 +13,25 @@ Item
     property alias interaction_groundwalk:  interaction_groundwalk
     property alias interaction_birds:       interaction_flying_birds
 
+    WPN114.Node
+    {
+        path: "/stonepath/cendres/active"
+        type: WPN114.Type.Bool
+
+        onValueReceived:
+        {
+            if ( newValue )
+            {
+                instruments.kaivo_1.active = false;
+                instruments.kaivo_2.active = false;
+                instruments.absynth.active = false;
+                effects.amplitube.active = false;
+            }
+
+            cendres_rooms.active = newValue;
+        }
+    }
+
     Item //------------------------------------------------------------------------------ INTERACTIONS
     {
         id: interactions
@@ -221,7 +240,7 @@ Item
         }
 
         WPN114.StereoSource //----------------------------------------- 4.LIGHT-BACKGROUND (7-8)
-        {            
+        {
             exposePath: "/stonepath/cendres/audio/light-background/source"
 
             xspread: 0.25

@@ -28,7 +28,7 @@ Item
         Interaction //---------------------------------------------------- CROSSROADS
         {
             id: crossroads
-            path: "/introduction/interaction/crossroads"
+            path: "/introduction/interactions/crossroads"
 
             title: "Croisée des chemins"
             module: "quarre/Vote.qml"
@@ -59,6 +59,7 @@ Item
                         if ( res === 0 ) res_zero++;
                         else if ( res === 1 ) res_one++;
                         else if ( res === 2 ) res_two++;
+                        owner.remote.ignore("/modules/crossroads/selection");
                     }
                 });
 

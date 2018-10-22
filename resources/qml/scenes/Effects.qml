@@ -3,9 +3,9 @@ import WPN114 1.0 as WPN114
 
 Item
 {
-    property alias reverb: reverb
-    property alias amplitube: amplitube
-    property alias rooms: effects_rooms
+    property alias reverb:      reverb
+    property alias amplitube:   amplitube
+    property alias rooms:       effects_rooms
 
     WPN114.Rooms
     {
@@ -13,39 +13,39 @@ Item
         active: true
         parentStream: audio_stream
         setup: rooms_setup
-        exposePath: "/audio/effects/rooms"
+        exposePath: "/effects/rooms"
 
         WPN114.StereoSource //----------------------------------------------------- ALTIVERB
         {
+            active: true
             xspread: 0.25
             diffuse: 0.55
             y: 0.5
 
-            exposePath: "/audio/instruments/altiverb/source"
+            exposePath: "/effects/reverb/source"
 
             WPN114.Convolver
             {
                 id: reverb
-                active: true
                 irPath: "/Users/pchd/Desktop/IRS/921.wav"
-                exposePath: "/audio/effects/reverb"
+                exposePath: "/effects/reverb"
             }
         }
 
         WPN114.StereoSource //----------------------------------------------------- AMPLITUBE
         {
+            active: false
             xspread: 0.25
             diffuse: 0.55
             y: 0.5
 
-            exposePath: "/audio/instruments/amplitube/source"
+            exposePath: "/effects/amplitube/source"
 
             WPN114.AudioPlugin // TODO: switch to convolver
             {
                 id: amplitube
-                active: false
                 path: "/Library/Audio/Plug-Ins/VST/Amplitube 4.vst"
-                exposePath: "/audio/effects/amplitube"
+                exposePath: "/effects/amplitube"
             }
         }
     }

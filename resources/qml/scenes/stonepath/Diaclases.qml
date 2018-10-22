@@ -9,17 +9,27 @@ Item
 
     WPN114.Node
     {
-        path: "/interactions/stonepath/diaclases/setup"
-        type: WPN114.Type.Impulse
+        path: "/stonepath/diaclases/interactions/spring_attack"
+        type: WPN114.Type.Float
+        onValueReceived: instruments.kaivo_1.set("env1_attack", newValue);
+    }
+
+    WPN114.Node
+    {
+        path: "/stonepath/diaclases/active"
+        type: WPN114.Type.Bool
 
         onValueReceived:
         {
-            instruments.kaivo_1.active = true;
-            instruments.rooms.active = true;
-//            instruments.kaivo_2.active = false;
-           // instruments.kaivo_1.setPreset("spring");
+            if ( newValue )
+            {
+                instruments.kaivo_2.active = false;
+                instruments.absynth.active = false;
+                effects.amplitube.active = false;
+            }
 
-           // instruments.kaivo_1.showEditorWindow();
+            instruments.kaivo_1.active = newValue;
+            diaclases_rooms.active = newValue;
         }
     }
 
@@ -32,7 +42,7 @@ Item
             id:     interaction_spring_low
 
             title:  "Gong primitif, déclenchements (1)"
-            path:   "stonepath/diaclases/spring-low"
+            path:   "/stonepath/diaclases/interactions/spring-low"
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
@@ -62,13 +72,15 @@ Item
             id:     interaction_spring_high
 
             title:  "Gong primitif, déclenchements (2)"
-            path:   "stonepath/diaclases/spring-hi"
+            path:   "/stonepath/diaclases/interactions/spring-hi"
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
 
             length: 80
             countdown:  15
+
+            onInteractionNotify: instruments.kaivo_1.programChange(0, 37)
 
             mappings: QuMapping
             {
@@ -89,7 +101,7 @@ Item
             id:     interaction_spring_timbre_1
 
             title:  "Gong primitif, timbre"
-            path:   "stonepath/diaclases/spring-timbre"
+            path:   "/stonepath/diaclases/interactions/spring-timbre"
             module: "basics/XYZRotation.qml"
 
             description: "Faites pivoter l'appareil dans ses axes de rotation
@@ -115,13 +127,19 @@ Item
             id:     interaction_spring_low_2
 
             title:  "Gong primitif, percussif (1)"
-            path:   "stonepath/diaclases/spring-low-2"
+            path:   "/stonepath/diaclases/interactions/spring-low-2"
             module: "basics/GestureHammer.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
 
             length: 80
             countdown:  10
+
+            onInteractionNotify:
+            {
+                instruments.kaivo_1.programChange(0, 37)
+                instruments.kaivo_1.set("env1_attack", 0)
+            }
 
             mappings: QuMapping
             {
@@ -142,13 +160,19 @@ Item
             id:     interaction_spring_high_2
 
             title:  "Gong primitif, percussif (2)"
-            path:   "stonepath/diaclases/spring-hi-2"
+            path:   "/stonepath/diaclases/interactions/spring-hi-2"
             module: "basics/GestureHammer.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
 
             length: 80
             countdown:  10
+
+            onInteractionNotify:
+            {
+                instruments.kaivo_1.programChange(0, 37)
+                instruments.kaivo_1.set("env1_attack", 0)
+            }
 
             mappings: QuMapping
             {
@@ -169,7 +193,7 @@ Item
             id:     interaction_spring_timbre_2
 
             title:  "Gong primitif, timbre (2)"
-            path:   "stonepath/diaclases/spring-timbre-2"
+            path:   "/stonepath/diaclases/interactions/spring-timbre-2"
             module: "basics/XYZRotation.qml"
 
             description: "Faites pivoter l'appareil dans ses axes de rotation pour
@@ -195,7 +219,7 @@ Item
             id:     interaction_smoke_spat
 
             title:  "Combustions, mise en espace"
-            path:   "stonepath/diaclases/smoke"
+            path:   "/stonepath/diaclases/interactions/smoke"
             module: "basics/ZRotation.qml"
 
             description: "Orientez votre appareil horizontalement, à 360 degrés
@@ -203,6 +227,9 @@ Item
 
             length: 155
             countdown:  15
+
+            onInteractionNotify:    smoke.play();
+            onInteractionEnd:       smoke.stop();
 
             mappings: QuMapping
             {
@@ -221,7 +248,7 @@ Item
         parentStream: audio_stream
         setup: rooms_setup
 
-        exposePath: "/audio/stonepath/diaclases/rooms"
+        exposePath: "/stonepath/diaclases/audio/rooms"
 
         WPN114.StereoSource //----------------------------------------- 1.STONEWATER (1-2)
         {
@@ -230,10 +257,10 @@ Item
             diffuse: 0.5
             y: 0.25
 
-            exposePath: "/audio/stonepath/diaclases/stonewater/source"
+            exposePath: "/stonepath/diaclases/audio/stonewater/source"
 
             WPN114.StreamSampler { id: stonewater;
-                exposePath: "/audio/stonepath/diaclases/stonewater"
+                exposePath: "/stonepath/diaclases/audio/stonewater"
                 path: "audio/stonepath/diaclases/stonewater.wav" }
         }
 
@@ -244,10 +271,10 @@ Item
             diffuse: 0.5
             y: 0.25
 
-            exposePath: "/audio/stonepath/diaclases/harmonics/source"
+            exposePath: "/stonepath/diaclases/audio/harmonics/source"
 
             WPN114.StreamSampler { id: harmonics;
-                exposePath: "/audio/stonepath/diaclases/harmonics"
+                exposePath: "/stonepath/diaclases/audio/harmonics"
                 path: "audio/stonepath/diaclases/harmonics.wav" }
         }
 
@@ -258,20 +285,20 @@ Item
             diffuse: 0.6
             y: 0.85
 
-            exposePath: "/audio/stonepath/diaclases/drone/source"
+            exposePath: "/stonepath/diaclases/audio/drone/source"
 
             WPN114.StreamSampler { id: drone;
-                exposePath: "/audio/stonepath/diaclases/drone"
+                exposePath: "/stonepath/diaclases/audio/drone"
                 path: "audio/stonepath/diaclases/drone.wav" }
         }
 
         WPN114.MonoSource //----------------------------------------- 4.SMOKE (7-8)
         {
             id: smoke_source;
-            exposePath: "/audio/stonepath/diaclases/smoke/source"
+            exposePath: "/stonepath/diaclases/audio/smoke/source"
 
             WPN114.Sampler { id: smoke;
-                exposePath: "/audio/stonepath/diaclases/smoke"
+                exposePath: "/stonepath/diaclases/audio/smoke"
                 path: "audio/stonepath/diaclases/smoke.wav" }
         }
     }

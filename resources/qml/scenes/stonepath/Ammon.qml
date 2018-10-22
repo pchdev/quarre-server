@@ -7,6 +7,22 @@ Item
 {
     property alias rooms: ammon_rooms
 
+    WPN114.Node
+    {
+        path: "/stonepath/ammon/active"
+        type: WPN114.Type.Bool
+
+        onValueReceived:
+        {
+            instruments.kaivo_1.active = newValue;
+            instruments.kaivo_2.active = newValue;
+            instruments.absynth.active = newValue;
+            ammon_rooms.active = newValue;
+
+            if ( newValue ) effects.amplitube.active = false;
+        }
+    }
+
     Item
     {
         id: interactions
@@ -169,6 +185,8 @@ Item
         parentStream: audio_stream
         setup: rooms_setup
 
+        exposePath: "/stonepath/ammon/audio/rooms"
+
         WPN114.StereoSource //----------------------------------------- 1.FOOTSTEPS (1-2)
         {            
             fixed: true
@@ -180,7 +198,7 @@ Item
 
             WPN114.Sampler { id: footsteps;
                 exposePath: "/stonepath/ammon/audio/footsteps"
-                path: "audio/stonepath/ammon/foosteps.wav" }
+                path: "audio/stonepath/ammon/footsteps.wav" }
         }
 
         WPN114.StereoSource //----------------------------------------- 2.BROKEN-RADIO (3-4)
