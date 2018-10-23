@@ -7,7 +7,7 @@ Item
     id: root
 
     property int idkey:             0
-    property var owners:            [];
+    property var owners:            [ ];
     property string title:          ""
     property string description:    ""
     property int length:            0
@@ -128,6 +128,7 @@ Item
             interaction_dispatched.value = false;
             executor.running = false;
             executor.count = 0;
+            owners = [ ];
         }
     }
 

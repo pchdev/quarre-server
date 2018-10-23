@@ -36,11 +36,10 @@ Item
 
         WPN114.StereoSource //----------------------------------------------------- KAIVO_1
         {
+            id: kaivo_1_source
             xspread: 0.25
             diffuse: 0.55
             y: 0.75
-
-            active: false
 
             exposePath: "/instruments/kaivo-1/source"
 
@@ -49,6 +48,9 @@ Item
                 id: kaivo_1
                 path: "/Library/Audio/Plug-Ins/VST/Kaivo.vst"
                 exposePath: "/instruments/kaivo-1"
+                active: false
+
+                onActiveChanged: kaivo_1_source.active = active
 
                 function setPreset(str) {
                     kaivo_1.programChange(0, kaivo_presets[str]);
@@ -70,11 +72,11 @@ Item
 
         WPN114.StereoSource //----------------------------------------------------- KAIVO_2
         {
+            id: kaivo_2_source
+
             xspread: 0.25
             diffuse: 0.55
-            y: 0.75
-
-            active: false
+            y: 0.75            
 
             exposePath: "/instruments/kaivo-2/source"
 
@@ -83,6 +85,9 @@ Item
                 id: kaivo_2
                 path: "/Library/Audio/Plug-Ins/VST/Kaivo.vst"
                 exposePath: "/instruments/kaivo-2"
+                active: false
+
+                onActiveChanged: kaivo_2_source.active = active
 
                 function setPreset(str) {
                     kaivo_2.programChange(0, kaivo_presets[str]);
@@ -104,7 +109,8 @@ Item
 
         WPN114.StereoSource //----------------------------------------------------- ABSYNTH
         {
-            active: false
+            id: absynth_source
+
             xspread: 0.25
             diffuse: 0.55
             y: 0.75
@@ -116,6 +122,9 @@ Item
                 id: absynth
                 path: "/Library/Audio/Plug-Ins/VST/Absynth 5 Stereo.vst"
                 exposePath: "/instruments/absynth"
+                active: false
+
+                onActiveChanged: absynth_source.active = active
 
                 WPN114.Fork { target: effects.reverb;
                     dBlevel: 0.0

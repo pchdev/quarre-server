@@ -38,14 +38,31 @@ Rectangle
         udpPort: 1234       
     }
 
+    WPN114.Node
+    {
+        id:     audio_reset
+        path:   "/global/audio/reset"
+        type:   WPN114.Type.Impulse
+
+        onValueReceived:
+        {
+            introduction.rooms.active = false
+            stonepath.cendres.rooms.active = false
+            stonepath.diaclases.rooms.active = false
+            stonepath.deidarabotchi.rooms.active = false
+            stonepath.markhor.rooms.active = false
+            stonepath.ammon.rooms.active = false
+        }
+    }
+
     WPN114.AudioStream //------------------------------------------------------------- AUDIO
     {
         id:             audio_stream
 
-//        outDevice:      "Scarlett 2i2 USB"
+        outDevice:      "Scarlett 2i2 USB"
 //        numOutputs:     2
 
-        outDevice:      "Soundflower (64ch)"
+//        outDevice:      "Soundflower (64ch)"
         numOutputs:     2
         sampleRate:     44100
         blockSize:      512
@@ -63,9 +80,9 @@ Rectangle
             start();
         }
 
-        WPN114.Node on dBlevel { path: "/audio/master/level" }
-        WPN114.Node on active { path: "/audio/master/active" }
-        WPN114.Node on mute { path: "/audio/master/muted" }
+        WPN114.Node on dBlevel { path: "/global/audio/master/level" }
+        WPN114.Node on active { path: "/global/audio/master/active" }
+        WPN114.Node on mute { path: "/global/audio/master/muted" }
     }
 
     WPN114.RoomSetup // octophonic ring setup for quarrè-angoulême

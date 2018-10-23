@@ -29,6 +29,7 @@ Item
             }
 
             instruments.kaivo_1.active = newValue;
+            instruments.rooms.active = newValue;
             diaclases_rooms.active = newValue;
         }
     }

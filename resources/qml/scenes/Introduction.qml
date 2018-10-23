@@ -71,6 +71,8 @@ Item
 
                 else total = Math.floor(Math.random()*2);
                 crossroads_result.value = total;
+
+                console.log("crossroads result:", total);
             }
         }
     }
@@ -88,17 +90,6 @@ Item
         path: "/introduction/audio/play"
         onValueReceived:
         {
-            digibirds.active     = newValue;
-            swarms.active        = newValue;
-            dragon_hi.active     = newValue;
-            dragon_lo.active     = newValue;
-            walking_1.active     = newValue;
-            walking_2.active     = newValue;
-            synth.active         = newValue;
-            spring.active        = newValue;
-            river.active         = newValue;
-            verb.active          = newValue;
-
             if ( newValue )
             {
                 digibirds.play      ( );
@@ -111,6 +102,9 @@ Item
                 spring.play         ( );
                 river.play          ( );
                 verb.play           ( );
+
+                // for synchronization purposes, active the container in last
+                introduction_rooms.active   = true;
             }
             else
             {
@@ -124,10 +118,11 @@ Item
                 spring.stop         ( );
                 river.stop          ( );
                 verb.stop           ( );
-            }
 
-            // for synchronization purposes, active the container in last
-            introduction_rooms.active   = newValue;
+                // if setting rooms inactive, samplers wouldn't be able to release
+                // so we have to do it manually (?)
+                // introduction_rooms.active   = newValue;
+            }
         }
     }
 

@@ -72,6 +72,22 @@ Item
         }
     }
 
+    WPN114.Node
+    {
+        path: "/global/interactions/reset"
+        type: WPN114.Type.Impulse
+
+        onValueReceived:
+        {
+            for ( var c = 0; c < maxClients; ++c )
+            {
+                var  client = clients.itemAt(c);
+                if ( client.connected )
+                     client.remote.get("/interactions/reset").value = 0;
+            }
+        }
+    }
+
     Connections
     {
         target: module_server

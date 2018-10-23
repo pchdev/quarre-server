@@ -49,6 +49,8 @@ Item
     function endInteraction(interaction)
     {
         remote.sendMessage("/interactions/current/end", 0, true);
+        if ( status === "active_incoming" ) status = "incoming";
+        else if ( status === "active" ) status = "idle";
     }
 
     function getActiveCountdown()
@@ -64,14 +66,15 @@ Item
 
         onConnected:
         {
-            console.log("client connected");
             root.status = "idle"
             root.connected = true
+
+            remote.listen("/interactions/next/countdown");
+            remote.listen("/interactions/current/countdown");
         }
 
         onDisconnected:
         {
-            console.log("client disconnected");
             root.status = "disconnected"
             root.connected = false;
         }
