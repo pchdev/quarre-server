@@ -4,15 +4,64 @@ import ".."
 
 Item
 {
-    property alias rooms: introduction_rooms
-    property alias crossroads: crossroads
-    property alias tutorial: tutorial
+    id: root
+
+    property alias rooms:           introduction_rooms
+    property alias scenario:        introduction_scenario
+    property int xroads_result:     0
+
+    signal end()
+
+    WPN114.TimeNode
+    {
+        id: introduction_scenario
+        source: audio_stream
+        duration: min ( 4.42 )
+
+        onStart:
+        {
+            digibirds.play      ( );
+            swarms.play         ( );
+            dragon_hi.play      ( );
+            dragon_lo.play      ( );
+            walking_1.play      ( );
+            walking_2.play      ( );
+            synth.play          ( );
+            spring.play         ( );
+            river.play          ( );
+            verb.play           ( );
+
+            // for synchronization purposes, active the container in last
+            introduction_rooms.active   = true;
+
+            client_manager.notifyStart( );
+            client_manager.notifyScene("introduction");
+        }
+
+        WPN114.TimeNode { date: min(3); onStart: root.end() }
+
+        onEnd: introduction_rooms.active = false;
+
+        InteractionExecutor
+        {
+            id: tutorial_event
+            target: tutorial_interaction
+            date: sec ( 1 )
+        }
+
+        InteractionExecutor
+        {
+            id: crossroads_event
+            target: crossroads_interaction
+            date: min ( 1.45 )
+        }
+    }
 
     Item//------------------------------------------------------------------------------ INTERACTIONS
     {
         Interaction //----------------------------------------------------- TUTORIAL
         {
-            id: tutorial
+            id: tutorial_interaction
             path: "/introduction/interactions/tutorial"
 
             title: "Didacticiel"
@@ -27,7 +76,7 @@ Item
 
         Interaction //---------------------------------------------------- CROSSROADS
         {
-            id: crossroads
+            id: crossroads_interaction
             path: "/introduction/interactions/crossroads"
 
             title: "Croisée des chemins"
@@ -70,58 +119,9 @@ Item
                     total = 1;
 
                 else total = Math.floor(Math.random()*2);
-                crossroads_result.value = total;
 
+                root.xroads_result = total;
                 console.log("crossroads result:", total);
-            }
-        }
-    }
-
-    WPN114.Node //--------------------------------------------------------------- CROSSROADS_RESULT
-    {
-        id: crossroads_result
-        type: WPN114.Type.Int
-        path: "/introduction/interactions/crossroads/result"
-    }
-
-    WPN114.Node //------------------------------------------------------------------------- CONTROL
-    {
-        type: WPN114.Type.Bool
-        path: "/introduction/audio/play"
-        onValueReceived:
-        {
-            if ( newValue )
-            {
-                digibirds.play      ( );
-                swarms.play         ( );
-                dragon_hi.play      ( );
-                dragon_lo.play      ( );
-                walking_1.play      ( );
-                walking_2.play      ( );
-                synth.play          ( );
-                spring.play         ( );
-                river.play          ( );
-                verb.play           ( );
-
-                // for synchronization purposes, active the container in last
-                introduction_rooms.active   = true;
-            }
-            else
-            {
-                digibirds.stop      ( );
-                swarms.stop         ( );
-                dragon_hi.stop      ( );
-                dragon_lo.stop      ( );
-                walking_1.stop      ( );
-                walking_2.stop      ( );
-                synth.stop          ( );
-                spring.stop         ( );
-                river.stop          ( );
-                verb.stop           ( );
-
-                // if setting rooms inactive, samplers wouldn't be able to release
-                // so we have to do it manually (?)
-                // introduction_rooms.active   = newValue;
             }
         }
     }

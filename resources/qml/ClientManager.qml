@@ -72,10 +72,42 @@ Item
         }
     }
 
+    function notifyStart()
+    {
+        for ( var c = 0; c < maxClients; ++c )
+        {
+            var  client = clients.itemAt(c);
+            if ( client.connected )
+                 client.remote.sendMessage("/scenario/running", true, true);
+        }
+    }
+
+    function notifyEnd()
+    {
+        for ( var c = 0; c < maxClients; ++c )
+        {
+            var  client = clients.itemAt(c);
+            if ( client.connected )
+                 client.remote.sendMessage("/scenario/running", false, true);
+        }
+    }
+
+    function notifyScene(name)
+    {
+        for ( var c = 0; c < maxClients; ++c )
+        {
+            var  client = clients.itemAt(c);
+            if ( client.connected )
+                 client.remote.sendMessage("/scenario/scene/name", name, true);
+        }
+    }
+
     WPN114.Node
     {
         path: "/global/interactions/reset"
         type: WPN114.Type.Impulse
+
+        critical: true
 
         onValueReceived:
         {
@@ -83,7 +115,10 @@ Item
             {
                 var  client = clients.itemAt(c);
                 if ( client.connected )
-                     client.remote.get("/interactions/reset").value = 0;
+                {
+                    client.remote.get("/interactions/reset").value = 0;
+                    client.interaction_count = 0;
+                }
             }
         }
     }
@@ -92,8 +127,9 @@ Item
     {
         target: module_server
         onNewConnection:
-        {
+        {            
             var hostaddr  = host.split(":")[0]+':'+'5678'
+            console.log("New connection:", hostaddr);
 
             for ( var c = 0; c < maxClients; ++c )
             {

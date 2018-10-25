@@ -17,7 +17,6 @@ Item
 
         WPN114.StereoSource //----------------------------------------------------- ALTIVERB
         {
-            active: true
             xspread: 0.25
             diffuse: 0.55
             y: 0.5
@@ -25,8 +24,9 @@ Item
             exposePath: "/effects/reverb/source"
 
             WPN114.Convolver
-            {
+            {                
                 id: reverb
+                active: true
                 irPath: "/Users/pchd/Desktop/IRS/921.wav"
                 exposePath: "/effects/reverb"
             }
@@ -34,17 +34,17 @@ Item
 
         WPN114.StereoSource //----------------------------------------------------- AMPLITUBE
         {
-            active: false
             xspread: 0.25
             diffuse: 0.55
             y: 0.5
 
             exposePath: "/effects/amplitube/source"
 
-            WPN114.AudioPlugin // TODO: switch to convolver
+            WPN114.Convolver
             {
                 id: amplitube
-                path: "/Library/Audio/Plug-Ins/VST/Amplitube 4.vst"
+                active: false
+                irPath: "/Users/pchd/Desktop/IRS/AMPDEFAULT.wav"
                 exposePath: "/effects/amplitube"
             }
         }

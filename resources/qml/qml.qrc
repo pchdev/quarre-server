@@ -26,5 +26,6 @@
         <file>views/NodeView.js</file>
         <file>views/Button.qml</file>
         <file>views/Slider.qml</file>
+        <file>InteractionExecutor.qml</file>
     </qresource>
 </RCC>

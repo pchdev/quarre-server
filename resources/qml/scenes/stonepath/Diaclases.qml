@@ -5,33 +5,71 @@ import ".."
 
 Item
 {
+    id: root
     property alias rooms: diaclases_rooms
+    property alias scenario: scenario
+    property real spring_attack: 0
 
-    WPN114.Node
+    signal next()
+
+    WPN114.TimeNode
     {
-        path: "/stonepath/diaclases/interactions/spring_attack"
-        type: WPN114.Type.Float
-        onValueReceived: instruments.kaivo_1.set("env1_attack", newValue);
-    }
+        id: scenario
+        source: audio_stream
+        duration: -1
 
-    WPN114.Node
-    {
-        path: "/stonepath/diaclases/active"
-        type: WPN114.Type.Bool
-
-        onValueReceived:
+        onStart:
         {
-            if ( newValue )
-            {
-                instruments.kaivo_2.active = false;
-                instruments.absynth.active = false;
-                effects.amplitube.active = false;
-            }
+            client_manager.notifyScene("diaclases");
 
-            instruments.kaivo_1.active = newValue;
-            instruments.rooms.active = newValue;
-            diaclases_rooms.active = newValue;
+            diaclases_rooms.active = true
+
+            instruments.kaivo_1.active = true
+            instruments.kaivo_1.dBlevel = -4
+            instruments.kaivo_2.active = false
+            instruments.rooms.active = true
+
+            stonewater.play();
         }
+
+        // always wait a little bit before changing presets after setting active
+        WPN114.TimeNode { date: sec(5) ; onStart: instruments.kaivo_1.setPreset("spring") }
+        WPN114.TimeNode { date: sec(13); onStart: { harmonics.play(); smoke.play() }}
+        WPN114.TimeNode { date: sec(55); onStart: { drone.play() }}
+
+        // FIRST BATCH OF INTERACTIONS
+        InteractionExecutor { id: spl1; target: interaction_spring_low; date: sec(20) }
+        InteractionExecutor { target: interaction_spring_high; date: sec(20) }
+        InteractionExecutor { target: interaction_spring_timbre_1; date: sec(20) }
+        InteractionExecutor { target: interaction_smoke_spat; date: sec(35) }
+
+        // SECOND BATCH OF INTERACTIONS
+        InteractionExecutor { follow: spl1; target: interaction_spring_low_2; date: sec(2) }
+        InteractionExecutor { follow: spl1; target: interaction_spring_high_2; date: sec(2) }
+        InteractionExecutor { follow: spl1; target: interaction_spring_timbre_2; date: sec(2) }
+
+        // ENV ATTACK INCREASE
+        WPN114.Automation
+        {
+            follow:     spl1;
+            target:     root.spring_attack
+            date:       sec(22)
+            duration:   min(1)
+
+            from: 0; to: 0.384;
+        }
+
+        // VERB
+        WPN114.Automation
+        {
+            follow: spl1; date: min(1.14)
+            target: instruments.kaivo_1.dBlevel;
+            from: -4; to: -96;
+        }
+
+        // TODO: end & next
+
+
     }
 
     Item //-------------------------------------------------------------------- INTERACTIONS
@@ -51,7 +89,7 @@ Item
             length: 80
             countdown:  15
 
-            onInteractionNotify: instruments.kaivo_1.programChange(0, 37)
+            onInteractionNotify: instruments.kaivo_1.setPreset("spring");
 
             mappings: QuMapping
             {
@@ -80,8 +118,6 @@ Item
 
             length: 80
             countdown:  15
-
-            onInteractionNotify: instruments.kaivo_1.programChange(0, 37)
 
             mappings: QuMapping
             {
@@ -136,11 +172,7 @@ Item
             length: 80
             countdown:  10
 
-            onInteractionNotify:
-            {
-                instruments.kaivo_1.programChange(0, 37)
-                instruments.kaivo_1.set("env1_attack", 0)
-            }
+            onInteractionNotify: instruments.kaivo_1.set("env1_attack", 0)
 
             mappings: QuMapping
             {
@@ -168,12 +200,6 @@ Item
 
             length: 80
             countdown:  10
-
-            onInteractionNotify:
-            {
-                instruments.kaivo_1.programChange(0, 37)
-                instruments.kaivo_1.set("env1_attack", 0)
-            }
 
             mappings: QuMapping
             {

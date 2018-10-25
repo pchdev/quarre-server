@@ -69,8 +69,8 @@ Item
             root.status = "idle"
             root.connected = true
 
-            remote.listen("/interactions/next/countdown");
-            remote.listen("/interactions/current/countdown");
+            remote.listen( "/interactions/next/countdown" );
+            remote.listen( "/interactions/current/countdown" );
         }
 
         onDisconnected:

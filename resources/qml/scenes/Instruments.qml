@@ -50,8 +50,6 @@ Item
                 exposePath: "/instruments/kaivo-1"
                 active: false
 
-                onActiveChanged: kaivo_1_source.active = active
-
                 function setPreset(str) {
                     kaivo_1.programChange(0, kaivo_presets[str]);
                 }
@@ -87,8 +85,6 @@ Item
                 exposePath: "/instruments/kaivo-2"
                 active: false
 
-                onActiveChanged: kaivo_2_source.active = active
-
                 function setPreset(str) {
                     kaivo_2.programChange(0, kaivo_presets[str]);
                 }
@@ -123,8 +119,6 @@ Item
                 path: "/Library/Audio/Plug-Ins/VST/Absynth 5 Stereo.vst"
                 exposePath: "/instruments/absynth"
                 active: false
-
-                onActiveChanged: absynth_source.active = active
 
                 WPN114.Fork { target: effects.reverb;
                     dBlevel: 0.0

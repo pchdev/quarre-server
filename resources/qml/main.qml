@@ -44,8 +44,11 @@ Rectangle
         path:   "/global/audio/reset"
         type:   WPN114.Type.Impulse
 
+        critical: true
+
         onValueReceived:
         {
+            console.log("AUDIO reset");
             introduction.rooms.active = false
             stonepath.cendres.rooms.active = false
             stonepath.diaclases.rooms.active = false
@@ -85,6 +88,7 @@ Rectangle
         WPN114.Node on mute { path: "/global/audio/master/muted" }
     }
 
+
     WPN114.RoomSetup // octophonic ring setup for quarrè-angoulême
     {
         id: rooms_setup;        
@@ -101,5 +105,26 @@ Rectangle
     Effects         { id: effects }
     Functions       { id: functions }
 
-    //SceneView { }
+    Button { text: "introduction"; onPressed: introduction.scenario.start() }
+    Button { y: 50; text: "stonepath"; onPressed: stonepath.scenario.start() }
+
+    Connections
+    {
+        target: introduction
+        onEnd:
+        {
+            console.log("introduction end")
+            console.log("path chosen:", introduction.xroads_result )
+
+            if ( introduction.xroads_result === 0 );
+            else stonepath.scenario.start();
+        }
+    }
+
+    Connections
+    {
+        target: stonepath
+        onEnd: ; // wpn214 start & then loop
+    }
+
 }

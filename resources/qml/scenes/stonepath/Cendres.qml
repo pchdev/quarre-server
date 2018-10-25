@@ -5,30 +5,208 @@ import ".."
 
 Item
 {
+    id: root
+
     property alias rooms: cendres_rooms
-    property alias interaction_thunder:     interaction_thunder
-    property alias interaction_boiling:     interaction_boiling
-    property alias interaction_marmottes:   interaction_marmottes
-    property alias interaction_dragon:      interaction_dragon
-    property alias interaction_groundwalk:  interaction_groundwalk
-    property alias interaction_birds:       interaction_flying_birds
+    property alias scenario: scenario
+    signal next()
 
-    WPN114.Node
+    WPN114.TimeNode
     {
-        path: "/stonepath/cendres/active"
-        type: WPN114.Type.Bool
+        id: scenario
+        source: audio_stream
+        duration: -1
 
-        onValueReceived:
+        onStart:
         {
-            if ( newValue )
+            client_manager.notifyScene("cendres");
+            cendres_rooms.active = true
+        }
+
+        InteractionExecutor //----------------------------------------------------- THUNDER
+        {
+            target: interaction_thunder
+            endExpression: interaction_thunder.interactionEnd
+            date: sec( 5 );
+
+            WPN114.TimeNode
             {
-                instruments.kaivo_1.active = false;
-                instruments.kaivo_2.active = false;
-                instruments.absynth.active = false;
-                effects.amplitube.active = false;
+                follow:   parent
+                date:     sec ( 30 )
+                onStart:  thunder.playRandom();
             }
 
-            cendres_rooms.active = newValue;
+            WPN114.Loop //--------------------------------- THUNDER_LOOP
+            {
+                follow:     parent
+                date:       min ( 1.05 )
+                duration:   min ( 2.30 )
+
+                pattern.duration: sec(35)
+
+                InteractionExecutor
+                {
+                    duration: sec(30)
+                    target: interaction_thunder
+                }
+            }
+        }
+
+        InteractionExecutor //----------------------------------------------------- BOILING
+        {
+            target: interaction_boiling
+            date: sec ( 10 )
+
+            WPN114.TimeNode { follow: parent; date: sec(2); onStart: burn.play() }
+            WPN114.TimeNode { follow: parent; date: sec(5); onStart: ashes.play() }
+
+            WPN114.Loop //--------------------------------- BOILING_LOOP
+            {
+                follow:     parent
+                date:       sec ( 20 )
+                duration:   min ( 2.30 )
+
+                pattern.duration: sec(35)
+
+                InteractionExecutor
+                {
+                    duration: sec ( 30 )
+                    target: interaction_boiling
+                }
+            }
+        }
+
+        InteractionExecutor //------------------------------------------------ MARMOTS_BIRDS
+        {
+            id: marmottes_execution
+            target: interaction_marmottes
+
+            date: sec( 35 );
+            onStart: groundwalk.stop();
+        }
+
+        InteractionExecutor
+        {
+            follow: marmottes_execution
+            target: interaction_flying_birds
+
+            date: sec( 25 );
+            onEnd: quarre.play();
+
+            WPN114.TimeNode
+            {
+                follow: parent; date: sec(15)
+                onStart: necks.play();
+            }
+
+            WPN114.TimeNode
+            {
+                id: next_node
+                follow: parent; date: sec(25)
+                onStart: root.next();
+            }
+        }
+
+        InteractionExecutor //--------------------------------------------------- DRAGON_GROUNDWALK
+        {
+            id:         dragon_execution
+            date:       sec( 55 );
+            target:     interaction_dragon
+            onStart:    dragon.play()
+            onEnd:      dragon.stop()
+        }
+
+        InteractionExecutor
+        {
+            follow:     dragon_execution
+            date:       sec( 20 )
+            target:     interaction_groundwalk
+            onStart:    groundwalk.play()
+            onEnd:      groundwalk.end()
+        }
+
+        WPN114.TimeNode //------------------------------------------------------ AUDIO_MISC
+        {
+            date: sec( 1 )
+            onStart:
+            {
+                waves.play              ( );
+                groundwalk.play         ( );
+                light_background.play   ( );
+            }
+        }
+
+        WPN114.TimeNode { date: sec( 20 )
+            onStart: { redbirds_1.play(); redbirds_2.play() }}
+
+        // ravens
+        WPN114.TimeNode { date: sec(46); onStart: birds.play("northern-raven1.wav") }
+        WPN114.TimeNode { date: sec(60); onStart: birds.play("northern-raven2.wav") }
+        WPN114.TimeNode { date: sec(68); onStart: birds.play("northern-raven3.wav") }
+        WPN114.TimeNode { date: sec(83); onStart: birds.play("northern-raven4.wav") }
+        WPN114.TimeNode { date: sec(94); onStart: birds.play("northern-raven5.wav") }
+
+        // marmots
+        WPN114.TimeNode { date: min(1.51); onStart: marmots.playRandom() }
+        WPN114.TimeNode { date: min(1.53); onStart: marmots.playRandom() }
+        WPN114.TimeNode { date: min(1.54); onStart: marmots.playRandom() }
+        WPN114.TimeNode { date: min(1.56); onStart: marmots.playRandom() }
+        WPN114.TimeNode { date: min(1.565); onStart: marmots.playRandom() }
+        WPN114.TimeNode { date: min(1.59); onStart: marmots.playRandom() }
+
+        WPN114.TimeNode //-------------------------------------------------- FADE_OUTS
+        {
+            follow: next_node
+            duration: min(1.42)
+
+            WPN114.Automation
+            {
+                target: necks.level
+                duration: min(1.30)
+                from: 1; to: 0;
+
+                onEnd: necks.stop()
+            }
+
+            WPN114.Automation
+            {
+                target: ashes.level
+                duration: min(1.05)
+                from: 1; to: 0;
+
+                onEnd: ashes.stop();
+            }
+
+            WPN114.Automation
+            {
+                target: quarre.level
+                duration: sec(54)
+                from: 1; to: 0;
+
+                onEnd: quarre.stop();
+            }
+
+            WPN114.Automation
+            {
+                target: redbirds_1.level
+                duration: min(1.42)
+                from: 1; to: 0;
+
+                onEnd: redbirds_1.stop();
+            }
+
+            WPN114.Automation
+            {
+                target: redbirds_2.level
+                duration: min(1.42)
+                from: 1; to: 0;
+
+                onEnd:
+                {
+                    redbirds_2.stop();
+                    cendres_rooms.active = false
+                }
+            }
         }
     }
 
@@ -120,9 +298,6 @@ Item
             countdown:  20
             length: 80
 
-            onInteractionNotify: dragon.play();
-            onInteractionEnd:    dragon.stop();
-
             mappings: QuMapping
             {
                 source: "/modules/zrotation/position2D"
@@ -145,9 +320,6 @@ Item
 
             countdown: 20
             length: 60
-
-            onInteractionNotify: groundwalk.play();
-            onInteractionEnd:    groundwalk.stop();
 
             mappings: QuMapping
             {

@@ -5,24 +5,167 @@ import ".."
 
 Item
 {    
+    id: root
     property alias rooms: markhor_rooms
+    property alias scenario: scenario
+    signal end()
 
-    WPN114.Node
+    WPN114.TimeNode
     {
-        path: "/stonepath/markhor/active"
-        type: WPN114.Type.Bool
+        id: scenario
 
-        onValueReceived:
+        onStart:
         {
-            instruments.kaivo_1.active = newValue;
-            instruments.kaivo_2.active = newValue;
-            markhor_rooms.active = newValue;
+            instruments.kaivo_1.active  = true;
+            instruments.kaivo_2.active  = true;
+            instruments.rooms.active    = true;
+            instruments.absynth.active  = false;
+            effects.amplitube.active    = false;
 
-            if ( newValue )
+            soundscape.play();
+            markhor_rooms.active = true;
+        }
+
+        InteractionExecutor //----------------------------------------------------- BELLS
+        {
+            id: bells_executor
+            target: interaction_clock_bells
+            date: sec(5)
+
+            onStart:
             {
-                instruments.absynth.active = false;
-                effects.amplitube.active = false;
+                instruments.kaivo_1.setPreset("autochurch");
+                instruments.kaivo_2.setPreset("markhor");
             }
+
+            onEnd: instruments.kaivo_1.active = false;
+
+            WPN114.TimeNode
+            {
+                date: parent.duration-(sec(51))
+                onStart: bell_hit.play();
+            }
+
+            WPN114.Automation
+            {
+                date: sec(15)
+                target: instruments.kaivo_1.dBlevel
+                duration: sec(45)
+                from: -96; to: -4;
+            }
+        }
+
+        InteractionExecutor //---------------------------------------------------- MARKHOR_DANCE
+        {
+            follow: bells_executor
+            target: interaction_granular_models
+
+            onStart:
+            {
+                ambient_light.play();
+
+                instruments.kaivo_2.noteOn(0, 70, 127);
+                instruments.kaivo_2.noteOn(0, 75, 127);
+                instruments.kaivo_2.noteOn(0, 80, 127);
+            }
+
+            // DOOMSDAYS
+            WPN114.TimeNode { date: sec(20); onStart: doomsday.playRandom();  }
+            WPN114.TimeNode { date: min(1.35); onStart: doomsday.playRandom(); }
+            WPN114.TimeNode { date: min(3.05); onStart: doomsday.playRandom(); }
+
+            WPN114.Automation
+            {
+                target: ambient_light.dBlevel
+                duration: sec(30)
+                from: -96; to: 0;
+            }
+
+            InteractionExecutor
+            {
+                target: interaction_resonators_1
+                date: min(1.08)
+
+                InteractionExecutor
+                {
+                    id: body_executor
+                    target: interaction_body_1
+                    date: min(1.08)
+                }
+            }
+
+            InteractionExecutor
+            {
+                target: interaction_pads_1
+                date: sec(20)
+            }
+        }
+
+        InteractionExecutor //--------------------------------------------------------- TUTTI
+        {
+            follow: body_executor
+            target: interaction_resonators_2
+            date: sec(10)
+
+            onStart: doomsday.playRandom();
+
+            WPN114.TimeNode { date: sec(40); onStart: doomsday.playRandom();  }
+            WPN114.TimeNode { date: min(1.30); onStart: doomsday.playRandom();  }
+            WPN114.TimeNode { date: min(2.45); onStart: doomsday.playRandom();  }
+        }
+
+        InteractionExecutor //---------------------------- BODY
+        {
+            follow: body_executor
+            target: interaction_body_2
+            date: sec(10)
+        }
+
+        InteractionExecutor //---------------------------- GRANULAR
+        {
+            id: granular_models_2_executor
+            follow: body_executor
+            target: interaction_granular_models_2
+            date: sec(10)
+        }
+
+        InteractionExecutor //---------------------------- PADS
+        {
+            follow: body_executor
+            target: interaction_pads_2
+            date: sec(10)
+        }
+
+        WPN114.Automation //---------------------------- SOUNDSCAPE_FADE_OUT
+        {
+            follow: granular_models_2_executor
+            target: soundscape.level
+            duration: min(1)
+            from: 1; to: 0;
+
+            onEnd: scenario.end()
+        }
+
+        WPN114.Automation //---------------------------- KAIVO_FADE_OUT
+        {
+            follow: granular_models_2_executor
+            target: instruments.kaivo_2.level
+            duration: sec(45);
+            from: 1; to: 0;
+        }
+
+        WPN114.Automation //---------------------------- AMBIENT_LIGHT_FADE_OUT
+        {
+            follow: granular_models_2_executor
+            target: ambient_light.level
+            duration: sec(45)
+            from: 1; to: 0;
+        }
+
+        onEnd:
+        {
+            markhor_rooms.active = false;
+            root.end()
         }
     }
 
@@ -38,8 +181,7 @@ Item
             path:   "/stonepath/markhor/interactions/clock-bells"
             module: "quarre/VareRainbells.qml"
 
-            description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches,
-pivotez-le doucement dans n'importe quel axe de rotation"
+            description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
             //afin de changer leurs propriétés."
 
             length: 45
@@ -87,20 +229,14 @@ pivotez-le doucement dans n'importe quel axe de rotation"
             length: 60
             countdown:  15
 
-            onInteractionNotify:
-            {
-                instruments.kaivo_2.noteOn(0, 70, 127);
-                instruments.kaivo_2.noteOn(0, 75, 127);
-                instruments.kaivo_2.noteOn(0, 80, 127);
-            }
-
-            // TODO: OVERLAP bug
-
             mappings:
                 [
                 QuMapping {
                     source: "/modules/markhor/granular/overlap"
-                    expression: function(v) { instruments.kaivo_2.set("gran_density", v) }},
+                    expression: function(v) {
+                        console.log("gran_density", v);
+                        instruments.kaivo_2.set("gran_density", v)
+                    }},
 
                 QuMapping {
                     source: "/modules/markhor/granular/pitch"
@@ -130,7 +266,9 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
                 [
                 QuMapping {
                     source: "/modules/markhor/resonator/brightness"
-                    expression: function(v) { instruments.kaivo_2.set("res_brightness", v) }},
+                    expression: function(v) {
+                        console.log("res_brightness", v);
+                        instruments.kaivo_2.set("res_brightness", v) }},
 
                 QuMapping {
                     source: "/modules/markhor/resonator/position"
@@ -196,10 +334,10 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings: QuMapping
             {
-                source: "/gestures/cover/trigger"
+                source: "/modules/markhor/pads/index"
                 expression: function(v) {
                     if ( v === 0 ) instruments.kaivo_2.allNotesOff();
-                    else instruments.kaivo_2.noteOn(0, pads[v-1], 127);
+                    else instruments.kaivo_2.noteOn(0, interaction_pads_1.pads[v-1], 127);
                 }
             }
         }

@@ -68,6 +68,8 @@ Item
         path: root.path+"/notify"
         type: WPN114.Type.Impulse
 
+        critical: true
+
         onValueReceived:
         {
             client_manager.dispatch(undefined, root)
@@ -86,6 +88,8 @@ Item
         id: interaction_begin
         path: root.path+"/begin"
         type: WPN114.Type.Impulse
+
+        critical: true
 
         onValueReceived:
         {
@@ -109,6 +113,8 @@ Item
         id: interaction_end
         path: root.path+"/end"
         type: WPN114.Type.Impulse
+
+        critical: true
 
         onValueReceived:
         {
@@ -138,6 +144,8 @@ Item
         path:   root.path+"/dispatched"
         type:   WPN114.Type.Bool
         value:  false
+
+        critical: true
     }
 
     WPN114.Node

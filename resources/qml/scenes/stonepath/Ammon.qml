@@ -5,21 +5,63 @@ import ".."
 
 Item
 {
+    id: root
     property alias rooms: ammon_rooms
+    property alias scenario: scenario
+    signal end()
 
-    WPN114.Node
+    WPN114.TimeNode
     {
-        path: "/stonepath/ammon/active"
-        type: WPN114.Type.Bool
+        id: scenario
+        duration: -1
 
-        onValueReceived:
+        onStart:
         {
-            instruments.kaivo_1.active = newValue;
-            instruments.kaivo_2.active = newValue;
-            instruments.absynth.active = newValue;
-            ammon_rooms.active = newValue;
+            wind.play()
+            footsteps.play();
+            ammon_rooms.active = true
 
-            if ( newValue ) effects.amplitube.active = false;
+            instruments.kaivo_1.active = true;
+            instruments.kaivo_2.active = true;
+            instruments.absynth.active = true;
+            instruments.rooms.active = true;
+        }
+
+        onEnd:
+        {
+            // do not deactivate rooms, wind has to keep playing during wpn214
+            instruments.kaivo_1.active = false;
+            instruments.kaivo_2.active = false;
+            instruments.absynth.active = false;
+
+            instruments.rooms.active = false;
+        }
+
+        InteractionExecutor
+        {
+            target: interaction_string_sweep
+            endExpression: ;
+        }
+
+        InteractionExecutor
+        {
+            target: interaction_bells
+            endExpression: ;
+        }
+
+        InteractionExecutor
+        {
+            target: interaction_inharm_synth
+
+            startExpression: ;
+            endExpression: ;
+        }
+
+        InteractionExecutor
+        {
+            target: interaction_strings_timbre
+            startExpression: ;
+            endExpression: ;
         }
     }
 

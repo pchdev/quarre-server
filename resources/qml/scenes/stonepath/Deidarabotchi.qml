@@ -5,7 +5,38 @@ import ".."
 
 Item
 {    
+    id: root
     property alias rooms: deidarabotchi_rooms
+    property alias scenario
+    signal end()
+
+    InteractionExecutor
+    {
+        id: scenario
+        target: interaction_transition
+
+        onStart:
+        {
+            kaivo.play      ();
+            synth.play      ();
+            breath.play     ();
+            wind.play       ();
+            background.play ();
+
+            instruments.kaivo_1.active = false;
+            instruments.kaivo_2.active = false;
+            instruments.absynth.active = false;
+            effects.amplitube.active = false;
+            deidarabotchi_rooms.active = true;
+        }
+
+        onEnd:
+        {
+            deidarabotchi_rooms.active = false;
+            root.end();
+        }
+
+    }
 
     Interaction //----------------------------------------------------- TUTORIAL
     {
@@ -18,38 +49,6 @@ Item
         length: 152
         countdown: 5
         description: "transition, veuillez patienter..."
-    }
-
-    WPN114.Node
-    {
-        type: WPN114.Type.Bool
-        path: "/stonepath/deidarabotchi/active"
-        onValueReceived:
-        {            
-            if ( newValue )
-            {
-                kaivo.play();
-                synth.play();
-                background.play();
-                breath.play();
-                wind.play();
-
-                instruments.kaivo_1.active = false;
-                instruments.kaivo_2.active = false;
-                instruments.absynth.active = false;
-                effects.amplitube.active = false;
-            }
-            else
-            {
-                kaivo.stop();
-                synth.stop();
-                background.stop();
-                breath.stop();
-                wind.stop();
-            }
-
-            deidarabotchi_rooms.active = newValue;
-        }
     }
 
     WPN114.Rooms
