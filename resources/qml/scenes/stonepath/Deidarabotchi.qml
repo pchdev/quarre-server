@@ -7,12 +7,13 @@ Item
 {    
     id: root
     property alias rooms: deidarabotchi_rooms
-    property alias scenario
+    property alias scenario: scenario
     signal end()
 
     InteractionExecutor
     {
         id: scenario
+        source: audio_stream
         target: interaction_transition
 
         onStart:
@@ -28,6 +29,8 @@ Item
             instruments.absynth.active = false;
             effects.amplitube.active = false;
             deidarabotchi_rooms.active = true;
+
+            client_manager.notifyScene("deidarabotchi");
         }
 
         onEnd:
@@ -46,7 +49,7 @@ Item
         title: "Transition, ダイダラボッチ "
         module: "quarre/Transitions.qml"
         broadcast: true
-        length: 152
+        length: 177
         countdown: 5
         description: "transition, veuillez patienter..."
     }

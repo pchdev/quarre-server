@@ -1,16 +1,19 @@
 #include <QApplication>
 #include <QQuickWidget>
+#include <QQmlComponent>
+#include <QQuickItem>
+
+#include <source/wpnconsoleinput.hpp>
 
 int main(int argc, char *argv[])
 {
-#if defined(Q_OS_WIN)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+    QApplication app(argc, argv);   
 
-    QApplication app(argc, argv);
+    qmlRegisterType<WPNConsoleInput, 1> ( "WPN214", 1, 0, "ConsoleInput");
 
-    QQuickWidget* view = new QQuickWidget;
-    view->setSource(QUrl::fromLocalFile("/Users/pchd/Repositories/quarre-server/resources/qml/main.qml"));
-    view->show();
+    QQuickWidget view;
+    view.setSource(QUrl::fromLocalFile("/Users/pchd/Repositories/quarre-server/resources/qml/main.qml"));
+    view.show();
+
     return app.exec();
 }

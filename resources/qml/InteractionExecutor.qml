@@ -6,8 +6,6 @@ WPN114.TimeNode
     id: root
 
     property Interaction target
-    property var startExpression
-    property var endExpression
 
     duration:   sec(target.countdown+target.length)
     onStart:    target.notify();
@@ -15,16 +13,8 @@ WPN114.TimeNode
 
     WPN114.TimeNode
     {
+        source:  root.source
         date:    sec(target.countdown)
         onStart: target.begin();
-    }
-
-    Component.onCompleted:
-    {
-        if ( startExpression !== undefined )
-             startExpression.connect(root.start)
-
-        if ( endExpression !== undefined )
-             endExpression.connect(root.end)
     }
 }

@@ -5,17 +5,13 @@ Rectangle
 {
     color: "transparent"
 
-    Connections
-    {
-        target: ossia_modules.strings
-        onValueChanged: string_canvas.requestPaint();
-    }
-
     WPN114.Node
     {
         id:     node_strings
         path:   "/modules/strings/display"
         type:   WPN114.Type.Int
+        critical: true
+
         value:  0
 
         onValueReceived: string_canvas.requestPaint();
@@ -26,6 +22,7 @@ Rectangle
         id:     node_trigger
         path:   "/modules/strings/trigger"
         type:   WPN114.Type.Impulse
+        critical: true
     }
 
     Canvas
@@ -45,7 +42,7 @@ Rectangle
             ctx.reset( );
             if ( !nstrings ) return;
 
-            var tspace   = (nstrings-1)*spacing;
+            var tspace   = ( nstrings-1 )*spacing;
             var l_edge   = string_canvas.width/2-tspace/2;
 
             string_canvas.left_edge  = l_edge;

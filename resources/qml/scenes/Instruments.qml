@@ -8,6 +8,11 @@ Item
     property alias kaivo_2: kaivo_2
     property alias absynth: absynth
 
+    property alias k1_fork_921: k1_fork_921
+    property alias k1_fork_lavaur: k1_fork_lavaur
+    property alias k2_fork_921: k2_fork_921
+    property alias k2_fork_lavaur: k2_fork_lavaur
+
     // KAIVO - PRESETS
 
     // 34 - SPRING_GENERIC
@@ -54,10 +59,15 @@ Item
                     kaivo_1.programChange(0, kaivo_presets[str]);
                 }
 
-                WPN114.Fork { target: effects.reverb;
+                WPN114.Fork { target: effects.reverb; id: k1_fork_921
                     dBlevel: 0.0
                     prefader: true
-                    exposePath: "/instruments/kaivo-1/forks/altiverb" }
+                    exposePath: "/instruments/kaivo-1/forks/921" }
+
+                WPN114.Fork { target: effects.lavaur; active: false; id: k1_fork_lavaur
+                    dBlevel: 0.0
+                    prefader: true
+                    exposePath: "/instruments/kaivo-1/forks/lavaur" }
 
                 WPN114.Fork { target: effects.amplitube;
                     dBlevel: 0.0
@@ -89,10 +99,15 @@ Item
                     kaivo_2.programChange(0, kaivo_presets[str]);
                 }
 
-                WPN114.Fork { target: effects.reverb;
+                WPN114.Fork { target: effects.reverb; id: k2_fork_921
                     dBlevel: 0.0
                     prefader: true
-                    exposePath: "/instruments/kaivo-2/forks/altiverb" }
+                    exposePath: "/instruments/kaivo-2/forks/921" }
+
+                WPN114.Fork { target: effects.lavaur; active: false; id: k2_fork_lavaur
+                    dBlevel: 0.0
+                    prefader: true
+                    exposePath: "/instruments/kaivo-1/forks/lavaur" }
 
                 WPN114.Fork { target: effects.amplitube
                     dBlevel: 0.0

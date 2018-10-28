@@ -10,6 +10,8 @@ Item
     property alias scenario: scenario
     property real spring_attack: 0
 
+    onSpring_attackChanged: instruments.kaivo_1.set("env1_attack", spring_attack);
+
     signal next()
 
     WPN114.TimeNode
@@ -20,16 +22,14 @@ Item
 
         onStart:
         {
-            client_manager.notifyScene("diaclases");
-
-            diaclases_rooms.active = true
-
             instruments.kaivo_1.active = true
             instruments.kaivo_1.dBlevel = -4
             instruments.kaivo_2.active = false
             instruments.rooms.active = true
 
             stonewater.play();
+            diaclases_rooms.active = true
+            client_manager.notifyScene("diaclases");
         }
 
         // always wait a little bit before changing presets after setting active
@@ -44,15 +44,24 @@ Item
         InteractionExecutor { target: interaction_smoke_spat; date: sec(35) }
 
         // SECOND BATCH OF INTERACTIONS
-        InteractionExecutor { follow: spl1; target: interaction_spring_low_2; date: sec(2) }
-        InteractionExecutor { follow: spl1; target: interaction_spring_high_2; date: sec(2) }
-        InteractionExecutor { follow: spl1; target: interaction_spring_timbre_2; date: sec(2) }
+        InteractionExecutor { after: spl1; target: interaction_spring_low_2; date: sec(2) }
+        InteractionExecutor { after: spl1; target: interaction_spring_high_2; date: sec(2.1) }
+
+        InteractionExecutor
+        {
+            after: spl1
+            target: interaction_spring_timbre_2
+            date: sec(2.2)
+
+            onEnd: root.next()
+        }
 
         // ENV ATTACK INCREASE
         WPN114.Automation
         {
-            follow:     spl1;
-            target:     root.spring_attack
+            after:      spl1;
+            target:     root
+            property:   "spring_attack"
             date:       sec(22)
             duration:   min(1)
 
@@ -62,13 +71,20 @@ Item
         // VERB
         WPN114.Automation
         {
-            follow: spl1; date: min(1.14)
-            target: instruments.kaivo_1.dBlevel;
+            after: spl1; date: min(1.14)
+            target: instruments.kaivo_1
+            property: "dBlevel"
             from: -4; to: -96;
+            duration: sec(20)
+
+            onEnd:
+            {
+                diaclases_rooms.active = false
+                instruments.kaivo_1.allNotesOff();
+                instruments.kaivo_1.active = false
+                instruments.rooms.active = false
+            }
         }
-
-        // TODO: end & next
-
 
     }
 
@@ -88,8 +104,6 @@ Item
 
             length: 80
             countdown:  15
-
-            onInteractionNotify: instruments.kaivo_1.setPreset("spring");
 
             mappings: QuMapping
             {
@@ -254,9 +268,6 @@ Item
 
             length: 155
             countdown:  15
-
-            onInteractionNotify:    smoke.play();
-            onInteractionEnd:       smoke.stop();
 
             mappings: QuMapping
             {

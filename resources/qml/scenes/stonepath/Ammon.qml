@@ -13,18 +13,39 @@ Item
     WPN114.TimeNode
     {
         id: scenario
+        source: audio_stream
         duration: -1
 
         onStart:
         {
-            wind.play()
-            footsteps.play();
+            console.log("ammon start");
             ammon_rooms.active = true
+            wind.play()       
 
             instruments.kaivo_1.active = true;
             instruments.kaivo_2.active = true;
-            instruments.absynth.active = true;
+//            instruments.absynth.active = true;
             instruments.rooms.active = true;
+
+            // we use a different reverb for this scene
+            effects.reverb.active = false;
+            effects.lavaur.active = true;
+
+            instruments.k1_fork_921.active      = false
+            instruments.k1_fork_lavaur.active   = true
+            instruments.k2_fork_921.active      = false
+            instruments.k2_fork_lavaur.active   = true
+
+            instruments.kaivo_1.dBlevel = -4;
+            instruments.k1_fork_lavaur.dBlevel = -10;
+
+            instruments.kaivo_2.dBlevel = -4;
+            instruments.k2_fork_lavaur.dBlevel  = -9
+
+            // the markhor intro bells should still be here
+//            instruments.kaivo_1.allNotesOff();
+
+            client_manager.notifyScene("ammon");
         }
 
         onEnd:
@@ -37,31 +58,87 @@ Item
             instruments.rooms.active = false;
         }
 
+        WPN114.TimeNode { date: sec(6); onStart: footsteps.play() }
+
         InteractionExecutor
         {
+            date: sec(10)
             target: interaction_string_sweep
-            endExpression: ;
+            endExpression: ( interaction_string_sweep.index === 100 );
+
+            onStart: instruments.kaivo_1.setPreset("temples");
         }
 
         InteractionExecutor
         {
+            date: sec(15)
             target: interaction_bells
-            endExpression: ;
+            endExpression: ( interaction_string_sweep.index === 100 );
+
+            onStart: instruments.kaivo_2.setPreset("church");
         }
 
-        InteractionExecutor
-        {
-            target: interaction_inharm_synth
+//        InteractionExecutor
+//        {
+//            target: interaction_inharm_synth
 
-            startExpression: ;
-            endExpression: ;
-        }
+//            startExpression: ( interaction_string_sweep.index === 38 );
+//            endExpression: ( interaction_string_sweep.index === 100 );
+//        }
 
         InteractionExecutor
         {
             target: interaction_strings_timbre
-            startExpression: ;
-            endExpression: ;
+            startExpression: ( interaction_string_sweep.index === 7 );
+            endExpression: ( interaction_string_sweep.index === 100 );
+        }
+
+        WPN114.Automation //--------------------------------------------- HARMONICS_SAMPLE
+        {
+            startExpression: ( interaction_string_sweep.index === 38 );
+
+            target: harmonics
+            property: "level"
+            duration: min(1.30)
+            from: 0; to: 1;
+
+            onStart: harmonics.play();
+        }
+
+        WPN114.Automation
+        {
+            startExpression: ( interaction_string_sweep.index === 84 )
+
+            target: harmonics
+            property: "level"
+            duration: min(1)
+            from: 1; to: 0;
+
+            onEnd: harmonics.stop();
+        }
+
+        WPN114.Automation //--------------------------------------------- BROKEN_RADIO
+        {
+            startExpression: ( interaction_string_sweep.index === 88 )
+
+            target: broken_radio
+            property: "level"
+            duration: sec(30)
+            from: 0; to: 1;
+
+            onStart: broken_radio.play();
+        }
+
+        WPN114.Automation
+        {
+            startExpression: ( interaction_string_sweep.index === 100 )
+
+            target: broken_radio
+            property: "level"
+            duration: sec(50)
+            from: 1; to: 0;
+
+            onEnd: broken_radio.stop();
         }
     }
 
@@ -87,12 +164,25 @@ Item
 
             property int index: 0
 
+            onInteractionBegin:
+            {
+                interaction_string_sweep.owners.forEach(function(owner) {
+                    var value = ammon_score.score[0]["notes"].length;
+                    owner.remote.sendMessage("/modules/strings/display", value, true)})
+            }
+
             mappings: QuMapping
             {
                 source: "/modules/strings/trigger"
                 expression: function(v) {
 
-                    var chord = ammon_score.score[index];
+                    var idx = interaction_string_sweep.index
+                    var chord = ammon_score.score[idx];
+                    var next_chord = ammon_score.score[idx+1];
+
+                    interaction_string_sweep.owners.forEach(function(owner) {
+                        owner.remote.sendMessage("/modules/strings/display", 0, true)
+                    });
 
                     for ( var i = 0; i < chord['notes'].length; ++i )
                     {
@@ -108,13 +198,15 @@ Item
                             }, chord['duration']); })(i);
                     }
 
-                    interaction_string_sweep.owners.forEach(function(owner) {
-                        var node = owner.remote.get("/modules/strings/display");
-                        node.setValue(ammon_score[index++]["notes"].length);
-                        console.log(node.value);
-                    })
+                    // display next chord
+                    functions.setTimeout( function() {
+                        interaction_string_sweep.owners.forEach(function(owner) {
+                            var value = next_chord["notes"].length;
+                            owner.remote.sendMessage("/modules/strings/display", value, true)})
+                    }, chord["duration"])
 
-                    index++;
+
+                    interaction_string_sweep.index++;
                 }
             }
         }
@@ -253,7 +345,12 @@ Item
 
             WPN114.Sampler { id: broken_radio;
                 exposePath: "/stonepath/ammon/audio/broken-radio"
-                path: "audio/stonepath/ammon/broken-radio.wav" }
+                path: "audio/stonepath/ammon/broken-radio.wav"
+
+                WPN114.Fork { target: effects.lavaur; dBlevel: -6
+                    prefader: false
+                    exposePath: "/instruments/kaivo-1/forks/lavaur" }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 3.HARMONICS (5-6)
@@ -273,12 +370,12 @@ Item
         WPN114.StereoSource //----------------------------------------- 4.WIND (7-8)
         {
             fixed: true
-            xspread: 0.25
-            diffuse: 0.85
+            xspread: 0.4
+            diffuse: 0.3
 
             exposePath: "/stonepath/ammon/audio/wind/source"
 
-            WPN114.Sampler { id: wind;
+            WPN114.Sampler { id: wind; loop: true; dBlevel: -12; xfade: 2000
                 exposePath: "/stonepath/ammon/audio/wind"
                 path: "audio/stonepath/ammon/wind.wav" }
         }

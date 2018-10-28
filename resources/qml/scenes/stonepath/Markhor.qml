@@ -6,6 +6,7 @@ import ".."
 Item
 {    
     id: root
+
     property alias rooms: markhor_rooms
     property alias scenario: scenario
     signal end()
@@ -13,6 +14,8 @@ Item
     WPN114.TimeNode
     {
         id: scenario
+        source: audio_stream
+        duration: -1
 
         onStart:
         {
@@ -24,6 +27,8 @@ Item
 
             soundscape.play();
             markhor_rooms.active = true;
+
+            client_manager.notifyScene("markhor");
         }
 
         InteractionExecutor //----------------------------------------------------- BELLS
@@ -42,14 +47,15 @@ Item
 
             WPN114.TimeNode
             {
-                date: parent.duration-(sec(51))
+                date: sec(8)
                 onStart: bell_hit.play();
             }
 
             WPN114.Automation
             {
                 date: sec(15)
-                target: instruments.kaivo_1.dBlevel
+                target: instruments.kaivo_1
+                property: "dBlevel"
                 duration: sec(45)
                 from: -96; to: -4;
             }
@@ -57,7 +63,7 @@ Item
 
         InteractionExecutor //---------------------------------------------------- MARKHOR_DANCE
         {
-            follow: bells_executor
+            after: bells_executor
             target: interaction_granular_models
 
             onStart:
@@ -76,7 +82,8 @@ Item
 
             WPN114.Automation
             {
-                target: ambient_light.dBlevel
+                target: ambient_light
+                property: "dBlevel"
                 duration: sec(30)
                 from: -96; to: 0;
             }
@@ -103,7 +110,7 @@ Item
 
         InteractionExecutor //--------------------------------------------------------- TUTTI
         {
-            follow: body_executor
+            after: body_executor
             target: interaction_resonators_2
             date: sec(10)
 
@@ -116,7 +123,7 @@ Item
 
         InteractionExecutor //---------------------------- BODY
         {
-            follow: body_executor
+            after: body_executor
             target: interaction_body_2
             date: sec(10)
         }
@@ -124,22 +131,23 @@ Item
         InteractionExecutor //---------------------------- GRANULAR
         {
             id: granular_models_2_executor
-            follow: body_executor
+            after: body_executor
             target: interaction_granular_models_2
             date: sec(10)
         }
 
         InteractionExecutor //---------------------------- PADS
         {
-            follow: body_executor
+            after: body_executor
             target: interaction_pads_2
             date: sec(10)
         }
 
         WPN114.Automation //---------------------------- SOUNDSCAPE_FADE_OUT
         {
-            follow: granular_models_2_executor
-            target: soundscape.level
+            after: granular_models_2_executor
+            target: soundscape
+            property: "level"
             duration: min(1)
             from: 1; to: 0;
 
@@ -148,16 +156,26 @@ Item
 
         WPN114.Automation //---------------------------- KAIVO_FADE_OUT
         {
-            follow: granular_models_2_executor
-            target: instruments.kaivo_2.level
+            after: granular_models_2_executor
+            target: instruments.kaivo_2
+            property: "level"
             duration: sec(45);
             from: 1; to: 0;
+
+            WPN114.Automation
+            {
+                target: instruments.k1_fork_921
+                property: "dBlevel"
+                duration: sec(45);
+                from: 1; to: 0;
+            }
         }
 
         WPN114.Automation //---------------------------- AMBIENT_LIGHT_FADE_OUT
         {
-            follow: granular_models_2_executor
-            target: ambient_light.level
+            after: granular_models_2_executor
+            target: ambient_light
+            property: "level"
             duration: sec(45)
             from: 1; to: 0;
         }
@@ -165,6 +183,7 @@ Item
         onEnd:
         {
             markhor_rooms.active = false;
+            instruments.kaivo_2.allNotesOff();
             root.end()
         }
     }
@@ -336,7 +355,10 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             {
                 source: "/modules/markhor/pads/index"
                 expression: function(v) {
-                    if ( v === 0 ) instruments.kaivo_2.allNotesOff();
+                    if ( v === 0 )
+                        for ( var i = 0; i < interaction_pads_1.pads.length; ++i )
+                            instruments.kaivo_2.noteOff(0, interaction_pads_1.pads[i], 127);
+
                     else instruments.kaivo_2.noteOn(0, interaction_pads_1.pads[v-1], 127);
                 }
             }
@@ -464,7 +486,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             exposePath: "/stonepath/markhor/audio/soundscape/source"
 
-            WPN114.Sampler { id: soundscape;
+            WPN114.Sampler { id: soundscape; loop: true; xfade: 2000
                 exposePath: "/stonepath/markhor/audio/soundscape"
                 path: "audio/stonepath/markhor/soundscape.wav" }
         }

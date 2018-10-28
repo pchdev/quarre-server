@@ -2,12 +2,16 @@ import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 import WPN114 1.0 as WPN114
+import WPN214 1.0 as WPN214
 import "scenes"
 import "scenes/stonepath"
 import "views"
 
 Rectangle
 {
+    id: application
+    objectName: "quarre-root"
+
     visible: true
     width: 640
     height: 480
@@ -63,10 +67,11 @@ Rectangle
         id:             audio_stream
 
         outDevice:      "Scarlett 2i2 USB"
-//        numOutputs:     2
+        numOutputs:     2
 
 //        outDevice:      "Soundflower (64ch)"
-        numOutputs:     2
+//        numOutputs:     8
+
         sampleRate:     44100
         blockSize:      512
 
@@ -77,6 +82,7 @@ Rectangle
             stonepath.diaclases.rooms.setup  = rooms_setup
             stonepath.deidarabotchi.rooms.setup  = rooms_setup
             stonepath.markhor.rooms.setup    = rooms_setup
+            stonepath.ammon.rooms.setup      = rooms_setup
             instruments.rooms.setup          = rooms_setup
             effects.rooms.setup              = rooms_setup
 
@@ -92,7 +98,7 @@ Rectangle
     WPN114.RoomSetup // octophonic ring setup for quarrè-angoulême
     {
         id: rooms_setup;        
-        //WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
+//        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
         WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.5 }
     }
 
@@ -105,17 +111,95 @@ Rectangle
     Effects         { id: effects }
     Functions       { id: functions }
 
-    Button { text: "introduction"; onPressed: introduction.scenario.start() }
+    Button
+    {
+        text: "introduction";
+        onPressed:
+        {
+            introduction.scenario.start()
+            audio_stream.tick.connect(logger.update)
+        }
+    }
+
     Button { y: 50; text: "stonepath"; onPressed: stonepath.scenario.start() }
+
+    Button
+    {
+        y: 100;
+        text: "cendres";
+        onPressed:
+        {
+            stonepath.cendres.scenario.start()
+            audio_stream.tick.connect(logger.update)
+        }
+    }
+
+    Button
+    {
+        y: 150;
+        text: "diaclases";
+        onPressed:
+        {
+            stonepath.diaclases.scenario.start()
+            audio_stream.tick.connect(logger.update)
+        }
+    }
+
+    Button
+    {
+        y: 200;
+        text: "deidarabotchi";
+        onPressed:
+        {
+            stonepath.deidarabotchi.scenario.start()
+            audio_stream.tick.connect(logger.update)
+        }
+    }
+
+
+    Button
+    {
+        y: 250;
+        text: "markhor";
+        onPressed:
+        {
+            stonepath.markhor.scenario.start()
+            audio_stream.tick.connect(logger.update)
+        }
+    }
+
+    Button
+    {
+        y: 300
+        text: "ammon"
+        onPressed:
+        {
+            stonepath.ammon.scenario.start()
+            audio_stream.tick.connect(logger.update)
+        }
+    }
+
+    Item
+    {
+        id: logger
+        property int count;
+        property string countstr;
+
+        onCountstrChanged: console.log(countstr);
+
+        function update(tick)
+        {
+            count += tick;
+            countstr = functions.realToTime(count);
+        }
+
+    }
 
     Connections
     {
         target: introduction
         onEnd:
         {
-            console.log("introduction end")
-            console.log("path chosen:", introduction.xroads_result )
-
             if ( introduction.xroads_result === 0 );
             else stonepath.scenario.start();
         }

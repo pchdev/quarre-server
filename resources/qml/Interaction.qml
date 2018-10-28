@@ -74,10 +74,10 @@ Item
         {
             client_manager.dispatch(undefined, root)
 
-            owners.forEach(function(owner) {
-                for ( var i = 0; i < mappings.length; ++i )
-                owner.remote.listen(mappings[i].source);
-            });
+//            owners.forEach(function(owner) {
+//                for ( var i = 0; i < mappings.length; ++i )
+//                owner.remote.listen(mappings[i].source);
+//            });
 
             root.interactionNotify();
         }
@@ -98,6 +98,7 @@ Item
                 for ( var i = 0; i < mappings.length; ++i )
                 {
                     var mapping = mappings[i];
+                    owner.remote.listen(mapping.source);
                     var node = owner.remote.get(mapping.source);
                     node.valueReceived.connect(mapping.expression);
                 }

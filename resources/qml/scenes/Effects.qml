@@ -4,6 +4,7 @@ import WPN114 1.0 as WPN114
 Item
 {
     property alias reverb:      reverb
+    property alias lavaur:      reverb_lavaur
     property alias amplitube:   amplitube
     property alias rooms:       effects_rooms
 
@@ -27,8 +28,16 @@ Item
             {                
                 id: reverb
                 active: true
-                irPath: "/Users/pchd/Desktop/IRS/921.wav"
-                exposePath: "/effects/reverb"
+                irPath: "/Users/pchd/Desktop/IRS/921MST.wav"
+                exposePath: "/effects/reverb/921"
+            }
+
+            WPN114.Convolver
+            {
+                id: reverb_lavaur
+                active: false
+                irPath: "/Users/pchd/Desktop/IRS/LAVAUR22ST.wav"
+                exposePath: "/effects/reverb/lavaur"
             }
         }
 

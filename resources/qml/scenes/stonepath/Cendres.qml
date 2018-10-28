@@ -9,7 +9,13 @@ Item
 
     property alias rooms: cendres_rooms
     property alias scenario: scenario
+
+    // next at 3:40 approx
+    // end at 5:20 approx ( when fade outs )
+
     signal next()
+
+    property var target_thunder_executor: thunder_executor
 
     WPN114.TimeNode
     {
@@ -25,27 +31,34 @@ Item
 
         InteractionExecutor //----------------------------------------------------- THUNDER
         {
+            id: thunder_executor
             target: interaction_thunder
-            endExpression: interaction_thunder.interactionEnd
             date: sec( 5 );
+
+            onStart: console.log("LOG-THUNDER-START")
+            onEnd: target_thunder_executor = thunder_executor_loop
 
             WPN114.TimeNode
             {
-                follow:   parent
+                after:    parentNode
                 date:     sec ( 30 )
-                onStart:  thunder.playRandom();
+                onStart:  { thunder.playRandom(); console.log("LOG-THUNDER-RDM") }
             }
 
             WPN114.Loop //--------------------------------- THUNDER_LOOP
             {
-                follow:     parent
+                after:      parentNode
                 date:       min ( 1.05 )
                 duration:   min ( 2.30 )
+
+                onStart: console.log("LOG-THUNDERLOOP-START")
+                onEnd: console.log("LOG-THUNDERLOOP-STOP")
 
                 pattern.duration: sec(35)
 
                 InteractionExecutor
                 {
+                    id: thunder_executor_loop
                     duration: sec(30)
                     target: interaction_thunder
                 }
@@ -57,12 +70,15 @@ Item
             target: interaction_boiling
             date: sec ( 10 )
 
-            WPN114.TimeNode { follow: parent; date: sec(2); onStart: burn.play() }
-            WPN114.TimeNode { follow: parent; date: sec(5); onStart: ashes.play() }
+            onStart: console.log("LOG-BOILING-START")
+            onEnd: console.log("LOG-BOILING-STOP")
+
+            WPN114.TimeNode { after: parentNode; date: sec(2); onStart: burn.play() }
+            WPN114.TimeNode { after: parentNode; date: sec(5); onStart: ashes.play() }
 
             WPN114.Loop //--------------------------------- BOILING_LOOP
             {
-                follow:     parent
+                after:      parentNode
                 date:       sec ( 20 )
                 duration:   min ( 2.30 )
 
@@ -87,7 +103,7 @@ Item
 
         InteractionExecutor
         {
-            follow: marmottes_execution
+            after: marmottes_execution
             target: interaction_flying_birds
 
             date: sec( 25 );
@@ -95,14 +111,14 @@ Item
 
             WPN114.TimeNode
             {
-                follow: parent; date: sec(15)
+                after: parentNode; date: sec(15)
                 onStart: necks.play();
             }
 
             WPN114.TimeNode
             {
                 id: next_node
-                follow: parent; date: sec(25)
+                after: parentNode; date: sec(25)
                 onStart: root.next();
             }
         }
@@ -118,11 +134,11 @@ Item
 
         InteractionExecutor
         {
-            follow:     dragon_execution
+            after:      dragon_execution
             date:       sec( 20 )
             target:     interaction_groundwalk
             onStart:    groundwalk.play()
-            onEnd:      groundwalk.end()
+            onEnd:      groundwalk.stop()
         }
 
         WPN114.TimeNode //------------------------------------------------------ AUDIO_MISC
@@ -156,12 +172,13 @@ Item
 
         WPN114.TimeNode //-------------------------------------------------- FADE_OUTS
         {
-            follow: next_node
+            after: next_node
             duration: min(1.42)
 
             WPN114.Automation
             {
-                target: necks.level
+                target: necks
+                property: "level"
                 duration: min(1.30)
                 from: 1; to: 0;
 
@@ -170,7 +187,8 @@ Item
 
             WPN114.Automation
             {
-                target: ashes.level
+                target: ashes
+                property: "level"
                 duration: min(1.05)
                 from: 1; to: 0;
 
@@ -179,7 +197,8 @@ Item
 
             WPN114.Automation
             {
-                target: quarre.level
+                target: quarre
+                property: "level"
                 duration: sec(54)
                 from: 1; to: 0;
 
@@ -188,7 +207,8 @@ Item
 
             WPN114.Automation
             {
-                target: redbirds_1.level
+                target: redbirds_1
+                property: "level"
                 duration: min(1.42)
                 from: 1; to: 0;
 
@@ -197,7 +217,18 @@ Item
 
             WPN114.Automation
             {
-                target: redbirds_2.level
+                target: waves
+                property: "level"
+                duration: min(1.42)
+                from: 1; to: 0;
+
+                onEnd: waves.stop();
+            }
+
+            WPN114.Automation
+            {
+                target: redbirds_2
+                property: "level"
                 duration: min(1.42)
                 from: 1; to: 0;
 
@@ -231,7 +262,7 @@ Item
             {
                 source: "/gestures/whip/trigger"
                 expression: function(v) {
-                    interaction_thunder.end();
+                    root.target_thunder_executor.end();
                     thunder.playRandom();
                 }
             }
@@ -377,7 +408,7 @@ Item
             yspread: 0.2
             diffuse: 0.47
 
-            WPN114.StreamSampler { id: ashes;
+            WPN114.StreamSampler { id: ashes; loop: true; xfade: 2000
                 exposePath: "/stonepath/cendres/audio/ashes"
                 path: "audio/stonepath/cendres/ashes.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
@@ -392,7 +423,7 @@ Item
             xspread:    0.3
             y:          0.9
 
-            WPN114.StreamSampler { id: redbirds_1;
+            WPN114.StreamSampler { id: redbirds_1; loop: true
                 exposePath: "/stonepath/cendres/audio/redbirds-1"
                 path: "audio/stonepath/cendres/redbirds-1.wav"
             }
@@ -406,7 +437,7 @@ Item
             xspread:    0.3
             y:          0.1
 
-            WPN114.StreamSampler { id: redbirds_2;
+            WPN114.StreamSampler { id: redbirds_2; loop: true
                 exposePath: "/stonepath/cendres/audio/redbirds-2"
                 path: "audio/stonepath/cendres/redbirds-2.wav" }
         }
@@ -434,7 +465,7 @@ Item
             fixed: true
             y: 0.1
 
-            WPN114.StreamSampler { id: burn;
+            WPN114.StreamSampler { id: burn; attack: 1000
                 exposePath: "/stonepath/cendres/audio/burn"
                 path: "audio/stonepath/cendres/burn.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -9 }
@@ -449,7 +480,7 @@ Item
             diffuse: 0.35
             fixed: true
 
-            WPN114.Sampler { id: waves;
+            WPN114.Sampler { id: waves; loop: true; xfade: 2000
                 exposePath: "/stonepath/cendres/audio/waves"
                 path: "audio/stonepath/cendres/waves.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -6 }
@@ -479,7 +510,9 @@ Item
 
             WPN114.MultiSampler { id: marmots;
                 exposePath: "/stonepath/cendres/audio/marmots"
-                path: "audio/stonepath/cendres/marmots" }
+                path: "audio/stonepath/cendres/marmots"
+                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 9.BOILING (17-18)
@@ -505,7 +538,7 @@ Item
             fixed: true
             y: 0.45
 
-            WPN114.Sampler { id: quarre;
+            WPN114.Sampler { id: quarre; attack: 10000; release: 10000;
                 exposePath: "/stonepath/cendres/audio/quarre"
                 path: "audio/stonepath/cendres/quarre.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -6 }
@@ -517,7 +550,7 @@ Item
             id:         groundwalk_source
             exposePath: "/stonepath/cendres/audio/groundwalk/source"
 
-            WPN114.StreamSampler { id: groundwalk;
+            WPN114.StreamSampler { id: groundwalk; dBlevel: 6
                 exposePath: "/stonepath/cendres/audio/groundwalk"
                 path: "audio/stonepath/cendres/groundwalk.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
@@ -544,7 +577,7 @@ Item
             id:         dragon_source
             exposePath: "/stonepath/cendres/audio/dragon/rooms"
 
-            WPN114.StreamSampler { id: dragon;
+            WPN114.StreamSampler { id: dragon; release: 10000
                 exposePath: "/stonepath/cendres/audio/dragon"
                 path: "audio/stonepath/cendres/dragon.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
@@ -559,7 +592,7 @@ Item
             WPN114.MultiSampler { id: birds;
                 exposePath: "/stonepath/cendres/audio/birds"
                 path: "audio/stonepath/cendres/birds"
-                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+                WPN114.Fork { target: effects.reverb; dBlevel: 3 }
             }
         }
     }

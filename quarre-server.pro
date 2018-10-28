@@ -1,5 +1,5 @@
 QT += quick quickwidgets widgets
-CONFIG += c++11 qtquickcompiler
+CONFIG += c++11 qtquickcompiler console
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -13,7 +13,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    source/wpnconsoleinput.cpp
 
 RESOURCES += resources/qml/qml.qrc \
     resources/qml/modules/modules.qrc
@@ -101,3 +102,6 @@ resources/audio/woodpath/jomon/owl4.wav
 #APP_AUDIO_FILES.files = $$DISTFILES
 #APP_AUDIO_FILES.path = Contents/Resources
 #QMAKE_BUNDLE_DATA += APP_AUDIO_FILES
+
+HEADERS += \
+    source/wpnconsoleinput.hpp
