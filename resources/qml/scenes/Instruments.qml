@@ -3,6 +3,7 @@ import WPN114 1.0 as WPN114
 
 Item
 {
+    id: root
     property alias rooms: instruments_rooms
     property alias kaivo_1: kaivo_1
     property alias kaivo_2: kaivo_2
@@ -13,22 +14,23 @@ Item
     property alias k2_fork_921: k2_fork_921
     property alias k2_fork_lavaur: k2_fork_lavaur
 
+    property bool kaivo_1_ready: false
+    property bool kaivo_2_ready: false
+    property bool absynth_ready: false
+
+    property var kaivo_presets: new Object;
+
     // KAIVO - PRESETS
-
-    // 34 - SPRING_GENERIC
-
-    property var kaivo_presets: new Object
-
     Component.onCompleted:
     {
-        kaivo_presets["spring"]         = 34;
-        kaivo_presets["markhor"]        = 21;
-        kaivo_presets["rainbells"]      = 25;
-        kaivo_presets["church"]         = 38;
-        kaivo_presets["autochurch"]     = 35;
-        kaivo_presets["jguitar"]        = 37;
-        kaivo_presets["temples"]        = 20;
-        kaivo_presets["insects"]        = 6;
+        root.kaivo_presets.spring         = 34;
+        root.kaivo_presets.markhor        = 21;
+        root.kaivo_presets.rainbells      = 25;
+        root.kaivo_presets.church         = 38;
+        root.kaivo_presets.autochurch     = 35;
+        root.kaivo_presets.jguitar        = 37;
+        root.kaivo_presets.temples        = 20;
+        root.kaivo_presets.insects        = 6;
     }
 
     WPN114.Rooms
@@ -56,7 +58,17 @@ Item
                 active: false
 
                 function setPreset(str) {
-                    kaivo_1.programChange(0, kaivo_presets[str]);
+                    var res;
+                    if ( str === "spring" ) res = 34;
+                    else if ( str === "markhor") res = 21;
+                    else if ( str === "rainbells") res = 25;
+                    else if ( str === "church") res = 38;
+                    else if ( str === "autochurch") res = 35;
+                    else if ( str === "jguitar") res = 37;
+                    else if ( str === "temples") res = 20;
+                    else if ( str === "insects") res = 6;
+
+                    kaivo_1.programChange(0, res);
                 }
 
                 WPN114.Fork { target: effects.reverb; id: k1_fork_921
@@ -96,7 +108,17 @@ Item
                 active: false
 
                 function setPreset(str) {
-                    kaivo_2.programChange(0, kaivo_presets[str]);
+                    var res;
+                    if ( str === "spring" ) res = 34;
+                    else if ( str === "markhor") res = 21;
+                    else if ( str === "rainbells") res = 25;
+                    else if ( str === "church") res = 38;
+                    else if ( str === "autochurch") res = 35;
+                    else if ( str === "jguitar") res = 37;
+                    else if ( str === "temples") res = 20;
+                    else if ( str === "insects") res = 6;
+
+                    kaivo_2.programChange(0, res);
                 }
 
                 WPN114.Fork { target: effects.reverb; id: k2_fork_921

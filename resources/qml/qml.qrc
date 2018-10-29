@@ -27,5 +27,7 @@
         <file>views/Button.qml</file>
         <file>views/Slider.qml</file>
         <file>InteractionExecutor.qml</file>
+        <file>MainView.qml</file>
+        <file>scenes/Scenario.qml</file>
     </qresource>
 </RCC>

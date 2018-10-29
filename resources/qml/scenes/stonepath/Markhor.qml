@@ -15,6 +15,8 @@ Item
     {
         id: scenario
         source: audio_stream
+        exposePath: "/stonepath/markhor/scenario"
+
         duration: -1
 
         onStart:

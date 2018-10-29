@@ -14,6 +14,8 @@ Item
     {
         id: scenario
         source: audio_stream
+        exposePath: "/stonepath/deidarabotchi/scenario"
+
         target: interaction_transition
 
         onStart:

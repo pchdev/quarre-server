@@ -15,6 +15,8 @@ Item
     WPN114.TimeNode
     {
         id: introduction_scenario
+        exposePath: "/introduction/scenario"
+
         source: audio_stream
         duration: min ( 4.42 )
 
@@ -130,7 +132,6 @@ Item
     {
         id: introduction_rooms
         parentStream: audio_stream
-        setup: rooms_setup
         active: false
 
         exposePath: "/introduction/audio/rooms"

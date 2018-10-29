@@ -18,14 +18,16 @@ Item
     {
         id: scenario
         source: audio_stream
+        exposePath: "/stonepath/diaclases/scenario"
+
         duration: -1
 
         onStart:
         {
+            instruments.rooms.active = true
             instruments.kaivo_1.active = true
             instruments.kaivo_1.dBlevel = -4
-            instruments.kaivo_2.active = false
-            instruments.rooms.active = true
+            instruments.kaivo_2.active = false            
 
             stonewater.play();
             diaclases_rooms.active = true
@@ -33,7 +35,9 @@ Item
         }
 
         // always wait a little bit before changing presets after setting active
-        WPN114.TimeNode { date: sec(5) ; onStart: instruments.kaivo_1.setPreset("spring") }
+        WPN114.TimeNode { date: sec(20);
+            onStart: { console.log("changing preset"); instruments.kaivo_1.setPreset("spring") }}
+
         WPN114.TimeNode { date: sec(13); onStart: { harmonics.play(); smoke.play() }}
         WPN114.TimeNode { date: sec(55); onStart: { drone.play() }}
 
@@ -65,7 +69,7 @@ Item
             date:       sec(22)
             duration:   min(1)
 
-            from: 0; to: 0.384;
+            from: 0; to: 0.6;
         }
 
         // VERB
@@ -76,16 +80,33 @@ Item
             property: "dBlevel"
             from: -4; to: -96;
             duration: sec(20)
+        }
+
+        WPN114.Automation
+        {
+            after: spl1; date: min(1.14)
+            target: drone
+            property: "level"
+            from: 1; to: 0;
+            duration: min(1)
+        }
+
+        WPN114.Automation
+        {
+            after: spl1; date: min(1.14)
+            target: harmonics
+            property: "level"
+            from: 1; to: 0;
+            duration: min(1)
 
             onEnd:
             {
                 diaclases_rooms.active = false
                 instruments.kaivo_1.allNotesOff();
-                instruments.kaivo_1.active = false
-                instruments.rooms.active = false
+                instruments.kaivo_1.active = false;
+                instruments.rooms.active = false;
             }
         }
-
     }
 
     Item //-------------------------------------------------------------------- INTERACTIONS
@@ -311,7 +332,7 @@ Item
 
             exposePath: "/stonepath/diaclases/audio/harmonics/source"
 
-            WPN114.StreamSampler { id: harmonics;
+            WPN114.StreamSampler { id: harmonics; loop: true; xfade: 2000
                 exposePath: "/stonepath/diaclases/audio/harmonics"
                 path: "audio/stonepath/diaclases/harmonics.wav" }
         }
@@ -325,7 +346,7 @@ Item
 
             exposePath: "/stonepath/diaclases/audio/drone/source"
 
-            WPN114.StreamSampler { id: drone;
+            WPN114.StreamSampler { id: drone; loop: true; xfade: 2000
                 exposePath: "/stonepath/diaclases/audio/drone"
                 path: "audio/stonepath/diaclases/drone.wav" }
         }

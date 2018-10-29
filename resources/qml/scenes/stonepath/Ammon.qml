@@ -14,6 +14,8 @@ Item
     {
         id: scenario
         source: audio_stream
+        exposePath: "/stonepath/ammon/scenario"
+
         duration: -1
 
         onStart:
