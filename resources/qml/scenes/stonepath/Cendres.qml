@@ -16,6 +16,7 @@ Item
     signal next()
 
     property var target_thunder_executor: thunder_executor
+    property var target_boiling_executor: boiling_executor
 
     WPN114.TimeNode
     {
@@ -27,18 +28,21 @@ Item
 
         onStart:
         {
+            instruments.rooms.active = false;
             client_manager.notifyScene("cendres");
             cendres_rooms.active = true
         }
 
         InteractionExecutor //----------------------------------------------------- THUNDER
         {
-            id: thunder_executor
-            target: interaction_thunder
-            date: sec( 5 );
+            id:         thunder_executor
+            target:     interaction_thunder
 
-            onStart: console.log("LOG-THUNDER-START")
-            onEnd: target_thunder_executor = thunder_executor_loop
+            date:       sec( 5 );
+            countdown:  sec( 10 )
+            length:     sec( 20 )
+
+            onEnd:      target_thunder_executor = thunder_executor_loop
 
             WPN114.TimeNode
             {
@@ -53,27 +57,28 @@ Item
                 date:       min ( 1.05 )
                 duration:   min ( 2.30 )
 
-                onStart: console.log("LOG-THUNDERLOOP-START")
-                onEnd: console.log("LOG-THUNDERLOOP-STOP")
-
                 pattern.duration: sec(35)
 
                 InteractionExecutor
                 {
-                    id: thunder_executor_loop
-                    duration: sec(30)
-                    target: interaction_thunder
+                    id:         thunder_executor_loop
+                    target:     interaction_thunder
+                    countdown:  sec(10)
+                    length:     sec(20)
                 }
             }
         }
 
         InteractionExecutor //----------------------------------------------------- BOILING
         {
-            target: interaction_boiling
-            date: sec ( 10 )
+            id:         boiling_executor
+            target:     interaction_boiling
 
-            onStart: console.log("LOG-BOILING-START")
-            onEnd: console.log("LOG-BOILING-STOP")
+            date:       sec(10)
+            countdown:  sec(10)
+            length:     sec(20)
+
+            onEnd:      target_thunder_executor = thunder_executor_loop
 
             WPN114.TimeNode { after: parentNode; date: sec(2); onStart: burn.play() }
             WPN114.TimeNode { after: parentNode; date: sec(5); onStart: ashes.play() }
@@ -88,28 +93,37 @@ Item
 
                 InteractionExecutor
                 {
-                    duration: sec ( 30 )
-                    target: interaction_boiling
+                    id:         boiling_loop_executor
+                    target:     interaction_boiling
+                    duration:   sec(30)
+                    countdown:  sec(10)
+                    length:     sec(20)
                 }
             }
         }
 
         InteractionExecutor //------------------------------------------------ MARMOTS_BIRDS
         {
-            id: marmottes_execution
-            target: interaction_marmottes
+            id:         marmottes_execution
+            target:     interaction_marmottes
 
-            date: sec( 35 );
-            onStart: groundwalk.stop();
+            date:       sec( 35 )
+            countdown:  sec( 15 )
+            length:     sec( 45 )
+
+            onStart:    groundwalk.stop();
         }
 
         InteractionExecutor
         {
-            after: marmottes_execution
-            target: interaction_flying_birds
+            after:      marmottes_execution
+            target:     interaction_flying_birds
 
-            date: sec( 25 );
-            onEnd: quarre.play();
+            date:       sec( 25 );
+            countdown:  sec( 15 );
+            length:     sec( 60 );
+
+            onEnd:      quarre.play();
 
             WPN114.TimeNode
             {
@@ -127,18 +141,26 @@ Item
 
         InteractionExecutor //--------------------------------------------------- DRAGON_GROUNDWALK
         {
-            id:         dragon_execution
-            date:       sec( 55 );
+            id:         dragon_execution            
             target:     interaction_dragon
+
+            date:       sec( 55 );
+            countdown:  sec( 20 );
+            length:     sec( 80 );
+
             onStart:    dragon.play()
             onEnd:      dragon.stop()
         }
 
         InteractionExecutor
         {
-            after:      dragon_execution
-            date:       sec( 20 )
+            after:      dragon_execution            
             target:     interaction_groundwalk
+
+            date:       sec( 20 );
+            countdown:  sec( 20 );
+            length:     sec( 60 );
+
             onStart:    groundwalk.play()
             onEnd:      groundwalk.stop()
         }
@@ -257,9 +279,6 @@ Item
 
             description: "Executez le geste décrit ci-dessous pour déclencher un son d'orage."
 
-            countdown:  10
-            length: 20
-
             mappings: QuMapping
             {
                 source: "/gestures/whip/trigger"
@@ -279,9 +298,6 @@ Item
             module: "basics/GesturePalm.qml"
 
             description: "Executez le geste décrit ci-dessous pour déclencher un son."
-
-            countdown:  10
-            length: 20
 
             mappings: QuMapping
             {
@@ -304,9 +320,6 @@ Item
             description: "Touchez du doigt un endroit de la sphère afin de déclencher
  et de mettre en espace un cri de marmotte."
 
-            countdown: 15
-            length: 45
-
             mappings: QuMapping
             {
                 source: "/modules/xytouch/position2D"
@@ -328,9 +341,6 @@ Item
             description: "Orientez votre appareil horizontalement, à 360 degrés
  autour de vous pour identifier et déplacer le son dans l'espace."
 
-            countdown:  20
-            length: 80
-
             mappings: QuMapping
             {
                 source: "/modules/zrotation/position2D"
@@ -351,9 +361,6 @@ Item
             description: "Orientez votre appareil horizontalement, à 360 degrés
  autour de vous pour identifier et déplacer le son dans l'espace."
 
-            countdown: 20
-            length: 60
-
             mappings: QuMapping
             {
                 source: "/modules/zrotation/position2D"
@@ -373,9 +380,6 @@ Item
 
             description: "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
  pendant quelques secondes, puis relachez pour déclencher"
-
-            countdown: 15
-            length: 60
 
             mappings: [
                 QuMapping {

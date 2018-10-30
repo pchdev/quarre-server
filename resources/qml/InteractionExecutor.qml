@@ -6,15 +6,17 @@ WPN114.TimeNode
     id: root
 
     property Interaction target
+    property int countdown
+    property int length
 
-    duration:   sec(target.countdown+target.length)
-    onStart:    target.notify();
+    duration:   root.countdown+root.length
+    onStart:    target.notify(countdown/1000, length/1000);
     onEnd:      target.end();
 
     WPN114.TimeNode
     {
         source:  root.source
-        date:    sec(target.countdown)
+        date:    root.countdown
         onStart: target.begin();
     }
 }

@@ -10,11 +10,12 @@ Item
     property var owners:            [ ];
     property string title:          ""
     property string description:    ""
-    property int length:            0
-    property int countdown:         0
     property string module:         ""
     property string path:           ""
     property bool broadcast:        false
+
+    property int countdown: 0
+    property int length: 0
 
     property list<QuMapping> mappings
 
@@ -24,10 +25,16 @@ Item
     signal interactionBegin     ( );
     signal interactionEnd       ( );
 
-    function notify()   { interaction_notify.value = 0; }
+    function notify(cd, le)
+    {
+        root.countdown   = cd;
+        root.length      = le;
+
+        interaction_notify.value = 0;
+    }
+
     function begin()    { interaction_begin.value = 0; }
     function end()      { interaction_end.value = 0; }
-    function execute()  { executor.start() }
 
     WPN114.Node on title        { path: root.path+"/title" }
     WPN114.Node on description  { path: root.path+"/description" }
@@ -36,31 +43,6 @@ Item
     WPN114.Node on module       { path: root.path+"/module" }
     WPN114.Node on broadcast    { path: root.path+"/broadcast" }
 
-    Timer //------------------------------------------------------------ EXECUTOR
-    {
-        property int count: 0
-        id: executor
-        repeat: true
-        interval: 1000
-        triggeredOnStart: true
-
-        onIntervalChanged: console.log("interval changed", interval)
-
-        onTriggered:
-        {
-            if ( !count ) interaction_notify.value = 0;
-            else if ( count === root.countdown ) interaction_begin.value = 0;
-
-            if ( count === root.countdown+root.length )
-            {
-                interaction_end.value = 0;
-                stop();
-                count = 0;
-            }
-
-            else ++count;
-        }
-    }
 
     WPN114.Node //------------------------------------------------------------ INTERACTION_NOTIFY
     {
@@ -73,12 +55,6 @@ Item
         onValueReceived:
         {
             client_manager.dispatch(undefined, root)
-
-//            owners.forEach(function(owner) {
-//                for ( var i = 0; i < mappings.length; ++i )
-//                owner.remote.listen(mappings[i].source);
-//            });
-
             root.interactionNotify();
         }
     }
@@ -147,14 +123,5 @@ Item
         value:  false
 
         critical: true
-    }
-
-    WPN114.Node
-    {
-        id:     interaction_execute
-        path:   root.path+"/execute"
-        type:   WPN114.Type.Impulse
-
-        onValueReceived: root.execute();
     }
 }

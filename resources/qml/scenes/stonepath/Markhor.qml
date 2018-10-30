@@ -35,9 +35,11 @@ Item
 
         InteractionExecutor //----------------------------------------------------- BELLS
         {
-            id: bells_executor
-            target: interaction_clock_bells
-            date: sec(5)
+            id:         bells_executor
+            target:     interaction_clock_bells
+            date:       sec( 5 )
+            length:     sec( 45 )
+            countdown:  sec( 15 )
 
             onStart:
             {
@@ -65,8 +67,10 @@ Item
 
         InteractionExecutor //---------------------------------------------------- MARKHOR_DANCE
         {
-            after: bells_executor
-            target: interaction_granular_models
+            after:      bells_executor
+            target:     interaction_granular_models
+            countdown:  sec( 15 )
+            length:     sec( 60 )
 
             onStart:
             {
@@ -92,29 +96,38 @@ Item
 
             InteractionExecutor
             {
-                target: interaction_resonators_1
-                date: min(1.08)
+                target:     interaction_resonators_1
+                date:       min( 1.08 )
+                countdown:  sec( 15 )
+                length:     sec( 60 )
 
                 InteractionExecutor
                 {
-                    id: body_executor
-                    target: interaction_body_1
-                    date: min(1.08)
+                    id:         body_executor
+                    target:     interaction_body_1
+                    date:       min( 1.08 )
+                    countdown:  sec( 15 )
+                    length:     sec( 60 )
                 }
             }
 
             InteractionExecutor
             {
-                target: interaction_pads_1
-                date: sec(20)
+                target:     interaction_pads_1
+                date:       sec( 20 )
+                countdown:  sec( 15 )
+                length:     sec( 175 )
+
             }
         }
 
         InteractionExecutor //--------------------------------------------------------- TUTTI
         {
-            after: body_executor
-            target: interaction_resonators_2
-            date: sec(10)
+            after:      body_executor
+            target:     interaction_resonators_2
+            date:       sec( 10 )
+            countdown:  sec( 10 )
+            length:     sec( 180 )
 
             onStart: doomsday.playRandom();
 
@@ -125,24 +138,34 @@ Item
 
         InteractionExecutor //---------------------------- BODY
         {
-            after: body_executor
-            target: interaction_body_2
-            date: sec(10)
+            after:      body_executor
+            target:     interaction_body_2
+
+            date:       sec( 10 )
+            countdown:  sec( 10 )
+            length:     sec( 180 )
+
         }
 
         InteractionExecutor //---------------------------- GRANULAR
         {
-            id: granular_models_2_executor
-            after: body_executor
-            target: interaction_granular_models_2
-            date: sec(10)
+            id:         granular_models_2_executor
+            after:      body_executor
+            target:     interaction_granular_models_2
+
+            date:       sec( 10 )
+            countdown:  sec( 10 )
+            length:     sec( 180 )
         }
 
         InteractionExecutor //---------------------------- PADS
         {
-            after: body_executor
-            target: interaction_pads_2
-            date: sec(10)
+            after:      body_executor
+            target:     interaction_pads_2
+
+            date:       sec( 10 )
+            countdown:  sec( 10 )
+            length:     sec( 230 )
         }
 
         WPN114.Automation //---------------------------- SOUNDSCAPE_FADE_OUT
@@ -205,9 +228,6 @@ Item
             description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
             //afin de changer leurs propriétés."
 
-            length: 45
-            countdown:  15
-
             mappings:
                 [
                 QuMapping // ---------------------------------------------- proximity mapping
@@ -247,9 +267,6 @@ Item
             description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
  des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
 
-            length: 60
-            countdown:  15
-
             mappings:
                 [
                 QuMapping {
@@ -279,9 +296,6 @@ Item
 
             description: "Manipulez les sliders afin d'altérer la résonance
 des percussions. Choisissez le son qui vous convient. Attention au temps !"
-
-            length: 60
-            countdown:  15
 
             mappings:
                 [
@@ -316,9 +330,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             description: "Manipulez les sliders afin d'altérer le corps de résonance
  des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
-            length: 60
-            countdown:  15
-
             mappings:
                 [
                 QuMapping {
@@ -348,9 +359,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             description: "Appuyez et maintenez l'un des pads (un seul à la fois)
  pour ajouter des compléments rythmiques."
 
-            length: 175
-            countdown:  15
-
             property var pads: [ 81, 82, 83, 85, 73, 77, 78, 79, 65, 67, 68, 72 ]
 
             mappings: QuMapping
@@ -377,9 +385,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             description: "Vous jouez maintenant tous ensemble, collaborez,
  laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
 
-            length: 180
-            countdown: 10
-
             mappings: interaction_granular_models.mappings
         }
 
@@ -393,9 +398,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             description: interaction_granular_models_2.description
             mappings: interaction_resonators_1.mappings
-
-            length: 180
-            countdown: 10
         }
 
         Interaction //--------------------------------------------- MARKHOR_BODY_2
@@ -408,9 +410,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             description: interaction_granular_models_2.description
             mappings: interaction_body_1.mappings
-
-            length: 180
-            countdown: 10
         }
 
         Interaction //--------------------------------------------- MARKHOR_PADS_2
@@ -423,9 +422,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             description: interaction_granular_models_2.description
             mappings: interaction_pads_1.mappings
-
-            length: 230
-            countdown:  10
         }
     }
 

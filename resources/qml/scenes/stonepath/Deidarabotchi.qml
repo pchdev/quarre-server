@@ -16,7 +16,9 @@ Item
         source: audio_stream
         exposePath: "/stonepath/deidarabotchi/scenario"
 
-        target: interaction_transition
+        target:     interaction_transition
+        length:     min( 2.57 )
+        countdown:  sec( 5 )
 
         onStart:
         {
@@ -51,8 +53,7 @@ Item
         title: "Transition, ダイダラボッチ "
         module: "quarre/Transitions.qml"
         broadcast: true
-        length: 177
-        countdown: 5
+
         description: "transition, veuillez patienter..."
     }
 

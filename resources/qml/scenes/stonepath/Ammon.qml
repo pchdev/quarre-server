@@ -64,20 +64,24 @@ Item
 
         InteractionExecutor
         {
-            date: sec(10)
-            target: interaction_string_sweep
-            endExpression: ( interaction_string_sweep.index === 100 );
+            target:         interaction_string_sweep
+            endExpression:  interaction_string_sweep.index === 100
+            onStart:        instruments.kaivo_1.setPreset("temples");
 
-            onStart: instruments.kaivo_1.setPreset("temples");
+            date:       sec( 10 )
+            countdown:  sec( 10 )
+            length:     sec( 360 )
         }
 
         InteractionExecutor
-        {
-            date: sec(15)
-            target: interaction_bells
-            endExpression: ( interaction_string_sweep.index === 100 );
+        {            
+            target:         interaction_bells
+            endExpression:  interaction_string_sweep.index === 100
+            onStart:        instruments.kaivo_2.setPreset("church");
 
-            onStart: instruments.kaivo_2.setPreset("church");
+            date:       sec( 15 )
+            countdown:  sec( 10 )
+            length:     sec( 360 )
         }
 
 //        InteractionExecutor
@@ -90,9 +94,11 @@ Item
 
         InteractionExecutor
         {
-            target: interaction_strings_timbre
-            startExpression: ( interaction_string_sweep.index === 7 );
-            endExpression: ( interaction_string_sweep.index === 100 );
+            target:             interaction_strings_timbre
+            startExpression:    interaction_string_sweep.index === 7
+            endExpression:      interaction_string_sweep.index === 100
+            countdown:          sec( 10 )
+            length:             sec( 360 )
         }
 
         WPN114.Automation //--------------------------------------------- HARMONICS_SAMPLE
@@ -160,9 +166,6 @@ Item
 
             description: "Frottez les cordes avec votre doigt au fur
  et à mesure de leur apparition"
-
-            length: 360
-            countdown: 10
 
             property int index: 0
 
@@ -262,9 +265,6 @@ Item
             description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler
  la brillance (axe Y) et la hauteur (axe X) de l'instrument déclenché par votre partenaire."
 
-            length: 360
-            countdown: 10
-
             mappings: QuMapping
             {
                 source: "/modules/xyzrotation/data"
@@ -286,9 +286,6 @@ Item
 
             description: "Exécutez un geste de frappe verticale pour
  déclencher des sons de cloches"
-
-            length: 360
-            countdown: 10
 
             mappings:
             [

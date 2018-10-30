@@ -24,10 +24,10 @@ Item
 
         onStart:
         {
-            instruments.rooms.active = true
-            instruments.kaivo_1.active = true
+            instruments.rooms.active    = true
+            instruments.kaivo_1.active  = true
             instruments.kaivo_1.dBlevel = -4
-            instruments.kaivo_2.active = false            
+            instruments.kaivo_2.active  = false
 
             stonewater.play();
             diaclases_rooms.active = true
@@ -35,32 +35,77 @@ Item
         }
 
         // always wait a little bit before changing presets after setting active
-        WPN114.TimeNode { date: sec(20);
-            onStart: { console.log("changing preset"); instruments.kaivo_1.setPreset("spring") }}
-
+        WPN114.TimeNode { date: sec(20); onStart: instruments.kaivo_1.setPreset("spring") }
         WPN114.TimeNode { date: sec(13); onStart: { harmonics.play(); smoke.play() }}
         WPN114.TimeNode { date: sec(55); onStart: { drone.play() }}
 
-        // FIRST BATCH OF INTERACTIONS
-        InteractionExecutor { id: spl1; target: interaction_spring_low; date: sec(20) }
-        InteractionExecutor { target: interaction_spring_high; date: sec(20) }
-        InteractionExecutor { target: interaction_spring_timbre_1; date: sec(20) }
-        InteractionExecutor { target: interaction_smoke_spat; date: sec(35) }
-
-        // SECOND BATCH OF INTERACTIONS
-        InteractionExecutor { after: spl1; target: interaction_spring_low_2; date: sec(2) }
-        InteractionExecutor { after: spl1; target: interaction_spring_high_2; date: sec(2.1) }
+        // FIRST BATCH OF INTERACTIONS ---------------------------------------------------------
+        InteractionExecutor
+        {
+            id:         spl1
+            target:     interaction_spring_low
+            date:       sec( 20 )
+            countdown:  sec( 15 )
+            length:     min( 1.20 )
+        }
 
         InteractionExecutor
         {
-            after: spl1
-            target: interaction_spring_timbre_2
-            date: sec(2.2)
-
-            onEnd: root.next()
+            target:     interaction_spring_high;
+            date:       sec( 20 )
+            countdown:  sec( 15 )
+            length:     min( 1.20 )
         }
 
-        // ENV ATTACK INCREASE
+        InteractionExecutor
+        {
+            target:     interaction_spring_timbre_1;
+            date:       sec( 20 )
+            length:     min( 1.20 )
+            countdown:  sec( 15 )
+        }
+
+        InteractionExecutor
+        {
+            target:     interaction_smoke_spat
+            date:       sec( 35 )
+            countdown:  sec( 15 )
+            length:     min( 1.35 )
+        }
+
+        // SECOND BATCH OF INTERACTIONS -------------------------------------------------------
+
+        InteractionExecutor
+        {
+            target:     interaction_spring_low_2
+            after:      spl1
+            date:       sec( 2 )
+            countdown:  sec( 10 )
+            length:     min( 1.20 )
+        }
+
+        InteractionExecutor
+        {
+            target:     interaction_spring_high_2
+            after:      spl1
+            date:       sec( 2.1 )
+            countdown:  sec( 10 )
+            length:     min( 1.20 )
+        }
+
+        InteractionExecutor
+        {
+            target:     interaction_spring_timbre_2
+            after:      spl1
+            date:       sec( 2.2 )
+            countdown:  sec( 10 )
+            length:     min( 1.20 )
+
+            onEnd:      root.next()
+        }
+
+        // AUTOMATIONS ------------------------------------------------------------------------
+
         WPN114.Automation
         {
             after:      spl1;
@@ -84,7 +129,8 @@ Item
 
         WPN114.Automation
         {
-            after: spl1; date: min(1.14)
+            after: spl1
+            date: min(1.14)
             target: drone
             property: "level"
             from: 1; to: 0;
@@ -93,7 +139,8 @@ Item
 
         WPN114.Automation
         {
-            after: spl1; date: min(1.14)
+            after: spl1
+            date: min(1.14)
             target: harmonics
             property: "level"
             from: 1; to: 0;
@@ -123,9 +170,6 @@ Item
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
 
-            length: 80
-            countdown:  15
-
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
@@ -150,9 +194,6 @@ Item
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
-
-            length: 80
-            countdown:  15
 
             mappings: QuMapping
             {
@@ -179,9 +220,6 @@ Item
             description: "Faites pivoter l'appareil dans ses axes de rotation
  pour manipuler la brillance (Y) et la hauteur (X) de l'instrument déclenché par vos partenaires."
 
-            length: 80
-            countdown:  15
-
             mappings: QuMapping
             {
                 source: "/gestures/cover/trigger"
@@ -203,9 +241,6 @@ Item
             module: "basics/GestureHammer.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
-
-            length: 80
-            countdown:  10
 
             onInteractionNotify: instruments.kaivo_1.set("env1_attack", 0)
 
@@ -233,9 +268,6 @@ Item
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
 
-            length: 80
-            countdown:  10
-
             mappings: QuMapping
             {
                 source: "/gestures/whip/trigger"
@@ -261,9 +293,6 @@ Item
             description: "Faites pivoter l'appareil dans ses axes de rotation pour
  manipuler la brillance (Y) et la hauteur (X) de l'instrument déclenché par vos partenaires."
 
-            length: 80
-            countdown:  10
-
             mappings: QuMapping
             {
                 source: "/sensors/rotation/xyz/data"
@@ -286,9 +315,6 @@ Item
 
             description: "Orientez votre appareil horizontalement, à 360 degrés
  autour de vous pour identifier et déplacer le son de combustion dans l'espace."
-
-            length: 155
-            countdown:  15
 
             mappings: QuMapping
             {

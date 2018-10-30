@@ -19,20 +19,16 @@ Item
 
         onStart:
         {
-            flute.play();
-            leaves.play();
-            woodworks.play();
-            insects.play();
-            digigreen.play();
-            verb.play()
+            flute.play      ( );
+            leaves.play     ( );
+            woodworks.play  ( );
+            insects.play    ( );
+            digigreen.play  ( );
+            verb.play       ( )
 
-            instruments.kaivo_1.active = false;
-            instruments.kaivo_2.active = false;
-            instruments.absynth.active = false;
-            effects.amplitube.active = false;
+            instruments.rooms.active = false;
 
             pando_rooms.active = true;
-
             client_manager.notifyScene("pando");
         }
 

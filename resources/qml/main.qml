@@ -50,7 +50,7 @@ Rectangle
     {
         id:             audio_stream
 
-        outDevice:      "Scarlett 2i2 USB"
+        outDevice:      "Scarlett 18i20 USB"
         numOutputs:     2
 
 //        outDevice:      "Soundflower (64ch)"

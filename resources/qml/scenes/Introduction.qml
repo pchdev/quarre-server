@@ -20,6 +20,8 @@ Item
         source: audio_stream
         duration: min ( 4.42 )
 
+        onEnd: introduction_rooms.active = false;
+
         onStart:
         {
             digibirds.play      ( );
@@ -42,20 +44,23 @@ Item
 
         WPN114.TimeNode { date: min(3); onStart: root.end() }
 
-        onEnd: introduction_rooms.active = false;
-
         InteractionExecutor
         {
-            id: tutorial_event
-            target: tutorial_interaction
-            date: sec ( 1 )
+            id:         tutorial_event
+            target:     tutorial_interaction
+            date:       sec( 1 )
+            countdown:  sec( 48 )
+            length:     sec( 50 )
         }
 
         InteractionExecutor
         {
-            id: crossroads_event
-            target: crossroads_interaction
-            date: min ( 1.45 )
+            id:         crossroads_event
+            target:     crossroads_interaction
+
+            date:       min( 1.45 )
+            length:     sec( 30 )
+            countdown:  sec( 30 )
         }
     }
 
@@ -69,8 +74,6 @@ Item
             title: "Didacticiel"
             module: "quarre/Tutorial.qml"
             broadcast: true
-            length: 50;
-            countdown: 48
 
             description:
                 "Présentation du fonctionnement global de l'application"
@@ -84,8 +87,6 @@ Item
             title: "Croisée des chemins"
             module: "quarre/Vote.qml"
             broadcast: true
-            length: 30
-            countdown: 30
 
             description: "sélectionnez l'un des symboles présentés ci-dessous. " +
                          "Ce choix influencera le déroulement du scénario."
