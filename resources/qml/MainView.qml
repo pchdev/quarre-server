@@ -15,17 +15,46 @@ Item
     property var items: [ ]
     property var target
 
-    Loader
-    {
-        id: loader
-        x: root.xpos
-        y: root.ypos
-
-    }
-
     function impulse() { target.value = 0 }
     function toggle()  { target.value = loader.item.checked }
     function slider()  { target.value = loader.item.value }
+
+    function processPeak(v)
+    {
+        vu_left.rms = v[0];
+        vu_right.rms = v[1];
+    }
+
+    Rectangle
+    {
+        id: gui_view
+        x: tree.width
+        height: parent.height
+        width: parent.width - tree.width
+
+        Loader
+        {
+            id: loader
+        }
+
+        WPN114.VUMeter
+        {
+            id: vu_left
+            y: parent.height/2-height/2
+            x: parent.width/2-width
+            height: 150
+            width: 25
+        }
+
+        WPN114.VUMeter
+        {
+            id: vu_right
+            y: parent.height/2-height/2
+            x: parent.width/2-1
+            height: 150
+            width: 25
+        }
+    }
 
     QC14.TreeView
     {

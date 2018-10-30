@@ -60,17 +60,18 @@ Rectangle
         blockSize:      512
         active:         false
 
-        Component.onCompleted: scenario.initialize();
+        inserts: WPN114.PeakRMS { id: vu_master; onPeak: mainview.processPeak(value) }
+
+        Component.onCompleted:
+        {
+            scenario.initialize();
+        }
 
         onActiveChanged:
         {
             if ( active ) start();
             else stop();
         }
-
-        WPN114.StreamSampler { id: river;
-            exposePath: "/test"
-            path: "audio/introduction/river.wav" }
 
         WPN114.Node on dBlevel { path: "/global/audio/master/level" }
         WPN114.Node on active { path: "/global/audio/master/active" }

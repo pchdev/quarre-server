@@ -8,64 +8,30 @@ Item
     {
         id: interactions
 
-        Interaction //------------------------------------------------- KAIVO_XDRONE
+        Interaction //------------------------------------------------- NIWOOD-LOW
         {
-            id: kaivo_xdrone_interaction
-            title: "Matière brute, sculpture"
-            module: "basics/XRotation.qml"
-            length: 60
-            countdown: 20
-
-            description:
-                "Orientez votre appareil de bas en haut, et inversement,
-                 afin de modifier le timbre et la vitesse du son continu."
-
-            mappings: QuMapping
-            {
-                source: "gestures/shake/trigger"
-                expression: function(v) {  }
-            }
+            // low smallbells
+            title: "Cloches primitives, déclenchement (1)"
         }
 
-        Interaction //------------------------------------------------- KAIVO_XYDRONE
+        Interaction //------------------------------------------------- NIWOOD-HI
         {
-            id: kaivo_xydrone_interaction
-            title: "Matière brute, sculpture (2)"
-            module: "basics/XYZRotation.qml"
-            length: 75
-            countdown: 20
-
-            description:
-                "Orientez votre appareil de bas en haut (X) et
-                faites pivoter sa tranche (Y) afin de modifier le timbre,
-                la vitesse et la hauteur du son continu."
-
-            mappings: QuMapping
-            {
-                source: "gestures/shake/trigger"
-                expression: function(v) {  }
-            }
+            // hi-smallbells
+            title: "Cloches primitives, déclenchement (2)"
         }
 
-        Interaction //------------------------------------------------- KAIVO_XYDRONE
+        Interaction //------------------------------------------------- NIWOOD-TIMBRE
         {
-            id: kaivo_pitchwhip_interaction
-            title: "Matière brute, sculpture (2)"
-            module: "basics/XYZRotation.qml"
-            length: 75
-            countdown: 20
-
-            description:
-                "Orientez votre appareil de bas en haut (X) et
-                faites pivoter sa tranche (Y) afin de modifier le timbre,
-                la vitesse et la hauteur du son continu."
-
-            mappings: QuMapping
-            {
-                source: "gestures/shake/trigger"
-                expression: function(v) {  }
-            }
+            // niwood timbre (brightness 0-0.5, position, body pitch)
+            title: "Cloches primitives, timbre (1)"
         }
+
+        Interaction //------------------------------------------------- INSECTS
+        {
+            // add and erase insects
+            title: "Insectes, déclenchemen"
+        }
+
     }
 
 }

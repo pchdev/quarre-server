@@ -1,97 +1,121 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import "../.."
+import ".."
 
 Item
 {
-    WPN114.Node
+    property alias rooms: pando_rooms
+    property alias scenario: scenario
+    signal end()
+
+    InteractionExecutor
     {
-        type: WPN114.Type.Bool
-        path: "audio/wood-path/pando/play"
-        onValueReceived:
+        id: scenario
+        source: audio_stream
+        exposePath: "/stonepath/deidarabotchi/scenario"
+
+        target: interaction_transition
+
+        onStart:
         {
-            pando_rooms.active   = newValue;
+            flute.play();
+            leaves.play();
+            woodworks.play();
+            insects.play();
+            digigreen.play();
+            verb.play()
+
+            instruments.kaivo_1.active = false;
+            instruments.kaivo_2.active = false;
+            instruments.absynth.active = false;
+            effects.amplitube.active = false;
+
+            pando_rooms.active = true;
+
+            client_manager.notifyScene("pando");
         }
+
+        onEnd:
+        {
+            pando_rooms.active = false;
+            root.end();
+        }
+
+    }
+
+    Interaction //----------------------------------------------------- PANDO_TRANSITION
+    {
+        id: interaction_transition
+        path: "/woodpath/pando/interactions/transition"
+
+        title: "Transition, Pando"
+        module: "quarre/Transitions.qml"
+        broadcast: true
+        length: 104
+        countdown: 5
+        description: "transition, veuillez patienter..."
     }
 
     WPN114.Rooms
     {
         id: pando_rooms
         parentStream: audio_stream
-        configuration: rooms_config
+        setup: rooms_setup
         active: false
 
-        exposePath: "/audio/wood-path/pando/rooms"
+        exposePath: "/woodpath/pando/audio/rooms"
 
         WPN114.RoomSource //----------------------------------------- 1.FLUTE (1-2)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
-
-            exposePath: "/audio/wood-path/pando/rooms/sources/flute"
+            exposePath: "/woodpath/pando/audio/flute/source"
 
             WPN114.Sampler { id: flute; stream: true;
-                path: "audio/wood-path/pando/flute.wav" }
+                path: "audio/woodpath/pando/flute.wav" }
         }
 
         WPN114.RoomSource //----------------------------------------- 2.LEAVES (3-4)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
-
-            exposePath: "/audio/wood-path/pando/rooms/sources/leaves"
+            exposePath: "/woodpath/pando/audio/rooms/leaves/source"
 
             WPN114.Sampler { id: leaves; stream: true;
-                path: "audio/wood-path/pando/leaves.wav" }
+                path: "audio/woodpath/pando/leaves.wav" }
         }
 
         WPN114.RoomSource //----------------------------------------- 3.WOODWORKS (5-6)
-        {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
+        {          
 
-            exposePath: "/audio/wood-path/pando/rooms/sources/woodworks"
+            exposePath: "/woodpath/pando/audio/rooms/woodworks/source"
 
             WPN114.Sampler { id: woodworks; stream: true;
-                path: "audio/wood-path/pando/woodworks.wav" }
+                path: "audio/woodpath/pando/woodworks.wav" }
         }
 
         WPN114.RoomSource //----------------------------------------- 4.INSECTS (7-8)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
 
-            exposePath: "/audio/wood-path/pando/rooms/sources/insects"
+            exposePath: "/woodpath/pando/audio/rooms/insects/source"
 
             WPN114.Sampler { id: insects; stream: true;
-                path: "audio/wood-path/pando/insects.wav" }
+                path: "audio/woodpath/pando/insects.wav" }
         }
 
         WPN114.RoomSource //----------------------------------------- 5.DIGIGREEN (9-10)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
 
-            exposePath: "/audio/wood-path/pando/rooms/sources/digigreen"
+            exposePath: "/woodpath/pando/audio/rooms/sources/digigreen"
 
             WPN114.Sampler { id: digigreen; stream: true;
-                path: "audio/wood-path/pando/digigreen.wav" }
+                path: "audio/woodpath/pando/digigreen.wav" }
         }
 
         WPN114.RoomSource //----------------------------------------- 6.VERB (11-12)
         {
-            position:   [ [0.151, 0.5, 0.5], [ 0.835, 0.5, 0.5 ] ]
-            diffuse:    [ 0.49, 0.49 ]
-            bias:       [ 0.5, 0.5 ]
 
-            exposePath: "/audio/wood-path/pando/rooms/sources/verb"
+            exposePath: "/woodpath/pando/audio/rooms/sources/verb"
 
             WPN114.Sampler { id: verb; stream: true;
-                path: "audio/wood-path/pando/verb.wav" }
+                path: "audio/woodpath/pando/verb.wav" }
         }
     }
 

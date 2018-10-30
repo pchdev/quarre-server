@@ -5,6 +5,12 @@ import "../.."
 
 Item
 {
+    WPN114.TimeNode
+    {
+
+    }
+
+
     Item //------------------------------------------------------------------------------ INTERACTIONS
     {
         id: interactions
@@ -17,15 +23,14 @@ Item
             length: 30
             countdown: 10
 
-            description:
-                "Exécutez le geste décrit ci-dessous
-                 afin de déclencher des sons de feuillages"
+            description: ""
 
             mappings: QuMapping
             {
-                source: "gestures/shake/trigger"
+                source: "/modules/gestures/shaking"
                 expression: function(v) {
-                    leaves.active = true; shake_leaves_interaction.end()
+                    if ( v ) leaves.play();
+                    else leaves.stop();
                 }
             }
         }
@@ -46,6 +51,27 @@ Item
             {
                 source: "modules/birds/trigger"
                 expression: function(v) {
+                    var target_source;
+                    if ( v[0] === 0 )
+                    {
+                        target_source = blackcap_source;
+                        blackcap.playRandom()
+                    }
+                    else if ( v[0] === 1 )
+                    {
+                        target_source = woodpecker_source;
+                        woodpecker.playRandom();
+                    }
+                    else if ( v[0] === 2 )
+                    {
+                        target_source = oriole_source;
+                        oriole.playRandom();
+                    }
+                    else if ( v[0] === 3 )
+                    {
+                        target_source = nightingale_source;
+                        nightingale.playRandom();
+                    }
                 }
             }
         }
@@ -62,32 +88,18 @@ Item
                 "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
                  pendant quelques secondes, puis relachez pour déclencher"
 
-            mappings: QuMapping
-            {
-                source: "modules/trajectories/trigger"
-                expression: function(v) {
+            mappings: [
+                QuMapping {
+                    source: "/modules/trajectories/trigger"
+                    expression: function(v) { flying_birds.playRandom() }},
+
+                QuMapping {
+                    source: "/modules/trajectories/position2D"
+                    expression: function(v) {
+                        flying_birds_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                    }
                 }
-            }
-        }
-
-        Interaction //------------------------------------------------- WOODRINGER
-        {
-            id: woodringer_interaction
-            title: "Arbres, expirations"
-            module: "basics/GesturePalm.qml"
-            length: 20
-            countdown: 10
-
-            description:
-                "Executez le geste décrit ci-dessous afin de déclencher un son grave"
-
-            mappings: QuMapping
-            {
-                source: "gestures/palm/trigger"
-                expression: function(v) {
-                    woodringer_low_rise.play();
-                }
-            }
+            ]
         }
 
         Interaction //------------------------------------------------- WOODENBIRDS_SPAT
@@ -105,8 +117,9 @@ Item
 
             mappings: QuMapping
             {
-                source: "gestures/palm/trigger"
+                source: "/modules/zrotation/position2D"
                 expression: function(v) {
+                    woodenbirds_source.position = Qt.vector3d(v[0], v[1], 0.5);
                 }
             }
         }
@@ -119,57 +132,8 @@ Item
         parentStream: audio_stream
         setup: rooms_setup
 
-        WPN114.StereoSource //----------------------------------------- 1.WIND (1-2)
+        WPN114.StereoSource //-----------------------------------------
         {
-            yspread: 0.35
-            diffuse: 0.8
-            fixed: true
-
-            exposePath: "/audio/woodpath/maaaet/wind/source"
-
-            WPN114.StreamSampler { id: wind;
-                exposePath: "/audio/woodpath/maaaet/wind"
-                path: "audio/woodpath/maaaet/wind.wav" }
-        }
-
-        WPN114.StereoSource //----------------------------------------- 2.LIGHT_BACKGROUND (3-4)
-        {            
-            xspread: 0.25
-            yspread: 0.25
-            diffuse: 0.55
-            fixed: true
-
-            exposePath: "/audio/woodpath/maaaet/light-background/source"
-
-            WPN114.Sampler { id: light_background;
-                exposePath: "/audio/woodpath/maaaet/light-background"
-                path: "audio/woodpath/maaaet/light-background.wav" }
-        }
-
-        WPN114.MonoSource //----------------------------------------- 3.GRASSHOPPERS (5-6)
-        {
-            fixed: true
-            y: 0.82
-
-            exposePath: "/audio/woodpath/maaaet/grasshoppers/source"
-
-            WPN114.Sampler { id: grasshoppers;
-                exposePath: "/audio/woodpath/maaaet/grasshoppers"
-                path: "audio/woodpath/maaaet/grasshoppers.wav" }
-        }
-
-        WPN114.StereoSource //----------------------------------------- 4.GROUND_CREEEK (7-8)
-        {
-            fixed: true
-            diffuse: 0.5
-            xspread: 0.25
-            y: 0.75
-
-            exposePath: "/audio/woodpath/maaaet/groundcreek/source"
-
-            WPN114.Sampler { id: groundcreek;
-                exposePath: "/audio/woodpath/maaaet/groundcreek"
-                path: "audio/woodpath/maaaet/groundcreek.wav" }
         }
 
         WPN114.StereoSource //----------------------------------------- 5.LEAVES (9-10)
@@ -181,25 +145,27 @@ Item
 
             exposePath: "/audio/woodpath/maaaet/leaves/source"
 
-            WPN114.Sampler { id: leaves;
+            WPN114.Sampler { id: leaves; attack: 2000; release: 2000;
                 exposePath: "/audio/woodpath/maaaet/leaves"
                 path: "audio/woodpath/maaaet/leaves.wav" }
         }
 
         WPN114.MonoSource //----------------------------------------- 6.BLACKCAP (11-12)
         {
+            id: blackcap_source
             exposePath: "/audio/woodpath/maaaet/blackcap/source"
 
-            WPN114.Sampler { id: blackcap;
+            WPN114.MultiSampler { id: blackcap;
                 exposePath: "/audio/woodpath/maaaet/blackcap"
                 path: "audio/woodpath/maaaet/blackcap" }
         }
 
         WPN114.MonoSource //----------------------------------------- 7.WOODPECKER (13-14)
         {
+            id: woodpecker_source
             exposePath: "/audio/woodpath/maaaet/woodpecker/source"
 
-            WPN114.Sampler { id: woodpecker;
+            WPN114.MultiSampler { id: woodpecker;
                 exposePath: "/audio/woodpath/maaaet/woodpecker"
                 path: "audio/woodpath/maaaet/woodpecker" }
         }
@@ -207,6 +173,7 @@ Item
 
         WPN114.MonoSource //----------------------------------------- 8.ORIOLE (15-16)
         {
+            id: oriole_source
             exposePath: "/audio/woodpath/maaaet/oriole/source"
 
             WPN114.Sampler { id: oriole;
@@ -216,9 +183,10 @@ Item
 
         WPN114.MonoSource //----------------------------------------- 9.NIGHTINGALE (17-18)
         {
+            id: nightingale_source
             exposePath: "/audio/woodpath/maaaet/nightingale/source"
 
-            WPN114.Sampler { id: nightingale;
+            WPN114.MultiSampler { id: nightingale;
                 exposePath: "/audio/woodpath/maaaet/nightingale"
                 path: "audio/woodpath/maaaet/nightingale" }
         }
@@ -226,77 +194,22 @@ Item
 
         WPN114.MonoSource //----------------------------------------- 10.FLYING_BIRDS (19-20)
         {
+            id: flying_birds_source
             exposePath: "/audio/woodpath/maaaet/flying-birds/source"
 
-            WPN114.Sampler { id: flying_birds;
+            WPN114.MultiSampler { id: flying_birds;
                 exposePath: "/audio/woodpath/maaaet/flying-birds"
                 path: "audio/woodpath/maaaet/flying-birds" }
         }
 
-
-        WPN114.StereoSource //----------------------------------------- 11.WOODRINGER_LOW (21-22)
-        {
-            fixed: true
-            yspread: 0.3
-            diffuse: 0.6
-
-            exposePath: "/audio/woodpath/maaaet/woodringer-low/source"
-
-            WPN114.Sampler { id: woodringer_low;
-                exposePath: "/audio/woodpath/maaaet/woodringer-low"
-                path: "audio/woodpath/maaaet/low-woodringer-static.wav" }
-        }
-
-
-        WPN114.StereoSource //----------------------------------------- 12.WOODRINGER_LOW_RISE (23-24)
-        {
-            fixed: true
-            xspread: 0.3
-            diffuse: 0.25
-            y: 0.85
-
-            exposePath: "/audio/woodpath/maaaet/woodringer-low-rise/source"
-
-            WPN114.MultiSampler { id: woodringer_low_rise;
-                exposePath: "/audio/woodpath/maaaet/woodringer-low-rise"
-                path: "audio/woodpath/maaaet/low-woodringer-rise" }
-        }
-
-
-        WPN114.StereoSource //----------------------------------------- 13.WOODRINGER_HI (25-26)
-        {
-            fixed: true
-            xspread: 0.3
-            y: 0.8
-
-            exposePath: "/audio/woodpath/maaaet/woodringer-high/source"
-
-            WPN114.Sampler { id: woodringer_high;
-                exposePath: "/audio/woodpath/maaaet/woodringer-high"
-                path: "audio/woodpath/maaaet/hi-woodringer-rise.wav" }
-        }
-
-
         WPN114.MonoSource //----------------------------------------- 14.WOODEN_BIRDS (27-28)
         {
+            id: woodenbirds_source
             exposePath: "/audio/woodpath/maaaet/woodenbirds/source"
 
             WPN114.Sampler { id: woodenbirds;
                 exposePath: "/audio/woodpath/maaaet/woodenbirds"
                 path: "audio/woodpath/maaaet/woodenbirds.wav" }
-        }
-
-        WPN114.StereoSource //----------------------------------------- 15.BIRDS_BACKGROUND (29-30)
-        {
-            fixed: true
-            yspread: 0.25
-            diffuse: 0.8
-
-            exposePath: "/audio/woodpath/maaaet/birds-background/spatialization"
-
-            WPN114.Sampler { id: birds_background;
-                exposePath: "/audio/woodpath/maaaet/birds-background"
-                path: "audio/woodpath/maaaet/birds-background.wav" }
         }
     }
 }
