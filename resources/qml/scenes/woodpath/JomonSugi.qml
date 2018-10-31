@@ -130,6 +130,7 @@ Item
         }
 
         // JOMON_SUGI ------------------------------------------------------------
+
         WPN114.TimeNode
         {
             after: akatsuki
@@ -145,13 +146,13 @@ Item
                 target:     interaction_mangler_1
                 date:       sec( 37 )
                 countdown:  sec( 15 )
-                length:     min (1.20 )
+                length:     min( 1.20 )
 
                 InteractionExecutor
                 {
                     target:     interaction_mangler_2
                     countdown:  sec( 15 )
-                    length:     min (1.20 )
+                    length:     min( 1.20 )
                 }
             }
         }
@@ -231,14 +232,72 @@ Item
             ]
         }
 
-        Interaction
+        Interaction //-------------------------------------------------------------- YUGURE_SYNTHS
         {
-            id:     interaction_synth_1
+            id:         interaction_synth_1
+            title:      "Accompagnements (1)"
+            module:     "quarre/JomonPalm.qml"
+
+            description: "Approchez et maintenez la paume de votre main à quelques centimètres
+ de l'écran pour produire du son, retirez-la pour le faire disparaître."
+
+            property bool sample: false
+
+            mappings: QuMapping
+            {
+                source: "/modules/jpalm/near"
+                expression: function(v) {
+
+                    if      ( v  && interaction_synth_1.sample ) ysynths.play(0);
+                    else if ( v && !interaction_synth_1.sample ) ysynths.play(1);
+                    else
+                    {
+                        ysynths.stop(0);
+                        ysynths.stop(1);
+                        interaction_synth_1.sample = !interaction_synth_1.sample;
+                    }
+                }
+            }
         }
 
         Interaction
         {
-            id:     interaction_synth_2
+            id:         interaction_synth_2
+            title:      "Accompagnements (1)"
+            module:     "quarre/JomonPalmZ.qml"
+
+            description: "Approchez et maintenez la paume de votre main à quelques centimètres
+ de l'écran pour produire du son, retirez-la pour le faire disparaître."
+
+            property bool sample: false
+
+            mappings:
+            [
+                QuMapping
+                {
+                    source: "/modules/jpalm/near"
+                    expression: function(v) {
+
+                        if      ( v  && interaction_synth_2.sample ) ysynths_2.play(0);
+                        else if ( v && !interaction_synth_2.sample ) ysynths_2.play(1);
+                        else
+                        {
+                            ysynths_2.stop(0);
+                            ysynths_2.stop(1);
+                            interaction_synth_2.sample = !interaction_synth_2.sample;
+                        }
+                    }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/zrotation/position2D"
+                    expression: function(v) {
+                        ysynths_2_source.position   = Qt.vector3d(v[0], v[1], 0.5);
+                    }
+                }
+
+            ]
         }
 
         Interaction //-------------------------------------------------------------------------- JOMON_STR_1
@@ -308,8 +367,8 @@ Item
             {
                 source: "/modules/xytouch/position2D"
                 expression: function(v) {
-                    fsynths.left.position   = Qt.vector3d(v[0], v[1], 0.5);
-                    fsynths.right.position  = Qt.vector3d(1-v[0], 1-v[1], 0.5);
+                    jsynths_source.left.position  = Qt.vector3d(v[0], v[1], 0.5);
+                    jsynths_source.right.position = Qt.vector3d(1-v[0], 1-v[1], 0.5);
                 }
             }
         }
@@ -321,15 +380,57 @@ Item
             module: "quarre/JomonMangler.qml"
 
             description: "Parasitez, détruisez le signal"
+
+            mappings:
+            [
+                QuMapping
+                {
+                    source: "/modules/mangler/resampler"
+                    expression: function(v) { mangler.badResampler = v; }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/thermonuclear"
+                    expression: function(v) { mangler.thermonuclear = v; }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/bitdepth"
+                    expression: function(v) { mangler.bitdepth = v; }
+                }
+            ]
         }
 
         Interaction //-------------------------------------------------------------------------- MANGLER_2
         {
             id:     interaction_mangler_2
             title:  "Destructurations (2)"
-            module: "quarre/JomonMangler.qml"
+            module: "quarre/JomonMangler2.qml"
 
             description: "Parasitez, détruisez le signal"
+
+            mappings:
+            [
+                QuMapping
+                {
+                    source: "/modules/mangler/love"
+                    expression: function(v) { mangler.love = v; }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/jive"
+                    expression: function(v) { mangler.jive = v; }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/attitude"
+                    expression: function(v) { mangler.attitude = v; }
+                }
+            ]
         }
     }
 
@@ -364,7 +465,10 @@ Item
 
             WPN114.Sampler { id: dmsynth;
                 exposePath: "/woodpath/jomon/audio/dmsynth"
-                path: "audio/woodpath/jomon/dmsynth.wav" }
+                path: "audio/woodpath/jomon/dmsynth.wav"
+
+                WPN114.Mangler { id: mangler }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 3.LEAVES (5-6)
@@ -395,11 +499,40 @@ Item
             diffuse: 0.3
             y: 0.1
             fixed:  true
-            exposePath: "/woodpath/jomon/audio/ysynths/source"
+            exposePath: "/woodpath/jomon/audio/ysynths-1/source"
 
-            WPN114.Sampler { id: ysynths;
-                exposePath: "/woodpath/jomon/audio/ysynths"
-                path: "audio/woodpath/jomon/ysynths.wav" }
+            WPN114.MultiSampler { id: ysynths;
+                exposePath: "/woodpath/jomon/audio/ysynths-1"
+                path: "audio/woodpath/jomon/ysynths-1" }
+        }
+
+        WPN114.StereoSource //----------------------------------------- 5.YSYNTHS (9-10)
+        {
+            id: ysynths_2_source
+
+            xspread: 0.3
+            diffuse: 0.3
+            y: 0.1
+            fixed:  true
+            exposePath: "/woodpath/jomon/audio/ysynths-2/source"
+
+            WPN114.MultiSampler { id: ysynths_2;
+                exposePath: "/woodpath/jomon/audio/ysynths-2"
+                path: "audio/woodpath/jomon/ysynths-2" }
+        }
+
+        WPN114.StereoSource //----------------------------------------- 5.YSYNTHS (9-10)
+        {
+            id: jsynths_source
+            xspread: 0.3
+            diffuse: 0.3
+            y: 0.1
+            fixed:  true
+            exposePath: "/woodpath/jomon/audio/jsynths/source"
+
+            WPN114.MultiSampler { id: jsynths;
+                exposePath: "/woodpath/jomon/audio/jsynths"
+                path: "audio/woodpath/jomon/jsynths" }
         }
 
         WPN114.MonoSource //----------------------------------------- 6.OWL_1 (11-12)
