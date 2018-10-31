@@ -16,8 +16,7 @@ Item
         id:             scenario
         source:         audio_stream
         exposePath:     "/woodpath/jomon/scenario"
-
-        duration: -1
+        duration:       -1
 
         onStart:
         {
@@ -35,7 +34,7 @@ Item
         InteractionExecutor
         {
             id:         arpeggiator_ex
-            target:     interaction_arpeggiator_notes
+            target:     interaction_arpeggiator
             date:       sec( 5 )
             countdown:  sec( 15 )
             length:     min( 5 )

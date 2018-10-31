@@ -19,6 +19,25 @@ Item
     Vare        { id: vare }
     JomonSugi   { id: jomon }
 
+    function reset()
+    {
+        maaaet.rooms.active   = false
+        carre.rooms.active    = false
+        pando.rooms.active    = false
+        vare.rooms.active     = false
+        jomon.rooms.active    = false
+    }
+
+    function initialize(setup)
+    {
+        maaaet.rooms.setup      = setup
+        carre.rooms.setup       = setup
+        pando.rooms.setup       = setup
+        vare.rooms.setup        = setup
+        jomon.rooms.setup       = setup
+
+    }
+
     WPN114.TimeNode
     {
         id: scenario
