@@ -20,6 +20,7 @@ Item
             instruments.kaivo_1.active = true;
             instruments.kaivo_2.active = true;
             instruments.rooms.active = true;
+            client_manager.notifyScene("carre");
         }
 
         // 1.SOFT ------------------------------------------------------------

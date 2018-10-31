@@ -23,6 +23,8 @@ Item
             instruments.kaivo_1.active = true;
             instruments.kaivo_2.active = true;
             snowfall.play();
+
+            client_manager.notifyScene("vare");
         }
 
         InteractionExecutor

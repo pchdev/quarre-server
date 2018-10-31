@@ -29,5 +29,6 @@
         <file>InteractionExecutor.qml</file>
         <file>MainView.qml</file>
         <file>scenes/Scenario.qml</file>
+        <file>scenes/woodpath/JomonScore.qml</file>
     </qresource>
 </RCC>

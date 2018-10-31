@@ -180,38 +180,10 @@ Item
             {
                 source: "/modules/strings/trigger"
                 expression: function(v) {
-
-                    var idx = interaction_string_sweep.index
-                    var chord = ammon_score.score[idx];
-                    var next_chord = ammon_score.score[idx+1];
-
-                    interaction_string_sweep.owners.forEach(function(owner) {
-                        owner.remote.sendMessage("/modules/strings/display", 0, true)
-                    });
-
-                    for ( var i = 0; i < chord['notes'].length; ++i )
-                    {
-                        ( function(i) {
-
-                            console.log(chord['notes'][i], chord['velocity'][i], chord['times'][i]);
-
-                            functions.setTimeout( function() {
-                                instruments.kaivo_1.noteOn(0, chord['notes'][i], chord['velocity'][i]); }, chord['times'][i]);
-
-                            functions.setTimeout( function() {
-                                instruments.kaivo_1.noteOff(0, chord['notes'][i], chord['velocity'][i]);
-                            }, chord['duration']); })(i);
-                    }
-
-                    // display next chord
-                    functions.setTimeout( function() {
-                        interaction_string_sweep.owners.forEach(function(owner) {
-                            var value = next_chord["notes"].length;
-                            owner.remote.sendMessage("/modules/strings/display", value, true)})
-                    }, chord["duration"])
-
-
-                    interaction_string_sweep.index++;
+                    functions.processScoreIncrement( ammon_score,
+                                interaction_string_sweep,
+                                interaction_string_sweep,
+                                instruments.kaivo_1 );
                 }
             }
         }

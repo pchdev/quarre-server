@@ -48,7 +48,7 @@ Item
             {
                 after:    parentNode
                 date:     sec ( 30 )
-                onStart:  { thunder.playRandom(); console.log("LOG-THUNDER-RDM") }
+                onStart:  thunder.playRandom()
             }
 
             WPN114.Loop //--------------------------------- THUNDER_LOOP
@@ -57,14 +57,14 @@ Item
                 date:       min ( 1.05 )
                 duration:   min ( 2.30 )
 
-                pattern.duration: sec(35)
+                pattern.duration: sec( 35 )
 
                 InteractionExecutor
                 {
                     id:         thunder_executor_loop
                     target:     interaction_thunder
-                    countdown:  sec(10)
-                    length:     sec(20)
+                    countdown:  sec( 10 )
+                    length:     sec( 20 )
                 }
             }
         }
@@ -74,11 +74,11 @@ Item
             id:         boiling_executor
             target:     interaction_boiling
 
-            date:       sec(10)
-            countdown:  sec(10)
-            length:     sec(20)
+            date:       sec( 10 )
+            countdown:  sec( 10 )
+            length:     sec( 20 )
 
-            onEnd:      target_thunder_executor = thunder_executor_loop
+            onEnd:      target_boiling_executor = boiling_loop_executor
 
             WPN114.TimeNode { after: parentNode; date: sec(2); onStart: burn.play() }
             WPN114.TimeNode { after: parentNode; date: sec(5); onStart: ashes.play() }
@@ -95,9 +95,9 @@ Item
                 {
                     id:         boiling_loop_executor
                     target:     interaction_boiling
-                    duration:   sec(30)
-                    countdown:  sec(10)
-                    length:     sec(20)
+                    duration:   sec( 30 )
+                    countdown:  sec( 10 )
+                    length:     sec( 20 )
                 }
             }
         }
@@ -180,11 +180,11 @@ Item
             onStart: { redbirds_1.play(); redbirds_2.play() }}
 
         // ravens
-        WPN114.TimeNode { date: sec(46); onStart: birds.play("northern-raven1.wav") }
-        WPN114.TimeNode { date: sec(60); onStart: birds.play("northern-raven2.wav") }
-        WPN114.TimeNode { date: sec(68); onStart: birds.play("northern-raven3.wav") }
-        WPN114.TimeNode { date: sec(83); onStart: birds.play("northern-raven4.wav") }
-        WPN114.TimeNode { date: sec(94); onStart: birds.play("northern-raven5.wav") }
+        WPN114.TimeNode { date: sec(46); onStart: birds.play( "northern-raven1.wav" ) }
+        WPN114.TimeNode { date: sec(60); onStart: birds.play( "northern-raven2.wav" ) }
+        WPN114.TimeNode { date: sec(68); onStart: birds.play( "northern-raven3.wav" ) }
+        WPN114.TimeNode { date: sec(83); onStart: birds.play( "northern-raven4.wav" ) }
+        WPN114.TimeNode { date: sec(94); onStart: birds.play( "northern-raven5.wav" ) }
 
         // marmots
         WPN114.TimeNode { date: min(1.51); onStart: marmots.playRandom() }
