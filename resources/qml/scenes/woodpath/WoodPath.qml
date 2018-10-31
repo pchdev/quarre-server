@@ -3,8 +3,21 @@ import WPN114 1.0 as WPN114
 
 Item
 {
-    id: root
-    signal end()
+    id:     root
+    signal  end()
+
+    property alias maaaet:      maaaet
+    property alias carre:       carre
+    property alias pando:       pando
+    property alias vare:        vare
+    property alias jomon:       jomon
+    property alias scenario:    scenario
+
+    Maaaet      { id: maaaet }
+    Carre       { id: carre }
+    Pando       { id: pando }
+    Vare        { id: vare }
+    JomonSugi   { id: jomon }
 
     WPN114.TimeNode
     {
@@ -45,13 +58,7 @@ Item
 
     Connections
     {
-        target: ammon
+        target: jomon
         onEnd:  root.end()
     }
-
-    Maaaet      { id: maaaet }
-    Carre       { id: carre }
-    Pando       { id: pando }
-    Vare        { id: vare }
-    JomonSugi   { id: jomon }
 }

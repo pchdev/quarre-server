@@ -7,11 +7,13 @@ Item
 {
     id: root
     signal next();
+    property alias scenario: scenario
 
     WPN114.TimeNode
     {
-        id: scenario
-        source: audio_stream
+        id:           scenario
+        source:       audio_stream
+        exposePath:   "/woodpath/maaaet/scenario"
 
         duration: -1
 
@@ -229,11 +231,11 @@ Item
             diffuse: 0.5
             yspread: 0.25
 
-            exposePath: "/audio/woodpath/maaaet/spring/source"
+            exposePath: "/woodpath/maaaet/audio/spring/source"
 
             WPN114.Sampler { id: spring; loop: true; xfade: 3000
-                exposePath: "/audio/woodpath/maaaet/spring"
-                path: "audio/introduction/spring.wav"
+                exposePath: "/woodpath/maaaet/audio/spring"
+                path: "audio/woodpath/maaaet/spring.wav"
             }
         }
 
@@ -243,11 +245,11 @@ Item
             diffuse: 0.5
             yspread: 0.25
 
-            exposePath: "/audio/woodpath/maaaet/winldeaves/source"
+            exposePath: "/woodpath/maaaet/audio/windleaves/source"
 
             WPN114.Sampler { id: windleaves; loop: true; xfade: 3000
-                exposePath: "/audio/woodpath/windleaves/grove"
-                path: "audio/introduction/windleaves.wav"
+                exposePath: "/woodpath/maaaet/windleaves"
+                path: "audio/woodpath/maaaet/windleaves.wav"
             }
         }
 
@@ -257,11 +259,11 @@ Item
             diffuse: 0.5
             yspread: 0.25
 
-            exposePath: "/audio/woodpath/maaaet/grove/source"
+            exposePath: "/woodpath/maaaet/audio/grove/source"
 
             WPN114.Sampler { id: grove; loop: true; xfade: 3000
-                exposePath: "/audio/woodpath/maaaet/grove"
-                path: "audio/introduction/grove.wav"
+                exposePath: "/woodpath/maaaet/audio/grove"
+                path: "audio/woodpath/maaaet/grove.wav"
             }
         }
 
@@ -271,11 +273,11 @@ Item
             diffuse: 0.5
             yspread: 0.25
 
-            exposePath: "/audio/woodpath/maaaet/woodworks/source"
+            exposePath: "/woodpath/maaaet/audio/woodworks/source"
 
             WPN114.Sampler { id: woodworks
-                exposePath: "/audio/woodpath/maaaet/woodworks"
-                path: "audio/introduction/woodworks.wav"
+                exposePath: "/woodpath/maaaet/audio/woodworks"
+                path: "audio/woodpath/maaaet/woodworks.wav"
             }
         }
 
@@ -285,11 +287,11 @@ Item
             diffuse: 0.5
             yspread: 0.25
 
-            exposePath: "/audio/woodpath/maaaet/woodworks2/source"
+            exposePath: "/woodpath/maaaet/audio/woodworks2/source"
 
             WPN114.Sampler { id: woodworks_2
-                exposePath: "/audio/woodpath/maaaet/woodworks2"
-                path: "audio/introduction/woodworks2.wav"
+                exposePath: "/woodpath/maaaet/audio/woodworks2"
+                path: "audio/woodpath/maaaet/woodworks2.wav"
             }
         }
 
@@ -300,30 +302,30 @@ Item
             xspread: 0.25
             y: 0.75
 
-            exposePath: "/audio/woodpath/maaaet/leaves/source"
+            exposePath: "/woodpath/maaaet/audio/leaves/source"
 
             WPN114.Sampler { id: leaves; attack: 2000; release: 2000;
-                exposePath: "/audio/woodpath/maaaet/leaves"
+                exposePath: "/woodpath/maaaet/audio/leaves"
                 path: "audio/woodpath/maaaet/leaves.wav" }
         }
 
         WPN114.MonoSource //----------------------------------------- 6.BLACKCAP (11-12)
         {
             id: blackcap_source
-            exposePath: "/audio/woodpath/maaaet/blackcap/source"
+            exposePath: "/woodpath/maaaet/audio/blackcap/source"
 
             WPN114.MultiSampler { id: blackcap;
-                exposePath: "/audio/woodpath/maaaet/blackcap"
+                exposePath: "/woodpath/maaaet/audio/blackcap"
                 path: "audio/woodpath/maaaet/blackcap" }
         }
 
         WPN114.MonoSource //----------------------------------------- 7.WOODPECKER (13-14)
         {
             id: woodpecker_source
-            exposePath: "/audio/woodpath/maaaet/woodpecker/source"
+            exposePath: "/woodpath/maaaet/audio/woodpecker/source"
 
             WPN114.MultiSampler { id: woodpecker;
-                exposePath: "/audio/woodpath/maaaet/woodpecker"
+                exposePath: "/woodpath/maaaet/audio/woodpecker"
                 path: "audio/woodpath/maaaet/woodpecker" }
         }
 
@@ -331,20 +333,20 @@ Item
         WPN114.MonoSource //----------------------------------------- 8.ORIOLE (15-16)
         {
             id: oriole_source
-            exposePath: "/audio/woodpath/maaaet/oriole/source"
+            exposePath: "/woodpath/maaaet/audio/oriole/source"
 
             WPN114.Sampler { id: oriole;
-                exposePath: "/audio/woodpath/maaaet/oriole"
+                exposePath: "/woodpath/maaaet/audio/oriole"
                 path: "audio/woodpath/maaaet/oriole" }
         }
 
         WPN114.MonoSource //----------------------------------------- 9.NIGHTINGALE (17-18)
         {
             id: nightingale_source
-            exposePath: "/audio/woodpath/maaaet/nightingale/source"
+            exposePath: "/woodpath/maaaet/audio/nightingale/source"
 
             WPN114.MultiSampler { id: nightingale;
-                exposePath: "/audio/woodpath/maaaet/nightingale"
+                exposePath: "/woodpath/maaaet/audio/nightingale"
                 path: "audio/woodpath/maaaet/nightingale" }
         }
 
@@ -352,20 +354,20 @@ Item
         WPN114.MonoSource //----------------------------------------- 10.FLYING_BIRDS (19-20)
         {
             id: flying_birds_source
-            exposePath: "/audio/woodpath/maaaet/flying-birds/source"
+            exposePath: "/woodpath/maaaet/audio/flying-birds/source"
 
             WPN114.MultiSampler { id: flying_birds;
-                exposePath: "/audio/woodpath/maaaet/flying-birds"
+                exposePath: "/woodpath/maaaet/audio/flying-birds"
                 path: "audio/woodpath/maaaet/flying-birds" }
         }
 
         WPN114.MonoSource //----------------------------------------- 14.WOODEN_BIRDS (27-28)
         {
             id: woodenbirds_source
-            exposePath: "/audio/woodpath/maaaet/woodenbirds/source"
+            exposePath: "/woodpath/maaaet/audio/woodenbirds/source"
 
             WPN114.Sampler { id: woodenbirds;
-                exposePath: "/audio/woodpath/maaaet/woodenbirds"
+                exposePath: "/woodpath/maaaet/audio/woodenbirds"
                 path: "audio/woodpath/maaaet/woodenbirds.wav" }
         }
     }

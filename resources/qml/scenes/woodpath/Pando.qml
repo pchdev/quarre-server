@@ -5,17 +5,20 @@ import ".."
 
 Item
 {
-    property alias rooms: pando_rooms
-    property alias scenario: scenario
+    property alias rooms:       pando_rooms
+    property alias scenario:    scenario
     signal end()
 
     InteractionExecutor
     {
-        id: scenario
-        source: audio_stream
-        exposePath: "/stonepath/deidarabotchi/scenario"
+        id:         scenario
+        target:     interaction_transition
+        source:     audio_stream
 
-        target: interaction_transition
+        exposePath: "/woodpath/pando/scenario"
+
+        length:     sec( 104 )
+        countdown:  sec( 5 )
 
         onStart:
         {
@@ -48,8 +51,6 @@ Item
         title: "Transition, Pando"
         module: "quarre/Transitions.qml"
         broadcast: true
-        length: 104
-        countdown: 5
         description: "transition, veuillez patienter..."
     }
 

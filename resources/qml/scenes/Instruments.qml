@@ -139,36 +139,5 @@ Item
                 }
             }
         }
-
-        WPN114.StereoSource //----------------------------------------------------- ABSYNTH
-        {
-            id: absynth_source
-
-            xspread: 0.25
-            diffuse: 0.55
-            y: 0.75
-
-            exposePath: "/instruments/absynth/source"
-
-            WPN114.AudioPlugin
-            {
-                id: absynth
-                path: "/Library/Audio/Plug-Ins/VST/Absynth 5 Stereo.vst"
-                exposePath: "/instruments/absynth"
-                active: false
-
-                WPN114.Fork { target: effects.reverb;
-                    dBlevel: 0.0
-                    prefader: true
-                    exposePath: "/instruments/absynth/forks/altiverb" }
-
-                WPN114.Fork { target: effects.amplitube;
-                    dBlevel: 0.0
-                    active: false
-                    prefader: true
-                    exposePath: "/instruments/absynth/forks/amplitube"
-                }
-            }
-        }
     }
 }

@@ -1,9 +1,39 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import "../.."
+import ".."
 
 Item
 {
     property alias rooms: jomon_rooms
+    property alias scenario: scenario
+    signal end();
+
+    WPN114.TimeNode
+    {
+        id:             scenario
+        source:         audio_stream
+        exposePath:     "/woodpath/jomon/scenario"
+
+        duration: -1
+    }
+
+    Item //-------------------------------------------------------------------- INTERACTIONS
+    {
+        id: interactions
+
+        Interaction //--------------------------------------------- CLOCK_BELLS
+        {
+            id:     interaction_clock_bells
+
+            title:  "Cloches, pré-rythmiques"
+            path:   "/stonepath/markhor/interactions/clock-bells"
+            module: "quarre/VareRainbells.qml"
+
+            description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
+            //afin de changer leurs propriétés."
+        }
+    }
 
     WPN114.Rooms
     {

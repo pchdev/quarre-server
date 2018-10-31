@@ -13,6 +13,7 @@ Rectangle
     {
         id:     node
         path:   "/modules/insects/trigger"
+        type:   WPN114.Type.Bool
     }
 
     onEnabledChanged:
@@ -33,18 +34,19 @@ Rectangle
         onTriggered:
         {
             if ( sensor_manager.proximity.reading.near )
-            ossia_modules.sensors_proximity_close = !ossia_modules.sensors_proximity_close
+                 node.value = false
         }
-    }
-
-    Connections
-    {
-        target: gesture_manager.backend
-        onDetected: t_anim.animation.running = true
     }
 
     TriggerAnimation    { id: t_anim; anchors.fill: parent }
     ZRotation           { id: z_rotation }
     XRotation           { id: x_rotation; visible: false }
-    GestureShake        { id: gesture_shake; visible: false }
+
+    GestureShake
+    {
+        id: gesture_shake;
+        visible: false
+
+        onDetected: { node.value = true; t_anim.animation.running = true }
+    }
 }

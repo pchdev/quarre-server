@@ -6,6 +6,15 @@ import "woodpath"
 
 Item
 {
+
+    Introduction    { id: introduction }
+    WoodPath        { id: woodpath }
+    StonePath       { id: stonepath }
+    WPN214          { id: wpn214 }
+
+    Instruments     { id: instruments }
+    Effects         { id: effects }
+
     function initialize()
     {
         introduction.rooms.setup         = rooms_setup
@@ -14,11 +23,18 @@ Item
         stonepath.deidarabotchi.rooms.setup  = rooms_setup
         stonepath.markhor.rooms.setup    = rooms_setup
         stonepath.ammon.rooms.setup      = rooms_setup
+
+        woodpath.maaaet.rooms.setup      = rooms_setup
+        woodpath.carre.rooms.setup       = rooms_setup
+        woodpath.pando.rooms.setup       = rooms_setup
+        woodpath.vare.rooms.setup        = rooms_setup
+        woodpath.jomon.rooms.setup       = rooms_setup
+
         instruments.rooms.setup          = rooms_setup
         effects.rooms.setup              = rooms_setup
     }
 
-    WPN114.Node
+    WPN114.Node //----------------------------------------------------------- AUDIO_RESET
     {
         id:     audio_reset
         path:   "/scenario/reset"
@@ -29,16 +45,27 @@ Item
         onValueReceived:
         {
             console.log("AUDIO reset");
-            introduction.rooms.active = false
-            stonepath.cendres.rooms.active = false
-            stonepath.diaclases.rooms.active = false
-            stonepath.deidarabotchi.rooms.active = false
-            stonepath.markhor.rooms.active = false
-            stonepath.ammon.rooms.active = false
+            introduction.rooms.active               = false
+
+            stonepath.cendres.rooms.active          = false
+            stonepath.diaclases.rooms.active        = false
+            stonepath.deidarabotchi.rooms.active    = false
+            stonepath.markhor.rooms.active          = false
+            stonepath.ammon.rooms.active            = false
+
+            woodpath.maaaet.rooms.active            = false
+            woodpath.carre.rooms.active             = false
+            woodpath.pando.rooms.active             = false
+            woodpath.vare.rooms.active              = false
+            woodpath.jomon.rooms.active             = false
+
+            instruments.rooms.active                = false
+            instruments.kaivo_1.active              = false
+            instruments.kaivo_2.active              = false
         }
     }
 
-    WPN114.Node
+    WPN114.Node //----------------------------------------------------------- MAIN_START
     {
         id: scenario_start
         path: "/scenario/start"
@@ -50,7 +77,7 @@ Item
             if ( !audio_stream.active ) audio_stream.active = true;
 
             introduction.scenario.start();
-            audio_stream.tick.connect(timer.update)
+            timer.start();
         }
     }
 
@@ -61,6 +88,11 @@ Item
         property string countstr;
 
         onCountstrChanged: console.log(countstr);
+
+        function start()
+        {
+            audio_stream.tick.connect(timer.update)
+        }
 
         function update(tick)
         {
@@ -74,7 +106,8 @@ Item
         target: introduction
         onEnd:
         {
-            if ( introduction.xroads_result === 0 );
+            if ( introduction.xroads_result === 0 )
+                 woodpath.scenario.start();
             else stonepath.scenario.start();
         }
     }
@@ -85,20 +118,6 @@ Item
 //        onEnd: ; // wpn214 start & then loop
 //    }
 
-    Introduction    { id: introduction }
-    WoodPath        { id: woodpath }
-    StonePath       { id: stonepath }
-    //WPN214          { id: wpn214 }
 
-    Instruments     { id: instruments }
-    Effects         { id: effects }
-
-    WPN114.Node
-    {
-        path: "/test"
-        type: WPN114.Type.Float
-
-        onValueReceived: instruments.kaivo_1.set("env1_attack", newValue)
-    }
 
 }
