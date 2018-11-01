@@ -38,6 +38,8 @@ Item
         id: interaction_ending
 
         title: "Fin, WPN214"
+        path:   "/wpn214/interactions/wpn214"
+
         module: "quarre/WPN214.qml"
         broadcast: true
         description: "Merci pour votre participation"

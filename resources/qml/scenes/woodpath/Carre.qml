@@ -6,20 +6,27 @@ import "../.."
 Item
 {
     id: root
-    signal next();
     property alias scenario: scenario
+    property alias rooms: carre_rooms
+    property real env_attack: 0
+    signal next();
+
+    onEnv_attackChanged: instruments.kaivo_1.set("env1_attack", env_attack);
 
     WPN114.TimeNode
     {
         id:             scenario
         source:         audio_stream
         exposePath:     "/woodpath/carre/scenario"
+        duration:       -1
 
         onStart:
         {
             instruments.kaivo_1.active = true;
-            instruments.kaivo_2.active = true;
+            instruments.kaivo_2.active = false;
             instruments.rooms.active = true;
+            carre_rooms.active = true;
+
             client_manager.notifyScene("carre");
         }
 
@@ -27,6 +34,7 @@ Item
 
         InteractionExecutor
         {
+            id:         interaction_bell_low_1_ex
             target:     interaction_bell_low_1
             date:       sec( 5 )
             countdown:  sec( 15 )
@@ -34,8 +42,11 @@ Item
 
             onStart:
             {
-                instruments.kaivo_1.setPreset("niwood");
-                instruments.kaivo_2.setPreset("insects");
+                console.log("CARRE START");
+                instruments.kaivo_1.setPreset( instruments.niwood );
+                instruments.kaivo_1.set("env1_attack", 0.6)
+                groundnoise.play();
+                insects.play();
             }
         }
 
@@ -67,18 +78,38 @@ Item
 
         InteractionExecutor
         {
-            after:      interaction_bell_low_1
+            after:      interaction_bell_low_1_ex
             target:     interaction_bell_low_2
             date:       sec( 5 )
             countdown:  sec( 10 )
             length:     sec( 80 )
 
             onStart:    instruments.kaivo_1.set("env1_attack", 0);
+
+            WPN114.Automation
+            {
+                date:       sec( 20 )
+                target:     root
+                property:   "env_attack"
+                duration:   sec( 70 )
+                from:       0
+                to:         0.6
+            }
+
+            WPN114.Automation
+            {
+                date:       sec( 65 )
+                target:     instruments.kaivo_1
+                property:   "level"
+                duration:   sec( 25 )
+
+                from: instruments.kaivo_1.level; to: 0
+            }
         }
 
         InteractionExecutor
         {
-            after:      interaction_bell_hi_1
+            after:      interaction_bell_low_1_ex
             target:     interaction_bell_hi_2
             date:       sec( 5.1 )
             countdown:  sec( 10 )
@@ -87,11 +118,23 @@ Item
 
         InteractionExecutor
         {
-            after:      interaction_bell_low_1
+            id:         interaction_bell_timbre_2_ex
+            after:      interaction_bell_low_1_ex
             target:     interaction_bell_timbre
             date:       sec( 5.2 )
             countdown:  sec( 10 )
             length:     sec( 80 )
+        }
+
+        WPN114.Automation
+        {
+            after:      interaction_bell_timbre_2_ex
+            target:     carre_rooms
+            property:   "level"
+            duration:   sec( 45 )
+
+            from: carre_rooms.level; to: 0;
+            onStart: root.next();
         }
     }
 
@@ -103,6 +146,7 @@ Item
         {
             id: interaction_bell_low_1
             title: "Cloches primitives, déclenchements (1)"
+            path:   "/woodpath/carre/interactions/niwood-low-1"
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
@@ -126,16 +170,30 @@ Item
         {
             id: interaction_bell_low_2
             title: "Cloches primitives, percussif (1)"
+            path:   "/woodpath/carre/interactions/niwood-low-2"
             module: "basics/GestureHammer.qml"
 
             description: interaction_bell_low_1.description;
-            mappings: interaction_bell_low_1.mappings;
+
+            mappings: QuMapping
+            {
+                source: "/gestures/whip/trigger"
+                expression: function(v) {
+                    var rdm = Math.floor(Math.random()*14+45);
+
+                    instruments.kaivo_1.noteOn(0, rdm, 50);
+                    functions.setTimeout(function(){
+                        instruments.kaivo_1.noteOff(0, rdm, 50);
+                    }, 5000);
+                }
+            }
         }
 
         Interaction //------------------------------------------------- NIWOOD-HI
         {
             id: interaction_bell_hi_1
             title: "Cloches primitives, déclenchements (2)"
+            path:   "/woodpath/carre/interactions/niwood-hi-1"
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
@@ -154,14 +212,27 @@ Item
             }
         }
 
+
         Interaction
         {
             id: interaction_bell_hi_2
             title: "Cloches primitives, percussif (2)"
+            path:   "/woodpath/carre/interactions/niwood-hi-2"
             module: "basics/GestureHammer.qml"
 
             description: interaction_bell_hi_1.description;
-            mappings: interaction_bell_hi_1.mappings;
+            mappings: QuMapping
+            {
+                source: "/gestures/whip/trigger"
+                expression: function(v) {
+                    var rdm = Math.floor(Math.random()*14+60);
+
+                    instruments.kaivo_1.noteOn(0, rdm, 50);
+                    functions.setTimeout(function(){
+                        instruments.kaivo_1.noteOff(0, rdm, 50);
+                    }, 5000);
+                }
+            }
         }
 
         Interaction //------------------------------------------------- NIWOOD-TIMBRE
@@ -169,6 +240,7 @@ Item
             id: interaction_bell_timbre
 
             title: "Cloches primitives, timbre"
+            path:   "/woodpath/carre/interactions/niwood-timbre-1"
             module: "basics/XYZRotation.qml"
 
             description: "Faites pivoter l'appareil dans ses axes de rotation
@@ -196,43 +268,72 @@ Item
             id: interaction_insects
 
             title: "Insectes, déclenchement"
-            module: "quarre/Insects.qml"
+            path:   "/woodpath/carre/interactions/insects"
+            module: "quarre/ZRotation.qml"
 
-            description: "Agitez fermement votre appareil pour ajouter des sons d'insectes,
- orientez votre téléphone tout autour de vous pour les déplacer"
+            description: ""
 
-            mappings:
-                [
-                QuMapping // ---------------------------------------------- note add/erase
-                {
-                    source: "/modules/insects/trigger"
-                    expression: function(v) {
-
-                        if ( v )
-                        {
-
-                        }
-
-                        else instruments.kaivo_2.allNotesOff();
-                    }
-                },
-
-                QuMapping // ---------------------------------------------- x-pitch mapping
-                {
-                    source: "/modules/xrotation/normalized"
-                    expression: function(v) {
-                        instruments.kaivo_2.set("gran_pitch", v);
-                    }
-                },
-
-                QuMapping // ---------------------------------------------- rotation mapping
+            mappings: QuMapping
                 {
                     source: "/modules/zrotation/position2D"
                     expression: function(v) {
-                        instruments.kaivo_2_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                        insects_source.left.position  = Qt.vector3d(v[0], v[1], 0.5);
+                        insects_source.right.position = Qt.vector3d(1-v[0], 1-v[1], 0.5);
                     }
                 }
-            ]
+        }
+
+        WPN114.Rooms
+        {
+            id: carre_rooms
+            active: false
+            parentStream: audio_stream
+            setup: rooms_setup
+
+            WPN114.StereoSource //----------------------------------------- GROUNDNOISE
+            {
+                fixed: true
+                diffuse: 0.5
+                xspread: 0.25
+
+                exposePath: "/woodpath/carre/audio/groundnoise/source"
+
+                WPN114.StreamSampler { id: groundnoise; loop: true; xfade: 3000
+                    exposePath: "/woodpath/carre/audio/groundnoise"
+                    path: "audio/woodpath/carre/groundnoise.wav"
+
+                    WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                }
+            }
+
+            WPN114.StereoSource //----------------------------------------- QUARRE
+            {
+                fixed: true
+                diffuse: 0.25
+                xspread: 0.5
+
+                exposePath: "/woodpath/carre/audio/quarre/source"
+
+                WPN114.StreamSampler { id: quarre; loop: true; xfade: 4000
+                    exposePath: "/woodpath/carre/audio/quarre"
+                    path: "audio/woodpath/carre/quarre.wav"
+
+                    WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                }
+            }
+
+            WPN114.StereoSource //----------------------------------------- INSECTS
+            {
+                id: insects_source
+                exposePath: "/woodpath/carre/audio/insects/source"
+
+                WPN114.StreamSampler { id: insects; loop: true; xfade: 3000
+                    exposePath: "/woodpath/carre/audio/insects"
+                    path: "audio/woodpath/carre/insects.wav"
+
+                    WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                }
+            }
         }
     }
 }

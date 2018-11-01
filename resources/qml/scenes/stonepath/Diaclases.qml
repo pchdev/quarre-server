@@ -35,7 +35,7 @@ Item
         }
 
         // always wait a little bit before changing presets after setting active
-        WPN114.TimeNode { date: sec(20); onStart: instruments.kaivo_1.setPreset("spring") }
+        WPN114.TimeNode { date: sec(20); onStart: instruments.kaivo_1.setPreset(instruments.spring) }
         WPN114.TimeNode { date: sec(13); onStart: { harmonics.play(); smoke.play() }}
         WPN114.TimeNode { date: sec(55); onStart: { drone.play() }}
 

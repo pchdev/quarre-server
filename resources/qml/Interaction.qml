@@ -109,8 +109,6 @@ Item
 
             root.interactionEnd();
             interaction_dispatched.value = false;
-            executor.running = false;
-            executor.count = 0;
             owners = [ ];
         }
     }

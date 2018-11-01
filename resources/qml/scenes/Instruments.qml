@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.10
 import WPN114 1.0 as WPN114
 
 Item
@@ -7,7 +7,6 @@ Item
     property alias rooms: instruments_rooms
     property alias kaivo_1: kaivo_1
     property alias kaivo_2: kaivo_2
-    property alias absynth: absynth
 
     property alias k1_fork_921: k1_fork_921
     property alias k1_fork_lavaur: k1_fork_lavaur
@@ -18,20 +17,17 @@ Item
     property bool kaivo_2_ready: false
     property bool absynth_ready: false
 
-    property var kaivo_presets: new Object;
-
-    // KAIVO - PRESETS
-    Component.onCompleted:
-    {
-        root.kaivo_presets.spring         = 34;
-        root.kaivo_presets.markhor        = 21;
-        root.kaivo_presets.rainbells      = 25;
-        root.kaivo_presets.church         = 38;
-        root.kaivo_presets.autochurch     = 35;
-        root.kaivo_presets.jguitar        = 37;
-        root.kaivo_presets.temples        = 20;
-        root.kaivo_presets.insects        = 6;
-    }
+    // kaivo presets enumeration:
+    property int autochurch:    1
+    property int churchbells:   2
+    property int jguitar:       3
+    property int yguitar:       4
+    property int tguitar:       5
+    property int markhor:       6
+    property int niwood:        7
+    property int spring:        8
+    property int vare:          9
+    property int rainbells:     10
 
     WPN114.Rooms
     {
@@ -57,18 +53,8 @@ Item
                 exposePath: "/instruments/kaivo-1"
                 active: false
 
-                function setPreset(str) {
-                    var res;
-                    if ( str === "spring" ) res = 34;
-                    else if ( str === "markhor") res = 21;
-                    else if ( str === "rainbells") res = 25;
-                    else if ( str === "church") res = 38;
-                    else if ( str === "autochurch") res = 35;
-                    else if ( str === "jguitar") res = 37;
-                    else if ( str === "temples") res = 20;
-                    else if ( str === "insects") res = 6;
-
-                    kaivo_1.programChange(0, res);
+                function setPreset(enm) {
+                    kaivo_1.programChange(0, enm);
                 }
 
                 WPN114.Fork { target: effects.reverb; id: k1_fork_921
@@ -107,18 +93,8 @@ Item
                 exposePath: "/instruments/kaivo-2"
                 active: false
 
-                function setPreset(str) {
-                    var res;
-                    if ( str === "spring" ) res = 34;
-                    else if ( str === "markhor") res = 21;
-                    else if ( str === "rainbells") res = 25;
-                    else if ( str === "church") res = 38;
-                    else if ( str === "autochurch") res = 35;
-                    else if ( str === "jguitar") res = 37;
-                    else if ( str === "temples") res = 20;
-                    else if ( str === "insects") res = 6;
-
-                    kaivo_2.programChange(0, res);
+                function setPreset(enm) {
+                    kaivo_2.programChange(0, enm);
                 }
 
                 WPN114.Fork { target: effects.reverb; id: k2_fork_921

@@ -43,21 +43,21 @@ Item
 
             onStart:
             {
-                instruments.kaivo_1.setPreset("autochurch");
-                instruments.kaivo_2.setPreset("markhor");
+                instruments.kaivo_1.setPreset(instruments.autochurch);
+                instruments.kaivo_2.setPreset(instruments.markhor);
             }
 
             onEnd: instruments.kaivo_1.active = false;
 
             WPN114.TimeNode
             {
-                date: sec(8)
+                date: sec( 8 )
                 onStart: bell_hit.play();
             }
 
             WPN114.Automation
             {
-                date: sec(15)
+                date: sec( 15 )
                 target: instruments.kaivo_1
                 property: "dBlevel"
                 duration: sec(45)
@@ -82,9 +82,9 @@ Item
             }
 
             // DOOMSDAYS
-            WPN114.TimeNode { date: sec(20); onStart: doomsday.playRandom();  }
-            WPN114.TimeNode { date: min(1.35); onStart: doomsday.playRandom(); }
-            WPN114.TimeNode { date: min(3.05); onStart: doomsday.playRandom(); }
+            WPN114.TimeNode { date: sec( 20 ); onStart: doomsday.playRandom();  }
+            WPN114.TimeNode { date: min( 1.35 ); onStart: doomsday.playRandom(); }
+            WPN114.TimeNode { date: min( 3.05 ); onStart: doomsday.playRandom(); }
 
             WPN114.Automation
             {
@@ -229,7 +229,7 @@ Item
             //afin de changer leurs propriétés."
 
             mappings:
-                [
+            [
                 QuMapping // ---------------------------------------------- proximity mapping
                 {
                     source: "/modules/bells/trigger"
@@ -268,7 +268,7 @@ Item
  des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
-                [
+            [
                 QuMapping {
                     source: "/modules/markhor/granular/overlap"
                     expression: function(v) {
@@ -298,7 +298,7 @@ Item
 des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
-                [
+            [
                 QuMapping {
                     source: "/modules/markhor/resonator/brightness"
                     expression: function(v) {

@@ -27,12 +27,21 @@ Item
             woodworks.play  ( );
             insects.play    ( );
             digigreen.play  ( );
-            verb.play       ( )
+            verb.play       ( );
 
             instruments.rooms.active = false;
-
             pando_rooms.active = true;
+
             client_manager.notifyScene("pando");
+        }
+
+        WPN114.Automation
+        {
+            target:     pando_rooms
+            property:   "level"
+            duration:   sec( 45 )
+
+            from: 0; to: 1;
         }
 
         onEnd:
@@ -63,55 +72,75 @@ Item
 
         exposePath: "/woodpath/pando/audio/rooms"
 
-        WPN114.RoomSource //----------------------------------------- 1.FLUTE (1-2)
+        WPN114.StereoSource //----------------------------------------- 1.FLUTE (1-2)
         {
+            fixed: true
+            xspread: 0.25
+            diffuse: 0.4
+            y: 0.9
+
             exposePath: "/woodpath/pando/audio/flute/source"
 
-            WPN114.Sampler { id: flute; stream: true;
+            WPN114.StreamSampler { id: flute;
                 path: "audio/woodpath/pando/flute.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 2.LEAVES (3-4)
+        WPN114.StereoSource //----------------------------------------- 2.LEAVES (3-4)
         {
-            exposePath: "/woodpath/pando/audio/rooms/leaves/source"
+            fixed: true
+            xspread: 0.4
+            exposePath: "/woodpath/pando/audio/leaves/source"
 
-            WPN114.Sampler { id: leaves; stream: true;
+            WPN114.StreamSampler { id: leaves;
                 path: "audio/woodpath/pando/leaves.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 3.WOODWORKS (5-6)
+        WPN114.StereoSource //----------------------------------------- 3.WOODWORKS (5-6)
         {          
+            fixed: true
+            xspread: 0.15
+            diffuse: 0.4
 
-            exposePath: "/woodpath/pando/audio/rooms/woodworks/source"
+            exposePath: "/woodpath/pando/audio/woodworks/source"
 
-            WPN114.Sampler { id: woodworks; stream: true;
+            WPN114.StreamSampler { id: woodworks;
                 path: "audio/woodpath/pando/woodworks.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 4.INSECTS (7-8)
+        WPN114.StereoSource //----------------------------------------- 4.INSECTS (7-8)
         {
+            fixed: true
+            yspread: 0.25
 
-            exposePath: "/woodpath/pando/audio/rooms/insects/source"
+            exposePath: "/woodpath/pando/audio/insects/source"
 
-            WPN114.Sampler { id: insects; stream: true;
+            WPN114.StreamSampler { id: insects;
                 path: "audio/woodpath/pando/insects.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 5.DIGIGREEN (9-10)
+        WPN114.StereoSource //----------------------------------------- 5.DIGIGREEN (9-10)
         {
+            xspread: 0.35
+            y: 0.2
+            diffuse: 0.25
 
-            exposePath: "/woodpath/pando/audio/rooms/sources/digigreen"
+            fixed: true
+            exposePath: "/woodpath/pando/audio/sources/digigreen"
 
-            WPN114.Sampler { id: digigreen; stream: true;
+            WPN114.StreamSampler { id: digigreen;
                 path: "audio/woodpath/pando/digigreen.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 6.VERB (11-12)
+        WPN114.StereoSource //----------------------------------------- 6.VERB (11-12)
         {
+            xspread: 0.15
+            diffuse: 0.5
+            y: 0.4
 
-            exposePath: "/woodpath/pando/audio/rooms/sources/verb"
+            fixed: true
+            exposePath: "/woodpath/pando/audio/sources/verb"
 
-            WPN114.Sampler { id: verb; stream: true;
+            WPN114.StreamSampler { id: verb;
                 path: "audio/woodpath/pando/verb.wav" }
         }
     }

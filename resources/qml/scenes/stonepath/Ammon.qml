@@ -66,7 +66,7 @@ Item
         {
             target:         interaction_string_sweep
             endExpression:  interaction_string_sweep.index === 100
-            onStart:        instruments.kaivo_1.setPreset("temples");
+            onStart:        instruments.kaivo_1.setPreset(instruments.tguitar);
 
             date:       sec( 10 )
             countdown:  sec( 10 )
@@ -77,7 +77,7 @@ Item
         {            
             target:         interaction_bells
             endExpression:  interaction_string_sweep.index === 100
-            onStart:        instruments.kaivo_2.setPreset("church");
+            onStart:        instruments.kaivo_2.setPreset(instruments.churchbells);
 
             date:       sec( 15 )
             countdown:  sec( 10 )

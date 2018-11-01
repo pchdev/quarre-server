@@ -51,7 +51,7 @@ Item
         ammon.rooms.active            = false
     }
 
-    Connections
+    Connections //---------------------------------------------------------- SCENARIO_CONNECTIONS
     {
         target: cendres
         onNext: diaclases.scenario.start();

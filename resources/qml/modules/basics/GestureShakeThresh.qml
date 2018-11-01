@@ -3,7 +3,10 @@ import WPN114 1.0 as WPN114
 
 Rectangle
 {
-    property real thresh: 20.0
+    id: root
+    property real thresh_hi: 12
+    property real thresh_low: 9.5
+
     anchors.fill: parent
     color: "transparent"
 
@@ -28,17 +31,13 @@ Rectangle
 
         onTriggered:
         {
-            var xyz = Qt.vector3d( sensor_manager.accelerometers.reading.x,
-                                  sensor_manager.accelerometers.reading.y,
-                                  sensor_manager.accelerometers.reading.z );
+            var z = Math.abs(sensor_manager.accelerometers.reading.x);
 
-            if ( ( xyz.x >= thresh || xyz.y >= thresh || xyz.z >= thresh )
-                 && !node.value )
+            if ( z >= thresh_hi && !node.value )
                  node.value = true;
 
-            else if ( node.value ) node.value = false;
-
-
+            else if ( z < thresh_low && node.value )
+                node.value = false;
         }
     }
 

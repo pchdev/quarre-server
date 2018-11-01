@@ -382,21 +382,15 @@ Item
 
             mappings:
             [
-                QuMapping
-                {
-                    source: "/modules/mangler/resampler"
+                QuMapping { source: "/modules/mangler/resampler"
                     expression: function(v) { mangler.badResampler = v; }
                 },
 
-                QuMapping
-                {
-                    source: "/modules/mangler/thermonuclear"
+                QuMapping { source: "/modules/mangler/thermonuclear"
                     expression: function(v) { mangler.thermonuclear = v; }
                 },
 
-                QuMapping
-                {
-                    source: "/modules/mangler/bitdepth"
+                QuMapping { source: "/modules/mangler/bitdepth"
                     expression: function(v) { mangler.bitdepth = v; }
                 }
             ]

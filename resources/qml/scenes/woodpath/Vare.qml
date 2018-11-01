@@ -6,6 +6,7 @@ import ".."
 Item
 {
     property alias scenario: scenario
+    property alias rooms: vare_rooms
     signal next()
 
     WPN114.TimeNode
@@ -35,7 +36,12 @@ Item
             countdown:  sec( 15 )
             length:     sec( 60 )
 
-            onStart: instruments.kaivo_1.setPreset("rainbells");
+            onStart:
+            {
+                instruments.kaivo_1.setPreset(instruments.rainbells);
+                instruments.kaivo_2.setPreset(instruments.vare);
+            }
+
             onEnd: instruments.kaivo_1.active = false
         }
 
@@ -95,10 +101,11 @@ Item
             id:     interaction_rainbells
 
             title:  "Cloches, pré-rythmiques"
-            path:   "/stonepath/markhor/interactions/clock-bells"
+            path:   "/woodpath/vare/interactions/rainbells"
             module: "quarre/VareRainbells.qml"
 
-            description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
+            description: "Passez la main devant l'appareil pour ajouter et changer
+ les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
             //afin de changer leurs propriétés."
 
             mappings:
@@ -134,8 +141,8 @@ Item
             id:     interaction_granular_models
 
             title:  "Impulsions (essais)"
-            path:   "/stonepath/markhor/interactions/granular-1"
-            module: "quarre/MarkhorGranular.qml"
+            path:   "/woodpath/vare/interactions/granular-1"
+            module: "quarre/VareGranular.qml"
 
             description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
  des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
@@ -143,18 +150,18 @@ Item
             mappings:
                 [
                 QuMapping {
-                    source: "/modules/markhor/granular/overlap"
+                    source: "/modules/vare/granular/overlap"
                     expression: function(v) {
                         console.log("gran_density", v);
                         instruments.kaivo_2.set("gran_density", v)
                     }},
 
                 QuMapping {
-                    source: "/modules/markhor/granular/pitch"
+                    source: "/modules/vare/granular/pitch"
                     expression: function(v) { instruments.kaivo_2.set("gran_pitch", v) }},
 
                 QuMapping {
-                    source: "/modules/markhor/granular/pitch_env"
+                    source: "/modules/vare/granular/pitch_env"
                     expression: function(v) { instruments.kaivo_2.set("gran_pitch_env", v) }}
             ]
         }
@@ -164,8 +171,8 @@ Item
             id:     interaction_resonators_1
 
             title:  "Résonances (essais)"
-            path:   "/stonepath/markhor/interactions/resonator-1"
-            module: "quarre/MarkhorResonator.qml"
+            path:   "/woodpath/vare/interactions/resonator-1"
+            module: "quarre/VareResonator.qml"
 
             description: "Manipulez les sliders afin d'altérer la résonance
 des percussions. Choisissez le son qui vous convient. Attention au temps !"
@@ -173,21 +180,21 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             mappings:
                 [
                 QuMapping {
-                    source: "/modules/markhor/resonator/brightness"
+                    source: "/modules/vare/resonator/brightness"
                     expression: function(v) {
                         console.log("res_brightness", v);
                         instruments.kaivo_2.set("res_brightness", v) }},
 
                 QuMapping {
-                    source: "/modules/markhor/resonator/position"
+                    source: "/modules/vare/resonator/position"
                     expression: function(v) { instruments.kaivo_2.set("res_position", v) }},
 
                 QuMapping {
-                    source: "/modules/markhor/resonator/pitch"
+                    source: "/modules/vare/resonator/pitch"
                     expression: function(v) { instruments.kaivo_2.set("res_pitch_p", v) }},
 
                 QuMapping {
-                    source: "/modules/markhor/resonator/sustain"
+                    source: "/modules/vare/resonator/sustain"
                     expression: function(v) { instruments.kaivo_2.set("res_sustain", v) }}
             ]
         }
@@ -197,8 +204,8 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_body_1
 
             title:  "Corps de résonance (essais)"
-            path:   "/stonepath/markhor/interactions/body-1"
-            module: "quarre/MarkhorBody.qml"
+            path:   "/woodpath/vare/interactions/body-1"
+            module: "quarre/VarerBody.qml"
 
             description: "Manipulez les sliders afin d'altérer le corps de résonance
  des percussions. Choisissez le son qui vous convient. Attention au temps !"
@@ -206,15 +213,15 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             mappings:
                 [
                 QuMapping {
-                    source: "/modules/markhor/body/tone"
+                    source: "/modules/vare/body/tone"
                     expression: function(v) { instruments.kaivo_2.set("body_tone", v) }},
 
                 QuMapping {
-                    source: "/modules/markhor/body/pitch"
+                    source: "/modules/vare/body/pitch"
                     expression: function(v) { instruments.kaivo_2.set("body_pitch", v) }},
 
                 QuMapping {
-                    source: "/modules/markhor/body/xy"
+                    source: "/modules/vare/body/xy"
                     expression: function(v) {
                         instruments.kaivo_2.set("body_position_x", v[0]);
                         instruments.kaivo_2.set("body_position_y", v[1])}}
@@ -226,8 +233,8 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_pads_1
 
             title:  "Temps et Contretemps (essais)"
-            path:   "/stonepath/markhor/interactions/pads-1"
-            module: "quarre/MarkhorPads.qml"
+            path:   "/woodpath/vare/interactions/pads-1"
+            module: "quarre/VarePercs.qml"
 
             description: "Appuyez et maintenez l'un des pads (un seul à la fois)
  pour ajouter des compléments rythmiques."
@@ -236,7 +243,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings: QuMapping
             {
-                source: "/modules/markhor/pads/index"
+                source: "/modules/vare/pads/index"
                 expression: function(v) {
                     if ( v === 0 )
                         for ( var i = 0; i < interaction_pads_1.pads.length; ++i )
@@ -252,8 +259,8 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_granular_models_2
 
             title:  "Impulsions (tutti)"
-            path:   "/stonepath/markhor/interactions/granular-2"
-            module: "quarre/MarkhorGranular.qml"
+            path:   "/woodpath/vare/interactions/granular-2"
+            module: "quarre/VareGranular.qml"
 
             description: "Vous jouez maintenant tous ensemble, collaborez,
  laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
@@ -266,8 +273,8 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_resonators_2
 
             title:  "Résonances (tutti)"
-            path:   "/stonepath/markhor/interactions/resonator-2"
-            module: "quarre/MarkhorResonator.qml"
+            path:   "/woodpath/vare/interactions/resonator-2"
+            module: "quarre/VareResonator.qml"
 
             description: interaction_granular_models_2.description
             mappings: interaction_resonators_1.mappings
@@ -278,8 +285,8 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_body_2
 
             title:  "Corps de résonance (tutti)"
-            path:   "/stonepath/markhor/interactions/body-2"
-            module: "quarre/MarkhorBody.qml"
+            path:   "/woodpath/vare/interactions/body-2"
+            module: "quarre/VareBody.qml"
 
             description: interaction_granular_models_2.description
             mappings: interaction_body_1.mappings
@@ -290,8 +297,8 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_pads_2
 
             title:  "Temps et Contretemps (tutti)"
-            path:   "/stonepath/markhor/interactions/pads-2"
-            module: "quarre/MarkhorPads.qml"
+            path:   "/woodpath/vare/interactions/pads-2"
+            module: "quarre/VarePads.qml"
 
             description: interaction_granular_models_2.description
             mappings: interaction_pads_1.mappings
@@ -305,40 +312,31 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         parentStream: audio_stream
         setup: rooms_setup
 
-        WPN114.RoomSource //----------------------------------------- 1.SNOWFALL (1-2)
+        WPN114.StereoSource //----------------------------------------- 1.SNOWFALL (1-2)
         {
-            exposePath: "/audio/woodpath/vare/snowfall/spatialization"
+            exposePath: "/audio/woodpath/vare/snowfall/source"
 
-            WPN114.Sampler { id: snowfall; stream: true;
+            WPN114.StreamSampler { id: snowfall; loop: true; xfade: 3000
                 exposePath: "/woodpath/vare/audio/snowfall"
                 path: "audio/woodpath/vare/snowfall.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 2.HAMMER (3-4)
+        WPN114.StereoSource //----------------------------------------- 2.HAMMER (3-4)
         {
-            exposePath: "/audio/woodpath/vare/hammer/spatialization"
+            exposePath: "/audio/woodpath/vare/hammer/source"
 
-            WPN114.Sampler { id: hammer; stream: true;
+            WPN114.Sampler { id: hammer;
                 exposePath: "/woodpath/vare/audio/hammer"
                 path: "audio/woodpath/vare/hammer.wav" }
         }
 
-        WPN114.RoomSource //----------------------------------------- 3.PARORAL (5-6)
+        WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
         {
-            exposePath: "/audio/woodpath/vare/paroral/spatialization"
+            exposePath: "/audio/woodpath/vare/paroral/source"
 
-            WPN114.Sampler { id: paroral; stream: true;
+            WPN114.Sampler { id: paroral;
                 exposePath: "/woodpath/vare/audio/paroral"
-                path: "audio/woodpath/vare/paroral.wav" }
-        }
-
-        WPN114.RoomSource //----------------------------------------- 4.DOOMSDAY (7-8)
-        {
-            exposePath: "/audio/woodpath/vare/doomsday/spatialization"
-
-            WPN114.MultiSampler { id: doomsday; stream: true;
-                exposePath: "/woodpath/vare/audio/doomsday"
-                path: "audio/woodpath/vare/doomsday.wav" }
+                path: "audio/stonepath/markhor/paroral.wav" }
         }
     }
 }

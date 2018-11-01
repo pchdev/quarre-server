@@ -10,11 +10,7 @@ Item
     property alias rooms: cendres_rooms
     property alias scenario: scenario
 
-    // next at 3:40 approx
-    // end at 5:20 approx ( when fade outs )
-
     signal next()
-
     property var target_thunder_executor: thunder_executor
     property var target_boiling_executor: boiling_executor
 
@@ -197,68 +193,25 @@ Item
         WPN114.TimeNode //-------------------------------------------------- FADE_OUTS
         {
             after: next_node
-            duration: min(1.42)
+            duration: min( 1.42 )
 
             WPN114.Automation
             {
-                target: necks
-                property: "level"
-                duration: min(1.30)
-                from: 1; to: 0;
+                target:     cendres_rooms
+                property:   "level"
+                duration:   min( 1.30 )
 
-                onEnd: necks.stop()
-            }
-
-            WPN114.Automation
-            {
-                target: ashes
-                property: "level"
-                duration: min(1.05)
-                from: 1; to: 0;
-
-                onEnd: ashes.stop();
-            }
-
-            WPN114.Automation
-            {
-                target: quarre
-                property: "level"
-                duration: sec(54)
-                from: 1; to: 0;
-
-                onEnd: quarre.stop();
-            }
-
-            WPN114.Automation
-            {
-                target: redbirds_1
-                property: "level"
-                duration: min(1.42)
-                from: 1; to: 0;
-
-                onEnd: redbirds_1.stop();
-            }
-
-            WPN114.Automation
-            {
-                target: waves
-                property: "level"
-                duration: min(1.42)
-                from: 1; to: 0;
-
-                onEnd: waves.stop();
-            }
-
-            WPN114.Automation
-            {
-                target: redbirds_2
-                property: "level"
-                duration: min(1.42)
                 from: 1; to: 0;
 
                 onEnd:
                 {
-                    redbirds_2.stop();
+                    necks.stop       ( );
+                    ashes.stop       ( );
+                    quarre.stop      ( );
+                    redbirds_1.stop  ( );
+                    redbirds_2.stop  ( );
+                    waves.stop       ( );
+
                     cendres_rooms.active = false
                 }
             }

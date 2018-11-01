@@ -1,9 +1,9 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.0
-import QtQuick.Controls 1.4 as QC
 import QtQuick.Window 2.2
 import WPN114 1.0 as WPN114
 //import WPN214 1.0 as WPN214
+
 import "views/NodeView.js" as NodeView
 import "scenes"
 import "views"

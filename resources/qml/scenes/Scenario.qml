@@ -8,7 +8,7 @@ Item
 {
     Introduction    { id: introduction }
     WoodPath        { id: woodpath }
-    StonePath       { id: stonepath }
+//    StonePath       { id: stonepath }
     WPN214          { id: wpn214 }
 
     Instruments     { id: instruments }
@@ -20,7 +20,7 @@ Item
         instruments.rooms.setup   = rooms_setup
         effects.rooms.setup       = rooms_setup
 
-        stonepath.initialize    ( rooms_setup );
+//        stonepath.initialize    ( rooms_setup );
         woodpath.initialize     ( rooms_setup );
     }
 
@@ -37,7 +37,7 @@ Item
             console.log("AUDIO reset");
 
             introduction.rooms.active = false
-            stonepath.reset ( );
+//            stonepath.reset ( );
             woodpath.reset  ( );
 
             instruments.rooms.active     = false
@@ -88,15 +88,15 @@ Item
         {
             if ( introduction.xroads_result === 0 )
                  woodpath.scenario.start();
-            else stonepath.scenario.start();
+//            else stonepath.scenario.start();
         }
     }
 
-    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
-    {
-        target: stonepath
-        onEnd: wpn214.scenario.start();
-    }
+//    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
+//    {
+//        target: stonepath
+//        onEnd: wpn214.scenario.start();
+//    }
 
     Connections
     {

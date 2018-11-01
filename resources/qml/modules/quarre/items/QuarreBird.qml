@@ -34,7 +34,7 @@ Rectangle
             {
                 if ( !bird_rect.paused ) return;
 
-                ossia_modules.touch_birds_trigger = Qt.vector3d(
+                birds_node.value = Qt.vector3d(
                             number_id,
                             (bird_rect.x + bird_rect.width/2)/touchbirds_root.width,
                             (bird_rect.y + bird_rect.height/2)/touchbirds_root.height );
