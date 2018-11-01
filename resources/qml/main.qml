@@ -4,9 +4,11 @@ import QtQuick.Window 2.2
 import WPN114 1.0 as WPN114
 //import WPN214 1.0 as WPN214
 
-import "views/NodeView.js" as NodeView
 import "scenes"
 import "views"
+
+// TODO: FLAC audio
+
 
 Rectangle
 {
@@ -73,7 +75,7 @@ Rectangle
             else stop();
         }
 
-        WPN114.Node on dBlevel { path: "/global/audio/master/level" }
+        WPN114.Node on dBlevel { path: "/global/audio/master/dBlevel" }
         WPN114.Node on active { path: "/global/audio/master/active" }
         WPN114.Node on mute { path: "/global/audio/master/muted" }
     }

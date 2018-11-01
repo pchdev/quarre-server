@@ -22,9 +22,8 @@ Item
 
     WPN114.TimeNode
     {
-        id: scenario
-        source: audio_stream
-        duration: -1
+        id:      scenario
+        source:  audio_stream
 
         onStart:
         {

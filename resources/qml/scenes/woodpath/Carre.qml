@@ -86,12 +86,14 @@ Item
 
             onStart:    instruments.kaivo_1.set("env1_attack", 0);
 
+            WPN114.TimeNode { date: sec( 10 ); onStart: quarre.play() }
+
             WPN114.Automation
             {
                 date:       sec( 20 )
                 target:     root
                 property:   "env_attack"
-                duration:   sec( 70 )
+                duration:   sec( 35 )
                 from:       0
                 to:         0.6
             }

@@ -39,9 +39,8 @@ Item
 
     WPN114.TimeNode
     {
-        id: scenario
+        id:     scenario
         source: audio_stream
-        duration: -1
 
         onStart:
         {
@@ -56,11 +55,11 @@ Item
         onNext: carre.scenario.start();
     }
 
-//    Connections // CARRE TO PANDO
-//    {
-//        target: carre
-//        onNext: pando.scenario.start();
-//    }
+    Connections // CARRE TO PANDO
+    {
+        target: carre
+        onNext: pando.scenario.start();
+    }
 
 //    Connections // PANDO TO VARE
 //    {

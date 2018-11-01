@@ -7,7 +7,6 @@ Item
 {
     id: root
     signal next();
-
     property alias rooms: maaaet_rooms
     property alias scenario: scenario
 
@@ -27,7 +26,7 @@ Item
             client_manager.notifyScene("maaaet");
         }
 
-        // we start with some forest ambiance ---------------------------
+
         WPN114.TimeNode { onStart: { grove.play(); windleaves.play(); spring.play() } }
         WPN114.TimeNode { date: min(1); onStart: woodworks.play() }
 
@@ -111,6 +110,7 @@ Item
             length:     sec( 60 )
 
             onStart:    woodenbirds.play();
+            onEnd:      woodenbirds.stop();
         }
 
         WPN114.Automation //------------------------------------- FADE_OUT
@@ -119,10 +119,23 @@ Item
             target: maaaet_rooms
             property: "level"
             from: 1; to: 0;
-            duration: sec( 45 )
+            duration: sec( 90 )
 
+            // NEXT
             WPN114.TimeNode { date: sec( 22 ); onStart: root.next() }
-            onEnd: maaaet_rooms.active = false;
+
+            onEnd:
+            {
+                windleaves.stop     ( );
+                spring.stop         ( );
+                woodworks.stop      ( );
+                woodworks_2.stop    ( );
+                wind.stop           ( );
+                grove.stop          ( );
+
+                maaaet_rooms.active = false;
+                scenario.end        ( );
+            }
         }
     }
 
@@ -143,7 +156,6 @@ Item
             {
                 source: "/modules/gestures/shaking"
                 expression: function(v) {
-                    console.log(v)
                     if ( v ) leaves.play();
                     else leaves.stop();
                 }
@@ -424,11 +436,11 @@ Item
             id: woodenbirds_source
             exposePath: "/woodpath/maaaet/audio/woodenbirds/source"
 
-            WPN114.Sampler { id: woodenbirds;
+            WPN114.Sampler { id: woodenbirds; dBlevel: 6
                 exposePath: "/woodpath/maaaet/audio/woodenbirds"
                 path: "audio/woodpath/maaaet/woodenbirds.wav"
 
-                WPN114.Fork { target: effects.reverb; dBlevel: 0 }
+                WPN114.Fork { target: effects.reverb; dBlevel: -3 }
             }
         }
     }
