@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
-import "items"
+import "../basics/items"
+import WPN114 1.0 as WPN114
 
 Rectangle
 {
@@ -11,8 +12,8 @@ Rectangle
     {
         name: "hauteur"
         min: -3; max: 3;
-        value: ossia_modules.vare_granular_pitch
-        onValueChanged: ossia_modules.vare_granular_pitch = Math.floor(value)
+
+        WPN114.Node on value { path: "/modules/vare/granular/pitch" }
         y: parent.height*0.05
     }
 
@@ -20,8 +21,8 @@ Rectangle
     {
         name: "densité"
         min: 0.5; max: 4.0
-        value: ossia_modules.vare_granular_overlap
-        onValueChanged: ossia_modules.vare_granular_overlap= value
+
+        WPN114.Node on value { path: "/modules/vare/granular/overlap" }
         y: parent.height*0.2
     }
 
@@ -29,16 +30,16 @@ Rectangle
     {
         name: "vitesse"
         min: 2.0; max: 110.0
-        value: ossia_modules.vare_granular_rate
-        onValueChanged: ossia_modules.vare_granular_rate = value
+
+        WPN114.Node on value { path: "/modules/vare/granular/rate" }
         y: parent.height*0.35
     }
 
     QuarreSlider
     {
         name: "position"
-        value: ossia_modules.vare_granular_x
-        onValueChanged: ossia_modules.vare_granular_x= value
+
+        WPN114.Node on value { path: "/modules/vare/granular/position" }
         y: parent.height*0.5
     }
 
@@ -46,8 +47,8 @@ Rectangle
     {
         name: "position_mod"
         min: -1.0; max: 1.0
-        value: ossia_modules.vare_granular_x_p
-        onValueChanged: ossia_modules.vare_granular_x_p = value
+
+        WPN114.Node on value { path: "/modules/vare/granular/position-mod" }
         y: parent.height*0.65
     }
 

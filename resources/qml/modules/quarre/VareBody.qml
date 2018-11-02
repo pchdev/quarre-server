@@ -1,5 +1,7 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 import "items"
+import "../basics/items"
 
 Rectangle
 {
@@ -9,8 +11,8 @@ Rectangle
     QuarreSlider
     {
         name: "ton"
-        value: ossia_modules.vare_body_tone
-        onValueChanged: ossia_modules.vare_body_tone = value
+
+        WPN114.Node on value { path: "/modules/vare/body/tone" }
         y: parent.height*0.05
     }
 
@@ -18,32 +20,39 @@ Rectangle
     {
         name: "fréquence de résonance"
         min: -1.0; max: 1.0
-        value: ossia_modules.vare_body_pitch
-        onValueChanged: ossia_modules.vare_body_pitch = value
+
+        WPN114.Node on value { path: "/modules/vare/body/pitch" }
+
         y: parent.height*0.20
+    }
+
+    WPN114.Node
+    {
+        id: xy
+        path: "/modules/vare/body/xy"
+        type: WPN114.Type.Vec2f
+        value: Qt.vector2d(0, 0)
     }
 
     QuarreSlider
     {
-        name: "position horizontale"
-        value: ossia_modules.vare_body_xy.x
-        onValueChanged: ossia_modules.vare_body_xy.x = value
+        name: "modèle horizontal"
+        onValueChanged: xy.value.x = value;
         y: parent.height*0.35
     }
 
     QuarreSlider
     {
-        name: "position verticale"
-        value: ossia_modules.vare_body_xy.y
-        onValueChanged: ossia_modules.vare_body_xy.y = value
+        name: "modèle vertical"
+        onValueChanged: xy.value.y = value;
         y: parent.height*0.5
     }
 
     QuarreSlider
     {
         name: "résonance"
-        value: ossia_modules.vare_body_sustain
-        onValueChanged: ossia_modules.vare_body_sustain = value
+
+        WPN114.Node on value { path: "/modules/vare/body/sustain" }
         y: parent.height*0.65
     }
 }

@@ -54,7 +54,11 @@ Item
             countdown:  sec( 15 )
             length:     sec( 60 )
 
-            onStart:; // kaivo notes on
+            onStart:
+            {
+                instruments.kaivo_2.noteOn(0, 66, 127);
+                instruments.kaivo_2.noteOn(0, 73, 127);
+            }
         }
 
 

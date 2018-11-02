@@ -2,13 +2,15 @@ import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 import WPN114 1.0 as WPN114
-//import WPN214 1.0 as WPN214
 
 import "scenes"
 import "views"
 
+// TODO: Pink Noise setup testing module
+// TODO: Mixing module for every scene (including forks)
+// TODO: Spatialization for every scene
+// TODO: volume and spatialization presets
 // TODO: FLAC audio
-
 
 Rectangle
 {
@@ -84,7 +86,7 @@ Rectangle
     {
         id: rooms_setup;        
 //        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
-        WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.6 }
+        WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.5 }
     }
 
     ClientManager   { id: client_manager; maxClients: 4 }

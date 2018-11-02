@@ -9,14 +9,14 @@ Item
     property alias maaaet:      maaaet
     property alias carre:       carre
     property alias pando:       pando
-//    property alias vare:        vare
+    property alias vare:        vare
 //    property alias jomon:       jomon
     property alias scenario:    scenario
 
     Maaaet      { id: maaaet }
     Carre       { id: carre }
     Pando       { id: pando }
-//    Vare        { id: vare }
+    Vare        { id: vare }
 //    JomonSugi   { id: jomon }
 
     function reset()
@@ -24,7 +24,7 @@ Item
         maaaet.rooms.active   = false
         carre.rooms.active    = false
         pando.rooms.active    = false
-//        vare.rooms.active     = false
+        vare.rooms.active     = false
 //        jomon.rooms.active    = false
     }
 
@@ -33,7 +33,7 @@ Item
         maaaet.rooms.setup      = setup
         carre.rooms.setup       = setup
         pando.rooms.setup       = setup
-//        vare.rooms.setup        = setup
+        vare.rooms.setup        = setup
 //        jomon.rooms.setup       = setup
     }
 
@@ -61,11 +61,11 @@ Item
         onNext: pando.scenario.start();
     }
 
-//    Connections // PANDO TO VARE
-//    {
-//        target: pando
-//        onEnd:  vare.scenario.start();
-//    }
+    Connections // PANDO TO VARE
+    {
+        target: pando
+        onEnd:  vare.scenario.start();
+    }
 
 //    Connections // VARE TO JOMON
 //    {

@@ -21,7 +21,7 @@ Item
         countdown:  sec( 5 )
 
         onStart:
-        {
+        {           
             flute.play      ( );
             leaves.play     ( );
             woodworks.play  ( );
@@ -29,9 +29,7 @@ Item
             digigreen.play  ( );
             verb.play       ( );
 
-            instruments.rooms.active = false;
             pando_rooms.active = true;
-
             client_manager.notifyScene("pando");
         }
 
@@ -39,7 +37,7 @@ Item
         {
             target:     pando_rooms
             property:   "level"
-            duration:   sec( 45 )
+            duration:   sec( 20 )
 
             from: 0; to: 1;
         }

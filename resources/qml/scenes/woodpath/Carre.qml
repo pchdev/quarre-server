@@ -26,6 +26,7 @@ Item
             instruments.kaivo_2.active = false;
             instruments.rooms.active = true;
             carre_rooms.active = true;
+            alpine_swift.play();
 
             client_manager.notifyScene("carre");
         }
@@ -40,14 +41,19 @@ Item
             countdown:  sec( 15 )
             length:     min( 1.20 )
 
+            WPN114.TimeNode { date: sec(45); onStart: harmonics.play() }
+
             onStart:
             {
                 console.log("CARRE START");
                 instruments.kaivo_1.setPreset( instruments.niwood );
                 instruments.kaivo_1.set("env1_attack", 0.6)
+                spring.play();
                 groundnoise.play();
                 insects.play();
             }
+
+            onEnd: quarre.play();
         }
 
         InteractionExecutor
@@ -86,7 +92,7 @@ Item
 
             onStart:    instruments.kaivo_1.set("env1_attack", 0);
 
-            WPN114.TimeNode { date: sec( 10 ); onStart: quarre.play() }
+            WPN114.TimeNode { date: sec( 86 ); onStart: root.next(); }
 
             WPN114.Automation
             {
@@ -136,7 +142,19 @@ Item
             duration:   sec( 45 )
 
             from: carre_rooms.level; to: 0;
-            onStart: root.next();
+
+            onEnd:
+            {
+                groundnoise.stop  ( );
+                quarre.stop       ( );
+                insects.stop      ( );
+                harmonics.stop    ( );
+                spring.stop       ( );
+                alpine_swift.stop ( );
+
+                instruments.kaivo_1.active = false;
+                instruments.rooms.active = false;
+            }
         }
     }
 
@@ -292,6 +310,38 @@ Item
             parentStream: audio_stream
             setup: rooms_setup
 
+            WPN114.StereoSource //----------------------------------------- SPRING
+            {
+                fixed: true
+                diffuse: 0.5
+                yspread: 0.25
+
+                exposePath: "/woodpath/carre/audio/spring/source"
+
+                WPN114.StreamSampler { id: spring; loop: true; xfade: 3000
+                    exposePath: "/woodpath/carre/audio/spring"
+                    path: "audio/introduction/spring.wav"
+
+                    WPN114.Fork { target: effects.reverb; dBlevel: -9 }
+                }
+            }
+
+            WPN114.StereoSource //----------------------------------------- ALPINE_SWIFT
+            {
+                fixed: true
+                diffuse: 0.5
+                yspread: 0.25
+
+                exposePath: "/woodpath/carre/audio/swift/source"
+
+                WPN114.StreamSampler { id: alpine_swift; loop: true; xfade: 3000
+                    exposePath: "/woodpath/carre/audio/swift"
+                    path: "audio/introduction/swift.wav"
+
+                    WPN114.Fork { target: effects.reverb; dBlevel: -9 }
+                }
+            }
+
             WPN114.StereoSource //----------------------------------------- GROUNDNOISE
             {
                 fixed: true
@@ -334,6 +384,31 @@ Item
                     path: "audio/woodpath/carre/insects.wav"
 
                     WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                }
+            }
+
+            WPN114.StereoSource //----------------------------------------- HARMONICS
+            {
+                id: harmonics_source
+                exposePath: "/woodpath/carre/audio/harmonics/source"
+
+                WPN114.StreamSampler { id: harmonics; loop: true; xfade: 3000
+                    exposePath: "/woodpath/carre/audio/harmonics"
+                    path: "audio/woodpath/carre/harmonics.wav"
+
+                    WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                }
+            }
+
+            WPN114.MonoSource //----------------------------------------- RAVENS
+            {
+                id:         ravens_source
+                exposePath: "/stonepath/cendres/audio/ravens/rooms"
+
+                WPN114.MultiSampler { id: ravens;
+                    exposePath: "/woodpath/carre/audio/ravens"
+                    path: "audio/woodpath/carre/ravens"
+                    WPN114.Fork { target: effects.reverb; dBlevel: 3 }
                 }
             }
         }
