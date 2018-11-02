@@ -15,14 +15,14 @@ Item
     property var items: [ ]
     property var target
 
-    function impulse() { target.value = 0 }
-    function toggle()  { target.value = loader.item.checked }
-    function slider()  { target.value = loader.item.value }
+    function impulse  ( )  { target.value = 0 }
+    function toggle   ( )  { target.value = loader.item.checked }
+    function slider   ( )  { target.value = loader.item.value }
 
     function processPeak(v)
     {
-        vu_left.rms = v[0];
-        vu_right.rms = v[1];
+        vu_left.rms     = v[0];
+        vu_right.rms    = v[1];
     }
 
     Rectangle

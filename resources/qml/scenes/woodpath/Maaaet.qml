@@ -24,6 +24,7 @@ Item
 
             wind.play();
             client_manager.notifyScene("maaaet");
+            if ( !timer.running ) timer.start();
         }
 
 

@@ -54,7 +54,8 @@ Item
 
         onValueReceived:
         {
-            if ( !audio_stream.active ) audio_stream.active = true;
+            if ( !audio_stream.active )
+                  audio_stream.active = true;
 
             introduction.scenario.start();
             timer.start();
@@ -64,6 +65,8 @@ Item
     Item //----------------------------------------------------------------- TIMER
     {
         id: timer
+
+        property bool running: false
         property int count;
         property string countstr;
 
@@ -72,6 +75,7 @@ Item
         function start()
         {
             audio_stream.tick.connect(timer.update)
+            running = true;
         }
 
         function update(tick)
@@ -98,11 +102,11 @@ Item
 //        onEnd: wpn214.scenario.start();
 //    }
 
-    Connections
-    {
-        target: woodpath
-        onEnd: wpn214.scenario.start();
-    }
+//    Connections
+//    {
+//        target: woodpath
+//        onEnd: wpn214.scenario.start();
+//    }
 
     Connections
     {

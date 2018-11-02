@@ -5,29 +5,31 @@ import ".."
 
 Item
 {
+    id: root;
     property alias rooms:       pando_rooms
     property alias scenario:    scenario
     signal end()
 
     InteractionExecutor
     {
-        id:         scenario
-        target:     interaction_transition
-        source:     audio_stream
+        id:          scenario
+        target:      interaction_transition
+        source:      audio_stream
+        exposePath:  "/woodpath/pando/scenario"
 
-        exposePath: "/woodpath/pando/scenario"
-
-        length:     sec( 104 )
+        length:     min( 1.46 )
         countdown:  sec( 5 )
 
         onStart:
         {           
-            flute.play      ( );
-            leaves.play     ( );
-            woodworks.play  ( );
-            insects.play    ( );
-            digigreen.play  ( );
-            verb.play       ( );
+            if ( !timer.running ) timer.start();
+
+            flute.play       ( );
+            leaves.play      ( );
+            woodworks.play   ( );
+            insects.play     ( );
+            digigreen.play   ( );
+            verb.play        ( );
 
             pando_rooms.active = true;
             client_manager.notifyScene("pando");
@@ -52,12 +54,13 @@ Item
 
     Interaction //----------------------------------------------------- PANDO_TRANSITION
     {
-        id: interaction_transition
-        path: "/woodpath/pando/interactions/transition"
+        id:         interaction_transition
+        path:       "/woodpath/pando/interactions/transition"
+        title:      "Transition, Pando"
+        module:     "quarre/Transitions.qml"
 
-        title: "Transition, Pando"
-        module: "quarre/Transitions.qml"
         broadcast: true
+
         description: "transition, veuillez patienter..."
     }
 
@@ -142,5 +145,4 @@ Item
                 path: "audio/woodpath/pando/verb.wav" }
         }
     }
-
 }

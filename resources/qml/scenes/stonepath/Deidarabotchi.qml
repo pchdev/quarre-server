@@ -12,13 +12,13 @@ Item
 
     InteractionExecutor
     {
-        id: scenario
-        source: audio_stream
-        exposePath: "/stonepath/deidarabotchi/scenario"
+        id:          scenario
+        target:      interaction_transition
+        source:      audio_stream
+        exposePath:  "/stonepath/deidarabotchi/scenario"
 
-        target:     interaction_transition
-        length:     min( 2.57 )
-        countdown:  sec( 5 )
+        length:      min( 2.57 )
+        countdown:   sec( 5 )
 
         onStart:
         {

@@ -38,8 +38,20 @@ Item
 
             onStart:
             {
-                instruments.kaivo_1.setPreset(instruments.rainbells);
-                instruments.kaivo_2.setPreset(instruments.vare);
+                instruments.kaivo_1.setPreset( instruments.rainbells );
+                instruments.kaivo_2.setPreset( instruments.vare );
+            }
+
+            WPN114.TimeNode { date: sec( 41 ); onStart: hammer.play() }
+
+            WPN114.Automation
+            {
+                target:     instruments.kaivo_1
+                property:   "level"
+                date:       sec( 15 )
+                duration:   sec( 60 )
+
+                from: 0; to: 1;
             }
 
             onEnd: instruments.kaivo_1.active = false
@@ -56,11 +68,10 @@ Item
 
             onStart:
             {
-                instruments.kaivo_2.noteOn(0, 66, 127);
-                instruments.kaivo_2.noteOn(0, 73, 127);
+                instruments.kaivo_2.noteOn( 0, 68, 127 );
+                instruments.kaivo_2.noteOn( 0, 73, 127 );
             }
         }
-
 
         InteractionExecutor
         {
@@ -90,8 +101,6 @@ Item
             date:       min( 1.10 )
             countdown:  sec( 15 )
             length:     sec( 60 )
-
-            onStart:; // kaivo notes on
         }
     }
 
@@ -112,17 +121,27 @@ Item
  les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
             //afin de changer leurs propriétés."
 
+            property var notes: [ ]
+
             mappings:
                 [
                 QuMapping // ---------------------------------------------- proximity mapping
                 {
                     source: "/modules/bells/trigger"
                     expression: function(v) {
-                        var rdm_note = 35 + Math.random()*40;
+
+                        if ( interaction_rainbells.notes.length === 4 )
+                        {
+                            var note = interaction_rainbells.notes[ 0 ];
+                            instruments.kaivo_1.noteOff(0, note, 100 )
+                            interaction_rainbells.notes.splice(0, 1);
+                        }
+
+                        var rdm_note = 47 + Math.random()*40;
                         var rdm_p = Math.random()*15+2;
 
                         instruments.kaivo_1.noteOn(0, rdm_note, rdm_p);
-                        instruments.kaivo_1.noteOff(0, rdm_note, rdm_p);
+                        interaction_rainbells.notes.push(rdm_note);
                     }
                 },
 
@@ -165,7 +184,7 @@ Item
                     expression: function(v) { instruments.kaivo_2.set("gran_pitch", v) }},
 
                 QuMapping {
-                    source: "/modules/vare/granular/pitch_env"
+                    source: "/modules/vare/granular/position"
                     expression: function(v) { instruments.kaivo_2.set("gran_pitch_env", v) }}
             ]
         }
@@ -318,29 +337,35 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
         WPN114.StereoSource //----------------------------------------- 1.SNOWFALL (1-2)
         {
-            exposePath: "/audio/woodpath/vare/snowfall/source"
+            exposePath: "/woodpath/vare/audio/snowfall/source"
 
-            WPN114.StreamSampler { id: snowfall; loop: true; xfade: 3000
+            WPN114.StreamSampler { id: snowfall; loop: true; xfade: 3000; attack: 2000
                 exposePath: "/woodpath/vare/audio/snowfall"
-                path: "audio/woodpath/vare/snowfall.wav" }
+                path: "audio/woodpath/vare/snowfall.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 2.HAMMER (3-4)
         {
-            exposePath: "/audio/woodpath/vare/hammer/source"
+            exposePath: "/woodpath/vare/audio/hammer/source"
 
             WPN114.Sampler { id: hammer;
                 exposePath: "/woodpath/vare/audio/hammer"
-                path: "audio/woodpath/vare/hammer.wav" }
+                path: "audio/woodpath/vare/hammer.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -0 }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
         {
-            exposePath: "/audio/woodpath/vare/paroral/source"
+            exposePath: "/woodpath/vare/audio/paroral/source"
 
             WPN114.Sampler { id: paroral;
                 exposePath: "/woodpath/vare/audio/paroral"
-                path: "audio/stonepath/markhor/paroral.wav" }
+                path: "audio/stonepath/markhor/paroral.wav"
+                WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+            }
         }
     }
 }

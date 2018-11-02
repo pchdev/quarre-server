@@ -18,16 +18,16 @@ Item
     property bool absynth_ready: false
 
     // kaivo presets enumeration:
-    property int autochurch:    1
-    property int churchbells:   2
-    property int jguitar:       3
-    property int yguitar:       4
-    property int tguitar:       5
-    property int markhor:       6
-    property int niwood:        7
-    property int spring:        8
-    property int vare:          9
-    property int rainbells:     10
+    property int autochurch:    0
+    property int churchbells:   1
+    property int jguitar:       2
+    property int yguitar:       3
+    property int tguitar:       4
+    property int markhor:       5
+    property int niwood:        6
+    property int spring:        7
+    property int vare:          8
+    property int rainbells:     9
 
     WPN114.Rooms
     {

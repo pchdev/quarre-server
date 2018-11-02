@@ -46,5 +46,8 @@
         <file>quarre/items/QuarreBird.qml</file>
         <file>quarre/items/SpatializationSphere.qml</file>
         <file>basics/GestureShakeThresh.qml</file>
+        <file>quarre/items/SourceMix.qml</file>
+        <file>quarre/mix/IntroductionMixview.qml</file>
+        <file>quarre/mix/CendresMixview.qml</file>
     </qresource>
 </RCC>

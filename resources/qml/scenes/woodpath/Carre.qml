@@ -51,6 +51,8 @@ Item
                 spring.play();
                 groundnoise.play();
                 insects.play();
+
+                if ( !timer.running ) timer.start();
             }
 
             onEnd: quarre.play();
@@ -336,7 +338,7 @@ Item
 
                 WPN114.StreamSampler { id: alpine_swift; loop: true; xfade: 3000
                     exposePath: "/woodpath/carre/audio/swift"
-                    path: "audio/introduction/swift.wav"
+                    path: "audio/woodpath/carre/swift.wav"
 
                     WPN114.Fork { target: effects.reverb; dBlevel: -9 }
                 }
@@ -403,7 +405,7 @@ Item
             WPN114.MonoSource //----------------------------------------- RAVENS
             {
                 id:         ravens_source
-                exposePath: "/stonepath/cendres/audio/ravens/rooms"
+                exposePath: "/woodpath/carre/audio/ravens/rooms"
 
                 WPN114.MultiSampler { id: ravens;
                     exposePath: "/woodpath/carre/audio/ravens"
