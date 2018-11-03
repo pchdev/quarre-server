@@ -102,7 +102,7 @@ Item
         }
     }
 
-    WPN114.Node
+    WPN114.Node // ------------------------------------------------- INTERACTIONS_RESET
     {
         path: "/global/interactions/reset"
         type: WPN114.Type.Impulse
@@ -116,14 +116,14 @@ Item
                 var  client = clients.itemAt(c);
                 if ( client.connected )
                 {
-                    client.remote.get("/interactions/reset").value = 0;
+                    client.remote.sendMessage("/interactions/reset", 0, true);
                     client.interaction_count = 0;
                 }
             }
         }
     }
 
-    Connections
+    Connections // ------------------------------------------------- CLIENT_CONNECTIONS_DISPATCH
     {
         target: module_server
         onNewConnection:

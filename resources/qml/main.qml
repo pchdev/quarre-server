@@ -11,6 +11,7 @@ import "views"
 // TODO: Spatialization for every scene
 // TODO: volume and spatialization presets
 // TODO: FLAC audio
+// TODO: VUMeters
 
 Rectangle
 {
@@ -50,12 +51,47 @@ Rectangle
             mainview.tree.model = query_server.nodeTree()
     }
 
+    ClientManager   { id: client_manager; maxClients: 4 }
+    Functions       { id: functions }
+    Scenario        { id: scenario }
+    MainView        { id: mainview }
+
+    // AUDIO LEVEL/VERB/SPACE PRESETS -------------------------------------
+
+    WPN114.Node
+    {
+        path: "/global/audio/presets/save"
+        type: WPN114.Type.String
+    }
+
+    WPN114.Node
+    {
+        path: "/global/audio/presets/load"
+        type: WPN114.Type.String
+    }
+
+    WPN114.RoomSetup
+    {
+        id: rooms_setup;
+
+        // stereo tests
+        WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.5 }
+
+        // octophonic ring setup for quarrè-angoulême
+//        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
+
+        // scrime 3dôme
+//        WPN114.SpeakerRing { nspeakers: 4; offset: Math.PI/8; influence: 0.5; elevation: 0.99 }
+//        WPN114.SpeakerRing { nspeakers: 6; offset: Math.PI/8; influence: 0.5; elevation: 0.66 }
+//        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.5; elevation: 0.33 }
+    }
+
     WPN114.AudioStream //------------------------------------------------------------- AUDIO
     {
         id:             audio_stream
 
         outDevice:      "Scarlett 18i20 USB"
-        numOutputs:     2
+        numOutputs:     8
 
 //        outDevice:      "Soundflower (64ch)"
 //        numOutputs:     8
@@ -64,15 +100,18 @@ Rectangle
         blockSize:      512
         active:         false
 
-        inserts: WPN114.PeakRMS { id: vu_master; onPeak: mainview.processPeak(value) }
-
-        Component.onCompleted:
+        inserts: WPN114.PeakRMS
         {
-            scenario.initialize();
+            id: vu_master
+            source: audio_stream
+            onPeak: mainview.vumeters.processPeak(value)
         }
+
+        Component.onCompleted: scenario.initialize();
 
         onActiveChanged:
         {
+            // this should be implicit
             if ( active ) start();
             else stop();
         }
@@ -81,17 +120,4 @@ Rectangle
         WPN114.Node on active { path: "/global/audio/master/active" }
         WPN114.Node on mute { path: "/global/audio/master/muted" }
     }
-
-    WPN114.RoomSetup // octophonic ring setup for quarrè-angoulême
-    {
-        id: rooms_setup;        
-//        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
-        WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.5 }
-    }
-
-    ClientManager   { id: client_manager; maxClients: 4 }
-    Functions       { id: functions }
-    Scenario        { id: scenario }
-    MainView        { id: mainview }
-
 }

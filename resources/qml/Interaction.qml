@@ -43,7 +43,6 @@ Item
     WPN114.Node on module       { path: root.path+"/module" }
     WPN114.Node on broadcast    { path: root.path+"/broadcast" }
 
-
     WPN114.Node //------------------------------------------------------------ INTERACTION_NOTIFY
     {
         id: interaction_notify

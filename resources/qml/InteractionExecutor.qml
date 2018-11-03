@@ -9,14 +9,14 @@ WPN114.TimeNode
     property int countdown
     property int length
 
-    duration:   root.countdown+root.length
-    onStart:    target.notify(countdown/1000, length/1000);
+    duration:   length === -1 ? -1 : root.countdown+root.length
+    onStart:    target.notify(countdown/1000, length === -1 ? -1 : length/1000);
     onEnd:      target.end();
 
     WPN114.TimeNode
     {
-        source:  root.source
-        date:    root.countdown
-        onStart: target.begin();
+        source:   root.source
+        date:     root.countdown
+        onStart:  target.begin();
     }
 }

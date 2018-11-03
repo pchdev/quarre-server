@@ -12,9 +12,9 @@ Item
 
     WPN114.TimeNode
     {
-        id: scenario
-        source: audio_stream
-        exposePath: "/stonepath/ammon/scenario"
+        id:          scenario
+        source:      audio_stream
+        exposePath:  "/stonepath/ammon/scenario"
 
         duration: -1
 
@@ -103,11 +103,11 @@ Item
 
         WPN114.Automation //--------------------------------------------- HARMONICS_SAMPLE
         {
-            startExpression: ( interaction_string_sweep.index === 38 );
+            startExpression:  interaction_string_sweep.index === 38;
 
             target: harmonics
             property: "level"
-            duration: min(1.30)
+            duration: min( 1.30 )
             from: 0; to: 1;
 
             onStart: harmonics.play();
@@ -115,11 +115,11 @@ Item
 
         WPN114.Automation
         {
-            startExpression: ( interaction_string_sweep.index === 84 )
+            startExpression: interaction_string_sweep.index === 84
 
             target: harmonics
             property: "level"
-            duration: min(1)
+            duration: min( 1 )
             from: 1; to: 0;
 
             onEnd: harmonics.stop();
@@ -127,11 +127,11 @@ Item
 
         WPN114.Automation //--------------------------------------------- BROKEN_RADIO
         {
-            startExpression: ( interaction_string_sweep.index === 88 )
+            startExpression: interaction_string_sweep.index === 88
 
             target: broken_radio
             property: "level"
-            duration: sec(30)
+            duration: sec( 30 )
             from: 0; to: 1;
 
             onStart: broken_radio.play();
@@ -139,7 +139,7 @@ Item
 
         WPN114.Automation
         {
-            startExpression: ( interaction_string_sweep.index === 100 )
+            startExpression: interaction_string_sweep.index === 100
 
             target: broken_radio
             property: "level"

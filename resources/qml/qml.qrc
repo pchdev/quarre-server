@@ -30,5 +30,6 @@
         <file>MainView.qml</file>
         <file>scenes/Scenario.qml</file>
         <file>scenes/woodpath/JomonScore.qml</file>
+        <file>views/MultiVUMeter.qml</file>
     </qresource>
 </RCC>

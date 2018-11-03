@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4 as QC14
 import WPN114 1.0 as WPN114
 import "views/NodeView.js" as NodeView
+import "views"
 
 Item
 {
@@ -12,6 +13,7 @@ Item
     property int ypos: 0
     property int xpos: tree.width+20
     property alias tree: tree
+    property alias vumeters: vumeters
     property var items: [ ]
     property var target
 
@@ -19,40 +21,21 @@ Item
     function toggle   ( )  { target.value = loader.item.checked }
     function slider   ( )  { target.value = loader.item.value }
 
-    function processPeak(v)
-    {
-        vu_left.rms     = v[0];
-        vu_right.rms    = v[1];
-    }
-
     Rectangle
     {
-        id: gui_view
-        x: tree.width
-        height: parent.height
-        width: parent.width - tree.width
+        id:      gui_view
+        x:       tree.width
+        height:  parent.height
+        width:   parent.width - tree.width
 
-        Loader
-        {
-            id: loader
-        }
+        Loader { id: loader }
 
-        WPN114.VUMeter
+        MultiVUMeter
         {
-            id: vu_left
-            y: parent.height/2-height/2
-            x: parent.width/2-width
+            id: vumeters
+            nchannels: audio_stream.numOutputs
+            anchors.centerIn: parent
             height: 150
-            width: 25
-        }
-
-        WPN114.VUMeter
-        {
-            id: vu_right
-            y: parent.height/2-height/2
-            x: parent.width/2-1
-            height: 150
-            width: 25
         }
     }
 
@@ -104,9 +87,17 @@ Item
             {
                 loader.source = "views/Slider.qml";
                 loader.item.label = node.name;
-//                loader.item.width = 300
-//                loader.item.height = 25
                 loader.item.valueChanged.connect(node.setValue);
+            }
+
+            else if ( node.type === WPN114.Type.Int )
+            {
+                // TODO
+            }
+
+            else if ( node.type === WPN114.Type.String )
+            {
+                // TODO
             }
         }
     }

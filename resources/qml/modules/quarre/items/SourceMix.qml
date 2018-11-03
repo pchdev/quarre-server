@@ -46,29 +46,29 @@ Item
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     text: root.method
-                    WPN114.Node on checked { path: root.method+'/'+'play'
-                }
+                    WPN114.Node on checked { path: root.method+'/'+'play'; critical: true }
 
-                QuarreSlider //-------------------------------------------------------------- LEVEL
-                {
-                    id: dBlevel_slider
-                    name: "level"
-                    y: 50
-                    min: -96;
-                    max: 12;
+                    QuarreSlider //-------------------------------------------------------------- LEVEL
+                    {
+                        id: dBlevel_slider
+                        name: "level"
+                        y: 50
+                        min: -96;
+                        max: 12;
 
-                    WPN114.Node on value { path: root.method+'/'+'dblevel'; critical: true }
-                }
+                        WPN114.Node on value { path: root.method+'/'+'dblevel'; critical: true }
+                    }
 
-                QuarreSlider //-------------------------------------------------------------- VERB
-                {
-                    id: reverb_slider
-                    name: "reverb"
-                    y: 100
-                    min: -96;
-                    max: 12;
+                    QuarreSlider //-------------------------------------------------------------- VERB
+                    {
+                        id: reverb_slider
+                        name: "reverb"
+                        y: 100
+                        min: -96;
+                        max: 12;
 
-                    WPN114.Node on value { path: root.method+'/reverb/'+'dblevel'; critical: true }
+                        WPN114.Node on value { path: root.method+'/reverb/'+'dblevel'; critical: true }
+                    }
                 }
             }
         }

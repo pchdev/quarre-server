@@ -28,7 +28,6 @@ Item
         SourceMix { method: "/cendres/redbirds_2" }
         SourceMix { method: "/cendres/thunder" }
         SourceMix { method: "/cendres/waves" }
-
     }
 
     PageIndicator
