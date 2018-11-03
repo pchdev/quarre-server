@@ -35,6 +35,7 @@ Item
             deidarabotchi_rooms.active = true;
 
             client_manager.notifyScene("deidarabotchi");
+            if ( !timer.running ) timer.start();
         }
 
         onEnd:

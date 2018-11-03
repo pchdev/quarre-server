@@ -40,6 +40,8 @@ Item
 
             client_manager.notifyStart( );
             client_manager.notifyScene("introduction");
+
+            if ( !timer.running ) timer.start();
         }
 
         WPN114.TimeNode { date: min(3); onStart: root.end() }

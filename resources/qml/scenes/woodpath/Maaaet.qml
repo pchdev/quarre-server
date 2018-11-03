@@ -127,14 +127,19 @@ Item
 
             onEnd:
             {
+                woodenbirds.stop    ( );
                 windleaves.stop     ( );
                 spring.stop         ( );
                 woodworks.stop      ( );
                 woodworks_2.stop    ( );
                 wind.stop           ( );
                 grove.stop          ( );
+                leaves.stop         ( );
 
-                maaaet_rooms.active = false;
+                functions.setTimeout(function() {
+                    maaaet_rooms.active = false;
+                }, 1000 );
+
                 scenario.end        ( );
             }
         }

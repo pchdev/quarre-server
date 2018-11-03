@@ -31,6 +31,7 @@ Item
             markhor_rooms.active = true;
 
             client_manager.notifyScene("markhor");
+            if ( !timer.running ) timer.start();
         }
 
         InteractionExecutor //----------------------------------------------------- BELLS

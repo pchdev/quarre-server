@@ -27,6 +27,7 @@ Item
 
             cicadas.play();
             client_manager.notifyScene("yūgure");
+            if ( !timer.running ) timer.start();
         }
 
         // YUGURE ------------------------------------------------------------

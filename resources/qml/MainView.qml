@@ -14,6 +14,7 @@ Item
     property int xpos: tree.width+20
     property alias tree: tree
     property alias vumeters: vumeters
+    property alias timer: timer_label
     property var items: [ ]
     property var target
 
@@ -21,7 +22,7 @@ Item
     function toggle   ( )  { target.value = loader.item.checked }
     function slider   ( )  { target.value = loader.item.value }
 
-    Rectangle
+    Rectangle //---------------------------------------------------- RIGHTMOST RECT
     {
         id:      gui_view
         x:       tree.width
@@ -36,6 +37,15 @@ Item
             nchannels: audio_stream.numOutputs
             anchors.centerIn: parent
             height: 150
+        }
+
+        Text
+        {
+            id: timer_label
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "00:00"
+            font.pointSize: 40
+            y: parent.height * 0.75
         }
     }
 

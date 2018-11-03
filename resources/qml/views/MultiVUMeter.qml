@@ -9,6 +9,12 @@ Item
     function processPeak(v)
     {
         for ( var i = 0; i < v.length; ++i )
+              repeater.itemAt(i).peak = v[i];
+    }
+
+    function processRms(v)
+    {
+        for ( var i = 0; i < v.length; ++i )
               repeater.itemAt(i).rms = v[i];
     }
 

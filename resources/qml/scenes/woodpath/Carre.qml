@@ -154,6 +154,10 @@ Item
                 spring.stop       ( );
                 alpine_swift.stop ( );
 
+                functions.setTimeout(function() {
+                    carre_rooms.active = false;
+                }, 1000 );
+
                 instruments.kaivo_1.active = false;
                 instruments.rooms.active = false;
             }

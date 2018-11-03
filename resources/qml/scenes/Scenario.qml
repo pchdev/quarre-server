@@ -3,9 +3,11 @@ import WPN114 1.0 as WPN114
 
 import "stonepath"
 import "woodpath"
+import "mix"
 
 Item
 {
+    MixScene        { id: mix_scene }
     Introduction    { id: introduction }
     WoodPath        { id: woodpath }
 //    StonePath       { id: stonepath }
@@ -82,6 +84,8 @@ Item
         {
             count += tick;
             countstr = functions.realToTime(count);
+
+            mainview.timer.text = countstr;
         }
     }
 

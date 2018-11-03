@@ -31,5 +31,7 @@
         <file>scenes/Scenario.qml</file>
         <file>scenes/woodpath/JomonScore.qml</file>
         <file>views/MultiVUMeter.qml</file>
+        <file>scenes/mix/MixScene.qml</file>
+        <file>scenes/mix/MixInteraction.qml</file>
     </qresource>
 </RCC>

@@ -32,6 +32,7 @@ Item
             stonewater.play();
             diaclases_rooms.active = true
             client_manager.notifyScene("diaclases");
+            if ( !timer.running ) timer.start();
         }
 
         // always wait a little bit before changing presets after setting active

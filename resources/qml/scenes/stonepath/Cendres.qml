@@ -27,6 +27,8 @@ Item
             instruments.rooms.active = false;
             client_manager.notifyScene("cendres");
             cendres_rooms.active = true
+
+            if ( !timer.running ) timer.start();
         }
 
         InteractionExecutor //----------------------------------------------------- THUNDER

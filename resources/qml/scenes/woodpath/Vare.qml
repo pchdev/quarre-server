@@ -26,6 +26,7 @@ Item
             snowfall.play();
 
             client_manager.notifyScene("vare");
+            if ( !timer.running ) timer.start();
         }
 
         InteractionExecutor

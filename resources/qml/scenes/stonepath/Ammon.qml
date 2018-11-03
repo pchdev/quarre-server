@@ -58,6 +58,7 @@ Item
             instruments.absynth.active = false;
 
             instruments.rooms.active = false;
+            if ( !timer.running ) timer.start();
         }
 
         WPN114.TimeNode { date: sec(6); onStart: footsteps.play() }

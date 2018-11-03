@@ -11,7 +11,6 @@ import "views"
 // TODO: Spatialization for every scene
 // TODO: volume and spatialization presets
 // TODO: FLAC audio
-// TODO: VUMeters
 
 Rectangle
 {
@@ -75,10 +74,10 @@ Rectangle
         id: rooms_setup;
 
         // stereo tests
-        WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.5 }
+//        WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.5 }
 
         // octophonic ring setup for quarrè-angoulême
-//        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
+        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
 
         // scrime 3dôme
 //        WPN114.SpeakerRing { nspeakers: 4; offset: Math.PI/8; influence: 0.5; elevation: 0.99 }
@@ -102,9 +101,13 @@ Rectangle
 
         inserts: WPN114.PeakRMS
         {
-            id: vu_master
-            source: audio_stream
-            onPeak: mainview.vumeters.processPeak(value)
+            id:      vu_master
+            source:  audio_stream
+
+            onRms:   mainview.vumeters.processRms  ( value )
+            onPeak:  mainview.vumeters.processPeak ( value )
+
+            refreshRate: 20//Hz
         }
 
         Component.onCompleted: scenario.initialize();
