@@ -28,6 +28,7 @@ Item
     property int spring:        7
     property int vare:          8
     property int rainbells:     9
+    property int varerhythm:    10
 
     WPN114.Rooms
     {

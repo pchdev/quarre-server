@@ -13,6 +13,14 @@ Item
 //    StonePath       { id: stonepath }
     WPN214          { id: wpn214 }
 
+    WPN114.Node
+    {
+        path: "/test"
+        type: WPN114.Type.Float
+
+        onValueReceived: instruments.kaivo_1.set("env1_attack", newValue);
+    }
+
     Instruments     { id: instruments }
     Effects         { id: effects }
 

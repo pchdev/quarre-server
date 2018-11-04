@@ -5,6 +5,7 @@ import ".."
 
 Item
 {
+    id: root
     property alias rooms: jomon_rooms
     property alias scenario: scenario
     signal end();
@@ -21,9 +22,9 @@ Item
         onStart:
         {
             jomon_rooms.active = true;
-            instruments.kaivo_1.active = true;
-            instruments.kaivo_2.active = true;
+//            instruments.kaivo_1.active = true;
             instruments.rooms.active = true;
+            instruments.kaivo_2.active = true;
 
             cicadas.play();
             client_manager.notifyScene("yūgure");
@@ -32,130 +33,141 @@ Item
 
         // YUGURE ------------------------------------------------------------
 
-        InteractionExecutor
-        {
-            id:         arpeggiator_ex
-            target:     interaction_arpeggiator
-            date:       sec( 5 )
-            countdown:  sec( 15 )
-            length:     min( 5 )
+//        InteractionExecutor
+//        {
+//            id:         arpeggiator_ex
+//            target:     interaction_arpeggiator
+//            date:       sec( 5 )
+//            countdown:  sec( 15 )
+//            length:     min( 5 )
 
-            onStart:
-            {
-                instruments.kaivo_1.setPreset("yguitar");
-                instruments.kaivo_2.setPreset("rainbells");
-                owl1.play()
-            }
-        }
+//            onStart:
+//            {
+//                instruments.kaivo_1.setPreset( "yguitar" );
+//                instruments.kaivo_2.setPreset( "rainbells" );
+//                owl1.play()
+//            }
+//        }
 
-        InteractionExecutor
-        {
-            target:     interaction_arpeggiator_control
-            date:       sec( 10 )
-            countdown:  sec( 15 )
-            length:     min( 4.55 )
+//        InteractionExecutor
+//        {
+//            target:     interaction_arpeggiator_control
+//            date:       sec( 10 )
+//            countdown:  sec( 15 )
+//            length:     min( 4.55 )
 
-            onStart:    owl2.play();
-        }
+//            onStart:    owl2.play();
+//        }
 
         InteractionExecutor
         {
             target:     interaction_rainbells
-            date:       sec( 20 )
+            date:       sec( 5 )
             countdown:  sec( 15 )
-            length:     min( 4.45 )
+            length:     sec( 180 )
 
-            onStart:    owl3.play();
-        }
-
-        InteractionExecutor
-        {
-            target:     interaction_synth_1
-            date:       sec( 30 )
-            countdown:  sec( 15 )
-            length:     min( 2 )
-
-            onStart:    owl4.play();
-
-            InteractionExecutor
+            onStart:
             {
-                target:     interaction_synth_2
-                after:      parentNode
-                date:       sec( 5 )
-                countdown:  sec( 10 )
-                length:     min( 2 )
+                owl3.play();
+                console.log("starting");
+                instruments.kaivo_2.setPreset( instruments.rainbells );
+            }
+
+            onEnd:
+            {
+                owl3.stop();
+                instruments.kaivo_2.allNotesOff();
             }
         }
+
+//        InteractionExecutor
+//        {
+//            target:     interaction_synth_1
+//            date:       sec( 30 )
+//            countdown:  sec( 15 )
+//            length:     min( 2 )
+
+//            onStart:    owl4.play();
+
+//            InteractionExecutor
+//            {
+//                target:     interaction_synth_2
+//                after:      parentNode
+//                date:       sec( 5 )
+//                countdown:  sec( 10 )
+//                length:     min( 2 )
+//            }
+//        }
 
         // AKATSUKI ------------------------------------------------------------
 
-        InteractionExecutor
-        {
-            id:         akatsuki
-            target:     interaction_strings_1
-            after:      arpeggiator_ex
-            date:       sec( 10 )
-            countdown:  sec( 15 )
-            length:     min( 5 )
+//        InteractionExecutor
+//        {
+//            id:         akatsuki
+//            target:     interaction_strings_1
+//            after:      arpeggiator_ex
+//            date:       sec( 10 )
+//            countdown:  sec( 15 )
+//            length:     min( 5 )
 
-            onStart:
-            {
-                instruments.kaivo_1.setPreset("jguitar");
-                client_manager.notifyScene("akatasuki")
-            }
+//            onStart:
+//            {
+//                instruments.kaivo_1.setPreset("jguitar");
+//                client_manager.notifyScene("akatasuki")
+//            }
 
-            endExpression: jomon_score.index === 18;
+//            endExpression: jomon_score.index === 18;
 
-            InteractionExecutor
-            {
-                target:      interaction_strings_2
-                countdown:   sec( 10 )
-                length:      min( 5 )
-            }
+//            InteractionExecutor
+//            {
+//                target:      interaction_strings_2
+//                countdown:   sec( 10 )
+//                length:      min( 5 )
+//            }
 
-            InteractionExecutor
-            {
-                target:     interaction_rainbells
-                date:       sec( 10 )
-                countdown:  sec( 10 )
-                length:     min( 5 )
-            }
+//            InteractionExecutor
+//            {
+//                target:     interaction_rainbells
+//                date:       sec( 10 )
+//                countdown:  sec( 10 )
+//                length:     min( 5 )
+//            }
 
-            InteractionExecutor
-            {
-                startExpression: jomon_score.index === 8;
-                countdown:       sec( 5 )
-                length:          min( 3 )
-            }
-        }
+//            InteractionExecutor
+//            {
+//                startExpression: jomon_score.index === 8;
+//                countdown:       sec( 5 )
+//                length:          min( 3 )
+//            }
+//        }
 
-        // JOMON_SUGI ------------------------------------------------------------
+//        // JOMON_SUGI ------------------------------------------------------------
 
-        WPN114.TimeNode
-        {
-            after: akatsuki
-            duration: min( 2.30 )
+//        WPN114.TimeNode
+//        {
+//            after: akatsuki
+//            duration: min( 2.30 )
 
-            onStart:
-            {
-                client_manager.notifyScene("jomon.sugi")
-            }
+//            onStart:
+//            {
+//                client_manager.notifyScene("jomon.sugi")
+//            }
 
-            InteractionExecutor
-            {
-                target:     interaction_mangler_1
-                date:       sec( 37 )
-                countdown:  sec( 15 )
-                length:     min( 1.20 )
+//            InteractionExecutor
+//            {
+//                target:     interaction_mangler_1
+//                date:       sec( 37 )
+//                countdown:  sec( 15 )
+//                length:     min( 1.20 )
 
-                InteractionExecutor
-                {
-                    target:     interaction_mangler_2
-                    countdown:  sec( 15 )
-                    length:     min( 1.20 )
-                }
-            }
-        }
+//                InteractionExecutor
+//                {
+//                    target:     interaction_mangler_2
+//                    countdown:  sec( 15 )
+//                    length:     min( 1.20 )
+//                }
+//            }
+//        }
     }
 
     Item //-------------------------------------------------------------------- INTERACTIONS
@@ -165,6 +177,7 @@ Item
         Interaction
         {
             id:     interaction_arpeggiator
+            path:   "/woodpath/jomon/interactions/arpeggiator"
             title:  "Arpèges, notes"
             module: "quarre/JomonArpeggiator.qml"
 
@@ -174,23 +187,25 @@ Item
         Interaction
         {
             id:    interaction_arpeggiator_control
+            path:   "/woodpath/jomon/interactions/arpeggiator-control"
         }
 
         Interaction //-------------------------------------------------------------------------- RAINBELLS
         {
             id:     interaction_rainbells
+            path:   "/woodpath/jomon/interactions/rainbells"
 
             title:  "Cloches de pluie (2)"
             module: "quarre/JomonPalm.qml"
 
             description: "Approchez et maintenez la paume de votre main à quelques
- centimètres de l'écran de l'appareil pour produire du son, faites des rotations pour le transformer."
+centimètres de l'écran de l'appareil pour produire du son"
 
             mappings:
             [
                 QuMapping //--------------------------------------------------- NEAR_GESTURE
                 {
-                    source: "/modules/jomon/near"
+                    source: "/modules/jomon/palm/near"
                     expression: function(v) {
 
                         if ( v )
@@ -201,6 +216,7 @@ Item
                             instruments.kaivo_2.noteOn(0, r1, 100);
                             instruments.kaivo_2.noteOn(0, r2, 100);
                         }
+
                         else instruments.kaivo_2.allNotesOff();
                     }
                 },
@@ -214,18 +230,19 @@ Item
 
                         instruments.kaivo_2.set( "res_brightness", norm_z*0.5 );
                         instruments.kaivo_2.set( "res_position", norm_z );
-                        instruments.kaivo_2.set( "gran_pitch_env", v[2]/180*2 );
-                        instruments.kaivo_2.set( "gran_density", (v[0]+90)/90 *0.875 + 0.125 )
+                        instruments.kaivo_2.set( "gran_pitch_env", v[2]/360 + 0.5 );
+                        instruments.kaivo_2.set( "gran_density", (v[0]+90)/90*0.34);
 
                         if ( v[1] < 0 )
                         {
-                            instruments.kaivo_2.set( "gran_rate", v[1]/180+1);
-                            instruments.kaivo_2.set( "gran_pitch", v[1]/180*4+1);
+                            // 0.09 to 0.19
+                            instruments.kaivo_2.set( "gran_rate", v[1]/180*0.1+0.09);
+                            instruments.kaivo_2.set( "gran_pitch", v[1]/360+0.5);
                         }
                         else
                         {
-                            instruments.kaivo_2.set( "gran_rate", v[1]/180*15);
-                            instruments.kaivo_2.set( "gran_pitch", 1);
+                            instruments.kaivo_2.set( "gran_rate", v[1]/180*0.45);
+                            instruments.kaivo_2.set( "gran_pitch", 0.67 );
                         }
                     }
                 }
@@ -235,6 +252,7 @@ Item
         Interaction //-------------------------------------------------------------- YUGURE_SYNTHS
         {
             id:         interaction_synth_1
+            path:       "/woodpath/jomon/interactions/palmsynth-1"
             title:      "Accompagnements (1)"
             module:     "quarre/JomonPalm.qml"
 
@@ -263,6 +281,7 @@ Item
         Interaction
         {
             id:         interaction_synth_2
+            path:       "/woodpath/jomon/interactions/palmsynth-2"
             title:      "Accompagnements (1)"
             module:     "quarre/JomonPalmZ.qml"
 
@@ -303,8 +322,9 @@ Item
         Interaction //-------------------------------------------------------------------------- JOMON_STR_1
         {
             id:     interaction_strings_1
+            path:   "/woodpath/jomon/interactions/strings-1"
             title:  "Cordes, duo déclenchement (1)"
-            modules: "quarre/Strings.qml"
+            module:  "quarre/Strings.qml"
 
             description: "Frottez les cordes avec votre doigt au fur et à mesure de leur apparition."
 
@@ -330,6 +350,7 @@ Item
         Interaction //-------------------------------------------------------------------------- JOMON_STR_2
         {
             id:     interaction_strings_2
+            path:   "/woodpath/jomon/interactions/strings-2"
             title:  "Cordes, duo déclenchement (2)"
             module: "quarre/Strings.qml"
 
@@ -357,6 +378,7 @@ Item
         Interaction //-------------------------------------------------------------------------- SYNTH_SPAT
         {
             id:     interaction_synth_spat
+            path:   "/woodpath/jomon/interactions/synth-spat"
             title:  "Synthétiseurs, mise en espace"
             module: "basics/ZRotation.qml"
 
@@ -376,55 +398,57 @@ Item
         Interaction //-------------------------------------------------------------------------- MANGLER_1
         {
             id:     interaction_mangler_1
+            path:   "/woodpath/jomon/interactions/mangler-1"
             title:  "Destructurations (1)"
             module: "quarre/JomonMangler.qml"
 
             description: "Parasitez, détruisez le signal"
 
-            mappings:
-            [
-                QuMapping { source: "/modules/mangler/resampler"
-                    expression: function(v) { mangler.badResampler = v; }
-                },
+//            mappings:
+//            [
+//                QuMapping { source: "/modules/mangler/resampler"
+//                    expression: function(v) { mangler.badResampler = v; }
+//                },
 
-                QuMapping { source: "/modules/mangler/thermonuclear"
-                    expression: function(v) { mangler.thermonuclear = v; }
-                },
+//                QuMapping { source: "/modules/mangler/thermonuclear"
+//                    expression: function(v) { mangler.thermonuclear = v; }
+//                },
 
-                QuMapping { source: "/modules/mangler/bitdepth"
-                    expression: function(v) { mangler.bitdepth = v; }
-                }
-            ]
+//                QuMapping { source: "/modules/mangler/bitdepth"
+//                    expression: function(v) { mangler.bitdepth = v; }
+//                }
+//            ]
         }
 
         Interaction //-------------------------------------------------------------------------- MANGLER_2
         {
             id:     interaction_mangler_2
+            path:   "/woodpath/jomon/interactions/mangler-2"
             title:  "Destructurations (2)"
             module: "quarre/JomonMangler2.qml"
 
             description: "Parasitez, détruisez le signal"
 
-            mappings:
-            [
-                QuMapping
-                {
-                    source: "/modules/mangler/love"
-                    expression: function(v) { mangler.love = v; }
-                },
+//            mappings:
+//            [
+//                QuMapping
+//                {
+//                    source: "/modules/mangler/love"
+//                    expression: function(v) { mangler.love = v; }
+//                },
 
-                QuMapping
-                {
-                    source: "/modules/mangler/jive"
-                    expression: function(v) { mangler.jive = v; }
-                },
+//                QuMapping
+//                {
+//                    source: "/modules/mangler/jive"
+//                    expression: function(v) { mangler.jive = v; }
+//                },
 
-                QuMapping
-                {
-                    source: "/modules/mangler/attitude"
-                    expression: function(v) { mangler.attitude = v; }
-                }
-            ]
+//                QuMapping
+//                {
+//                    source: "/modules/mangler/attitude"
+//                    expression: function(v) { mangler.attitude = v; }
+//                }
+//            ]
         }
     }
 
@@ -443,7 +467,7 @@ Item
 
             exposePath: "/woodpath/jomon/audio/cicadas/source"
 
-            WPN114.StreamSampler { id: cicadas; loop: true; xfade: 2000
+            WPN114.StreamSampler { id: cicadas; loop: true; xfade: 2000; attack: 3000
                 exposePath: "/woodpath/jomon/audio/cicadas"
                 path: "audio/woodpath/jomon/cicadas.wav" }
         }
@@ -461,7 +485,7 @@ Item
                 exposePath: "/woodpath/jomon/audio/dmsynth"
                 path: "audio/woodpath/jomon/dmsynth.wav"
 
-                WPN114.Mangler { id: mangler }
+//                WPN114.Mangler { id: mangler }
             }
         }
 
@@ -550,7 +574,7 @@ Item
 
             WPN114.Sampler { id: owl2; loop: true; xfade: 2000
                 exposePath: "/woodpath/jomon/audio/owl2"
-                path: "audio/woodpath/vare/owl2.wav" }
+                path: "audio/woodpath/jomon/owl2.wav" }
         }
 
         WPN114.MonoSource //----------------------------------------- 8.OWL_3 (15-16)
@@ -562,7 +586,7 @@ Item
 
             WPN114.Sampler { id: owl3; loop: true; xfade: 2000
                 exposePath: "/woodpath/jomon/audio/owl3"
-                path: "audio/woodpath/vare/owl3.wav" }
+                path: "audio/woodpath/jomon/owl3.wav" }
         }
 
         WPN114.MonoSource //----------------------------------------- 9.OWL_4 (17-18)
@@ -574,7 +598,7 @@ Item
 
             WPN114.Sampler { id: owl4; loop: true; xfade: 2000
                 exposePath: "/woodpath/jomon/audio/owl4"
-                path: "audio/woodpath/vare/owl4.wav" }
+                path: "audio/woodpath/jomon/owl4.wav" }
         }
     }
 }

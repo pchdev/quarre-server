@@ -19,10 +19,8 @@ Rectangle
     QuarreSlider
     {
         name: "fréquence de résonance"
-        min: -1.0; max: 1.0
 
         WPN114.Node on value { path: "/modules/vare/body/pitch" }
-
         y: parent.height*0.20
     }
 

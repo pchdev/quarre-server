@@ -10,14 +10,14 @@ Item
     property alias carre:       carre
     property alias pando:       pando
     property alias vare:        vare
-//    property alias jomon:       jomon
+    property alias jomon:       jomon
     property alias scenario:    scenario
 
     Maaaet      { id: maaaet }
     Carre       { id: carre }
     Pando       { id: pando }
     Vare        { id: vare }
-//    JomonSugi   { id: jomon }
+    JomonSugi   { id: jomon }
 
     function reset()
     {
@@ -25,7 +25,7 @@ Item
         carre.rooms.active    = false
         pando.rooms.active    = false
         vare.rooms.active     = false
-//        jomon.rooms.active    = false
+        jomon.rooms.active    = false
     }
 
     function initialize(setup)
@@ -34,7 +34,7 @@ Item
         carre.rooms.setup       = setup
         pando.rooms.setup       = setup
         vare.rooms.setup        = setup
-//        jomon.rooms.setup       = setup
+        jomon.rooms.setup       = setup
     }
 
     WPN114.TimeNode
@@ -67,15 +67,15 @@ Item
         onEnd:  vare.scenario.start();
     }
 
-//    Connections // VARE TO JOMON
-//    {
-//        target: vare
-//        onEnd:  jomon.scenario.start();
-//    }
+    Connections // VARE TO JOMON
+    {
+        target: vare
+        onNext: jomon.scenario.start();
+    }
 
-//    Connections // JOMON TO WOODPATH END
-//    {
-//        target: jomon
-//        onEnd:  root.end()
-//    }
+    Connections // JOMON TO WOODPATH END
+    {
+        target: jomon
+        onEnd:  root.end()
+    }
 }

@@ -14,16 +14,16 @@ Item
         anchors.fill: parent
         currentIndex: 0
 
-        SourceMix { method: "/introduction/digibirds" }
-        SourceMix { method: "/introduction/dragon-hi" }
-        SourceMix { method: "/introduction/dragon-lo" }
-        SourceMix { method: "/introduction/river" }
-        SourceMix { method: "/introduction/spring" }
-        SourceMix { method: "/introduction/swarms" }
-        SourceMix { method: "/introduction/synth" }
-        SourceMix { method: "/introduction/verb" }
-        SourceMix { method: "/introduction/walking-1" }
-        SourceMix { method: "/introduction/walking-2" }
+        SourceMix { method: "/introduction/audio/digibirds" }
+        SourceMix { method: "/introduction/audio/dragon-hi" }
+        SourceMix { method: "/introduction/audio/dragon-lo" }
+        SourceMix { method: "/introduction/audio/river" }
+        SourceMix { method: "/introduction/audio/spring" }
+        SourceMix { method: "/introduction/audio/swarms" }
+        SourceMix { method: "/introduction/audio/synth" }
+        SourceMix { method: "/introduction/audio/verb" }
+        SourceMix { method: "/introduction/audio/walking-1" }
+        SourceMix { method: "/introduction/audio/walking-2" }
     }
 
     PageIndicator

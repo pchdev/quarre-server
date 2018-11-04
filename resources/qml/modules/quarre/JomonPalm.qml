@@ -1,5 +1,9 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
+
 import "items"
+import "../basics"
+import "../basics/items"
 
 Rectangle
 {
@@ -11,54 +15,43 @@ Rectangle
     onEnabledChanged:
     {
         sensor_manager.proximity.active = enabled;
-        sensor_manager.rotation.active = enabled;
         poll.running = enabled;
+        xyz_rotation.enabled = enabled;
     }
 
-    Item
+    WPN114.Node
     {
-        anchors.fill: parent
-
-        Image //----------------------------------------------------------------- GUI
-        {
-            id: hand
-            antialiasing: true
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/modules/palm.png"
-        }
+        id:     node_palm_state
+        path:   "/modules/jomon/palm/near"
+        type:   WPN114.Type.Bool
+        value:  false
     }
 
-    TriggerAnimation { id: t_anim; animation.loops: Animation.Infinite; len: 625 }
+    TriggerAnimation    { id: t_anim; animation.loops: Animation.Infinite; len: 625 }
+    XYZRotation         { id: xyz_rotation }
 
     Timer
     {
         id: poll
-        interval: 50
+        interval: 100
         repeat: true
 
         onTriggered:
         {
-            ossia_modules.sensors_rotation_xyz_data = Qt.vector3d(
-                        sensor_manager.rotation.reading.x,
-                        sensor_manager.rotation.reading.y,
-                        sensor_manager.rotation.reading.z );
-
             if ( sensor_manager.proximity.reading.near && !proximity_state )
             {
                 proximity_state = true;
-                ossia_modules.jomon_palm_state = true;
+                node_palm_state.value = true;
                 t_anim.animation.running = true;
             }
 
             else if ( !sensor_manager.proximity.reading.near && proximity_state )
             {
                 proximity_state = false;
-                ossia_modules.jomon_palm_state = false;
+                node_palm_state.value = false;
                 t_anim.animation.running = false;
                 t_anim.circle.opacity = 0
             }
         }
     }
-
 }

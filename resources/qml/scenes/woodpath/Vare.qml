@@ -5,6 +5,7 @@ import ".."
 
 Item
 {
+    id: root
     property alias scenario: scenario
     property alias rooms: vare_rooms
     signal next()
@@ -14,8 +15,7 @@ Item
         id:             scenario
         source:         audio_stream
         exposePath:     "/woodpath/vare/scenario"
-
-        duration: -1
+        duration:       -1
 
         onStart:
         {
@@ -39,8 +39,9 @@ Item
 
             onStart:
             {
-                instruments.kaivo_1.setPreset( instruments.rainbells );
                 instruments.kaivo_2.setPreset( instruments.vare );
+                instruments.kaivo_1.setPreset( instruments.rainbells );
+
             }
 
             WPN114.TimeNode { date: sec( 41 ); onStart: hammer.play() }
@@ -55,7 +56,7 @@ Item
                 from: 0; to: 1;
             }
 
-            onEnd: instruments.kaivo_1.active = false
+            onEnd: instruments.kaivo_1.allNotesOff();
         }
 
         InteractionExecutor
@@ -82,6 +83,8 @@ Item
             date:       min( 1.10 )
             countdown:  sec( 15 )
             length:     min( 2.20 )
+
+            onStart:    paroral.play();
         }
 
         InteractionExecutor
@@ -96,12 +99,109 @@ Item
 
         InteractionExecutor
         {
-            after:  resonators_1_ex
-            target: interaction_granular_models
+            id:      interaction_granular_models_ex
+            after:   resonators_1_ex
+            target:  interaction_granular_models
 
             date:       min( 1.10 )
             countdown:  sec( 15 )
             length:     sec( 60 )
+
+            onEnd: instruments.kaivo_1.setPreset( instruments.varerhythm );
+        }
+
+        // PAUSE: INTRODUCING RHYTHM
+        // AND THEN SECOND BATCH OF INTERACTIONS ( TUTTI )
+
+        WPN114.TimeNode
+        {
+            after: interaction_granular_models_ex
+            date: sec( 2 )
+            onStart:
+            {
+                instruments.kaivo_1.noteOn(0, 78, 127);
+                instruments.kaivo_1.noteOn(0, 83, 127);
+            }
+        }
+
+        InteractionExecutor
+        {
+            after: interaction_granular_models_ex
+            date: sec( 15 )
+            target: interaction_resonators_2
+            countdown: sec( 10 )
+            length: min( 3 )
+
+            InteractionExecutor
+            {
+                target: interaction_granular_models_2
+                countdown: sec( 10 )
+                length: min( 3 )
+
+                InteractionExecutor
+                {
+                    id: interaction_body_2_ex
+                    target: interaction_body_2
+                    countdown: sec( 10 )
+                    length: min( 3 )
+
+                    InteractionExecutor
+                    {
+                        id: interaction_pads_2_ex
+                        target: interaction_pads_2
+                        countdown: sec( 10 )
+                        length: min( 3.30 )
+
+                    }
+                }
+            }
+        }
+
+        WPN114.Automation //---- ENDING FADE OUTS
+        {
+            after: interaction_body_2_ex
+
+            target: instruments.kaivo_1
+            property: "level"
+            from: instruments.kaivo_1.level
+            to: 0;
+
+            duration: sec( 40 )
+
+            WPN114.Automation
+            {
+                target: instruments.kaivo_2
+                property: "level"
+                from: instruments.kaivo_2.level
+                to: 0;
+
+                duration: sec( 40 )
+            }
+
+            WPN114.Automation
+            {
+                after:   parentNode
+                target:  vare_rooms
+                property: "level"
+                from: vare_rooms.level
+                to: 0;
+
+                duration: sec( 30 )
+
+                onStart: root.next();
+
+                onEnd:
+                {
+                    snowfall.stop();
+                    instruments.kaivo_1.allNotesOff();
+                    instruments.kaivo_2.allNotesOff();
+
+                    functions.setTimeout(function(){
+                        vare_rooms.active = false;
+                    }, 1000 );
+                }
+
+            }
         }
     }
 
@@ -138,8 +238,8 @@ Item
                             interaction_rainbells.notes.splice(0, 1);
                         }
 
-                        var rdm_note = 47 + Math.random()*40;
-                        var rdm_p = Math.random()*15+2;
+                        var rdm_note = 60 + Math.random()*20;
+                        var rdm_p = 127;
 
                         instruments.kaivo_1.noteOn(0, rdm_note, rdm_p);
                         interaction_rainbells.notes.push(rdm_note);
@@ -151,10 +251,13 @@ Item
                     source: "/modules/xyzrotation/data"
                     expression: function(v) {
 
-                        instruments.kaivo_1.set("res_brightness", v[0]+90/180);
-                        instruments.kaivo_1.set("res_position", (v[2]+180)/360);
-                        instruments.kaivo_1.set("res_sustain", (v[1]+180)/360*0.1);
-                        instruments.kaivo_1.set("env1_attack", (v[1]+180)/360*0.5);
+                        var cc1 = Math.min(Math.abs(v[0]), 85)/85*127;
+                        var cc2 = Math.min(Math.abs(v[1]), 90)/90*127;
+                        var cc3 = (v[2]+180)/360*127;
+
+                        instruments.kaivo_1.control(0, 1, cc1);
+                        instruments.kaivo_1.control(0, 2, cc2);
+                        instruments.kaivo_1.control(0, 3, cc3);
                     }
                 }
             ]
@@ -173,20 +276,24 @@ Item
 
             mappings:
                 [
-                QuMapping {
-                    source: "/modules/vare/granular/overlap"
-                    expression: function(v) {
-                        console.log("gran_density", v);
-                        instruments.kaivo_2.set("gran_density", v)
-                    }},
+                QuMapping { source: "/modules/vare/granular/overlap"
+                    expression: function(v) { instruments.kaivo_2.set("gran_density", v) }},
 
                 QuMapping {
                     source: "/modules/vare/granular/pitch"
                     expression: function(v) { instruments.kaivo_2.set("gran_pitch", v) }},
 
                 QuMapping {
+                    source: "/modules/vare/granular/pitch-env"
+                    expression: function(v) { instruments.kaivo_2.set("gran_pitch_env", v) }},
+
+                QuMapping {
                     source: "/modules/vare/granular/position"
-                    expression: function(v) { instruments.kaivo_2.set("gran_pitch_env", v) }}
+                    expression: function(v) { instruments.kaivo_2.set("gran_position_x", v) }},
+
+                QuMapping {
+                    source: "/modules/vare/granular/position-mod"
+                    expression: function(v) { instruments.kaivo_2.set("gran_position_x_p", v) }}
             ]
         }
 
@@ -205,9 +312,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
                 [
                 QuMapping {
                     source: "/modules/vare/resonator/brightness"
-                    expression: function(v) {
-                        console.log("res_brightness", v);
-                        instruments.kaivo_2.set("res_brightness", v) }},
+                    expression: function(v) { instruments.kaivo_2.set("res_brightness", v) }},
 
                 QuMapping {
                     source: "/modules/vare/resonator/position"
@@ -229,7 +334,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             title:  "Corps de résonance (essais)"
             path:   "/woodpath/vare/interactions/body-1"
-            module: "quarre/VarerBody.qml"
+            module: "quarre/VareBody.qml"
 
             description: "Manipulez les sliders afin d'altérer le corps de résonance
  des percussions. Choisissez le son qui vous convient. Attention au temps !"
@@ -263,7 +368,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             description: "Appuyez et maintenez l'un des pads (un seul à la fois)
  pour ajouter des compléments rythmiques."
 
-            property var pads: [ 81, 82, 83, 85, 73, 77, 78, 79, 65, 67, 68, 72 ]
+            property var pads: [ 76, 77, 78, 79, 71, 72, 74, 75, 61, 63, 66, 70 ]
 
             mappings: QuMapping
             {
@@ -338,23 +443,32 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
         WPN114.StereoSource //----------------------------------------- 1.SNOWFALL (1-2)
         {
+            xspread: 0.25
+            diffuse: 0.2
+            fixed: true
+
             exposePath: "/woodpath/vare/audio/snowfall/source"
 
             WPN114.StreamSampler { id: snowfall; loop: true; xfade: 3000; attack: 2000
+                dBlevel: 18
                 exposePath: "/woodpath/vare/audio/snowfall"
                 path: "audio/woodpath/vare/snowfall.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                WPN114.Fork { target: effects.reverb; dBlevel: -9 }
             }
         }
 
         WPN114.StereoSource //----------------------------------------- 2.HAMMER (3-4)
         {
+            fixed: true
+            diffuse: 0.25
+
             exposePath: "/woodpath/vare/audio/hammer/source"
 
             WPN114.Sampler { id: hammer;
+                dBlevel: 6
                 exposePath: "/woodpath/vare/audio/hammer"
                 path: "audio/woodpath/vare/hammer.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -0 }
+                WPN114.Fork { target: effects.reverb; dBlevel: -3 }
             }
         }
 

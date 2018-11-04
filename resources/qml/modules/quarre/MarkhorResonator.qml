@@ -27,7 +27,6 @@ Rectangle
     QuarreSlider
     {
         name: "hauteur"
-        min: 0.1; max: 2;
         y: parent.height*0.2*3;
 
         WPN114.Node on value { path: "/modules/markhor/resonator/pitch" }

@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import WPN114 1.0 as WPN114
 import "items"
 
 Rectangle
@@ -15,18 +16,26 @@ Rectangle
 
     property var notes: []
 
+    WPN114.Node
+    {
+        id: node_add
+        path: "/modules/jomon/arpeggiator/notes/add"
+        type: WPN114.Type.Int
+        critical: true
+    }
+
+    WPN114.Node
+    {
+        id: node_remove
+        path: "/modules/jomon/arpeggiator/notes/remove"
+        type: WPN114.Type.Int
+        critical: true
+    }
+
     function update(idx, status)
     {
-        if ( status )
-        {
-            ossia_modules.jomon_arp_notes_add = idx;
-            ossia_modules.jomon_arp_notes_add = 0;
-        }
-        else
-        {
-            ossia_modules.jomon_arp_notes_remove = idx;
-            ossia_modules.jomon_arp_notes_remove = 0;
-        }
+        if ( status ) node_add.value = idx;
+        else node_remove.value = idx;
     }
 
     Grid

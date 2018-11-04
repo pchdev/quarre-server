@@ -19,7 +19,6 @@ Rectangle
     QuarreSlider
     {
         name: "fréquence de résonance"
-        min: -1.0; max: 1.0
         y: parent.height*0.2*2
 
         WPN114.Node on value { path: "/modules/markhor/body/pitch" }

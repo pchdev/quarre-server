@@ -12,6 +12,10 @@ import "views"
 // TODO: volume and spatialization presets
 // TODO: FLAC audio
 
+// WRITING: väre rhythmic arrangement
+// WRITING: jomon sugi
+// WRITING: carre soundscape
+
 Rectangle
 {
     id: application
@@ -47,7 +51,10 @@ Rectangle
         udpPort: 1234       
 
         Component.onCompleted:
+        {
             mainview.tree.model = query_server.nodeTree()
+//            query_server.loadPreset("quarre-angouleme.json");
+        }
     }
 
     ClientManager   { id: client_manager; maxClients: 4 }
@@ -61,12 +68,16 @@ Rectangle
     {
         path: "/global/audio/presets/save"
         type: WPN114.Type.String
+
+//        onValueReceived: query_server.savePreset(newValue)
     }
 
     WPN114.Node
     {
         path: "/global/audio/presets/load"
         type: WPN114.Type.String
+
+//        onValueReceived: query_server.loadPreset(newValue)
     }
 
     WPN114.RoomSetup

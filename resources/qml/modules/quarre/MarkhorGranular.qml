@@ -12,7 +12,6 @@ Rectangle
     QuarreSlider
     {
         name: "hauteur mod"
-        min: -2.0; max: 2.0;
         y: parent.height*0.2
 
         WPN114.Node on value { path: "/modules/markhor/granular/pitch_env" }
@@ -21,7 +20,6 @@ Rectangle
     QuarreSlider
     {
         name: "hauteur"
-        min: -3; max: 3;
         y: parent.height*0.2*2
 
         WPN114.Node on value { path: "/modules/markhor/granular/pitch" }
@@ -30,7 +28,7 @@ Rectangle
     QuarreSlider
     {
         name: "densité"
-        min: 0.125; max: 0.35
+        max: 0.29
         y: parent.height*0.2*3
 
         WPN114.Node on value { path: "/modules/markhor/granular/overlap" }

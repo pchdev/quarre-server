@@ -11,7 +11,7 @@ Rectangle
     QuarreSlider
     {
         name: "brillance"
-        y: parent.height * 0.2
+        y: parent.height*0.05
 
         WPN114.Node on value { path: "/modules/vare/resonator/brightness" }
     }
@@ -19,7 +19,7 @@ Rectangle
     QuarreSlider
     {
         name: "position"
-        y: parent.height*0.2*2
+        y: parent.height*0.2
 
         WPN114.Node on value { path: "/modules/vare/resonator/position" }
     }
@@ -27,8 +27,7 @@ Rectangle
     QuarreSlider
     {
         name: "hauteur"
-        min: 0.1; max: 2;
-        y: parent.height*0.2*3;
+        y: parent.height*0.35
 
         WPN114.Node on value { path: "/modules/vare/resonator/pitch" }
     }
@@ -36,8 +35,8 @@ Rectangle
     QuarreSlider
     {
         name: "résonance"
-        min: 0.0; max: 0.4;
-        y: parent.height*0.2*4;
+        min: 0.0; max: 0.6
+        y: parent.height*0.5
 
         WPN114.Node on value { path: "/modules/vare/resonator/sustain" }
     }

@@ -11,7 +11,7 @@ Rectangle
     QuarreSlider
     {
         name: "hauteur"
-        min: -3; max: 3;
+        min: 0.5; max: 1;
 
         WPN114.Node on value { path: "/modules/vare/granular/pitch" }
         y: parent.height*0.05
@@ -19,19 +19,18 @@ Rectangle
 
     QuarreSlider
     {
-        name: "densité"
-        min: 0.5; max: 4.0
+        name: "hauteur_mod"
 
-        WPN114.Node on value { path: "/modules/vare/granular/overlap" }
+        WPN114.Node on value { path: "/modules/vare/granular/pitch-env" }
         y: parent.height*0.2
     }
 
     QuarreSlider
     {
-        name: "vitesse"
-        min: 2.0; max: 110.0
+        name: "densité"
+        min: 0; max: 0.29
 
-        WPN114.Node on value { path: "/modules/vare/granular/rate" }
+        WPN114.Node on value { path: "/modules/vare/granular/overlap" }
         y: parent.height*0.35
     }
 
@@ -46,7 +45,6 @@ Rectangle
     QuarreSlider
     {
         name: "position_mod"
-        min: -1.0; max: 1.0
 
         WPN114.Node on value { path: "/modules/vare/granular/position-mod" }
         y: parent.height*0.65
