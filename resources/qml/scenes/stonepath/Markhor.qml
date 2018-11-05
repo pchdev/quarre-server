@@ -44,8 +44,8 @@ Item
 
             onStart:
             {
-                instruments.kaivo_1.setPreset(instruments.autochurch);
-                instruments.kaivo_2.setPreset(instruments.markhor);
+                instruments.kaivo_1.setPreset( instruments.autochurch );
+                instruments.kaivo_2.setPreset( instruments.markhor );
             }
 
             onEnd: instruments.kaivo_1.active = false;
@@ -272,10 +272,7 @@ Item
             [
                 QuMapping {
                     source: "/modules/markhor/granular/overlap"
-                    expression: function(v) {
-                        console.log("gran_density", v);
-                        instruments.kaivo_2.set("gran_density", v)
-                    }},
+                    expression: function(v) { instruments.kaivo_2.set("gran_density", v)}},
 
                 QuMapping {
                     source: "/modules/markhor/granular/pitch"
@@ -302,9 +299,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             [
                 QuMapping {
                     source: "/modules/markhor/resonator/brightness"
-                    expression: function(v) {
-                        console.log("res_brightness", v);
-                        instruments.kaivo_2.set("res_brightness", v) }},
+                    expression: function(v) { instruments.kaivo_2.set("res_brightness", v) }},
 
                 QuMapping {
                     source: "/modules/markhor/resonator/position"
@@ -504,5 +499,4 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
                 path: "audio/stonepath/markhor/bell-hit.wav" }
         }
     }
-
 }

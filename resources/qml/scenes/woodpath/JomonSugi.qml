@@ -130,15 +130,10 @@ Item
                 length:      min( 5 )
             }
 
-            InteractionExecutor
+            WPN114.TimeNode
             {
-                startExpression:    jomon_score.index === 9;
-                target:             interaction_synth_spat
-
-                countdown:  sec( 5 )
-                length:     min( 3 )
-
-                onStart:    leaves.play();
+                startExpression: jomon_score.index === 9;
+                onStart: leaves.play();
             }
         }
 
@@ -150,6 +145,12 @@ Item
             duration: sec( 5 )
             from: instruments.kaivo_1.level
             to: 0;
+
+            onEnd:
+            {
+                jsynths_1.stop();
+                jsynths_2.stop();
+            }
         }
 
 //        // JOMON_SUGI ------------------------------------------------------------
@@ -342,7 +343,7 @@ centimètres de l'écran de l'appareil pour produire du son"
                 {
                     source: "/modules/zrotation/position2D"
                     expression: function(v) {
-                        ysynths_2_source.position   = Qt.vector3d(v[0], v[1], 0.5);
+                        ysynths_2_source.position = Qt.vector3d(v[0], v[1], 0.5);
                     }
                 }
 
@@ -371,7 +372,6 @@ centimètres de l'écran de l'appareil pour produire du son"
                 expression: function(v) {
 
                     var ndur = jomon_score.score[jomon_score.index]['duration'];
-                    console.log("STRINGS_1", ndur)
 
                     functions.processScoreIncrement( jomon_score,
                                 interaction_strings_1,
@@ -380,8 +380,8 @@ centimètres de l'écran de l'appareil pour produire du son"
 
                     if ( jomon_score.index > 8 )
                     {
-                        jsynths_2.stop();
-                        jsynths_1.play();
+                        jsynths_2.play();
+                        if ( jsynths_1.active ) jsynths_1.stop();
                     }
                 }                                                     
             }
@@ -402,7 +402,6 @@ centimètres de l'écran de l'appareil pour produire du son"
                 expression: function(v) {
 
                     var ndur = jomon_score.score[jomon_score.index]['duration'];
-                    console.log("STRINGS_2", ndur)
 
                     functions.processScoreIncrement( jomon_score,
                                 interaction_strings_2,
@@ -411,29 +410,9 @@ centimètres de l'écran de l'appareil pour produire du son"
 
                     if ( jomon_score.index > 8 )
                     {
-                        jsynths_1.stop();
-                        jsynths_2.play();
+                        jsynths_1.play();
+                        if ( jsynths_1.active ) jsynths_2.stop();
                     }
-                }
-            }
-        }
-
-        Interaction //-------------------------------------------------------------------------- SYNTH_SPAT
-        {
-            id:     interaction_synth_spat
-            path:   "/woodpath/jomon/interactions/synth-spat"
-            title:  "Synthétiseurs, mise en espace"
-            module: "basics/ZRotation.qml"
-
-            description: "Orientez votre appareil horizontalement,
- a 360 degrés autour de vous pour déplacer le son des synthétiseurs dans l'espace."
-
-            mappings: QuMapping
-            {
-                source: "/modules/xytouch/position2D"
-                expression: function(v) {
-                    jsynths_source.left.position  = Qt.vector3d(v[0], v[1], 0.5);
-                    jsynths_source.right.position = Qt.vector3d(1-v[0], 1-v[1], 0.5);
                 }
             }
         }
@@ -447,20 +426,24 @@ centimètres de l'écran de l'appareil pour produire du son"
 
             description: "Parasitez, détruisez le signal"
 
-//            mappings:
-//            [
-//                QuMapping { source: "/modules/mangler/resampler"
-//                    expression: function(v) { mangler.badResampler = v; }
-//                },
+            // DRIVE: 0 - 1
+            // CRUSH: 0 - 0.85
+            // DWSP:  0 - 0.8
 
-//                QuMapping { source: "/modules/mangler/thermonuclear"
-//                    expression: function(v) { mangler.thermonuclear = v; }
-//                },
+            mappings:
+            [
+                QuMapping { source: "/modules/mangler/drive"
+                    expression: function(v) { mangler.set("Drive", v) }
+                },
 
-//                QuMapping { source: "/modules/mangler/bitdepth"
-//                    expression: function(v) { mangler.bitdepth = v; }
-//                }
-//            ]
+                QuMapping { source: "/modules/mangler/crush"
+                    expression: function(v) { mangler.set("Crush", v) }
+                },
+
+                QuMapping { source: "/modules/mangler/resampler"
+                    expression: function(v) { mangler.set("Downsamp", v) }
+                }
+            ]
         }
 
         Interaction //-------------------------------------------------------------------------- MANGLER_2
@@ -472,26 +455,112 @@ centimètres de l'écran de l'appareil pour produire du son"
 
             description: "Parasitez, détruisez le signal"
 
-//            mappings:
-//            [
-//                QuMapping
-//                {
-//                    source: "/modules/mangler/love"
-//                    expression: function(v) { mangler.love = v; }
-//                },
+            // FILTER: 0 - 1
+            // RESFILTER: 0 - 1
+            // FILTER-TYPE : 0 OR 1 (bool)
 
-//                QuMapping
-//                {
-//                    source: "/modules/mangler/jive"
-//                    expression: function(v) { mangler.jive = v; }
-//                },
+            mappings:
+            [
+                QuMapping
+                {
+                    source: "/modules/mangler/filter/freq"
+                    expression: function(v) {
+                        mangler.set("Lowpass Freq", v);
+                        mangler.set("Hipass Freq", v);
+                    }
+                },
 
-//                QuMapping
-//                {
-//                    source: "/modules/mangler/attitude"
-//                    expression: function(v) { mangler.attitude = v; }
-//                }
-//            ]
+                QuMapping
+                {
+                    source: "/modules/mangler/filter/res"
+                    expression: function(v) {
+                        mangler.set("Lowpass Res", v);
+                        mangler.set("Hipass Res", v);
+                    }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/filter/type"
+                    expression: function(v) { mangler.set("Filter Type", v) }
+                }
+            ]
+        }
+        Interaction //-------------------------------------------------------------------------- MANGLER_2
+        {
+            id:     interaction_mangler_3
+            path:   "/woodpath/jomon/interactions/mangler-3"
+            title:  "Destructurations (3)"
+            module: "quarre/JomonMangler3.qml"
+
+            description: "Parasitez, détruisez le signal"
+
+            // LFO-RATE: 0 - 1
+            // LFO-WAVEFORM: 0 - 1
+            // LFO-DRIVE: 0 - 1
+
+            mappings:
+                [
+                QuMapping
+                {
+                    source: "/modules/mangler/lfo/rate"
+                    expression: function(v) { mangler.set("LFO Free Rate", v) }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/lfo/waveform"
+                    expression: function(v) { mangler.set("LFO Waveform", v) }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/lfo/drive"
+                    expression: function(v) { mangler.set("Drive Mod Depth", v) }
+                }
+            ]
+        }
+
+        Interaction //-------------------------------------------------------------------------- MANGLER_2
+        {
+            id:     interaction_mangler_4
+            path:   "/woodpath/jomon/interactions/mangler-4"
+            title:  "Destructurations (4)"
+            module: "quarre/JomonMangler4.qml"
+
+            description: "Parasitez, détruisez le signal"
+
+            // LFO-CRUSH : 0 - 1
+            // LFO-DWSP: 0 - 1
+            // LFO-FREQ: 0 - 1
+            // LFO-RES: 0 - 1
+
+            mappings:
+                [
+                QuMapping
+                {
+                    source: "/modules/mangler/lfo/crush"
+                    expression: function(v) { mangler.set("Crush Mod Depth", v) }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/lfo/resampler"
+                    expression: function(v) { mangler.set("Resamp Mod Depth", v) }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/lfo/freq"
+                    expression: function(v) { mangler.set("Filter Freq Mod Depth", v) }
+                },
+
+                QuMapping
+                {
+                    source: "/modules/mangler/lfo/res"
+                    expression: function(v) { mangler.set("Filter Res Mod Depth", v) }
+                }
+            ]
         }
     }
 
@@ -530,7 +599,12 @@ centimètres de l'écran de l'appareil pour produire du son"
                 exposePath: "/woodpath/jomon/audio/dmsynth"
                 path: "audio/woodpath/jomon/dmsynth.wav"
 
-//                WPN114.Mangler { id: mangler }
+                WPN114.AudioPlugin
+                {
+                    id: mangler
+                    exposePath: "/woodpath/jomon/audio/krush"
+                    path: "/Library/Audio/Plug-Ins/VST/Krush.vst"
+                }
             }
         }
 

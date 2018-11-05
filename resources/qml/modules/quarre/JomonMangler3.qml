@@ -11,25 +11,25 @@ Rectangle
 
     QuarreSlider
     {
-        name: "fréquence filtre"
+        name: "fréquence modulation"
 
-        WPN114.Node on value { path: "/modules/mangler/filter/freq" }
+        WPN114.Node on value { path: "/modules/mangler/lfo/rate" }
         y: parent.height*0.2
     }
 
     QuarreSlider
     {
-        name: "résonance filtre"
+        name: "drive modulation"
 
-        WPN114.Node on value { path: "/modules/mangler/filer/res" }
+        WPN114.Node on value { path: "/modules/mangler/lfo/drive" }
         y: parent.height*0.2 * 2
     }
 
     WPN114.Node
     {
-        id:     attitude
-        path:   "/modules/mangler/filter/type"
-        type:   WPN114.Type.Int
+        id:     waveform
+        path:   "/modules/mangler/lfo/waveform"
+        type:   WPN114.Type.Float
     }
 
     ComboBox
@@ -41,7 +41,7 @@ Rectangle
         anchors.horizontalCenter: parent.horizontalCenter
         model: [ "Passe-bas", "Passe-haut" ]
 
-        onActivated: attitude.value = index;
+        onActivated: waveform.value = (index+1)/4;
     }
 
 }

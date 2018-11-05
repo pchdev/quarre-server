@@ -30,7 +30,7 @@ Item
             {                
                 id: reverb
                 active: true
-                irPath: "/Users/pchd/Desktop/IRS/921MST.wav"
+                irPath: "audio/impulse-responses/921MST.wav"
                 exposePath: "/effects/reverb/921"
             }
 
@@ -38,7 +38,7 @@ Item
             {
                 id: reverb_lavaur
                 active: false
-                irPath: "/Users/pchd/Desktop/IRS/LAVAUR22ST.wav"
+                irPath: "audio/impulse-responses/LAVAUR22ST.wav"
                 exposePath: "/effects/reverb/lavaur"
             }
 
@@ -46,7 +46,7 @@ Item
             {
                 id: amplitube
                 active: false
-                irPath: "/Users/pchd/Desktop/IRS/AMPDEFAULT.wav"
+                irPath: "audio/impulse-responses/AMPDEFAULT.wav"
                 exposePath: "/effects/amplitube"
             }
         }

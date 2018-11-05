@@ -49,5 +49,7 @@
         <file>quarre/items/SourceMix.qml</file>
         <file>quarre/mix/IntroductionMixview.qml</file>
         <file>quarre/mix/CendresMixview.qml</file>
+        <file>quarre/JomonMangler3.qml</file>
+        <file>quarre/JomonMangler4.qml</file>
     </qresource>
 </RCC>
