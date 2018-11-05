@@ -136,6 +136,10 @@ Item
                 var client = clients.itemAt(c);
                 if ( !client.connected )
                 {
+                    // we have to set connected property explicitely before
+                    // the connection is actually made
+                    // preventing client to connect multiple times to different remotes
+                    client.connected = true;
                     client.remote.connect(hostaddr);
                     break;
                 }

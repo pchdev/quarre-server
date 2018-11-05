@@ -114,11 +114,12 @@ Rectangle
         {
             id:      vu_master
             source:  audio_stream
+            active:  true
 
             onRms:   mainview.vumeters.processRms  ( value )
             onPeak:  mainview.vumeters.processPeak ( value )
 
-            refreshRate: 20//Hz
+            refreshRate: 15//Hz
         }
 
         Component.onCompleted: scenario.initialize();

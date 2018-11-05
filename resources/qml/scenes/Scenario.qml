@@ -10,7 +10,7 @@ Item
     MixScene        { id: mix_scene }
     Introduction    { id: introduction }
     WoodPath        { id: woodpath }
-//    StonePath       { id: stonepath }
+    StonePath       { id: stonepath }
     WPN214          { id: wpn214 }
 
     WPN114.Node
@@ -30,7 +30,7 @@ Item
         instruments.rooms.setup   = rooms_setup
         effects.rooms.setup       = rooms_setup
 
-//        stonepath.initialize    ( rooms_setup );
+        stonepath.initialize    ( rooms_setup );
         woodpath.initialize     ( rooms_setup );
     }
 
@@ -47,7 +47,7 @@ Item
             console.log("AUDIO reset");
 
             introduction.rooms.active = false
-//            stonepath.reset ( );
+            stonepath.reset ( );
             woodpath.reset  ( );
 
             instruments.rooms.active     = false
@@ -68,7 +68,9 @@ Item
                   audio_stream.active = true;
 
             introduction.scenario.start();
-            timer.start();
+            timer.count = 0;
+
+            if ( !timer.running ) timer.start();
         }
     }
 
@@ -103,22 +105,29 @@ Item
         onEnd:
         {
             if ( introduction.xroads_result === 0 )
-                 woodpath.scenario.start();
-//            else stonepath.scenario.start();
+            {
+                woodpath.scenario.start();
+                wpn214.fade_target = woodpath.jomon
+            }
+            else
+            {
+                stonepath.scenario.start();
+                wpn214.fade_target = stonepath.ammon
+            }
         }
     }
 
-//    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
-//    {
-//        target: stonepath
-//        onEnd: wpn214.scenario.start();
-//    }
+    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
+    {
+        target: stonepath
+        onEnd: wpn214.scenario.start();
+    }
 
-//    Connections
-//    {
-//        target: woodpath
-//        onEnd: wpn214.scenario.start();
-//    }
+    Connections
+    {
+        target: woodpath
+        onEnd: wpn214.scenario.start();
+    }
 
     Connections
     {

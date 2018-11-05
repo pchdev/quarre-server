@@ -24,12 +24,17 @@ Item
             jomon_rooms.active = true;
 //            instruments.kaivo_1.active = true;
             instruments.rooms.active = true;
-            instruments.kaivo_2.active = true;
+            instruments.kaivo_1.active = true;
+            instruments.kaivo_2.active = false;
 
             cicadas.play();
             client_manager.notifyScene("yūgure");
             if ( !timer.running ) timer.start();
         }
+
+        // NOTE: SKIPPING YUGURE FOR NOW
+
+
 
         // YUGURE ------------------------------------------------------------
 
@@ -59,26 +64,26 @@ Item
 //            onStart:    owl2.play();
 //        }
 
-        InteractionExecutor
-        {
-            target:     interaction_rainbells
-            date:       sec( 5 )
-            countdown:  sec( 15 )
-            length:     sec( 180 )
+//        InteractionExecutor
+//        {
+//            target:     interaction_rainbells
+//            date:       sec( 5 )
+//            countdown:  sec( 15 )
+//            length:     sec( 180 )
 
-            onStart:
-            {
-                owl3.play();
-                console.log("starting");
-                instruments.kaivo_2.setPreset( instruments.rainbells );
-            }
+//            onStart:
+//            {
+//                owl3.play();
+//                console.log("starting");
+//                instruments.kaivo_2.setPreset( instruments.rainbells );
+//            }
 
-            onEnd:
-            {
-                owl3.stop();
-                instruments.kaivo_2.allNotesOff();
-            }
-        }
+//            onEnd:
+//            {
+//                owl3.stop();
+//                instruments.kaivo_2.allNotesOff();
+//            }
+//        }
 
 //        InteractionExecutor
 //        {
@@ -101,73 +106,98 @@ Item
 
         // AKATSUKI ------------------------------------------------------------
 
-//        InteractionExecutor
-//        {
-//            id:         akatsuki
-//            target:     interaction_strings_1
+        InteractionExecutor
+        {
+            id:         akatsuki
+            target:     interaction_strings_1
 //            after:      arpeggiator_ex
-//            date:       sec( 10 )
-//            countdown:  sec( 15 )
-//            length:     min( 5 )
+            date:       sec( 10 )
+            countdown:  sec( 10 )
+            length:     min( 5 )
 
-//            onStart:
-//            {
-//                instruments.kaivo_1.setPreset("jguitar");
-//                client_manager.notifyScene("akatasuki")
-//            }
+            onStart:
+            {
+                instruments.kaivo_1.setPreset( instruments.jguitar );
+                client_manager.notifyScene("dawn")
+            }
 
-//            endExpression: jomon_score.index === 18;
+            endExpression: jomon_score.index === 18;
 
-//            InteractionExecutor
-//            {
-//                target:      interaction_strings_2
-//                countdown:   sec( 10 )
-//                length:      min( 5 )
-//            }
+            InteractionExecutor
+            {
+                target:      interaction_strings_2
+                countdown:   sec( 10 )
+                length:      min( 5 )
+            }
 
-//            InteractionExecutor
-//            {
-//                target:     interaction_rainbells
-//                date:       sec( 10 )
-//                countdown:  sec( 10 )
-//                length:     min( 5 )
-//            }
+            InteractionExecutor
+            {
+                startExpression:    jomon_score.index === 9;
+                target:             interaction_synth_spat
 
-//            InteractionExecutor
-//            {
-//                startExpression: jomon_score.index === 8;
-//                countdown:       sec( 5 )
-//                length:          min( 3 )
-//            }
-//        }
+                countdown:  sec( 5 )
+                length:     min( 3 )
+
+                onStart:    leaves.play();
+            }
+        }
+
+        WPN114.Automation
+        {
+            after: akatsuki
+            target: instruments.kaivo_1
+            property: "level"
+            duration: sec( 5 )
+            from: instruments.kaivo_1.level
+            to: 0;
+        }
 
 //        // JOMON_SUGI ------------------------------------------------------------
 
-//        WPN114.TimeNode
-//        {
-//            after: akatsuki
-//            duration: min( 2.30 )
+        WPN114.TimeNode
+        {
+            id: jomon_scenario
+            after: akatsuki
+            date: sec( 5 )
+            duration: min( 2.30 )
 
-//            onStart:
-//            {
-//                client_manager.notifyScene("jomon.sugi")
-//            }
+            onStart:
+            {
+                client_manager.notifyScene("jomon.sugi")
+                dmsynth.play();
+                fsynths.play();
 
-//            InteractionExecutor
-//            {
-//                target:     interaction_mangler_1
-//                date:       sec( 37 )
-//                countdown:  sec( 15 )
-//                length:     min( 1.20 )
+                instruments.kaivo_1.active = false;
+                instruments.kaivo_2.active = false;
+            }
 
-//                InteractionExecutor
-//                {
-//                    target:     interaction_mangler_2
-//                    countdown:  sec( 15 )
-//                    length:     min( 1.20 )
-//                }
-//            }
-//        }
+            InteractionExecutor
+            {
+                target:     interaction_mangler_1
+                date:       sec( 37 )
+                countdown:  sec( 15 )
+                length:     min( 1.20 )
+
+                InteractionExecutor
+                {
+                    target:     interaction_mangler_2
+                    countdown:  sec( 15 )
+                    length:     min( 1.20 )
+                }
+            }
+        }
+
+        WPN114.Automation // FADE_OUT: keep cicadas active
+        {
+            after: jomon_scenario
+            target: jomon_rooms
+            property: "level"
+            from: jomon_rooms.level
+            to: 0.25
+            duration: sec( 30 )
+
+            onEnd: root.end();
+        }
     }
 
     Item //-------------------------------------------------------------------- INTERACTIONS
@@ -339,11 +369,21 @@ centimètres de l'écran de l'appareil pour produire du son"
             {
                 source: "/modules/strings/trigger"
                 expression: function(v) {
+
+                    var ndur = jomon_score.score[jomon_score.index]['duration'];
+                    console.log("STRINGS_1", ndur)
+
                     functions.processScoreIncrement( jomon_score,
                                 interaction_strings_1,
                                 interaction_strings_2,
-                                instruments.kaivo_1 );
-                }
+                                instruments.kaivo_1, ndur/2 );
+
+                    if ( jomon_score.index > 8 )
+                    {
+                        jsynths_2.stop();
+                        jsynths_1.play();
+                    }
+                }                                                     
             }
         }
 
@@ -356,21 +396,24 @@ centimètres de l'écran de l'appareil pour produire du son"
 
             description: "Frottez les cordes avec votre doigt au fur et à mesure de leur apparition."
 
-            onInteractionBegin:
-            {
-                interaction_strings_2.owners.forEach(function(owner) {
-                    var value = jomon_score.score[0]["notes"].length;
-                    owner.remote.sendMessage("/modules/strings/display", value, true)})
-            }
-
             mappings: QuMapping
             {
                 source: "/modules/strings/trigger"
                 expression: function(v) {
+
+                    var ndur = jomon_score.score[jomon_score.index]['duration'];
+                    console.log("STRINGS_2", ndur)
+
                     functions.processScoreIncrement( jomon_score,
                                 interaction_strings_2,
                                 interaction_strings_1,
-                                instruments.kaivo_1 );
+                                instruments.kaivo_1, ndur/2 );
+
+                    if ( jomon_score.index > 8 )
+                    {
+                        jsynths_1.stop();
+                        jsynths_2.play();
+                    }
                 }
             }
         }
@@ -459,6 +502,8 @@ centimètres de l'écran de l'appareil pour produire du son"
         parentStream: audio_stream
         setup: rooms_setup
 
+        exposePath: "/woodpath/jomon/audio/rooms"
+
         WPN114.StereoSource //----------------------------------------- 1.CICADAS (1-2)
         {
             xspread: 0.2
@@ -481,7 +526,7 @@ centimètres de l'écran de l'appareil pour produire du son"
 
             exposePath: "/woodpath/jomon/audio/dmsynth/source"
 
-            WPN114.Sampler { id: dmsynth;
+            WPN114.Sampler { id: dmsynth; attack: 1500
                 exposePath: "/woodpath/jomon/audio/dmsynth"
                 path: "audio/woodpath/jomon/dmsynth.wav"
 
@@ -506,7 +551,7 @@ centimètres de l'écran de l'appareil pour produire du son"
         {
             exposePath: "/woodpath/jomon/audio/fsynths/source"
 
-            WPN114.StreamSampler { id: fsynths;
+            WPN114.StreamSampler { id: fsynths; attack: 1000
                 exposePath: "/woodpath/jomon/audio/fsynths"
                 path: "audio/woodpath/jomon/fsynths.wav" }
         }
@@ -548,14 +593,18 @@ centimètres de l'écran de l'appareil pour produire du son"
             fixed:  true
             exposePath: "/woodpath/jomon/audio/jsynths/source"
 
-            WPN114.MultiSampler { id: jsynths;
-                exposePath: "/woodpath/jomon/audio/jsynths"
-                path: "audio/woodpath/jomon/jsynths" }
+            WPN114.Sampler { id: jsynths_1; loop: true; xfade: 2000
+                exposePath: "/woodpath/jomon/audio/jsynths-1"
+                path: "audio/woodpath/jomon/jsynths/jsynths-1.wav" }
+
+            WPN114.Sampler { id: jsynths_2; loop: true; xfade: 2000
+                exposePath: "/woodpath/jomon/audio/jsynths-2"
+                path: "audio/woodpath/jomon/jsynths/jsynths-2.wav" }
         }
 
         WPN114.MonoSource //----------------------------------------- 6.OWL_1 (11-12)
         {
-            position: Qt.vector3d(0.3, 0.4, 0.5)
+            position: Qt.vector3d(0.0, 0.5, 0.5)
             fixed:  true
 
             exposePath: "/woodpath/jomon/audio/owl1/source"
@@ -567,7 +616,7 @@ centimètres de l'écran de l'appareil pour produire du son"
 
         WPN114.MonoSource //----------------------------------------- 7.OWL_2 (13-14)
         {
-            position: Qt.vector3d(0.15, 0.05, 0.5)
+            position: Qt.vector3d(1.0, 0.5, 0.5)
             fixed: true
 
             exposePath: "/woodpath/jomon/audio/owl2/source"
@@ -579,7 +628,7 @@ centimètres de l'écran de l'appareil pour produire du son"
 
         WPN114.MonoSource //----------------------------------------- 8.OWL_3 (15-16)
         {
-            position: Qt.vector3d(0.95, 0.5, 0.5)
+            position: Qt.vector3d(0.5, 1.0, 0.5)
             fixed: true
 
             exposePath: "/woodpath/jomon/audio/owl3/source"
@@ -591,7 +640,7 @@ centimètres de l'écran de l'appareil pour produire du son"
 
         WPN114.MonoSource //----------------------------------------- 9.OWL_4 (17-18)
         {
-            position: Qt.vector3d(0.05, 0.5, 0.5)
+            position: Qt.vector3d(0.5, 0.0, 0.5)
             fixed: true
 
             exposePath: "/woodpath/jomon/audio/owl4/source"

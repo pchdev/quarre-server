@@ -40,40 +40,52 @@ Item
         return Qt.vector3d(Math.random(), Math.random(), Math.random());
     }
 
-    function processScoreIncrement(score, interaction, next, instrument)
+    function processScoreIncrement(score, interaction, next, instrument, next_duration)
     {
-        var idx         = score.index
-        var chord       = score.score[idx];
-        var next_chord  = score.score[idx+1];
+        var idx          = score.index
+        var chord        = score.score[idx];
+        var next_chord   = score.score[idx+1];
+        var ndur         = next_duration === undefined ? chord["duration"] : next_duration
 
         // send confirmation, and clear remote's display
         interaction.owners.forEach(function(owner) {
             owner.remote.sendMessage("/modules/strings/display", 0, true)
         });
 
+        // if next interaction is different than current one
+        // send notes off
+        if ( interaction !== next && idx )
+        {
+            var prev_chord = score.score[idx-1];
+            for ( var c = 0; c < prev_chord['notes'].length; ++c )
+                 instrument.noteOff(0, prev_chord['notes'][c], 127);
+        }
+
         for ( var i = 0; i < chord['notes'].length; ++i )
         {
             ( function(i) {
-                setTimeout( function()
-                {
+                setTimeout( function() {
                     instrument.noteOn(0, chord['notes'][i], chord['velocity'][i]);
                 },  chord['times'][i]);
 
-                setTimeout( function()
+                if ( interaction === next )
                 {
-                    instrument.noteOff(0, chord['notes'][i], chord['velocity'][i]);
-                },  chord['duration']); })(i);
+                    setTimeout( function() {
+                        instrument.noteOff(0, chord['notes'][i], chord['velocity'][i]);
+                    },  chord['duration']);
+                }
+            })(i);
         }
+
+        console.log("displaying next in:", ndur)
 
         // display next chord
         setTimeout( function() {
             next.owners.forEach(function(owner) {
                 var value = next_chord["notes"].length;
-                owner.remote.sendMessage("/modules/strings/display", value, true)})
-        }, chord["duration"])
-
+                owner.remote.sendMessage("/modules/strings/display", value, true)})            
+        }, ndur)
 
         score.index++;
-
     }
 }

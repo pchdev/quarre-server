@@ -20,8 +20,8 @@ Item
     // kaivo presets enumeration:
     property int autochurch:    0
     property int churchbells:   1
-    property int jguitar:       2
-    property int yguitar:       3
+    property int yguitar:       2
+    property int jguitar:       3
     property int tguitar:       4
     property int markhor:       5
     property int niwood:        6

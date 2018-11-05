@@ -20,6 +20,8 @@ Item
         {
             xspread: 0.25
             diffuse: 0.55
+            fixed: true
+
             y: 0.5
 
             exposePath: "/effects/reverb/source"
@@ -39,15 +41,6 @@ Item
                 irPath: "/Users/pchd/Desktop/IRS/LAVAUR22ST.wav"
                 exposePath: "/effects/reverb/lavaur"
             }
-        }
-
-        WPN114.StereoSource //----------------------------------------------------- AMPLITUBE
-        {
-            xspread: 0.25
-            diffuse: 0.55
-            y: 0.5
-
-            exposePath: "/effects/amplitube/source"
 
             WPN114.Convolver
             {
