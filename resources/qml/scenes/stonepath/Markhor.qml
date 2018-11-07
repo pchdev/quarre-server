@@ -21,10 +21,14 @@ Item
 
         onStart:
         {
+            instruments.k1_fork_921.prefader = true;
+            instruments.k1_fork_921.dBlevel = -12;
+
+            instruments.kaivo_1.dBlevel = -36;
+
             instruments.kaivo_1.active  = true;
             instruments.kaivo_2.active  = true;
             instruments.rooms.active    = true;
-            instruments.absynth.active  = false;
             effects.amplitube.active    = false;
 
             soundscape.play();
@@ -48,11 +52,18 @@ Item
                 instruments.kaivo_2.setPreset( instruments.markhor );
             }
 
-            onEnd: instruments.kaivo_1.active = false;
+            onEnd:
+            {
+                instruments.kaivo_1.allNotesOff();
+
+                functions.setTimeout(function(){
+                    instruments.kaivo_1.active = false;
+                }, 2000);
+            }
 
             WPN114.TimeNode
             {
-                date: sec( 8 )
+                date: sec( 8.2 )
                 onStart: bell_hit.play();
             }
 
@@ -61,13 +72,14 @@ Item
                 date: sec( 15 )
                 target: instruments.kaivo_1
                 property: "dBlevel"
-                duration: sec(45)
-                from: -96; to: -4;
+                duration: sec( 45 )
+                from: -36; to: -4;
             }
         }
 
         InteractionExecutor //---------------------------------------------------- MARKHOR_DANCE
         {
+            id:         granular_models_1_executor
             after:      bells_executor
             target:     interaction_granular_models
             countdown:  sec( 15 )
@@ -81,45 +93,58 @@ Item
                 instruments.kaivo_2.noteOn(0, 75, 127);
                 instruments.kaivo_2.noteOn(0, 80, 127);
             }
+        }
 
-            // DOOMSDAYS
-            WPN114.TimeNode { date: sec( 20 ); onStart: doomsday.playRandom();  }
-            WPN114.TimeNode { date: min( 1.35 ); onStart: doomsday.playRandom(); }
-            WPN114.TimeNode { date: min( 3.05 ); onStart: doomsday.playRandom(); }
+        // DOOMSDAYS
+        WPN114.TimeNode { after: bells_executor; date: sec( 20 ); onStart: doomsday.playRandom();  }
+        WPN114.TimeNode { after: bells_executor; date: min( 1.35 ); onStart: doomsday.playRandom(); }
+        WPN114.TimeNode { after: bells_executor; date: min( 3.05 ); onStart: doomsday.playRandom(); }
 
-            WPN114.Automation
+        WPN114.Automation
+        {
+            target:     ambient_light
+            after:      bells_executor;
+            property:   "dBlevel"
+            duration:   sec( 30 )
+
+            from: -96; to: 0;
+        }
+
+        InteractionExecutor
+        {
+            id:         resonator_executor
+            after:      bells_executor
+            target:     interaction_resonators_1
+            date:       min( 1.08 )
+            countdown:  sec( 15 )
+            length:     sec( 60 )
+        }
+
+        InteractionExecutor
+        {
+            id:         body_executor
+            after:      granular_models_1_executor
+            target:     interaction_body_1
+            date:       min( 1.08 )
+            countdown:  sec( 15 )
+            length:     sec( 60 )
+        }
+
+        InteractionExecutor
+        {
+            id:         pads_executor;
+            after:      bells_executor;
+            target:     interaction_pads_1
+            date:       sec( 20 )
+            countdown:  sec( 15 )
+            length:     sec( 175 )
+
+            onEnd:
             {
-                target: ambient_light
-                property: "dBlevel"
-                duration: sec(30)
-                from: -96; to: 0;
+                for ( var i = 0; i < interaction_pads_1.pads.length; ++i )
+                    instruments.kaivo_2.noteOff(0, interaction_pads_1.pads[i], 127);
             }
 
-            InteractionExecutor
-            {
-                target:     interaction_resonators_1
-                date:       min( 1.08 )
-                countdown:  sec( 15 )
-                length:     sec( 60 )
-
-                InteractionExecutor
-                {
-                    id:         body_executor
-                    target:     interaction_body_1
-                    date:       min( 1.08 )
-                    countdown:  sec( 15 )
-                    length:     sec( 60 )
-                }
-            }
-
-            InteractionExecutor
-            {
-                target:     interaction_pads_1
-                date:       sec( 20 )
-                countdown:  sec( 15 )
-                length:     sec( 175 )
-
-            }
         }
 
         InteractionExecutor //--------------------------------------------------------- TUTTI
@@ -132,31 +157,24 @@ Item
 
             onStart: doomsday.playRandom();
 
-            WPN114.TimeNode { date: sec(40); onStart: doomsday.playRandom();  }
-            WPN114.TimeNode { date: min(1.30); onStart: doomsday.playRandom();  }
-            WPN114.TimeNode { date: min(2.45); onStart: doomsday.playRandom();  }
-        }
+            WPN114.TimeNode { date: sec( 40 ); onStart: doomsday.playRandom();  }
+            WPN114.TimeNode { date: min( 1.30 ); onStart: doomsday.playRandom();  }
+            WPN114.TimeNode { date: min( 2.45 ); onStart: doomsday.playRandom();  }
 
-        InteractionExecutor //---------------------------- BODY
-        {
-            after:      body_executor
-            target:     interaction_body_2
+            InteractionExecutor //---------------------------- BODY
+            {
+                target:     interaction_body_2
+                countdown:  sec( 10 )
+                length:     sec( 180 )
 
-            date:       sec( 10 )
-            countdown:  sec( 10 )
-            length:     sec( 180 )
-
-        }
-
-        InteractionExecutor //---------------------------- GRANULAR
-        {
-            id:         granular_models_2_executor
-            after:      body_executor
-            target:     interaction_granular_models_2
-
-            date:       sec( 10 )
-            countdown:  sec( 10 )
-            length:     sec( 180 )
+                InteractionExecutor //---------------------------- GRANULAR
+                {
+                    id:         granular_models_2_executor
+                    target:     interaction_granular_models_2
+                    countdown:  sec( 10 )
+                    length:     sec( 180 )
+                }
+            }
         }
 
         InteractionExecutor //---------------------------- PADS
@@ -171,46 +189,54 @@ Item
 
         WPN114.Automation //---------------------------- SOUNDSCAPE_FADE_OUT
         {
-            after: granular_models_2_executor
-            target: soundscape
-            property: "level"
-            duration: min(1)
-            from: 1; to: 0;
+            after:      granular_models_2_executor
+            target:     soundscape
+            property:   "level"
+            duration:   min( 1 )
 
-            onEnd: scenario.end()
-        }
+            from: 1; to: 0;           
 
-        WPN114.Automation //---------------------------- KAIVO_FADE_OUT
-        {
-            after: granular_models_2_executor
-            target: instruments.kaivo_2
-            property: "level"
-            duration: sec(45);
-            from: 1; to: 0;
-
-            WPN114.Automation
+            WPN114.Automation //---------------------------- KAIVO_FADE_OUT
             {
-                target: instruments.k1_fork_921
-                property: "dBlevel"
-                duration: sec(45);
+                target:     instruments.kaivo_2
+                property:   "level"
+                duration:   sec( 45 );
+
                 from: 1; to: 0;
+
+                WPN114.Automation
+                {
+                    target:     instruments.k1_fork_921
+                    property:   "dBlevel"
+                    duration:   sec( 45 );
+
+                    from: 1; to: 0;
+                }
+
+                WPN114.Automation //---------------------------- AMBIENT_LIGHT_FADE_OUT
+                {
+                    after:      granular_models_2_executor
+                    target:     ambient_light
+                    property:   "level"
+                    duration:   sec( 45 )
+
+                    from: 1; to: 0;
+                }
             }
-        }
 
-        WPN114.Automation //---------------------------- AMBIENT_LIGHT_FADE_OUT
-        {
-            after: granular_models_2_executor
-            target: ambient_light
-            property: "level"
-            duration: sec(45)
-            from: 1; to: 0;
-        }
+            onEnd:
+            {
+                ambient_light.stop();
+                soundscape.stop();
+                instruments.kaivo_2.allNotesOff()
 
-        onEnd:
-        {
-            markhor_rooms.active = false;
-            instruments.kaivo_2.allNotesOff();
-            root.end()
+                functions.setTimeout(function() {
+                    markhor_rooms.active = false;
+                }, 2000 );
+
+                scenario.end();
+                root.end()
+            }
         }
     }
 

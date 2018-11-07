@@ -17,8 +17,8 @@ Item
         source:      audio_stream
         exposePath:  "/stonepath/deidarabotchi/scenario"
 
-        length:      min( 2.57 )
-        countdown:   sec( 5 )
+        length:      min( 2.54 )
+        countdown:   sec( 10 )
 
         onStart:
         {
@@ -30,8 +30,8 @@ Item
 
             instruments.kaivo_1.active = false;
             instruments.kaivo_2.active = false;
-            instruments.absynth.active = false;
             effects.amplitube.active = false;
+
             deidarabotchi_rooms.active = true;
 
             client_manager.notifyScene("deidarabotchi");

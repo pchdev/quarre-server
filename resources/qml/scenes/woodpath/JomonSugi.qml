@@ -25,6 +25,7 @@ Item
 //            instruments.kaivo_1.active = true;
             instruments.rooms.active = true;
             instruments.kaivo_1.active = true;
+            instruments.kaivo_1.level = 0;
             instruments.kaivo_2.active = false;
 
             cicadas.play();
@@ -33,8 +34,6 @@ Item
         }
 
         // NOTE: SKIPPING YUGURE FOR NOW
-
-
 
         // YUGURE ------------------------------------------------------------
 
@@ -118,7 +117,7 @@ Item
             onStart:
             {
                 instruments.kaivo_1.setPreset( instruments.jguitar );
-                client_manager.notifyScene("dawn")
+                client_manager.notifyScene("jomon.sugi")
             }
 
             endExpression: jomon_score.index === 18;
@@ -164,12 +163,27 @@ Item
 
             onStart:
             {
-                client_manager.notifyScene("jomon.sugi")
                 dmsynth.play();
                 fsynths.play();
 
                 instruments.kaivo_1.active = false;
                 instruments.kaivo_2.active = false;
+            }
+
+            WPN114.Automation
+            {
+                target: mangler
+                property: "wet"
+                duration: sec( 5 )
+                from: 0; to: 0.75;
+
+                WPN114.Automation
+                {
+                    target: mangler
+                    property: "dry"
+                    duration: sec( 37 )
+                    from: mangler.dry; to: 0.65;
+                }
             }
 
             InteractionExecutor
@@ -184,20 +198,39 @@ Item
                     target:     interaction_mangler_2
                     countdown:  sec( 15 )
                     length:     min( 1.20 )
+
+                    InteractionExecutor
+                    {
+                        target:     interaction_mangler_3
+                        countdown:  sec( 15 )
+                        length:     min( 1.20 )
+
+                        InteractionExecutor
+                        {
+                            target:     interaction_mangler_4
+                            countdown:  sec( 15 )
+                            length:     min( 1.20 )
+                        }
+                    }
                 }
             }
         }
 
         WPN114.Automation // FADE_OUT: keep cicadas active
         {
-            after: jomon_scenario
-            target: jomon_rooms
-            property: "level"
-            from: jomon_rooms.level
-            to: 0.25
-            duration: sec( 30 )
+            after:      jomon_scenario
+            target:     jomon_rooms
+            property:   "level"
+            from:       jomon_rooms.level
+            to:         0.25
+            duration:   sec( 30 )
 
-            onEnd: root.end();
+            onEnd:
+            {
+                scenario.end();
+                root.end();
+                wpn214.fade_target = root;
+            }
         }
     }
 
@@ -602,6 +635,12 @@ centimètres de l'écran de l'appareil pour produire du son"
                 WPN114.AudioPlugin
                 {
                     id: mangler
+                    property real dry: 0.75
+                    property real wet: 0.0
+
+                    onDryChanged: mangler.set("Dry", mangler.dry);
+                    onWetChanged: mangler.set("Wet", mangler.wet);
+
                     exposePath: "/woodpath/jomon/audio/krush"
                     path: "/Library/Audio/Plug-Ins/VST/Krush.vst"
                 }
@@ -616,7 +655,8 @@ centimètres de l'écran de l'appareil pour produire du son"
 
             exposePath: "/woodpath/jomon/audio/leaves/source"
 
-            WPN114.StreamSampler { id: leaves; loop: true; xfade: 2000
+            WPN114.StreamSampler { id: leaves; loop: true; xfade: 2000;
+                dBlevel: 12.00
                 exposePath: "/woodpath/jomon/audio/leaves"
                 path: "audio/woodpath/jomon/leaves.wav" }
         }
@@ -625,7 +665,7 @@ centimètres de l'écran de l'appareil pour produire du son"
         {
             exposePath: "/woodpath/jomon/audio/fsynths/source"
 
-            WPN114.StreamSampler { id: fsynths; attack: 1000
+            WPN114.StreamSampler { id: fsynths; attack: 2000
                 exposePath: "/woodpath/jomon/audio/fsynths"
                 path: "audio/woodpath/jomon/fsynths.wav" }
         }
@@ -667,11 +707,11 @@ centimètres de l'écran de l'appareil pour produire du son"
             fixed:  true
             exposePath: "/woodpath/jomon/audio/jsynths/source"
 
-            WPN114.Sampler { id: jsynths_1; loop: true; xfade: 2000
+            WPN114.Sampler { id: jsynths_1; loop: true; xfade: 2000; release: 1000
                 exposePath: "/woodpath/jomon/audio/jsynths-1"
                 path: "audio/woodpath/jomon/jsynths/jsynths-1.wav" }
 
-            WPN114.Sampler { id: jsynths_2; loop: true; xfade: 2000
+            WPN114.Sampler { id: jsynths_2; loop: true; xfade: 2000; release: 1000
                 exposePath: "/woodpath/jomon/audio/jsynths-2"
                 path: "audio/woodpath/jomon/jsynths/jsynths-2.wav" }
         }

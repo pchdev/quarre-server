@@ -31,12 +31,6 @@ Item
                 sampler.play();
                 client_manager.notifyScene("wpn214")
             }
-
-            onEnd:
-            {
-                wpn214_rooms.active = false
-                root.end();
-            }
         }
 
         WPN114.Automation
@@ -44,10 +38,18 @@ Item
             after: interaction_ending_ex;
             target: fade_target.rooms
             property: "level"
-            duration: sec( 30 )
+            duration: sec( 10 )
 
             from: fade_target.rooms.level
             to: 0;
+
+            onEnd:
+            {
+                fade_target.rooms.active = false
+                wpn214_rooms.active = false
+                scenario.end();
+                root.end();
+            }
         }
     }
 

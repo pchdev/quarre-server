@@ -11,14 +11,13 @@ GestureViewer
  de manière sèche et rapide"
 
     anchors.fill:   parent    
-    signal detected ()
 
     Connections
     {
         target: gesture_manager.backend
         onDetected:
         {
-            root.detected();
+            server.get("/gestures/shake/trigger").value = 1;
             trigger_animation.running = true
         }
     }

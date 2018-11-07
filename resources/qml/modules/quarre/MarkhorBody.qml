@@ -34,14 +34,14 @@ Rectangle
 
     QuarreSlider
     {
-        name: "position horizontale"
+        name: "modèle horizontal"
         onValueChanged: body_xy.value.x = value;
         y: parent.height*0.2*3
     }
 
     QuarreSlider
     {
-        name: "position verticale"
+        name: "modèle vertical"
         onValueChanged: body_xy.value.x = value;
         y: parent.height*0.2*4
     }

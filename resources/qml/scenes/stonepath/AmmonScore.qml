@@ -3,6 +3,10 @@ import WPN114 1.0 as WPN114
 
 Item
 {
+    property int index: 0
+
+    onIndexChanged: console.log("AMMON_SCORE:", index);
+
     property var score: [
 
         { notes: [55, 57], velocity: [40, 40], times: [0.0, 25], duration: 2000 },

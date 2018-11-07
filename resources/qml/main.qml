@@ -12,10 +12,6 @@ import "views"
 // TODO: volume and spatialization presets
 // TODO: FLAC audio
 
-// WRITING: väre rhythmic arrangement
-// WRITING: jomon sugi
-// WRITING: carre soundscape
-
 Rectangle
 {
     id: application

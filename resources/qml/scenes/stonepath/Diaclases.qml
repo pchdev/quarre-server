@@ -45,25 +45,23 @@ Item
         {
             id:         spl1
             target:     interaction_spring_low
-            date:       sec( 20 )
+            date:       sec( 30 )
             countdown:  sec( 15 )
             length:     min( 1.20 )
-        }
 
-        InteractionExecutor
-        {
-            target:     interaction_spring_high;
-            date:       sec( 20 )
-            countdown:  sec( 15 )
-            length:     min( 1.20 )
-        }
+            InteractionExecutor
+            {
+                target:     interaction_spring_high;
+                countdown:  sec( 15 )
+                length:     min( 1.20 )
+            }
 
-        InteractionExecutor
-        {
-            target:     interaction_spring_timbre_1;
-            date:       sec( 20 )
-            length:     min( 1.20 )
-            countdown:  sec( 15 )
+            InteractionExecutor
+            {
+                target:     interaction_spring_timbre_1;
+                length:     min( 1.20 )
+                countdown:  sec( 15 )
+            }
         }
 
         InteractionExecutor
@@ -83,26 +81,22 @@ Item
             date:       sec( 2 )
             countdown:  sec( 10 )
             length:     min( 1.20 )
-        }
 
-        InteractionExecutor
-        {
-            target:     interaction_spring_high_2
-            after:      spl1
-            date:       sec( 2.1 )
-            countdown:  sec( 10 )
-            length:     min( 1.20 )
-        }
+            InteractionExecutor
+            {
+                target:     interaction_spring_high_2
+                countdown:  sec( 10 )
+                length:     min( 1.20 )
+            }
 
-        InteractionExecutor
-        {
-            target:     interaction_spring_timbre_2
-            after:      spl1
-            date:       sec( 2.2 )
-            countdown:  sec( 10 )
-            length:     min( 1.20 )
+            InteractionExecutor
+            {
+                target:     interaction_spring_timbre_2
+                countdown:  sec( 10 )
+                length:     min( 1.20 )
 
-            onEnd:      root.next()
+                WPN114.TimeNode { date: min( 1.25 ); onStart: root.next() }
+            }
         }
 
         // AUTOMATIONS ------------------------------------------------------------------------
@@ -112,8 +106,8 @@ Item
             after:      spl1;
             target:     root
             property:   "spring_attack"
-            date:       sec(22)
-            duration:   min(1)
+            date:       sec( 22 )
+            duration:   sec( 35 )
 
             from: 0; to: 0.6;
         }
@@ -223,13 +217,12 @@ Item
 
             mappings: QuMapping
             {
-                source: "/gestures/cover/trigger"
-                expression: function(v)
-                {
+                source: "/modules/xyzrotation/data"
+                expression: function(v) {
                     var y = Math.abs(v[1])/180;
                     var x = Math.abs(v[0])/90;
                     instruments.kaivo_1.set("res_brightness", y);
-                    instruments.kaivo_1.set("res_pitch", x);
+                    instruments.kaivo_1.set("res_pitch", x*0.1+0.5);
                 }
             }
         }
@@ -296,12 +289,12 @@ Item
 
             mappings: QuMapping
             {
-                source: "/sensors/rotation/xyz/data"
+                source: "/modules/xyzrotation/data"
                 expression: function(v) {
                     var y = Math.abs(v[1])/180;
                     var x = Math.abs(v[0])/90;
                     instruments.kaivo_1.set("res_brightness", y);
-                    instruments.kaivo_1.set("res_pitch", x);
+                    instruments.kaivo_1.set("res_pitch", x*0.1+0.5);
                 }
             }
         }

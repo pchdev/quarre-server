@@ -80,6 +80,7 @@ Item
                 loader.item.text = node.name;
                 loader.item.checkable = false;
                 loader.item.checked = false;
+
                 loader.item.clicked.connect(root.impulse);
             }
 

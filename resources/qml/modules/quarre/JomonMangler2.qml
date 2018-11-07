@@ -21,7 +21,7 @@ Rectangle
     {
         name: "résonance filtre"
 
-        WPN114.Node on value { path: "/modules/mangler/filer/res" }
+        WPN114.Node on value { path: "/modules/mangler/filter/res" }
         y: parent.height*0.2 * 2
     }
 

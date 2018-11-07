@@ -51,5 +51,6 @@
         <file>quarre/mix/CendresMixview.qml</file>
         <file>quarre/JomonMangler3.qml</file>
         <file>quarre/JomonMangler4.qml</file>
+        <file>basics/GestureShake.qml</file>
     </qresource>
 </RCC>

@@ -35,7 +35,7 @@ Rectangle
     QuarreSlider
     {
         name: "résonance"
-        min: 0.0; max: 0.4;
+        min: 0.0; max: 0.55;
         y: parent.height*0.2*4;
 
         WPN114.Node on value { path: "/modules/markhor/resonator/sustain" }

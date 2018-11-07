@@ -19,10 +19,11 @@ Item
 
         onStart:
         {
-            vare_rooms.active = true;
-            instruments.rooms.active = true;
-            instruments.kaivo_1.active = true;
-            instruments.kaivo_2.active = true;
+            vare_rooms.active           = true;
+            instruments.kaivo_1.active  = true;
+            instruments.kaivo_2.active  = true;
+            instruments.rooms.active    = true;
+
             snowfall.play();
 
             client_manager.notifyScene("vare");
@@ -39,12 +40,9 @@ Item
 
             onStart:
             {
-                instruments.kaivo_2.setPreset( instruments.vare );
                 instruments.kaivo_1.setPreset( instruments.rainbells );
-
+                instruments.kaivo_2.setPreset( instruments.varerhythm );
             }
-
-            WPN114.TimeNode { date: sec( 41 ); onStart: hammer.play() }
 
             WPN114.Automation
             {
@@ -56,8 +54,43 @@ Item
                 from: 0; to: 1;
             }
 
+            WPN114.Automation
+            {
+                target:     instruments.kaivo_2
+                property:   "level"
+                date:       sec( 25 );
+                duration:   sec( 50 );
+
+                from: 0; to: 1;
+
+                onStart:
+                {
+                    instruments.kaivo_2.noteOn( 0, 63, 127 );
+                    instruments.kaivo_2.noteOn( 0, 68, 127 );
+                }
+            }
+
+            onEnd:
+            {
+                instruments.kaivo_2.noteOff ( 0, 63, 127 );
+                instruments.kaivo_2.noteOn  ( 0, 73, 127 );
+            }
+        }
+
+        WPN114.Automation
+        {
+            id: rainbells_fade_out
+            after: rainbells_ex
+            target: instruments.kaivo_1
+            property: "level"
+            duration: sec( 20 );
+
+            from:  instruments.kaivo_1.level; to: 0;
             onEnd: instruments.kaivo_1.allNotesOff();
         }
+
+        WPN114.TimeNode { after: rainbells_fade_out; date: sec( 1 );
+            onStart: instruments.kaivo_1.active = false }
 
         InteractionExecutor
         {
@@ -70,8 +103,8 @@ Item
 
             onStart:
             {
-                instruments.kaivo_2.noteOn( 0, 68, 127 );
-                instruments.kaivo_2.noteOn( 0, 73, 127 );
+                instruments.kaivo_2.noteOff ( 0, 68, 127 );
+                instruments.kaivo_2.noteOn  ( 0, 78, 127 );
             }
         }
 
@@ -84,7 +117,19 @@ Item
             countdown:  sec( 15 )
             length:     min( 2.20 )
 
-            onStart:    paroral.play();
+            onStart:
+            {
+                instruments.kaivo_2.noteOff ( 0, 73, 127 );
+                instruments.kaivo_2.noteOn  ( 0, 83, 127 );
+            }
+
+            onEnd:
+            {
+                for ( var i = 0; i < interaction_pads_1.pads.length; ++i )
+                    instruments.kaivo_2.noteOff(0, interaction_pads_1.pads[i], 127);
+
+                ambient.play();
+            }
         }
 
         InteractionExecutor
@@ -106,11 +151,8 @@ Item
             date:       min( 1.10 )
             countdown:  sec( 15 )
             length:     sec( 60 )
-
-            onEnd: instruments.kaivo_1.setPreset( instruments.varerhythm );
         }
 
-        // PAUSE: INTRODUCING RHYTHM
         // AND THEN SECOND BATCH OF INTERACTIONS ( TUTTI )
 
         WPN114.TimeNode
@@ -186,25 +228,27 @@ Item
                 from: vare_rooms.level
                 to: 0;
 
-                duration: sec( 30 )
+                duration: sec( 20 )
 
                 onStart: root.next();
 
                 onEnd:
                 {
                     snowfall.stop();
+                    ambient.stop();
+
                     instruments.kaivo_1.allNotesOff();
                     instruments.kaivo_2.allNotesOff();
 
                     functions.setTimeout(function(){
                         vare_rooms.active = false;
+                        instruments.kaivo_2.active = false;
                     }, 1000 );
                 }
 
             }
         }
     }
-
 
     Item //-------------------------------------------------------------------- INTERACTIONS
     {
@@ -276,7 +320,8 @@ Item
 
             mappings:
                 [
-                QuMapping { source: "/modules/vare/granular/overlap"
+                QuMapping {
+                    source: "/modules/vare/granular/overlap"
                     expression: function(v) { instruments.kaivo_2.set("gran_density", v) }},
 
                 QuMapping {
@@ -289,11 +334,11 @@ Item
 
                 QuMapping {
                     source: "/modules/vare/granular/position"
-                    expression: function(v) { instruments.kaivo_2.set("gran_position_x", v) }},
+                    expression: function(v) { instruments.kaivo_2.set(95, v) }},
 
                 QuMapping {
                     source: "/modules/vare/granular/position-mod"
-                    expression: function(v) { instruments.kaivo_2.set("gran_position_x_p", v) }}
+                    expression: function(v) { instruments.kaivo_2.set(106, v) }}
             ]
         }
 
@@ -368,7 +413,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             description: "Appuyez et maintenez l'un des pads (un seul à la fois)
  pour ajouter des compléments rythmiques."
 
-            property var pads: [ 76, 77, 78, 79, 71, 72, 74, 75, 61, 63, 66, 70 ]
+            property var pads: [ 86, 87, 88, 89, 81, 82, 84, 85, 71, 73, 76, 80 ]
 
             mappings: QuMapping
             {
@@ -381,6 +426,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
                     else instruments.kaivo_2.noteOn(0, interaction_pads_1.pads[v-1], 127);
                 }
             }
+
         }
 
         Interaction //--------------------------------------------- MARKHOR_GRANULAR_2
@@ -450,36 +496,23 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             exposePath: "/woodpath/vare/audio/snowfall/source"
 
             WPN114.StreamSampler { id: snowfall; loop: true; xfade: 3000; attack: 2000
-                dBlevel: 18
+                dBlevel: 6
                 exposePath: "/woodpath/vare/audio/snowfall"
                 path: "audio/woodpath/vare/snowfall.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -9 }
             }
         }
 
-        WPN114.StereoSource //----------------------------------------- 2.HAMMER (3-4)
-        {
-            fixed: true
-            diffuse: 0.25
-
-            exposePath: "/woodpath/vare/audio/hammer/source"
-
-            WPN114.Sampler { id: hammer;
-                dBlevel: 6
-                exposePath: "/woodpath/vare/audio/hammer"
-                path: "audio/woodpath/vare/hammer.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -3 }
-            }
-        }
-
         WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
         {
-            exposePath: "/woodpath/vare/audio/paroral/source"
+            fixed: true
+            xspread: 0.25
 
-            WPN114.Sampler { id: paroral;
-                exposePath: "/woodpath/vare/audio/paroral"
-                path: "audio/stonepath/markhor/paroral.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+            exposePath: "/woodpath/vare/audio/ambient/source"
+
+            WPN114.StreamSampler { id: ambient;
+                exposePath: "/woodpath/vare/audio/ambientl"
+                path: "audio/woodpath/vare/vare-ambient.wav"
             }
         }
     }

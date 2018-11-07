@@ -11,7 +11,6 @@ Rectangle
     QuarreSlider
     {
         name: "hauteur"
-        min: 0.5; max: 1;
 
         WPN114.Node on value { path: "/modules/vare/granular/pitch" }
         y: parent.height*0.05

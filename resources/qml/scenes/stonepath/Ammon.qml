@@ -26,7 +26,6 @@ Item
 
             instruments.kaivo_1.active = true;
             instruments.kaivo_2.active = true;
-//            instruments.absynth.active = true;
             instruments.rooms.active = true;
 
             // we use a different reverb for this scene
@@ -44,10 +43,8 @@ Item
             instruments.kaivo_2.dBlevel = -4;
             instruments.k2_fork_lavaur.dBlevel  = -9
 
-            // the markhor intro bells should still be here
-//            instruments.kaivo_1.allNotesOff();
-
             client_manager.notifyScene("ammon");
+            if ( !timer.running ) timer.start();
         }
 
         onEnd:
@@ -55,18 +52,19 @@ Item
             // do not deactivate rooms, wind has to keep playing during wpn214
             instruments.kaivo_1.active = false;
             instruments.kaivo_2.active = false;
-            instruments.absynth.active = false;
-
             instruments.rooms.active = false;
+
+            wpn214.fade_target = root;
             if ( !timer.running ) timer.start();
         }
 
         WPN114.TimeNode { date: sec(6); onStart: footsteps.play() }
+        WPN114.TimeNode { startExpression: ammon_score.index === 1; onStart: footsteps.stop(); }
 
         InteractionExecutor
         {
             target:         interaction_string_sweep
-            endExpression:  interaction_string_sweep.index === 100
+            endExpression:  ammon_score.index === 100
             onStart:        instruments.kaivo_1.setPreset(instruments.tguitar);
 
             date:       sec( 10 )
@@ -77,7 +75,7 @@ Item
         InteractionExecutor
         {            
             target:         interaction_bells
-            endExpression:  interaction_string_sweep.index === 100
+            endExpression:  ammon_score.index === 100
             onStart:        instruments.kaivo_2.setPreset(instruments.churchbells);
 
             date:       sec( 15 )
@@ -96,15 +94,15 @@ Item
         InteractionExecutor
         {
             target:             interaction_strings_timbre
-            startExpression:    interaction_string_sweep.index === 7
-            endExpression:      interaction_string_sweep.index === 100
+            startExpression:    ammon_score.index === 7
+            endExpression:      ammon_score.index === 100
             countdown:          sec( 10 )
             length:             sec( 360 )
         }
 
         WPN114.Automation //--------------------------------------------- HARMONICS_SAMPLE
         {
-            startExpression:  interaction_string_sweep.index === 38;
+            startExpression:  ammon_score.index === 38;
 
             target: harmonics
             property: "level"
@@ -116,7 +114,7 @@ Item
 
         WPN114.Automation
         {
-            startExpression: interaction_string_sweep.index === 84
+            startExpression: ammon_score.index === 84
 
             target: harmonics
             property: "level"
@@ -128,7 +126,7 @@ Item
 
         WPN114.Automation //--------------------------------------------- BROKEN_RADIO
         {
-            startExpression: interaction_string_sweep.index === 88
+            startExpression: ammon_score.index === 84
 
             target: broken_radio
             property: "level"
@@ -140,14 +138,32 @@ Item
 
         WPN114.Automation
         {
-            startExpression: interaction_string_sweep.index === 100
+            startExpression: ammon_score.index === 100
 
+            id: broken_radio_fade_out
             target: broken_radio
             property: "level"
-            duration: sec(50)
+            duration: sec( 50 )
             from: 1; to: 0;
 
             onEnd: broken_radio.stop();
+        }
+
+        WPN114.Automation
+        {
+            after: broken_radio_fade_out
+            target: ammon_rooms
+            property: "dBlevel"
+            from: ammon_rooms.dBlevel
+            to: -6;
+
+            duration: sec( 10 )
+
+            onEnd:
+            {
+                scenario.end();
+                root.end();
+            }
         }
     }
 
@@ -167,8 +183,6 @@ Item
 
             description: "Frottez les cordes avec votre doigt au fur
  et à mesure de leur apparition"
-
-            property int index: 0
 
             onInteractionBegin:
             {
@@ -236,13 +250,14 @@ Item
             module: "basics/XYZRotation.qml"
 
             description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler
- la brillance (axe Y) et la hauteur (axe X) de l'instrument déclenché par votre partenaire."
+la brillance (axe Y) et la hauteur (axe X) de l'instrument"
+            //déclenché par votre partenaire."
 
             mappings: QuMapping
             {
                 source: "/modules/xyzrotation/data"
                 expression: function(v) {
-                    instruments.kaivo_1.set("res_pitch", 440+v[0]/90*10);
+                    instruments.kaivo_1.set("res_pitch", v[0]/90*0.00625 + 0.5);
                     instruments.kaivo_1.set("res_brightness", (v[1]+180)/360);
                     instruments.kaivo_1.set("res_position", (v[2]+180)/360);
                 }
@@ -302,7 +317,7 @@ Item
 
             exposePath: "/stonepath/ammon/audio/footsteps/source"
 
-            WPN114.Sampler { id: footsteps;
+            WPN114.Sampler { id: footsteps; loop: true; xfade: 2000
                 exposePath: "/stonepath/ammon/audio/footsteps"
                 path: "audio/stonepath/ammon/footsteps.wav" }
         }

@@ -42,7 +42,7 @@ Rectangle
     Timer
     {
         id: proximity_poll
-        interval: 50
+        interval: 100
         repeat: true
 
         onTriggered:

@@ -141,6 +141,7 @@ Item
                     // preventing client to connect multiple times to different remotes
                     client.connected = true;
                     client.remote.connect(hostaddr);
+                    nclients.value = nclients.value+1
                     break;
                 }
             }
@@ -153,5 +154,13 @@ Item
         model: maxClients
 
         QuarreClient { number: index }
+    }
+
+    WPN114.Node
+    {
+        id: nclients
+        path: "/clients/nclients"
+        type: WPN114.Type.Int
+        value: 0
     }
 }

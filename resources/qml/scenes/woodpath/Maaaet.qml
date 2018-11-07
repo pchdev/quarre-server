@@ -39,6 +39,7 @@ Item
 
             InteractionExecutor
             {
+                id:         shake_leaves_interaction_ex
                 target:     shake_leaves_interaction
                 countdown:  sec( 10 )
                 length:     sec( 30 )
@@ -154,16 +155,16 @@ Item
             id:     shake_leaves_interaction
             title:  "Feuillages, déclenchement"
             path:   "/woodpath/maaaet/interactions/shake-leaves"
-            module: "basics/GestureShakeThresh.qml"
+            module: "basics/GestureShake.qml"
 
-            description: ""
+            description: "Executez le geste décrit ci-dessous"
 
             mappings: QuMapping
             {
-                source: "/modules/gestures/shaking"
+                source: "/gestures/shake/trigger"
                 expression: function(v) {
-                    if ( v ) leaves.play();
-                    else leaves.stop();
+                    leaves.playRandom();
+                    shake_leaves_interaction_ex.end();
                 }
             }
         }
@@ -365,9 +366,9 @@ Item
 
             exposePath: "/woodpath/maaaet/audio/leaves/source"
 
-            WPN114.StreamSampler { id: leaves; attack: 2000; release: 2000;
+            WPN114.MultiSampler { id: leaves;
                 exposePath: "/woodpath/maaaet/audio/leaves"
-                path: "audio/woodpath/maaaet/leaves.wav"
+                path: "audio/woodpath/maaaet/leaves"
 
                 WPN114.Fork { target: effects.reverb; dBlevel: -6 }
             }

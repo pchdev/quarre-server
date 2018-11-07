@@ -213,8 +213,12 @@ Item
                     redbirds_1.stop  ( );
                     redbirds_2.stop  ( );
                     waves.stop       ( );
+                    burn.stop        ( );
 
-                    cendres_rooms.active = false
+                    functions.setTimeout(function() {
+                        cendres_rooms.active = false
+                    }, 3000 );
+
                 }
             }
         }
@@ -499,7 +503,7 @@ Item
             fixed: true
             y: 0.45
 
-            WPN114.Sampler { id: quarre; attack: 10000; release: 10000;
+            WPN114.Sampler { id: quarre; attack: 10000; release: 2000;
                 exposePath: "/stonepath/cendres/audio/quarre"
                 path: "audio/stonepath/cendres/quarre.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -6 }

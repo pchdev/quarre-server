@@ -22,7 +22,9 @@ Item
 
         onStart:
         {
-            instruments.kaivo_1.active = true;
+            instruments.kaivo_1.active  = true;
+            instruments.kaivo_1.dBlevel = -4
+
             instruments.kaivo_2.active = false;
             instruments.rooms.active = true;
             carre_rooms.active = true;
@@ -45,7 +47,6 @@ Item
 
             onStart:
             {
-                console.log("CARRE START");
                 instruments.kaivo_1.setPreset( instruments.niwood );
                 instruments.kaivo_1.set("env1_attack", 0.6)
                 spring.play();
@@ -55,23 +56,21 @@ Item
                 if ( !timer.running ) timer.start();
             }
 
+            InteractionExecutor
+            {
+                target:     interaction_bell_hi_1
+                countdown:  sec( 15 )
+                length:     min( 1.20 )
+
+                InteractionExecutor
+                {
+                    target:     interaction_bell_timbre
+                    countdown:  sec( 15 )
+                    length:     min( 1.20 )
+                }
+            }
+
             onEnd: quarre.play();
-        }
-
-        InteractionExecutor
-        {
-            target:     interaction_bell_hi_1
-            date:       sec( 5.1 )
-            countdown:  sec( 15 )
-            length:     min( 1.20 )
-        }
-
-        InteractionExecutor
-        {
-            target:     interaction_bell_timbre
-            date:       sec( 5.2 )
-            countdown:  sec( 15 )
-            length:     min( 1.20 )
         }
 
         InteractionExecutor
@@ -88,13 +87,29 @@ Item
         {
             after:      interaction_bell_low_1_ex
             target:     interaction_bell_low_2
-            date:       sec( 5 )
-            countdown:  sec( 10 )
+            countdown:  sec( 5 )
             length:     sec( 80 )
 
             onStart:    instruments.kaivo_1.set("env1_attack", 0);
 
-            WPN114.TimeNode { date: sec( 86 ); onStart: root.next(); }
+            InteractionExecutor
+            {
+                after:      interaction_bell_low_1_ex
+                target:     interaction_bell_hi_2
+                countdown:  sec( 5 )
+                length:     sec( 80 )
+
+                InteractionExecutor
+                {
+                    id:         interaction_bell_timbre_2_ex
+                    after:      interaction_bell_low_1_ex
+                    target:     interaction_bell_timbre
+                    countdown:  sec( 5 )
+                    length:     sec( 80 )
+                }
+            }
+
+            WPN114.TimeNode { date: sec( 82 ); onStart: root.next(); }
 
             WPN114.Automation
             {
@@ -117,25 +132,6 @@ Item
             }
         }
 
-        InteractionExecutor
-        {
-            after:      interaction_bell_low_1_ex
-            target:     interaction_bell_hi_2
-            date:       sec( 5.1 )
-            countdown:  sec( 10 )
-            length:     sec( 80 )
-        }
-
-        InteractionExecutor
-        {
-            id:         interaction_bell_timbre_2_ex
-            after:      interaction_bell_low_1_ex
-            target:     interaction_bell_timbre
-            date:       sec( 5.2 )
-            countdown:  sec( 10 )
-            length:     sec( 80 )
-        }
-
         WPN114.Automation
         {
             after:      interaction_bell_timbre_2_ex
@@ -154,12 +150,13 @@ Item
                 spring.stop       ( );
                 alpine_swift.stop ( );
 
+                instruments.kaivo_1.allNotesOff();
+
                 functions.setTimeout(function() {
                     carre_rooms.active = false;
+                    instruments.kaivo_1.active = false;
+                    instruments.rooms.active = false;
                 }, 1000 );
-
-                instruments.kaivo_1.active = false;
-                instruments.rooms.active = false;
             }
         }
     }

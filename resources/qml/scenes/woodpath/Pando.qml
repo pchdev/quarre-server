@@ -17,7 +17,7 @@ Item
         source:      audio_stream
         exposePath:  "/woodpath/pando/scenario"
 
-        length:     min( 1.46 )
+        length:     min( 1.47 )
         countdown:  sec( 5 )
 
         onStart:
@@ -39,16 +39,13 @@ Item
         {
             target:     pando_rooms
             property:   "level"
-            duration:   sec( 20 )
+            duration:   sec( 10 )
 
             from: 0; to: 1;
         }
 
-        onEnd:
-        {
-            pando_rooms.active = false;
-            root.end();
-        }
+        WPN114.TimeNode { date: min(1.45); onStart: root.end() }
+        onEnd: { pando_rooms.active = false }
 
     }
 

@@ -10,6 +10,9 @@ Item
     property string status: "disconnected"
     property alias remote: remote
 
+    WPN114.Node on interaction_count { path: "/clients/"+number+"/n_interactions" }
+    WPN114.Node on status { path: "/clients/"+number+"/status" }
+
     function getInteractionMessage(interaction)
     {
         var interaction_arr = [];
@@ -51,6 +54,7 @@ Item
         remote.sendMessage("/interactions/current/end", 0, true);
         if ( status === "active_incoming" ) status = "incoming";
         else if ( status === "active" ) status = "idle";
+        else if ( status === "incoming" ) status = "idle";
     }
 
     function getActiveCountdown()
