@@ -27,6 +27,7 @@ Item
             instruments.rooms.active = false;
             client_manager.notifyScene("cendres");
             cendres_rooms.active = true
+            cendres_rooms.level = 1;
 
             if ( !timer.running ) timer.start();
         }

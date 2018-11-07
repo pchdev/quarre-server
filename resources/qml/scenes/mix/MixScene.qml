@@ -5,6 +5,7 @@ import ".."
 
 Item
 {
+    id: root
 
     WPN114.TimeNode
     {

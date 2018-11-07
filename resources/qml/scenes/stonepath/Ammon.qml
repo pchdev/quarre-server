@@ -20,13 +20,17 @@ Item
 
         onStart:
         {
-            console.log("ammon start");
             ammon_rooms.active = true
+            ammon_rooms.level = 1;
             wind.play()       
 
             instruments.kaivo_1.active = true;
             instruments.kaivo_2.active = true;
             instruments.rooms.active = true;
+
+            functions.setTimeout(function() {
+                instruments.kaivo_2.setPreset( instruments.churchbells );
+            }, 1000 )
 
             // we use a different reverb for this scene
             effects.reverb.active = false;
@@ -40,8 +44,8 @@ Item
             instruments.kaivo_1.dBlevel = -4;
             instruments.k1_fork_lavaur.dBlevel = -10;
 
-            instruments.kaivo_2.dBlevel = -4;
-            instruments.k2_fork_lavaur.dBlevel  = -9
+            instruments.kaivo_2.dBlevel = -20;
+            instruments.k2_fork_lavaur.dBlevel  = -18
 
             client_manager.notifyScene("ammon");
             if ( !timer.running ) timer.start();
@@ -65,7 +69,7 @@ Item
         {
             target:         interaction_string_sweep
             endExpression:  ammon_score.index === 100
-            onStart:        instruments.kaivo_1.setPreset(instruments.tguitar);
+            onStart:        instruments.kaivo_1.setPreset( instruments.tguitar );
 
             date:       sec( 10 )
             countdown:  sec( 10 )
@@ -76,7 +80,7 @@ Item
         {            
             target:         interaction_bells
             endExpression:  ammon_score.index === 100
-            onStart:        instruments.kaivo_2.setPreset(instruments.churchbells);
+            onStart:        ;
 
             date:       sec( 15 )
             countdown:  sec( 10 )
@@ -229,8 +233,6 @@ Item
                         var index       = Math.random()*40+40;
                         current_note    = index;
 
-                        instruments.absynth.noteOn(0, index, 100);
-                        instruments.absynth.noteOn(0, index+5, 100);
                     }
                     else
                     {
@@ -280,8 +282,8 @@ la brillance (axe Y) et la hauteur (axe X) de l'instrument"
                 QuMapping {
                     source: "/gestures/whip/trigger"
                     expression: function(v) {
-                        var index       = Math.floor(Math.random()*40)+40;
-                        var velocity    = Math.floor(Math.random()*40)+20;
+                        var index       = Math.floor(Math.random()*40)+30;
+                        var velocity    = Math.floor(Math.random()*40)+60;
 
                         instruments.kaivo_2.noteOn(0, index, velocity);
                         functions.setTimeout(function(v){
@@ -291,10 +293,11 @@ la brillance (axe Y) et la hauteur (axe X) de l'instrument"
                 QuMapping {
                     source: "/modules/xyzrotation/data"
                     expression: function(v) {
-                        instruments.kaivo_2.set("res_brightness", (v[0]+90)/180);
-                        instruments.kaivo_2.set("res_position", (v[2]+180)/360);
-                        instruments.kaivo_2.set("res_sustain", (v[1]+180)/360*0.1);
-                        instruments.kaivo_2.set("env1_attack", (v[1]+180)/360*0.5)}}
+                        instruments.kaivo_2.set( "body_position_x", (v[0]+90)/180 );
+                        instruments.kaivo_2.set( "res_brightness", (v[1]+180)/360 );
+                        instruments.kaivo_2.set( "res_position", (v[2]+180)/360 );
+                    }
+                }
             ]
         }
     }

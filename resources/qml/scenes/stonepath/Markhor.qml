@@ -22,17 +22,17 @@ Item
         onStart:
         {
             instruments.k1_fork_921.prefader = true;
-            instruments.k1_fork_921.dBlevel = -12;
+            instruments.k1_fork_921.dBlevel = -6;
 
-            instruments.kaivo_1.dBlevel = -36;
+            instruments.kaivo_1.dBlevel = -24
 
             instruments.kaivo_1.active  = true;
             instruments.kaivo_2.active  = true;
             instruments.rooms.active    = true;
-            effects.amplitube.active    = false;
 
             soundscape.play();
             markhor_rooms.active = true;
+            markhor_rooms.level = 1;
 
             client_manager.notifyScene("markhor");
             if ( !timer.running ) timer.start();
@@ -43,13 +43,17 @@ Item
             id:         bells_executor
             target:     interaction_clock_bells
             date:       sec( 5 )
-            length:     sec( 45 )
-            countdown:  sec( 15 )
+            length:     sec( 52 )
+            countdown:  sec( 8 )
 
             onStart:
             {
                 instruments.kaivo_1.setPreset( instruments.autochurch );
                 instruments.kaivo_2.setPreset( instruments.markhor );
+
+                functions.setTimeout(function() {
+                    instruments.kaivo_1.allNotesOff();
+                }, 1000)
             }
 
             onEnd:
@@ -72,8 +76,8 @@ Item
                 date: sec( 15 )
                 target: instruments.kaivo_1
                 property: "dBlevel"
-                duration: sec( 45 )
-                from: -36; to: -4;
+                duration: sec( 22 )
+                from: instruments.kaivo_1.dBlevel; to: 0;
             }
         }
 
@@ -194,23 +198,23 @@ Item
             property:   "level"
             duration:   min( 1 )
 
-            from: 1; to: 0;           
+            from: soundscape.level; to: 0;
 
             WPN114.Automation //---------------------------- KAIVO_FADE_OUT
             {
                 target:     instruments.kaivo_2
-                property:   "level"
-                duration:   sec( 45 );
+                property:   "dBlevel"
+                duration:   sec( 50 );
 
-                from: 1; to: 0;
+                from: instruments.kaivo_2.level; to: -48;
 
                 WPN114.Automation
                 {
-                    target:     instruments.k1_fork_921
+                    target:     instruments.k2_fork_921
                     property:   "dBlevel"
-                    duration:   sec( 45 );
+                    duration:   sec( 50 );
 
-                    from: 1; to: 0;
+                    from: instruments.k2_fork_921.dBlevel; to: -48;
                 }
 
                 WPN114.Automation //---------------------------- AMBIENT_LIGHT_FADE_OUT
@@ -220,7 +224,7 @@ Item
                     property:   "level"
                     duration:   sec( 45 )
 
-                    from: 1; to: 0;
+                    from: ambient_light.level; to: 0;
                 }
             }
 
@@ -255,17 +259,22 @@ Item
             description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
             //afin de changer leurs propriétés."
 
+            property int last_note: 0
+
             mappings:
             [
                 QuMapping // ---------------------------------------------- proximity mapping
                 {
                     source: "/modules/bells/trigger"
                     expression: function(v) {
-                        var rdm_note = 35 + Math.random()*40;
-                        var rdm_p = Math.random()*15+2;
+                        var rdm_note = 45 + Math.random()*30;
 
-                        instruments.kaivo_1.noteOn(0, rdm_note, rdm_p);
-                        instruments.kaivo_1.noteOff(0, rdm_note, rdm_p);
+                        if ( interaction_clock_bells.last_note )
+                             instruments.kaivo_1.noteOff(0, interaction_clock_bells.last_note, 127 );
+
+                        instruments.kaivo_1.noteOn  ( 0, rdm_note, 127 );
+
+                        interaction_clock_bells.last_note = rdm_note;
                     }
                 },
 
@@ -274,10 +283,15 @@ Item
                     source: "/modules/xyzrotation/data"
                     expression: function(v) {
 
-                        instruments.kaivo_1.set("res_brightness", v[0]+90/180);
-                        instruments.kaivo_1.set("res_position", (v[2]+180)/360);
-                        instruments.kaivo_1.set("res_sustain", (v[1]+180)/360*0.1);
-                        instruments.kaivo_1.set("env1_attack", (v[1]+180)/360*0.5);
+                        var x = (v[0]+90)/180;
+                        var y = (v[1]+180)/360;
+
+                        instruments.kaivo_1.set(" body_pitch", x );
+                        instruments.kaivo_1.set( "body_position_x", x );
+                        instruments.kaivo_1.set( "res_brightness", y );
+                        instruments.kaivo_1.set( "body_position_y", y );
+
+                        instruments.kaivo_1.set("body_tone", (v[2]+180)/360)
                     }
                 }
             ]

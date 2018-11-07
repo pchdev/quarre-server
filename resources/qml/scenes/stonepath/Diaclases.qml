@@ -31,6 +31,8 @@ Item
 
             stonewater.play();
             diaclases_rooms.active = true
+            diaclases_rooms.level = 1;
+
             client_manager.notifyScene("diaclases");
             if ( !timer.running ) timer.start();
         }
@@ -43,7 +45,7 @@ Item
         // FIRST BATCH OF INTERACTIONS ---------------------------------------------------------
         InteractionExecutor
         {
-            id:         spl1
+            id:         interaction_spring_low_ex
             target:     interaction_spring_low
             date:       sec( 30 )
             countdown:  sec( 15 )
@@ -69,18 +71,18 @@ Item
             target:     interaction_smoke_spat
             date:       sec( 35 )
             countdown:  sec( 15 )
-            length:     min( 1.35 )
+            length:     min( 2.45 )
         }
 
         // SECOND BATCH OF INTERACTIONS -------------------------------------------------------
 
         InteractionExecutor
         {
-            target:     interaction_spring_low_2
-            after:      spl1
-            date:       sec( 2 )
-            countdown:  sec( 10 )
-            length:     min( 1.20 )
+            target:      interaction_spring_low_2
+            after:       interaction_spring_low_ex
+            date:        sec( 1 )
+            countdown:   sec( 10 )
+            length:      min( 1.20 )
 
             InteractionExecutor
             {
@@ -95,7 +97,7 @@ Item
                 countdown:  sec( 10 )
                 length:     min( 1.20 )
 
-                WPN114.TimeNode { date: min( 1.25 ); onStart: root.next() }
+                WPN114.TimeNode { date: min( 1.15 ); onStart: root.next() }
             }
         }
 
@@ -103,7 +105,7 @@ Item
 
         WPN114.Automation
         {
-            after:      spl1;
+            after:      interaction_spring_low_ex;
             target:     root
             property:   "spring_attack"
             date:       sec( 22 )
@@ -115,38 +117,36 @@ Item
         // VERB
         WPN114.Automation
         {
-            after: spl1; date: min(1.14)
+            after: interaction_spring_low_ex
+            date: min( 1.14 )
             target: instruments.kaivo_1
             property: "dBlevel"
             from: -4; to: -96;
-            duration: sec(20)
+            duration: sec( 35 )
         }
 
         WPN114.Automation
         {
-            after: spl1
-            date: min(1.14)
-            target: drone
-            property: "level"
-            from: 1; to: 0;
-            duration: min(1)
-        }
-
-        WPN114.Automation
-        {
-            after: spl1
-            date: min(1.14)
-            target: harmonics
-            property: "level"
-            from: 1; to: 0;
-            duration: min(1)
+            after:      interaction_spring_low_ex
+            target:     diaclases_rooms
+            date:       min( 1.14 )
+            property:   "level"
+            from:       diaclases_rooms.level; to: 0;
+            duration:   sec( 70 )
 
             onEnd:
             {
-                diaclases_rooms.active = false
+                harmonics.stop();
+                drone.stop();
+                stonewater.stop();
+
                 instruments.kaivo_1.allNotesOff();
-                instruments.kaivo_1.active = false;
-                instruments.rooms.active = false;
+
+                functions.setTimeout(function() {
+                    diaclases_rooms.active = false
+                    instruments.kaivo_1.active = false;
+                    instruments.rooms.active = false;
+                }, 2000 );
             }
         }
     }
@@ -220,9 +220,9 @@ Item
                 source: "/modules/xyzrotation/data"
                 expression: function(v) {
                     var y = Math.abs(v[1])/180;
-                    var x = Math.abs(v[0])/90;
+                    var x = v[0]/90;
                     instruments.kaivo_1.set("res_brightness", y);
-                    instruments.kaivo_1.set("res_pitch", x*0.1+0.5);
+                    instruments.kaivo_1.set("res_pitch", x*0.05+0.5);
                 }
             }
         }
@@ -292,9 +292,9 @@ Item
                 source: "/modules/xyzrotation/data"
                 expression: function(v) {
                     var y = Math.abs(v[1])/180;
-                    var x = Math.abs(v[0])/90;
+                    var x = v[0]/90;
                     instruments.kaivo_1.set("res_brightness", y);
-                    instruments.kaivo_1.set("res_pitch", x*0.1+0.5);
+                    instruments.kaivo_1.set("res_pitch", x*0.05+0.5);
                 }
             }
         }

@@ -17,22 +17,19 @@ Item
         source:      audio_stream
         exposePath:  "/stonepath/deidarabotchi/scenario"
 
-        length:      min( 2.54 )
-        countdown:   sec( 10 )
+        length:      min( 2.44 )
+        countdown:   sec( 20 )
 
         onStart:
         {
-            kaivo.play      ();
-            synth.play      ();
-            breath.play     ();
-            wind.play       ();
-            background.play ();
-
-            instruments.kaivo_1.active = false;
-            instruments.kaivo_2.active = false;
-            effects.amplitube.active = false;
+            kaivo.play       ();
+            synth.play       ();
+            breath.play      ();
+            wind.play        ();
+            background.play  ();
 
             deidarabotchi_rooms.active = true;
+            deidarabotchi_rooms.level = 1;
 
             client_manager.notifyScene("deidarabotchi");
             if ( !timer.running ) timer.start();
@@ -76,7 +73,7 @@ Item
 
             exposePath: "/stonepath/deidarabotchi/audio/kaivo/source"
 
-            WPN114.StreamSampler { id: kaivo;
+            WPN114.StreamSampler { id: kaivo; attack: 2000
                 exposePath: "/stonepath/deidarabotchi/audio/kaivo"
                 path: "audio/stonepath/deidarabotchi/kaivo.wav" }
         }
@@ -90,7 +87,7 @@ Item
 
             exposePath: "/stonepath/deidarabotchi/audio/synth/source"
 
-            WPN114.StreamSampler { id: synth;
+            WPN114.StreamSampler { id: synth; attack: 2000
                 exposePath: "/stonepath/deidarabotchi/audio/synth"
                 path: "audio/stonepath/deidarabotchi/synth.wav" }
         }
@@ -103,7 +100,7 @@ Item
 
             exposePath: "/stonepath/deidarabotchi/audio/background/source"
 
-            WPN114.StreamSampler { id: background;
+            WPN114.StreamSampler { id: background; attack: 2000
                 exposePath: "/stonepath/deidarabotchi/audio/background"
                 path: "audio/stonepath/deidarabotchi/background.wav" }
         }
@@ -117,7 +114,7 @@ Item
 
             exposePath: "/stonepath/deidarabotchi/audio/breath/source"
 
-            WPN114.StreamSampler { id: breath;
+            WPN114.StreamSampler { id: breath; attack: 2000
                 exposePath: "/stonepath/deidarabotchi/audio/breath"
                 path: "audio/stonepath/deidarabotchi/breath.wav" }
         }
@@ -131,7 +128,7 @@ Item
 
             exposePath: "/stonepath/deidarabotchi/audio/wind/source"
 
-            WPN114.StreamSampler { id: wind;
+            WPN114.StreamSampler { id: wind; attack: 2000
                 exposePath: "/stonepath/deidarabotchi/audio/wind"
                 path: "audio/stonepath/deidarabotchi/wind.wav" }
         }
