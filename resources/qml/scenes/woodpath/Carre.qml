@@ -11,7 +11,8 @@ Item
     property real env_attack: 0
     signal next();
 
-    onEnv_attackChanged: instruments.kaivo_1.set("env1_attack", env_attack);
+    onEnv_attackChanged:
+        instruments.kaivo_1.set("env1_attack", env_attack);
 
     WPN114.TimeNode
     {
@@ -66,9 +67,14 @@ Item
 
                 InteractionExecutor
                 {
-                    target:     interaction_bell_timbre
+                    target:     interaction_swifts
                     countdown:  sec( 15 )
                     length:     min( 1.20 )
+
+                    // TODO: only stop if not dispatched
+
+                    onBegin: alpine_swift.stop();
+//                    onEnd: alpine_swift.play();
                 }
             }
 
@@ -97,16 +103,19 @@ Item
 
             InteractionExecutor
             {
+                id:         interaction_bell_hi_2_ex
                 target:     interaction_bell_hi_2
                 countdown:  sec( 5 )
                 length:     sec( 80 )
 
                 InteractionExecutor
                 {
-                    id:         interaction_bell_timbre_2_ex
-                    target:     interaction_bell_timbre
+                    id:         interaction_swifts_2_ex
+                    target:     interaction_swifts
                     countdown:  sec( 5 )
                     length:     sec( 80 )
+
+                    onEnd: alpine_swift.play();
                 }
             }
 
@@ -135,7 +144,7 @@ Item
 
         WPN114.Automation
         {
-            after:      interaction_bell_timbre_2_ex
+            after:      interaction_bell_hi_2_ex
             target:     carre_rooms
             property:   "level"
             duration:   sec( 45 )
@@ -261,50 +270,68 @@ Item
 
         Interaction //------------------------------------------------- NIWOOD-TIMBRE
         {
-            id: interaction_bell_timbre
+            id: interaction_swifts
 
-            title: "Cloches primitives, timbre"
-            path:   "/woodpath/carre/interactions/niwood-timbre-1"
-            module: "basics/XYZRotation.qml"
+            title: "Martinets, trajectoires"
+            path:   "/woodpath/carre/interactions/swifts"
+            module: "quarre/Trajectories.qml"
 
-            description: "Faites pivoter l'appareil dans ses axes de rotation
- pour manipuler la brillance (Y) et la hauteur (X) de l'instrument déclenché par vos partenaires."
+            description:
+                "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
+                 pendant quelques secondes, puis relachez pour déclencher"
 
-            // niwood timbre (brightness 0-0.5, position, body pitch)
-            mappings: QuMapping
-            {
-                source: "/modules/xyzrotation/data"
-                expression: function(v)
-                {                    
-                    var x = Math.abs(v[0])/90;
-                    var y = Math.abs(v[1])/180;
-                    var z = Math.abs(v[2])/360;
+            mappings: [
+                QuMapping {
+                    source: "/modules/trajectories/trigger"
+                    expression: function(v) { multiswifts.playRandom() }},
 
-                    instruments.kaivo_1.set("res_position", z);                    
-                    instruments.kaivo_1.set("body_pitch", y);
-                    instruments.kaivo_1.set("res_pitch", x*0.0125+0.5);
+                QuMapping {
+                    source: "/modules/trajectories/position2D"
+                    expression: function(v) {
+                        multiswifts_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                    }
                 }
-            }
+            ]
         }       
 
         Interaction //------------------------------------------------- INSECTS
         {
             id: interaction_insects
 
-            title: "Insectes, déclenchement"
+            title: "Insectes, mise en espace"
             path:   "/woodpath/carre/interactions/insects"
             module: "basics/ZRotation.qml"
 
-            description: ""
+            description: "Gardez votre appareil à plat, horizontalement, puis orientez-le
+ tout autour de vous pour identifier et déplacer un son dans l'espace sonore."
 
             mappings: QuMapping
                 {
                     source: "/modules/zrotation/position2D"
                     expression: function(v) {
-                        insects_source.left.position  = Qt.vector3d(v[0], v[1], 0.5);
-                        insects_source.right.position = Qt.vector3d(1-v[0], 1-v[1], 0.5);
+                        insects_source.position  = Qt.vector3d(v[0], v[1], 0.5);
                     }
                 }
+        }
+
+        Interaction
+        {
+            id:         interaction_carres
+            title:      "Carres, déclenchement"
+            module:     "basics/GestureHammer.qml"
+            path:       "/woodpath/carre/interactions/carres"
+
+            description: "Executez le geste décrit ci-dessous pour déclencher un son"
+
+            mappings: QuMapping
+            {
+                source: "/gestures/whip/trigger"
+                expression: function(v) {
+//                    root.target_thunder_executor.end();
+//                    thunder.playRandom();
+                }
+            }
+
         }
 
         WPN114.Rooms
@@ -330,6 +357,20 @@ Item
                 }
             }
 
+            WPN114.MonoSource
+            {
+                id: multiswifts_source
+
+                WPN114.MultiSampler
+                {
+                    id: multiswifts
+                    exposePath: "/woodpath/carre/audio/multiswifts"
+                    path: "audio/woodpath/carre/swifts"
+
+                    WPN114.Fork { target: effects.reverb; dBlevel: -9 }
+                }
+            }
+
             WPN114.StereoSource //----------------------------------------- ALPINE_SWIFT
             {
                 fixed: true
@@ -338,7 +379,8 @@ Item
 
                 exposePath: "/woodpath/carre/audio/swift/source"
 
-                WPN114.StreamSampler { id: alpine_swift; loop: true; xfade: 3000
+                WPN114.StreamSampler { id: alpine_swift;
+                    loop: true; xfade: 3000; release: 3000
                     exposePath: "/woodpath/carre/audio/swift"
                     path: "audio/woodpath/carre/swift.wav"
 
@@ -358,7 +400,7 @@ Item
                     exposePath: "/woodpath/carre/audio/groundnoise"
                     path: "audio/woodpath/carre/groundnoise.wav"
 
-                    WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                    WPN114.Fork { target: effects.reverb; dBlevel: -6 }
                 }
             }
 
@@ -374,20 +416,21 @@ Item
                     exposePath: "/woodpath/carre/audio/quarre"
                     path: "audio/woodpath/carre/quarre.wav"
 
-                    WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                    WPN114.Fork { target: effects.reverb; dBlevel: -6 }
                 }
             }
 
-            WPN114.StereoSource //----------------------------------------- INSECTS
+            WPN114.MonoSource //----------------------------------------- INSECTS
             {
                 id: insects_source
                 exposePath: "/woodpath/carre/audio/insects/source"
 
                 WPN114.StreamSampler { id: insects; loop: true; xfade: 3000
+                    dBlevel: 6
                     exposePath: "/woodpath/carre/audio/insects"
                     path: "audio/woodpath/carre/insects.wav"
 
-                    WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+                    WPN114.Fork { target: effects.reverb; dBlevel: -6 }
                 }
             }
 

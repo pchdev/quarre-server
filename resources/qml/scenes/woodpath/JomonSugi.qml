@@ -21,19 +21,27 @@ Item
 
         onStart:
         {
-            jomon_rooms.active = true;
-//            instruments.kaivo_1.active = true;
-            instruments.rooms.active    = true;
-
+            jomon_rooms.active               = true;
+            instruments.rooms.active         = true;
             instruments.kaivo_1.active       = true;
-            instruments.kaivo_1.dBlevel      = 0;
-            instruments.k1_fork_921.dBlevel  = -9
+            instruments.kaivo_1.dBlevel      = -3;
+            instruments.k1_fork_921.dBlevel  = -3;
+            instruments.k1_fork_amp.active   = true;
+            instruments.k1_fork_amp.dBlevel  = -6;
 
+            effects.amplitube.active = true;
             instruments.kaivo_2.active  = false;
 
             cicadas.play();
             client_manager.notifyScene( "yūgure" );
             if ( !timer.running ) timer.start();
+        }
+
+        onEnd:
+        {
+            instruments.kaivo_1.active       = false
+            instruments.k1_fork_amp.active   = false
+            effects.amplitube.active         = false
         }
 
         // NOTE: SKIPPING YUGURE FOR NOW
@@ -205,6 +213,7 @@ Item
 
             InteractionExecutor
             {
+                id:         mangler_ex
                 target:     interaction_mangler_1
                 date:       sec( 37 )
                 countdown:  sec( 15 )
@@ -231,6 +240,18 @@ Item
                     }
                 }
             }
+        }
+
+        WPN114.Automation
+        {
+            after: mangler_ex
+            target: leaves
+            property: "level"
+            from: leaves.level; to: 0
+
+            duration: sec( 20 )
+
+            onEnd: leaves.stop()
         }
 
         WPN114.Automation // FADE_OUT: keep cicadas active
@@ -667,53 +688,59 @@ centimètres de l'écran de l'appareil pour produire du son"
         WPN114.StereoSource //----------------------------------------- 3.LEAVES (5-6)
         {
             yspread: 0.25
-            diffuse: 0.8
+            diffuse: 0.2
             fixed: true
 
             exposePath: "/woodpath/jomon/audio/leaves/source"
 
             WPN114.StreamSampler { id: leaves; loop: true; xfade: 2000;
-                dBlevel: 12.00
                 exposePath: "/woodpath/jomon/audio/leaves"
-                path: "audio/woodpath/jomon/leaves.wav" }
+                path: "audio/woodpath/jomon/leaves.wav"
+
+                WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+            }
         }
 
         WPN114.StereoSource //----------------------------------------- 4.FSYNTHS (7-8)
         {
+            xspread: 0.35
+            diffuse: 0.2
+
             exposePath: "/woodpath/jomon/audio/fsynths/source"
 
             WPN114.StreamSampler { id: fsynths; attack: 2000
+                dBlevel: 3
                 exposePath: "/woodpath/jomon/audio/fsynths"
                 path: "audio/woodpath/jomon/fsynths.wav" }
         }
 
-        WPN114.StereoSource //----------------------------------------- 5.YSYNTHS (9-10)
-        {
-            xspread: 0.3
-            diffuse: 0.3
-            y: 0.1
-            fixed:  true
-            exposePath: "/woodpath/jomon/audio/ysynths-1/source"
+//        WPN114.StereoSource //----------------------------------------- 5.YSYNTHS (9-10)
+//        {
+//            xspread: 0.3
+//            diffuse: 0.3
+//            y: 0.1
+//            fixed:  true
+//            exposePath: "/woodpath/jomon/audio/ysynths-1/source"
 
-            WPN114.MultiSampler { id: ysynths;
-                exposePath: "/woodpath/jomon/audio/ysynths-1"
-                path: "audio/woodpath/jomon/ysynths-1" }
-        }
+//            WPN114.MultiSampler { id: ysynths;
+//                exposePath: "/woodpath/jomon/audio/ysynths-1"
+//                path: "audio/woodpath/jomon/ysynths-1" }
+//        }
 
-        WPN114.StereoSource //----------------------------------------- 5.YSYNTHS (9-10)
-        {
-            id: ysynths_2_source
+//        WPN114.StereoSource //----------------------------------------- 5.YSYNTHS (9-10)
+//        {
+//            id: ysynths_2_source
 
-            xspread: 0.3
-            diffuse: 0.3
-            y: 0.1
-            fixed:  true
-            exposePath: "/woodpath/jomon/audio/ysynths-2/source"
+//            xspread: 0.3
+//            diffuse: 0.3
+//            y: 0.1
+//            fixed:  true
+//            exposePath: "/woodpath/jomon/audio/ysynths-2/source"
 
-            WPN114.MultiSampler { id: ysynths_2;
-                exposePath: "/woodpath/jomon/audio/ysynths-2"
-                path: "audio/woodpath/jomon/ysynths-2" }
-        }
+//            WPN114.MultiSampler { id: ysynths_2;
+//                exposePath: "/woodpath/jomon/audio/ysynths-2"
+//                path: "audio/woodpath/jomon/ysynths-2" }
+//        }
 
         WPN114.StereoSource //----------------------------------------- 5.YSYNTHS (9-10)
         {
@@ -733,52 +760,52 @@ centimètres de l'écran de l'appareil pour produire du son"
                 path: "audio/woodpath/jomon/jsynths/jsynths-2.wav" }
         }
 
-        WPN114.MonoSource //----------------------------------------- 6.OWL_1 (11-12)
-        {
-            position: Qt.vector3d(0.0, 0.5, 0.5)
-            fixed:  true
+//        WPN114.MonoSource //----------------------------------------- 6.OWL_1 (11-12)
+//        {
+//            position: Qt.vector3d(0.0, 0.5, 0.5)
+//            fixed:  true
 
-            exposePath: "/woodpath/jomon/audio/owl1/source"
+//            exposePath: "/woodpath/jomon/audio/owl1/source"
 
-            WPN114.Sampler { id: owl1; loop: true; xfade: 2000
-                exposePath: "/woodpath/jomon/audio/owl1"
-                path: "audio/woodpath/jomon/owl1.wav" }
-        }
+//            WPN114.Sampler { id: owl1; loop: true; xfade: 2000
+//                exposePath: "/woodpath/jomon/audio/owl1"
+//                path: "audio/woodpath/jomon/owl1.wav" }
+//        }
 
-        WPN114.MonoSource //----------------------------------------- 7.OWL_2 (13-14)
-        {
-            position: Qt.vector3d(1.0, 0.5, 0.5)
-            fixed: true
+//        WPN114.MonoSource //----------------------------------------- 7.OWL_2 (13-14)
+//        {
+//            position: Qt.vector3d(1.0, 0.5, 0.5)
+//            fixed: true
 
-            exposePath: "/woodpath/jomon/audio/owl2/source"
+//            exposePath: "/woodpath/jomon/audio/owl2/source"
 
-            WPN114.Sampler { id: owl2; loop: true; xfade: 2000
-                exposePath: "/woodpath/jomon/audio/owl2"
-                path: "audio/woodpath/jomon/owl2.wav" }
-        }
+//            WPN114.Sampler { id: owl2; loop: true; xfade: 2000
+//                exposePath: "/woodpath/jomon/audio/owl2"
+//                path: "audio/woodpath/jomon/owl2.wav" }
+//        }
 
-        WPN114.MonoSource //----------------------------------------- 8.OWL_3 (15-16)
-        {
-            position: Qt.vector3d(0.5, 1.0, 0.5)
-            fixed: true
+//        WPN114.MonoSource //----------------------------------------- 8.OWL_3 (15-16)
+//        {
+//            position: Qt.vector3d(0.5, 1.0, 0.5)
+//            fixed: true
 
-            exposePath: "/woodpath/jomon/audio/owl3/source"
+//            exposePath: "/woodpath/jomon/audio/owl3/source"
 
-            WPN114.Sampler { id: owl3; loop: true; xfade: 2000
-                exposePath: "/woodpath/jomon/audio/owl3"
-                path: "audio/woodpath/jomon/owl3.wav" }
-        }
+//            WPN114.Sampler { id: owl3; loop: true; xfade: 2000
+//                exposePath: "/woodpath/jomon/audio/owl3"
+//                path: "audio/woodpath/jomon/owl3.wav" }
+//        }
 
-        WPN114.MonoSource //----------------------------------------- 9.OWL_4 (17-18)
-        {
-            position: Qt.vector3d(0.5, 0.0, 0.5)
-            fixed: true
+//        WPN114.MonoSource //----------------------------------------- 9.OWL_4 (17-18)
+//        {
+//            position: Qt.vector3d(0.5, 0.0, 0.5)
+//            fixed: true
 
-            exposePath: "/woodpath/jomon/audio/owl4/source"
+//            exposePath: "/woodpath/jomon/audio/owl4/source"
 
-            WPN114.Sampler { id: owl4; loop: true; xfade: 2000
-                exposePath: "/woodpath/jomon/audio/owl4"
-                path: "audio/woodpath/jomon/owl4.wav" }
-        }
+//            WPN114.Sampler { id: owl4; loop: true; xfade: 2000
+//                exposePath: "/woodpath/jomon/audio/owl4"
+//                path: "audio/woodpath/jomon/owl4.wav" }
+//        }
     }
 }

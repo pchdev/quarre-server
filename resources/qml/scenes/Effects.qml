@@ -42,13 +42,13 @@ Item
                 exposePath: "/effects/reverb/lavaur"
             }
 
-//            WPN114.Convolver
-//            {
-//                id: amplitube
-//                active: false
-//                irPath: "audio/impulse-responses/AMPDEFAULT.wav"
-//                exposePath: "/effects/amplitube"
-//            }
+            WPN114.Convolver
+            {
+                id: amplitube
+                active: false
+                irPath: "audio/impulse-responses/AMPDEFAULT.wav"
+                exposePath: "/effects/amplitube"
+            }
         }
     }
 }

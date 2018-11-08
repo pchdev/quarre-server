@@ -5,6 +5,7 @@ WPN114.TimeNode
 {
     id: root
 
+    signal begin();
     property Interaction target
     property int countdown
     property int length
@@ -17,6 +18,10 @@ WPN114.TimeNode
     {
         source:   root.source
         date:     root.countdown
-        onStart:  target.begin();
+        onStart:
+        {
+            target.begin();
+            root.begin();
+        }
     }
 }

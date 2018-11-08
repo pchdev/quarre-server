@@ -13,6 +13,8 @@ Item
     property alias k2_fork_921: k2_fork_921
     property alias k2_fork_lavaur: k2_fork_lavaur
 
+    property alias k1_fork_amp: k1_fork_amp
+
     property bool kaivo_1_ready: false
     property bool kaivo_2_ready: false
     property bool absynth_ready: false
@@ -68,7 +70,10 @@ Item
                     prefader: true
                     exposePath: "/instruments/kaivo-1/forks/lavaur" }
 
-                WPN114.Fork { target: effects.amplitube;
+                WPN114.Fork
+                {
+                    id: k1_fork_amp
+                    target: effects.amplitube;
                     dBlevel: 0.0
                     prefader: true
                     active: false
@@ -107,13 +112,6 @@ Item
                     dBlevel: 0.0
                     prefader: true
                     exposePath: "/instruments/kaivo-1/forks/lavaur" }
-
-                WPN114.Fork { target: effects.amplitube
-                    dBlevel: 0.0
-                    active: false
-                    prefader: true
-                    exposePath: "/instruments/kaivo-2/forks/amplitube"
-                }
             }
         }
     }

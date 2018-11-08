@@ -503,6 +503,8 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         parentStream: audio_stream
         setup: rooms_setup
 
+        exposePath: "/woodpath/vare/audio/rooms"
+
         WPN114.StereoSource //----------------------------------------- 1.SNOWFALL (1-2)
         {
             xspread: 0.25
@@ -522,13 +524,15 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
         {
             fixed: true
-            xspread: 0.25
+            xspread: 0.45
 
             exposePath: "/woodpath/vare/audio/ambient/source"
 
             WPN114.StreamSampler { id: ambient;
-                exposePath: "/woodpath/vare/audio/ambientl"
+                dBlevel: -7
+                exposePath: "/woodpath/vare/audio/ambient"
                 path: "audio/woodpath/vare/vare-ambient.wav"
+                WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: -2 }
             }
         }
     }

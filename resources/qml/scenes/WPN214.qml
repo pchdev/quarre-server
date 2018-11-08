@@ -77,13 +77,14 @@ Item
         WPN114.StereoSource //----------------------------------------- SAMPLER
         {
             fixed: true
-            diffuse: 0.4
+            diffuse: 0.2
             xspread: 0.25
             y: 0.75
 
             exposePath: "/wpn214/sampler/source"
 
             WPN114.StreamSampler { id: sampler
+                dBlevel: -3
                 exposePath: "/wpn214/sampler"
                 path: "audio/wpn214/wpn214.wav" }
         }

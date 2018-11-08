@@ -268,7 +268,7 @@ Item
         WPN114.StereoSource //----------------------------------------- SPRING
         {
             fixed: true
-            diffuse: 0.5
+            diffuse: 0.2
             yspread: 0.25
 
             exposePath: "/woodpath/maaaet/audio/spring/source"
@@ -284,8 +284,8 @@ Item
         WPN114.StereoSource //----------------------------------------- WINDLEAVES
         {
             fixed: true
-            diffuse: 0.5
-            yspread: 0.25
+            diffuse: 0.1
+            xspread: 0.25
 
             exposePath: "/woodpath/maaaet/audio/windleaves/source"
 
@@ -330,8 +330,8 @@ Item
         WPN114.StereoSource //----------------------------------------- WOODWORKS
         {
             fixed: true
-            diffuse: 0.5
-            yspread: 0.25
+            diffuse: 0.1
+            xspread: 0.25
 
             exposePath: "/woodpath/maaaet/audio/woodworks/source"
 
@@ -346,7 +346,7 @@ Item
         WPN114.StereoSource //----------------------------------------- WOODWORKS_2
         {
             fixed: true
-            diffuse: 0.5
+            diffuse: 0.2
             yspread: 0.25
 
             exposePath: "/woodpath/maaaet/audio/woodworks2/source"
@@ -362,7 +362,7 @@ Item
         WPN114.StereoSource //----------------------------------------- 5.LEAVES (9-10)
         {
             fixed: true
-            diffuse: 0.4
+            diffuse: 0.2
             xspread: 0.25
             y: 0.75
 

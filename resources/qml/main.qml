@@ -86,12 +86,12 @@ Rectangle
 //        WPN114.SpeakerPair { xspread: 0.25; y: 0.5; influence: 0.5 }
 
         // octophonic ring setup for quarrè-angoulême
-        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.55 }
+        WPN114.SpeakerRing { nspeakers: 8; offset: -Math.PI/8; influence: 0.7 }
 
         // scrime 3dôme
-//        WPN114.SpeakerRing { nspeakers: 4; offset: Math.PI/8; influence: 0.5; elevation: 0.99 }
-//        WPN114.SpeakerRing { nspeakers: 6; offset: Math.PI/8; influence: 0.5; elevation: 0.66 }
-//        WPN114.SpeakerRing { nspeakers: 8; offset: Math.PI/8; influence: 0.5; elevation: 0.33 }
+//        WPN114.SpeakerRing { nspeakers: 4; offset: -Math.PI/8; influence: 0.7; elevation: 0.99 }
+//        WPN114.SpeakerRing { nspeakers: 6; offset: -Math.PI/8; influence: 0.7; elevation: 0.66 }
+//        WPN114.SpeakerRing { nspeakers: 8; offset: -Math.PI/8; influence: 0.7; elevation: 0.33 }
     }
 
     WPN114.AudioStream //------------------------------------------------------------- AUDIO
