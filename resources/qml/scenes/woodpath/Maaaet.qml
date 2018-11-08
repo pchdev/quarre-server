@@ -20,6 +20,8 @@ Item
         onStart:
         {
             maaaet_rooms.active = true
+            maaaet_rooms.level = 1
+
             instruments.rooms.active = false;
 
             wind.play();

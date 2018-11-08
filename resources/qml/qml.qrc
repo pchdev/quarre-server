@@ -33,5 +33,7 @@
         <file>views/MultiVUMeter.qml</file>
         <file>scenes/mix/MixScene.qml</file>
         <file>scenes/mix/MixInteraction.qml</file>
+        <file>PushApplicationControl.qml</file>
+        <file>PushScene.qml</file>
     </qresource>
 </RCC>

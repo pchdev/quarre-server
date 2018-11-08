@@ -27,7 +27,8 @@ Item
 
             onStart:
             {
-                wpn214_rooms.active = true
+                wpn214_rooms.active = true;
+                wpn214_rooms.level = 1;
                 sampler.play();
                 client_manager.notifyScene("wpn214")
             }

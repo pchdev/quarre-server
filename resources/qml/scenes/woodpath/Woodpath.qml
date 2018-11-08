@@ -44,7 +44,6 @@ Item
 
         onStart:
         {
-            console.log("starting woodpath scenario");
             maaaet.scenario.start();
         }
     }

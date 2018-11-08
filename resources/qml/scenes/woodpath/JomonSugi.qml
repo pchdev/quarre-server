@@ -23,10 +23,10 @@ Item
         {
             jomon_rooms.active = true;
 //            instruments.kaivo_1.active = true;
-            instruments.rooms.active = true;
-            instruments.kaivo_1.active = true;
-            instruments.kaivo_1.level = 0;
-            instruments.kaivo_2.active = false;
+            instruments.rooms.active    = true;
+            instruments.kaivo_1.active  = true;
+            instruments.kaivo_1.dBlevel   = -4;
+            instruments.kaivo_2.active  = false;
 
             cicadas.play();
             client_manager.notifyScene("yūgure");
@@ -118,6 +118,10 @@ Item
             {
                 instruments.kaivo_1.setPreset( instruments.jguitar );
                 client_manager.notifyScene("jomon.sugi")
+
+                functions.setTimeout(function() {
+                    instruments.kaivo_1.set( "env1_attack", 0.25 )
+                }, 1000 );
             }
 
             endExpression: jomon_score.index === 18;
@@ -132,7 +136,17 @@ Item
             WPN114.TimeNode
             {
                 startExpression: jomon_score.index === 9;
-                onStart: leaves.play();
+                onStart:
+                {
+                    leaves.play();
+                    instruments.kaivo_1.set("env1_attack", 0.5);
+                }
+            }
+
+            WPN114.TimeNode
+            {
+                startExpression: jomon_score.index === 14;
+                onStart: instruments.kaivo_1.set( "env1_attack", 0.25 );
             }
         }
 
@@ -141,7 +155,7 @@ Item
             after: akatsuki
             target: instruments.kaivo_1
             property: "level"
-            duration: sec( 5 )
+            duration: sec( 10 )
             from: instruments.kaivo_1.level
             to: 0;
 
@@ -579,7 +593,7 @@ centimètres de l'écran de l'appareil pour produire du son"
                 QuMapping
                 {
                     source: "/modules/mangler/lfo/resampler"
-                    expression: function(v) { mangler.set("Resamp Mod Depth", v) }
+                    expression: function(v) { mangler.set("Downsamp Mod Depth", v) }
                 },
 
                 QuMapping
@@ -635,7 +649,7 @@ centimètres de l'écran de l'appareil pour produire du son"
                 WPN114.AudioPlugin
                 {
                     id: mangler
-                    property real dry: 0.75
+                    property real dry: 0.6
                     property real wet: 0.0
 
                     onDryChanged: mangler.set("Dry", mangler.dry);

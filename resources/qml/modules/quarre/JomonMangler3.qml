@@ -39,9 +39,9 @@ Rectangle
         height: parent.height*0.1
         width: parent.width*0.65
         anchors.horizontalCenter: parent.horizontalCenter
-        model: [ "Passe-bas", "Passe-haut" ]
+        model: [ "Sinus", "Carré", "Triangle", "Aléatoire" ]
 
-        onActivated: waveform.value = (index+1)/4;
+        onActivated: waveform.value = index/4;
     }
 
 }

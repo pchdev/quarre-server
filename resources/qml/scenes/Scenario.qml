@@ -7,6 +7,12 @@ import "mix"
 
 Item
 {
+    property alias introduction: introduction;
+    property alias woodpath: woodpath;
+    property alias stonepath: stonepath;
+    property alias wpn214: wpn214;
+    property alias mix: mix_scene;
+
     MixScene        { id: mix_scene }
     Introduction    { id: introduction }
     WoodPath        { id: woodpath }
@@ -56,6 +62,11 @@ Item
         }
     }
 
+    function start()
+    {
+        scenario_start.value = 0;
+    }
+
     WPN114.Node //----------------------------------------------------------- MAIN_START
     {
         id: scenario_start
@@ -96,6 +107,7 @@ Item
             countstr = functions.realToTime(count);
 
             mainview.timer.text = countstr;
+            pushctl.lcd_display(1, 23, countstr);
         }
     }
 

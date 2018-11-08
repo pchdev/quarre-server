@@ -81,6 +81,7 @@ Item
         {
             root.status = "disconnected"
             root.connected = false;
+            pushctl.notifyDisconnection(number);
         }
     }
 

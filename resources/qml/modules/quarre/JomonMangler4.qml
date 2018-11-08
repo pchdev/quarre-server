@@ -37,7 +37,7 @@ Rectangle
         name: "modulation résonance"
 
         WPN114.Node on value { path: "/modules/mangler/lfo/res" }
-        y: parent.height*0.2 * 3
+        y: parent.height*0.2 * 4
     }
 
 }

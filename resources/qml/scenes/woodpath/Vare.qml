@@ -26,6 +26,8 @@ Item
 
             snowfall.play();
 
+            vare_rooms.level = 1;
+
             client_manager.notifyScene("vare");
             if ( !timer.running ) timer.start();
         }
@@ -127,8 +129,6 @@ Item
             {
                 for ( var i = 0; i < interaction_pads_1.pads.length; ++i )
                     instruments.kaivo_2.noteOff(0, interaction_pads_1.pads[i], 127);
-
-                ambient.play();
             }
         }
 
@@ -155,10 +155,21 @@ Item
 
         // AND THEN SECOND BATCH OF INTERACTIONS ( TUTTI )
 
+        WPN114.Automation
+        {
+            after: pads_ex_1
+            target: ambient
+            property: "dBlevel"
+            from: -48; to: ambient.dBlevel;
+            duration: sec( 45 )
+
+            onStart: ambient.play();
+        }
+
         WPN114.TimeNode
         {
-            after: interaction_granular_models_ex
-            date: sec( 2 )
+            after: pads_ex_1
+            date: sec( 3 )
             onStart:
             {
                 instruments.kaivo_1.noteOn(0, 78, 127);
@@ -168,9 +179,9 @@ Item
 
         InteractionExecutor
         {
-            after: interaction_granular_models_ex
-            date: sec( 15 )
+            after: pads_ex_1
             target: interaction_resonators_2
+            date: sec( 5 )
             countdown: sec( 10 )
             length: min( 3 )
 
@@ -186,17 +197,18 @@ Item
                     target: interaction_body_2
                     countdown: sec( 10 )
                     length: min( 3 )
-
-                    InteractionExecutor
-                    {
-                        id: interaction_pads_2_ex
-                        target: interaction_pads_2
-                        countdown: sec( 10 )
-                        length: min( 3.30 )
-
-                    }
                 }
             }
+        }
+
+        InteractionExecutor
+        {
+            id:         interaction_pads_2_ex
+            after:      interaction_granular_models_ex
+            target:     interaction_pads_2
+            date:       sec( 15 )
+            countdown:  sec( 10 )
+            length:     min( 3.30 )
         }
 
         WPN114.Automation //---- ENDING FADE OUTS
@@ -245,7 +257,6 @@ Item
                         instruments.kaivo_2.active = false;
                     }, 1000 );
                 }
-
             }
         }
     }
@@ -473,7 +484,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             title:  "Temps et Contretemps (tutti)"
             path:   "/woodpath/vare/interactions/pads-2"
-            module: "quarre/VarePads.qml"
+            module: "quarre/VarePercs.qml"
 
             description: interaction_granular_models_2.description
             mappings: interaction_pads_1.mappings

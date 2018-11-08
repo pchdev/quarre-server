@@ -21,6 +21,8 @@ Rectangle
     width: 640
     height: 480
 
+    PushApplicationControl { id: pushctl }
+
     WPN114.FolderNode //------------------------------------------------------------- NETSERVER
     {
         device: module_server

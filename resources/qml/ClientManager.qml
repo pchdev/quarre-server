@@ -142,6 +142,7 @@ Item
                     client.connected = true;
                     client.remote.connect(hostaddr);
                     nclients.value = nclients.value+1
+                    pushctl.notifyNewConnection(c);
                     break;
                 }
             }

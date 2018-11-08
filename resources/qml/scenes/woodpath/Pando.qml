@@ -32,6 +32,7 @@ Item
             verb.play        ( );
 
             pando_rooms.active = true;
+            pando_rooms.level = 1;
             client_manager.notifyScene("pando");
         }
 

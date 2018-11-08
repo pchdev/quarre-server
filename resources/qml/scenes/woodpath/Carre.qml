@@ -28,6 +28,8 @@ Item
             instruments.kaivo_2.active = false;
             instruments.rooms.active = true;
             carre_rooms.active = true;
+            carre_rooms.level = 1;
+
             alpine_swift.play();
 
             client_manager.notifyScene("carre");
@@ -87,14 +89,14 @@ Item
         {
             after:      interaction_bell_low_1_ex
             target:     interaction_bell_low_2
+            date:       sec( 2 )
             countdown:  sec( 5 )
             length:     sec( 80 )
 
-            onStart:    instruments.kaivo_1.set("env1_attack", 0);
+            onStart:    instruments.kaivo_1.set( "env1_attack", 0 );
 
             InteractionExecutor
             {
-                after:      interaction_bell_low_1_ex
                 target:     interaction_bell_hi_2
                 countdown:  sec( 5 )
                 length:     sec( 80 )
@@ -102,7 +104,6 @@ Item
                 InteractionExecutor
                 {
                     id:         interaction_bell_timbre_2_ex
-                    after:      interaction_bell_low_1_ex
                     target:     interaction_bell_timbre
                     countdown:  sec( 5 )
                     length:     sec( 80 )
@@ -181,9 +182,9 @@ Item
                 {
                     var rdm = Math.floor(Math.random()*14+40);
 
-                    instruments.kaivo_1.noteOn(0, rdm, 10);
+                    instruments.kaivo_1.noteOn(0, rdm, 60);
                     functions.setTimeout(function(){
-                        instruments.kaivo_1.noteOff(0, rdm, 10);
+                        instruments.kaivo_1.noteOff(0, rdm, 60);
                     }, 5000);
                 }
             }
@@ -204,9 +205,9 @@ Item
                 expression: function(v) {
                     var rdm = Math.floor(Math.random()*14+45);
 
-                    instruments.kaivo_1.noteOn(0, rdm, 50);
+                    instruments.kaivo_1.noteOn(0, rdm, 120);
                     functions.setTimeout(function(){
-                        instruments.kaivo_1.noteOff(0, rdm, 50);
+                        instruments.kaivo_1.noteOff(0, rdm, 120);
                     }, 5000);
                 }
             }
@@ -227,9 +228,9 @@ Item
                 expression: function(v) {
                     var rdm = Math.floor(Math.random()*14+60);
 
-                    instruments.kaivo_1.noteOn(0, rdm, 10);
+                    instruments.kaivo_1.noteOn(0, rdm, 60);
                     functions.setTimeout(function() {
-                        instruments.kaivo_1.noteOff(0, rdm, 10);
+                        instruments.kaivo_1.noteOff(0, rdm, 60);
                     }, 5000);
                 }
             }
@@ -250,9 +251,9 @@ Item
                 expression: function(v) {
                     var rdm = Math.floor(Math.random()*14+60);
 
-                    instruments.kaivo_1.noteOn(0, rdm, 50);
+                    instruments.kaivo_1.noteOn(0, rdm, 120);
                     functions.setTimeout(function(){
-                        instruments.kaivo_1.noteOff(0, rdm, 50);
+                        instruments.kaivo_1.noteOff(0, rdm, 120);
                     }, 5000);
                 }
             }
@@ -274,14 +275,14 @@ Item
             {
                 source: "/modules/xyzrotation/data"
                 expression: function(v)
-                {
-                    var y = Math.abs(v[1])/180;
+                {                    
                     var x = Math.abs(v[0])/90;
+                    var y = Math.abs(v[1])/180;
                     var z = Math.abs(v[2])/360;
 
-                    instruments.kaivo_1.set("res_brightness", y*0.5);
-                    instruments.kaivo_1.set("res_position", z);
-                    instruments.kaivo_1.set("body_pitch", x);
+                    instruments.kaivo_1.set("res_position", z);                    
+                    instruments.kaivo_1.set("body_pitch", y);
+                    instruments.kaivo_1.set("res_pitch", x*0.0125+0.5);
                 }
             }
         }       
@@ -292,7 +293,7 @@ Item
 
             title: "Insectes, déclenchement"
             path:   "/woodpath/carre/interactions/insects"
-            module: "quarre/ZRotation.qml"
+            module: "basics/ZRotation.qml"
 
             description: ""
 
