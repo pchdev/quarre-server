@@ -34,6 +34,7 @@ Item
     {
         introduction.rooms.setup  = rooms_setup
         instruments.rooms.setup   = rooms_setup
+        wpn214.rooms.setup        = rooms_setup
         effects.rooms.setup       = rooms_setup
 
         stonepath.initialize    ( rooms_setup );

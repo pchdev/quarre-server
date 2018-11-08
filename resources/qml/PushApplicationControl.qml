@@ -33,6 +33,12 @@ WPN114.PushDevice
         registerScene( scenario.stonepath.ammon,          25, Push.PadColor.GOLD )
     }
 
+    Component.onDestruction:
+    {
+        push.lcd_clear      ( );
+        push.padgrid_clear  ( );
+    }
+
     onPlay:
     {
         scenario.start();

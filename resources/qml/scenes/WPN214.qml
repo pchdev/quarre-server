@@ -72,6 +72,7 @@ Item
         active: false
         parentStream: audio_stream
         setup: rooms_setup
+        exposePath: "/wpn214/rooms"
 
         WPN114.StereoSource //----------------------------------------- SAMPLER
         {

@@ -88,11 +88,14 @@ Item
             duration: sec( 20 );
 
             from:  instruments.kaivo_1.level; to: 0;
-            onEnd: instruments.kaivo_1.allNotesOff();
+            onEnd:
+            {
+                instruments.kaivo_1.allNotesOff();
+                functions.setTimeout(function() {
+                    instruments.kaivo_1.active = false;
+                }, 5000 );
+            }
         }
-
-        WPN114.TimeNode { after: rainbells_fade_out; date: sec( 1 );
-            onStart: instruments.kaivo_1.active = false }
 
         InteractionExecutor
         {
@@ -127,8 +130,11 @@ Item
 
             onEnd:
             {
-                for ( var i = 0; i < interaction_pads_1.pads.length; ++i )
-                    instruments.kaivo_2.noteOff(0, interaction_pads_1.pads[i], 127);
+                if ( interaction_pads_1.last_note )
+                {
+                    instruments.kaivo_2.noteOff( 0, interaction_pads_1.last_note, 127 )
+                    interaction_pads_1.last_note = 0;
+                }
             }
         }
 
@@ -164,17 +170,6 @@ Item
             duration: sec( 45 )
 
             onStart: ambient.play();
-        }
-
-        WPN114.TimeNode
-        {
-            after: pads_ex_1
-            date: sec( 3 )
-            onStart:
-            {
-                instruments.kaivo_1.noteOn(0, 78, 127);
-                instruments.kaivo_1.noteOn(0, 83, 127);
-            }
         }
 
         InteractionExecutor
@@ -249,7 +244,6 @@ Item
                     snowfall.stop();
                     ambient.stop();
 
-                    instruments.kaivo_1.allNotesOff();
                     instruments.kaivo_2.allNotesOff();
 
                     functions.setTimeout(function(){
@@ -426,18 +420,29 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             property var pads: [ 86, 87, 88, 89, 81, 82, 84, 85, 71, 73, 76, 80 ]
 
+            property int last_note: 0
+
             mappings: QuMapping
             {
                 source: "/modules/vare/pads/index"
                 expression: function(v) {
-                    if ( v === 0 )
-                        for ( var i = 0; i < interaction_pads_1.pads.length; ++i )
-                            instruments.kaivo_2.noteOff(0, interaction_pads_1.pads[i], 127);
 
-                    else instruments.kaivo_2.noteOn(0, interaction_pads_1.pads[v-1], 127);
+                    var ln = interaction_pads_1.last_note;
+
+                    if ( ln && !v )
+                    {
+                        instruments.kaivo_2.noteOff(0, ln, 127);
+                        interaction_pads_1.last_note = 0;
+                    }
+
+                    else
+                    {
+                        var nn = interaction_pads_1.pads[v-1]
+                        instruments.kaivo_2.noteOn(0, nn, 127);
+                        interaction_pads_1.last_note = nn;
+                    }
                 }
             }
-
         }
 
         Interaction //--------------------------------------------- MARKHOR_GRANULAR_2

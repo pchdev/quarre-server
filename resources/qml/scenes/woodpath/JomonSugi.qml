@@ -24,12 +24,15 @@ Item
             jomon_rooms.active = true;
 //            instruments.kaivo_1.active = true;
             instruments.rooms.active    = true;
-            instruments.kaivo_1.active  = true;
-            instruments.kaivo_1.dBlevel   = -4;
+
+            instruments.kaivo_1.active       = true;
+            instruments.kaivo_1.dBlevel      = 0;
+            instruments.k1_fork_921.dBlevel  = -9
+
             instruments.kaivo_2.active  = false;
 
             cicadas.play();
-            client_manager.notifyScene("yūgure");
+            client_manager.notifyScene( "yūgure" );
             if ( !timer.running ) timer.start();
         }
 
@@ -121,7 +124,7 @@ Item
 
                 functions.setTimeout(function() {
                     instruments.kaivo_1.set( "env1_attack", 0.25 )
-                }, 1000 );
+                }, 3000 );
             }
 
             endExpression: jomon_score.index === 18;

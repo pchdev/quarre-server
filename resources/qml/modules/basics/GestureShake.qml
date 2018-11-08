@@ -7,9 +7,7 @@ GestureViewer
     title:          "Agiter"
     gestures:       [ "QtSensors.shake" ]
 
-    description:    "Agiter fermement votre téléphone de gauche à droite et inversement,
- de manière sèche et rapide"
-
+    description:    "Agiter fermement votre téléphone de gauche à droite et inversement, de manière sèche et rapide"
     anchors.fill:   parent    
 
     Connections
