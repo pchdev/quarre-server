@@ -6,13 +6,15 @@ import "../../basics/items"
 Item
 {
     id: root
-    property string method: ""
+    property string method
+    property bool mono: false
+
     anchors.fill: parent
 
     WPN114.Node
     {
         id:     node_position_left
-        path:   root.method+'/'+'position/left'
+        path:   root.method+'/source/position/left'
         type:   WPN114.Type.Vec2f
 
         critical: true
@@ -22,7 +24,7 @@ Item
     WPN114.Node
     {
         id:     node_position_right
-        path:   root.method+'/'+'position/right'
+        path:   root.method+'/source/position/right'
         type:   WPN114.Type.Vec2f
 
         critical: true
@@ -46,29 +48,29 @@ Item
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     text: root.method
-                    WPN114.Node on checked { path: root.method+'/'+'play'; critical: true }
+                    WPN114.Node on checked { path: root.method+'/functions/play'; critical: true }
+                }
 
-                    QuarreSlider //-------------------------------------------------------------- LEVEL
-                    {
-                        id: dBlevel_slider
-                        name: "level"
-                        y: 50
-                        min: -96;
-                        max: 12;
+                QuarreSlider //-------------------------------------------------------------- LEVEL
+                {
+                    id: dBlevel_slider
+                    name: "level"
+                    y: 50
+                    min: -96;
+                    max: 12;
 
-                        WPN114.Node on value { path: root.method+'/'+'dblevel'; critical: true }
-                    }
+                    WPN114.Node on value { path: root.method+'/stream/dBlevel'; critical: true }
+                }
 
-                    QuarreSlider //-------------------------------------------------------------- VERB
-                    {
-                        id: reverb_slider
-                        name: "reverb"
-                        y: 100
-                        min: -96;
-                        max: 12;
+                QuarreSlider //-------------------------------------------------------------- VERB
+                {
+                    id: reverb_slider
+                    name: "reverb"
+                    y: 100
+                    min: -96;
+                    max: 12;
 
-                        WPN114.Node on value { path: root.method+'/reverb/'+'dblevel'; critical: true }
-                    }
+//                    WPN114.Node on value { path: root.method+'/reverb/'+'dblevel'; critical: true }
                 }
             }
         }

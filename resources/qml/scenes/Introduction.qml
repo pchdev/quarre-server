@@ -6,6 +6,7 @@ Item
 {
     id: root
 
+    property string path
     property alias rooms:           introduction_rooms
     property alias scenario:        introduction_scenario
     property int xroads_result:     0
@@ -135,8 +136,9 @@ Item
     {
         id: introduction_rooms
         parentStream: audio_stream
-        active: false
+        setup: rooms_setup
 
+        active: false
         exposePath: "/introduction/audio/rooms"
 
         WPN114.StereoSource //----------------------------------------- 1.DIGIBIRDS (1-2)

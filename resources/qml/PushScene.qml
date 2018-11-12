@@ -21,12 +21,12 @@ Item
 
     function notifyStart()
     {
-        push.light_pad(index, Push.PadColor.BLACK, Push.PadLightingMode.PULSE_2);
+        push.lightPad(index, Push.PadColor.BLACK, Push.PadLightingMode.PULSE_2);
     }
 
     function notifyEnd()
     {
-        push.light_pad( index, pcolor, Push.PadLightingMode.OFF )
+        push.lightPad( index, pcolor, Push.PadLightingMode.OFF )
     }
 
 }

@@ -1,5 +1,7 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.4 as QC14
+import QtQuick.Controls 2.4
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.11
 import WPN114 1.0 as WPN114
 import "views/NodeView.js" as NodeView
 import "views"
@@ -15,21 +17,22 @@ Item
     property alias tree: tree
     property alias vumeters: vumeters
     property alias timer: timer_label
-    property var items: [ ]
+    property alias scene_view: sceneview
     property var target
 
     function impulse  ( )  { target.value = 0 }
     function toggle   ( )  { target.value = loader.item.checked }
     function slider   ( )  { target.value = loader.item.value }
+    function text     ( )  { target.value = loader.item.text; loader.item.text = "" }
 
-    Rectangle //---------------------------------------------------- RIGHTMOST RECT
+    Rectangle // ------------------------------------------------------------------- MASTER_VIEW
     {
-        id:      gui_view
-        x:       tree.width
-        height:  parent.height
-        width:   parent.width - tree.width
+        id: masterview
+        height: parent.height
+        width: parent.width - tree.width
+        x: tree.width
 
-        Loader { id: loader }
+        visible: true
 
         MultiVUMeter
         {
@@ -49,20 +52,97 @@ Item
         }
     }
 
-    QC14.TreeView
+    RoomsView // --------------------------------------------------------------- ROOMS_VIEW
+    {
+        id: sceneview
+        color: "black"
+        visible: false
+
+        setup:   rooms_setup
+        target:  scenario.woodpath.maaaet.rooms
+
+        width: parent.width - tree.width
+        height: width
+
+        x: tree.width
+        y: tabbar.height
+
+    }
+
+    SceneMixView //------------------------------------------------------------- MIX_VIEW
+    {
+        id: mixview
+        visible: false
+        path: "/introduction"
+
+        width: parent.width - tree.width
+        height: parent.height
+        x: tree.width
+        y: tabbar.height
+    }
+
+    Rectangle // --------------------------------------------------------------- FOOTER
+    {
+        id:         footer_rect
+        x:          tree.width
+        y:          sceneview.height + tabbar.height
+        width:      sceneview.width
+        height:     root.height - sceneview.height - tabbar.height
+        color:      "dimgrey"
+
+        Loader { id: loader } // <------ FOR INDIVIDUAL NODE CONTROL
+    }
+
+    TabBar // ----------------------------------------------------------------- TABS
+    {
+        id: tabbar
+        width: parent.width - tree.width
+        x: tree.width
+
+        TabButton
+        {
+            text: "Main"
+            onPressed:
+            {
+                masterview.visible = true;
+                sceneview.visible = false;
+            }
+        }
+
+        TabButton
+        {
+            text: "SceneSpace"
+            onPressed:
+            {
+                masterview.visible = false;
+                sceneview.visible = true;
+            }
+        }
+
+        TabButton
+        {
+            text: "SceneMix"
+            onPressed:
+            {
+
+            }
+        }
+    }
+
+    TreeView //---------------------------------------------------------------------- TREE_VIEW
     {
         id: tree
         height: parent.height
         width: parent.width*0.4
 
-        QC14.TableViewColumn
+        TableViewColumn
         {
             title: "name"
             role: "NodeName"
             width: 200
         }
 
-        QC14.TableViewColumn
+        TableViewColumn
         {
             title: "value"
             role: "NodeValue"
@@ -99,6 +179,12 @@ Item
                 loader.source = "views/Slider.qml";
                 loader.item.label = node.name;
                 loader.item.valueChanged.connect(node.setValue);
+
+                if ( node.name === "dBlevel" )
+                {
+                    loader.item.slider.from = -96
+                    loader.item.slider.to = 12;
+                }
             }
 
             else if ( node.type === WPN114.Type.Int )
@@ -108,7 +194,8 @@ Item
 
             else if ( node.type === WPN114.Type.String )
             {
-                // TODO
+                loader.source = "views/TextField.qml";
+                loader.item.onAccepted.connect(root.text);
             }
         }
     }

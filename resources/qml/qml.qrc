@@ -35,5 +35,12 @@
         <file>scenes/mix/MixInteraction.qml</file>
         <file>PushApplicationControl.qml</file>
         <file>PushScene.qml</file>
+        <file>views/TextField.qml</file>
+        <file>scenes/Scene.qml</file>
+        <file>views/RoomsView.qml</file>
+        <file>views/Speaker.qml</file>
+        <file>views/SpeakerInfluence.qml</file>
+        <file>views/RoomSourceView.qml</file>
+        <file>views/SceneMixView.qml</file>
     </qresource>
 </RCC>

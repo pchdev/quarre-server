@@ -7,6 +7,7 @@ Item
     id: root
     property string label
     property bool integer: false
+    property alias slider: slider;
 
     signal valueChanged(real v)
 

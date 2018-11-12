@@ -7,39 +7,19 @@ import "mix"
 
 Item
 {
+    id: root
     property alias introduction: introduction;
     property alias woodpath: woodpath;
     property alias stonepath: stonepath;
     property alias wpn214: wpn214;
-    property alias mix: mix_scene;
 
-    MixScene        { id: mix_scene }
-    Introduction    { id: introduction }
-    WoodPath        { id: woodpath }
-    StonePath       { id: stonepath }
-    WPN214          { id: wpn214 }
+    Introduction     { id: introduction }
+    WoodPath         { id: woodpath  }
+    StonePath        { id: stonepath }
+    WPN214           { id: wpn214  }
 
-    WPN114.Node
-    {
-        path: "/test"
-        type: WPN114.Type.Float
-
-        onValueReceived: instruments.kaivo_1.set("env1_attack", newValue);
-    }
-
-    Instruments     { id: instruments }
-    Effects         { id: effects }
-
-    function initialize()
-    {
-        introduction.rooms.setup  = rooms_setup
-        instruments.rooms.setup   = rooms_setup
-        wpn214.rooms.setup        = rooms_setup
-        effects.rooms.setup       = rooms_setup
-
-        stonepath.initialize    ( rooms_setup );
-        woodpath.initialize     ( rooms_setup );
-    }
+    Instruments      { id: instruments }
+    Effects          { id: effects }
 
     WPN114.Node //----------------------------------------------------------- AUDIO_RESET
     {
@@ -51,39 +31,34 @@ Item
 
         onValueReceived:
         {
-            console.log("AUDIO reset");
-
-            introduction.rooms.active = false
-            stonepath.reset ( );
-            woodpath.reset  ( );
-
+            introduction.rooms.active    = false
             instruments.rooms.active     = false
             instruments.kaivo_1.active   = false
             instruments.kaivo_2.active   = false
+
+            stonepath.reset ( );
+            woodpath.reset  ( );
         }
     }
 
-    function start()
+    function start() //----------------------------------------------------------- MAIN_START
     {
-        scenario_start.value = 0;
+        if ( !audio_stream.active )
+              audio_stream.active = true;
+
+        introduction.scenario.start();
+        timer.count = 0;
+
+        if ( !timer.running ) timer.start();
     }
 
-    WPN114.Node //----------------------------------------------------------- MAIN_START
+    WPN114.Node
     {
         id: scenario_start
         path: "/scenario/start"
         type: WPN114.Type.Impulse
 
-        onValueReceived:
-        {
-            if ( !audio_stream.active )
-                  audio_stream.active = true;
-
-            introduction.scenario.start();
-            timer.count = 0;
-
-            if ( !timer.running ) timer.start();
-        }
+        onValueReceived: root.start();
     }
 
     Item //----------------------------------------------------------------- TIMER
@@ -102,13 +77,11 @@ Item
             running = true;
         }
 
-        function update(tick)
+        function update( tick )
         {
             count += tick;
             countstr = functions.realToTime(count);
-
             mainview.timer.text = countstr;
-            pushctl.lcd_display(1, 23, countstr);
         }
     }
 

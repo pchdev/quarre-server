@@ -376,7 +376,7 @@ Item
             id: smoke_source;
             exposePath: "/stonepath/diaclases/audio/smoke/source"
 
-            WPN114.Sampler { id: smoke;
+            WPN114.Sampler { id: smoke; loop: true; xfade: 3000
                 exposePath: "/stonepath/diaclases/audio/smoke"
                 path: "audio/stonepath/diaclases/smoke.wav" }
         }

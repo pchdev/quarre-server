@@ -245,7 +245,6 @@ Item
             }
         }
 
-
         Interaction
         {
             id: interaction_bell_hi_2
@@ -327,8 +326,6 @@ Item
             {
                 source: "/gestures/whip/trigger"
                 expression: function(v) {
-//                    root.target_thunder_executor.end();
-//                    thunder.playRandom();
                 }
             }
 
@@ -357,7 +354,7 @@ Item
                 }
             }
 
-            WPN114.MonoSource
+            WPN114.MonoSource // ------------------------------------------ MULTISWIFTS
             {
                 id: multiswifts_source
 
@@ -436,6 +433,9 @@ Item
 
             WPN114.StereoSource //----------------------------------------- HARMONICS
             {
+                fixed: true
+                yspread: 0.4
+
                 id: harmonics_source
                 exposePath: "/woodpath/carre/audio/harmonics/source"
 
@@ -447,17 +447,17 @@ Item
                 }
             }
 
-            WPN114.MonoSource //----------------------------------------- RAVENS
-            {
-                id:         ravens_source
-                exposePath: "/woodpath/carre/audio/ravens/rooms"
+//            WPN114.MonoSource //----------------------------------------- RAVENS
+//            {
+//                id:         ravens_source
+//                exposePath: "/woodpath/carre/audio/ravens/rooms"
 
-                WPN114.MultiSampler { id: ravens;
-                    exposePath: "/woodpath/carre/audio/ravens"
-                    path: "audio/woodpath/carre/ravens"
-                    WPN114.Fork { target: effects.reverb; dBlevel: 3 }
-                }
-            }
+//                WPN114.MultiSampler { id: ravens;
+//                    exposePath: "/woodpath/carre/audio/ravens"
+//                    path: "audio/woodpath/carre/ravens"
+//                    WPN114.Fork { target: effects.reverb; dBlevel: 3 }
+//                }
+//            }
         }
     }
 }

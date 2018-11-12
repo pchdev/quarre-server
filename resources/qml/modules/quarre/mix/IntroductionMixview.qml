@@ -6,12 +6,11 @@ import "../items"
 Item
 {
     id: root
+    anchors.fill: parent
 
     SwipeView
     {
         id: view
-
-        anchors.fill: parent
         currentIndex: 0
 
         SourceMix { method: "/introduction/audio/digibirds" }

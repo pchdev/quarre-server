@@ -14,16 +14,12 @@ Item
         source: audio_stream
         duration: -1
 
-        onEnd:
-        {
-            query_server.savePreset("quarre-angouleme.json",
-                [ "dBlevel", "position", "diffuse" ]);
-        }
-
         InteractionExecutor
         {
-            target: introduction_mix_interaction
+            target: cendres_mix_interaction
             exposePath: "/mix/introduction"
+            countdown: sec( 5 )
+            length: sec( 30 )
 
             onStart:  introduction.rooms.active = true;
             onEnd:    introduction.rooms.active = false;
@@ -71,9 +67,10 @@ Item
         id:      introduction_mix_interaction
         title:   "Introduction scene mix"
 
-        target:  "/introduction/audio"
-        path:    "/mix/interactions/introduction"
-        module:  "quarre/mix/IntroductionMixview.qml"
+        target:       "/introduction/audio"
+        path:         "/mix/interactions/introduction"
+        module:       "quarre/mix/IntroductionMixview.qml"
+        description:  "mix"
     }
 
     MixInteraction
@@ -84,6 +81,7 @@ Item
         target:   "/stonepath/cendres/audio"
         path:     "/mix/interactions/stonepath/cendres"
         module:   "quarre/mix/CendresMixview.qml"
+        description: "mix"
     }
 
     MixInteraction

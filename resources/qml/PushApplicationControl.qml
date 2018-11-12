@@ -7,42 +7,43 @@ WPN114.PushDevice
     id: push
 
     property var scenes: [ ]
+    property var currentScene
 
     Component.onCompleted:
     {
-        push.lcd_clear      ( );
-        push.padgrid_clear  ( );
-        push.lcd_display    ( 0, 31, "WPN214" )
+        push.lcdClearAll   ( )
+        push.padGridClear  ( )
+//        push.lcdDisplay    ( 0, 31, "WPN214" )
 
-        push.light_button( Push.CommandButtons.Play, Push.ButtonLightingMode.DIM )
-        push.light_toggle( Push.ToggleRow.UPPER, 0, Push.ToggleLightingMode.RED_DIM );
+        push.lightButton( Push.CommandButtons.Play, Push.ButtonLightingMode.Dim)
+        push.lightToggle( Push.ToggleRow.UPPER, 0, Push.ToggleLightingMode.RedDim );
 
-        registerScene( scenario.introduction,   58, Push.PadColor.WHITE )
-        registerScene( scenario.wpn214,         50, Push.PadColor.GREEN )
+        registerScene( scenario.introduction,   58, Push.PadColor.White )
+        registerScene( scenario.wpn214,         50, Push.PadColor.Green)
 
-        registerScene( scenario.woodpath.maaaet,  56, Push.PadColor.GRASS_GREEN )
-        registerScene( scenario.woodpath.carre,   48, Push.PadColor.DARKER_GRASS_GREEN )
-        registerScene( scenario.woodpath.pando,   40, Push.PadColor.DARKEST_GRASS_GREEN )
-        registerScene( scenario.woodpath.vare,    32, Push.PadColor.BLUE_GREEN )
-        registerScene( scenario.woodpath.jomon,   24, Push.PadColor.GOLD )
+        registerScene( scenario.woodpath.maaaet,  56, Push.PadColor.GrassGreen )
+        registerScene( scenario.woodpath.carre,   48, Push.PadColor.DarkerGrassGreen)
+        registerScene( scenario.woodpath.pando,   40, Push.PadColor.DarkestGrassGreen )
+        registerScene( scenario.woodpath.vare,    32, Push.PadColor.BlueGreen)
+        registerScene( scenario.woodpath.jomon,   24, Push.PadColor.Gold )
 
-        registerScene( scenario.stonepath.cendres,        57, Push.PadColor.DARKEST_RED)
-        registerScene( scenario.stonepath.diaclases,      49, Push.PadColor.DARKER_RED )
-        registerScene( scenario.stonepath.deidarabotchi,  41, Push.PadColor.DARKEST_PURPLISH_BLUE )
-        registerScene( scenario.stonepath.markhor,        33, Push.PadColor.BLUE_STEEL )
-        registerScene( scenario.stonepath.ammon,          25, Push.PadColor.GOLD )
+        registerScene( scenario.stonepath.cendres,        57, Push.PadColor.DarkestRed)
+        registerScene( scenario.stonepath.diaclases,      49, Push.PadColor.DarkerRed )
+        registerScene( scenario.stonepath.deidarabotchi,  41, Push.PadColor.DarkestPurplishBlue )
+        registerScene( scenario.stonepath.markhor,        33, Push.PadColor.BlueSteel )
+        registerScene( scenario.stonepath.ammon,          25, Push.PadColor.Gold )
     }
 
     Component.onDestruction:
     {
-        push.lcd_clear      ( );
-        push.padgrid_clear  ( );
+        push.lcdClearAll  ( )
+        push.padGridClear ( )
     }
 
     onPlay:
     {
         scenario.start();
-        push.light_button( Push.CommandButtons.Play, Push.ButtonLightingMode.FULL_BLINK_SLOW)
+        push.lightButton( Push.CommandButtons.Play, Push.ButtonLightingMode.FullBlinkSlow)
     }
 
     function registerScene( scene, index, color )
@@ -54,16 +55,17 @@ WPN114.PushDevice
 
     function notifyNewConnection(index)
     {
-        push.light_toggle( Push.ToggleRow.LOWER, index, Push.ToggleLightingMode.YELLOW_DIM )
+        push.lightToggle( Push.ToggleRow.Lower, index, Push.ToggleLightingMode.YellowDim )
     }
 
     function notifyDisconnection(index)
     {
-        push.light_toggle( Push.ToggleRow.LOWER, index, Push.ToggleLightingMode.RED_DIM )
+        push.lightToggle( Push.ToggleRow.Lower, index, Push.ToggleLightingMode.RedDim )
     }
 
     function notifySceneStart(scene)
     {
+        currentScene = scene;
         scenes.forEach(function(pscene){
             if ( pscene.scene === scene )
                  pscene.notifyStart();
@@ -78,6 +80,11 @@ WPN114.PushDevice
         });
     }
 
+    onCurrentSceneChanged:
+    {
+
+    }
+
     onPadOn:
     {
         scenes.forEach(function(pscene){
@@ -90,9 +97,14 @@ WPN114.PushDevice
     {
         if ( idx === 0 && value )
         {
-             push.light_toggle(Push.ToggleRow.UPPER, 0, Push.ToggleLightingMode.GREEN_DIM )
+             push.lightToggle(Push.ToggleRow.Upper, 0, Push.ToggleLightingMode.GreenDim )
             audio_stream.active = true;
         }
+    }
+
+    onKnob:
+    {
+
     }
 
     Connections //---------------------------------------------------------- SCENARIO_CONNECTIONS

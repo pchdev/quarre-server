@@ -1,43 +1,66 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
+import QtQuick.Controls 1.4 as QC14
+import WPN114 1.0 as WPN114
 
 import "../items"
 
 Item
 {
+    property WPN114.Node currentNode;
+    property int currentIndex: 0
+
+    property var scenes:
+    [
+      "/introduction", "/cendres", "/diaclases", "/deidarabotchi", "/markhor", "/ammon",
+      "/maaaet", "/carre", "/pando", "/vare", "/jomon", "/wpn214"
+    ]
+
     id: root
+    anchors.fill: parent
 
-    SwipeView
+    WPN114.OSCQueryClient
     {
-        id: view
+        id: client
+        zeroConfHost: "quarre-server"
 
+        onConnected:
+        {
+
+
+        }
+    }
+
+    function next()
+    {
+
+    }
+
+    function previous()
+    {
+
+    }
+
+    QC14.TabView
+    {
         anchors.fill: parent
-        currentIndex: 0
 
-        SourceMix { method: "/cendres/ashes" }
-        SourceMix { method: "/cendres/birds" }
-        SourceMix { method: "/cendres/boiling" }
-        SourceMix { method: "/cendres/burn" }
-        SourceMix { method: "/cendres/dragon" }
-        SourceMix { method: "/cendres/groundwalk" }
-        SourceMix { method: "/cendres/background" }
-        SourceMix { method: "/cendres/marmots" }
-        SourceMix { method: "/cendres/necks" }
-        SourceMix { method: "/cendres/quarre" }
-        SourceMix { method: "/cendres/redbirds_1" }
-        SourceMix { method: "/cendres/redbirds_2" }
-        SourceMix { method: "/cendres/thunder" }
-        SourceMix { method: "/cendres/waves" }
+        QC14.Tab
+        {
+            title: "Mix"
+
+            Text
+            {
+
+            }
+
+            Button
+            {
+                text: "play"
+                checkable: true
+            }
+        }
     }
 
-    PageIndicator
-    {
-        id:         indicator
-        count:      view.count
 
-        currentIndex:   view.currentIndex
-        anchors.bottom: view.bottom
-
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
 }

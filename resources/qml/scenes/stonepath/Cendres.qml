@@ -375,6 +375,7 @@ Item
             diffuse: 0.47
 
             WPN114.StreamSampler { id: ashes; loop: true; xfade: 2000
+                dBlevel: -2
                 exposePath: "/stonepath/cendres/audio/ashes"
                 path: "audio/stonepath/cendres/ashes.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
@@ -418,6 +419,7 @@ Item
             fixed: true
 
             WPN114.Sampler { id: light_background;
+                dBlevel: -3
                 exposePath: "/stonepath/cendres/audio/light-background"
                 path: "audio/stonepath/cendres/light-background.wav" }
         }
@@ -432,6 +434,7 @@ Item
             y: 0.1
 
             WPN114.StreamSampler { id: burn; attack: 1000
+                dBlevel: 0
                 exposePath: "/stonepath/cendres/audio/burn"
                 path: "audio/stonepath/cendres/burn.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -9 }
@@ -447,6 +450,7 @@ Item
             fixed: true
 
             WPN114.Sampler { id: waves; loop: true; xfade: 2000
+                dBlevel: 6
                 exposePath: "/stonepath/cendres/audio/waves"
                 path: "audio/stonepath/cendres/waves.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -6 }
@@ -463,6 +467,7 @@ Item
             y: 0.75
 
             WPN114.MultiSampler { id: thunder;
+                dBlevel: 7
                 exposePath: "/stonepath/cendres/audio/thunder"
                 path: "audio/stonepath/cendres/thunder"
                 WPN114.Fork { target: effects.reverb; dBlevel: -6 }
@@ -475,6 +480,7 @@ Item
             exposePath: "/stonepath/cendres/audio/marmots/source"
 
             WPN114.MultiSampler { id: marmots;
+                dBlevel: 6
                 exposePath: "/stonepath/cendres/audio/marmots"
                 path: "audio/stonepath/cendres/marmots"
                 WPN114.Fork { target: effects.reverb; dBlevel: -6 }
@@ -490,6 +496,7 @@ Item
             y: 0.55
 
             WPN114.Sampler { id: boiling;
+                dBlevel: 8
                 exposePath: "/stonepath/cendres/audio/boiling"
                 path: "audio/stonepath/cendres/boiling.wav" }
         }
@@ -499,12 +506,13 @@ Item
             exposePath: "/stonepath/cendres/audio/quarre/source"
 
             xspread: 0.42
-            diffuse: 1.0
+            diffuse: 0.2
             bias: 0.82
             fixed: true
             y: 0.45
 
             WPN114.Sampler { id: quarre; attack: 10000; release: 2000;
+                dBlevel: 0
                 exposePath: "/stonepath/cendres/audio/quarre"
                 path: "audio/stonepath/cendres/quarre.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -6 }
@@ -516,7 +524,7 @@ Item
             id:         groundwalk_source
             exposePath: "/stonepath/cendres/audio/groundwalk/source"
 
-            WPN114.StreamSampler { id: groundwalk; dBlevel: 6
+            WPN114.StreamSampler { id: groundwalk; dBlevel: 14
                 exposePath: "/stonepath/cendres/audio/groundwalk"
                 path: "audio/stonepath/cendres/groundwalk.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
@@ -527,11 +535,12 @@ Item
         {
             exposePath: "/stonepath/cendres/audio/necks/source"
 
-            xspread: 0.05
+            xspread: 0.15
             fixed: true
-            y: 0.52
+            y: 0.6
 
             WPN114.Sampler { id: necks;
+                dBlevel: 12
                 exposePath: "/stonepath/cendres/audio/necks"
                 path: "audio/stonepath/cendres/necks.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
@@ -544,6 +553,7 @@ Item
             exposePath: "/stonepath/cendres/audio/dragon/rooms"
 
             WPN114.StreamSampler { id: dragon; release: 10000
+                dBlevel: 10.7
                 exposePath: "/stonepath/cendres/audio/dragon"
                 path: "audio/stonepath/cendres/dragon.wav"
                 WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
