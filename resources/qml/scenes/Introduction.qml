@@ -143,7 +143,6 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 1.DIGIBIRDS (1-2)
         {
-            dBlevel: 0
             xspread: 0.35
             diffuse: 0.49
             fixed: true
@@ -157,7 +156,6 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 2.SWARMS (3-4)
         {
-            dBlevel: 0
             xspread: 0.27
             diffuse: 0.17
             fixed: true
@@ -172,35 +170,32 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 3.DRAGON_HIGH (5-6)
         {
-            dBlevel: 3.00
             xspread: 0.28
             fixed: true
             y: 0.65
 
             exposePath: "/introduction/audio/dragon-hi/source"
 
-            WPN114.StreamSampler { id: dragon_hi;
+            WPN114.StreamSampler { id: dragon_hi; dBlevel: 3.00
                 exposePath: "/introduction/audio/dragon-hi"
                 path: "audio/introduction/dragon-hi.wav" }
         }
 
         WPN114.StereoSource //----------------------------------------- 4.DRAGON_LOW (7-8)
         {
-            dBlevel: 6.00
             xspread: 0.28
             fixed: true
             y: 0.25
 
             exposePath: "/introduction/audio/dragon-lo/source"
 
-            WPN114.StreamSampler { id: dragon_lo;
+            WPN114.StreamSampler { id: dragon_lo; dBlevel: 6.00
                 exposePath: "/introduction/audio/dragon-lo"
                 path: "audio/introduction/dragon-lo.wav" }
         }
 
         WPN114.StereoSource //----------------------------------------- 5.WALKING_1 (9-10)
         {
-            dBlevel: 0.0
             xspread: 0.2
             fixed: true
 
@@ -213,7 +208,6 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 6.WALKING_2 (11-12)
         {
-            dBlevel: 0.00
             xspread: 0.15
             fixed: true
             y: 0.43
@@ -227,14 +221,13 @@ Item
 
         WPN114.StereoSource //----------------------------------------- 7.SYNTH (13-14)
         {
-            dBlevel: 6.00
             xspread: 0.25
             fixed: true
             y: 0.85
 
             exposePath: "/introduction/audio/synth/source"
 
-            WPN114.StreamSampler { id: synth;
+            WPN114.StreamSampler { id: synth; dBlevel: 6.00
                 exposePath: "/introduction/audio/synth"
                 path: "audio/introduction/synth.wav" }
         }

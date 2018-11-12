@@ -8,8 +8,17 @@ Item
     property string label
     property bool integer: false
     property alias slider: slider;
+    property real min: 0.0
+    property real max: 1.0
+    property real defaultValue: 0.0
 
-    signal valueChanged(real v)
+    signal valueChanged(real v)   
+
+    function update(v)
+    {
+        slider.value    = v;
+        spinbox.value   = v;
+    }
 
     Text
     {
@@ -21,18 +30,30 @@ Item
 
     Slider
     {
-        id: slider
-        from: 0
-        to: 1
-        onValueChanged: root.valueChanged(slider.value);
+        id:     slider
+        from:   root.min
+        to:     root.max
+
+        value: defaultValue
+
+        onValueChanged:
+        {
+            root.valueChanged(slider.value);
+            spinbox.value = value;
+        }
     }
 
     QC.SpinBox
     {
+        id: spinbox
         decimals: 2
         x: 300
-        id: spinbox
-        value: slider.value
-    }
 
+        value: defaultValue
+
+        minimumValue: root.min
+        maximumValue: root.max
+
+        onValueChanged: slider.value = value;
+    }
 }

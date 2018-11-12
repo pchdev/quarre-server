@@ -106,6 +106,7 @@ Item
             {
                 masterview.visible = true;
                 sceneview.visible = false;
+                mixview.visible = false;
             }
         }
 
@@ -116,6 +117,7 @@ Item
             {
                 masterview.visible = false;
                 sceneview.visible = true;
+                mixview.visible = false;
             }
         }
 
@@ -124,7 +126,9 @@ Item
             text: "SceneMix"
             onPressed:
             {
-
+                masterview.visible = false;
+                sceneview.visible = false;
+                mixview.visible = true;
             }
         }
     }

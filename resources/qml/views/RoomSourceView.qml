@@ -52,8 +52,6 @@ Item
         var pos_l = node.subnode( "left/properties/position" );
         var pos_r = node.subnode( "right/properties/position" );
 
-        console.log(pos_l.value, pos_r.value);
-
         source_left.x = pos_l.value.x*root.width-5;
         source_left.y = (1-(pos_l.value.y))*root.width-5;
 

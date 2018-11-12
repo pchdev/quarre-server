@@ -69,7 +69,7 @@ Rectangle
                 node.defaultValue = node.value;
             });
 
-            query_server.savePreset(newValue, ["dBlevel"], ["DEFAULT_VALUE"])
+            query_server.savePreset(newValue, [ "dBlevel" ], [ "DEFAULT_VALUE" ])
         }
     }
 
@@ -77,7 +77,15 @@ Rectangle
     {
         path: "/presets/load"
         type: WPN114.Type.String
-        onValueReceived: query_server.loadPreset(newValue);
+        onValueReceived:
+        {
+            query_server.loadPreset(newValue);
+
+            var nodes = query_server.collectNodes("dBlevel")
+            nodes.forEach(function(node) {
+                node.value = node.defaultValue;
+            });
+        }
     }
 
     WPN114.RoomSetup //---------------------------------------------------------------- ROOM_SETUP
