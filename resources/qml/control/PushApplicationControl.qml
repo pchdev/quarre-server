@@ -16,7 +16,7 @@ WPN114.PushDevice
 //        push.lcdDisplay    ( 0, 31, "WPN214" )
 
         push.lightButton( Push.CommandButtons.Play, Push.ButtonLightingMode.Dim)
-        push.lightToggle( Push.ToggleRow.UPPER, 0, Push.ToggleLightingMode.RedDim );
+        push.lightToggle( Push.ToggleRow.Upper, 0, Push.ToggleLightingMode.RedDim );
 
         registerScene( scenario.introduction,   58, Push.PadColor.White )
         registerScene( scenario.wpn214,         50, Push.PadColor.Green)
@@ -98,7 +98,7 @@ WPN114.PushDevice
         if ( idx === 0 && value )
         {
              push.lightToggle(Push.ToggleRow.Upper, 0, Push.ToggleLightingMode.GreenDim )
-            audio_stream.active = true;
+            if ( !audiostream.active ) audiostream.active = true;
         }
     }
 

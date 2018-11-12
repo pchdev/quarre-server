@@ -1,46 +1,46 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>control/PushApplicationControl.qml</file>
+        <file>control/PushScene.qml</file>
+        <file>engine/Functions.qml</file>
+        <file>engine/Interaction.qml</file>
+        <file>engine/InteractionExecutor.qml</file>
+        <file>engine/QuMapping.qml</file>
+        <file>network/ClientManager.qml</file>
+        <file>network/Client.qml</file>
+        <file>scenes/Effects.qml</file>
+        <file>scenes/Instruments.qml</file>
         <file>scenes/Introduction.qml</file>
         <file>scenes/WPN214.qml</file>
-        <file>scenes/Instruments.qml</file>
-        <file>scenes/stonepath/StonePath.qml</file>
+        <file>scenes/stonepath/Stonepath.qml</file>
         <file>scenes/stonepath/Cendres.qml</file>
         <file>scenes/stonepath/Diaclases.qml</file>
         <file>scenes/stonepath/Deidarabotchi.qml</file>
         <file>scenes/stonepath/Markhor.qml</file>
         <file>scenes/stonepath/Ammon.qml</file>
-        <file>scenes/woodpath/WoodPath.qml</file>
+        <file>scenes/stonepath/AmmonScore.qml</file>
+        <file>scenes/woodpath/Woodpath.qml</file>
         <file>scenes/woodpath/Maaaet.qml</file>
         <file>scenes/woodpath/Carre.qml</file>
         <file>scenes/woodpath/Pando.qml</file>
         <file>scenes/woodpath/Vare.qml</file>
-        <file>scenes/woodpath/JomonSugi.qml</file>
-        <file>Interaction.qml</file>
-        <file>scenes/QuMapping.qml</file>
-        <file>ClientManager.qml</file>
-        <file>QuarreClient.qml</file>
-        <file>scenes/Effects.qml</file>
-        <file>Functions.qml</file>
-        <file>scenes/stonepath/AmmonScore.qml</file>
-        <file>views/NodeView.js</file>
-        <file>views/Button.qml</file>
-        <file>views/Slider.qml</file>
-        <file>InteractionExecutor.qml</file>
-        <file>MainView.qml</file>
-        <file>scenes/Scenario.qml</file>
+        <file>scenes/woodpath/Jomon.qml</file>
         <file>scenes/woodpath/JomonScore.qml</file>
-        <file>views/MultiVUMeter.qml</file>
-        <file>scenes/mix/MixScene.qml</file>
-        <file>scenes/mix/MixInteraction.qml</file>
-        <file>PushApplicationControl.qml</file>
-        <file>PushScene.qml</file>
-        <file>views/TextField.qml</file>
+        <file>scenes/Scenario.qml</file>
         <file>scenes/Scene.qml</file>
-        <file>views/RoomsView.qml</file>
-        <file>views/Speaker.qml</file>
-        <file>views/SpeakerInfluence.qml</file>
+        <file>views/items/Button.qml</file>
+        <file>views/items/Slider.qml</file>
+        <file>views/items/Speaker.qml</file>
+        <file>views/items/SpeakerInfluence.qml</file>
+        <file>views/items/TextField.qml</file>
+        <file>views/MainView.qml</file>
+        <file>views/MultiVUMeter.qml</file>
         <file>views/RoomSourceView.qml</file>
+        <file>views/RoomsView.qml</file>
         <file>views/SceneMixView.qml</file>
+        <file>views/SceneView.qml</file>
+        <file>network/NetworkManager.qml</file>
+        <file>control/PresetsManager.qml</file>
     </qresource>
 </RCC>

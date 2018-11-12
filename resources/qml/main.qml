@@ -5,6 +5,9 @@ import WPN114 1.0 as WPN114
 
 import "scenes"
 import "views"
+import "engine"
+import "network"
+import "control"
 
 // TODO: Pink Noise setup testing module
 // TODO: Mixing module for every scene (including forks)
@@ -14,91 +17,30 @@ import "views"
 
 Rectangle
 {
-    id: application
-    objectName: "quarre-root"
+    id:         application
+    visible:    true
+    width:      640
+    height:     480
 
-    visible: true
-    width: 640
-    height: 480
+    // ================================================================================ CORE
 
-    PushApplicationControl { id: pushctl }
+    NetworkManager          { id: net  }
+    PresetsManager          { id: presets }
+    Functions               { id: functions }
+    Scenario                { id: scenario }
+    MainView                { id: mainview }
+//    PushApplicationControl  { id: push }
 
-    WPN114.FolderNode //------------------------------------------------------------- NETSERVER
+    WPN114.RoomSetup //================================================================= ROOM_SETUP
     {
-        device: module_server
-        recursive: true
-        folderPath: "/Users/pchd/Repositories/quarre-server/resources/qml/modules"
-        path: "/modules"
-        filters: ["*.qml"]
-    }
-
-    WPN114.OSCQueryServer
-    {
-        id: module_server
-        name: "quarre-modules"
-        tcpPort: 8576
-        udpPort: 4132
-    }
-
-    WPN114.OSCQueryServer
-    {
-        id: query_server
-        singleDevice: true
-        name: "quarre-server"
-        tcpPort: 5678
-        udpPort: 1234       
-
-        Component.onCompleted:
-            mainview.tree.model = query_server.nodeTree()
-    }
-
-    ClientManager   { id: client_manager; maxClients: 4 }
-    Functions       { id: functions }
-    Scenario        { id: scenario }
-    MainView        { id: mainview }
-
-    WPN114.Node //----------------------------------------------------------------------- PRESETS
-    {
-        path: "/presets/save"
-        type: WPN114.Type.String
-
-        onValueReceived:
-        {
-            var nodes = query_server.collectNodes("dBlevel")
-            nodes.forEach(function(node) {
-                node.defaultValue = node.value;
-            });
-
-            query_server.savePreset(newValue, [ "dBlevel" ], [ "DEFAULT_VALUE" ])
-        }
-    }
-
-    WPN114.Node
-    {
-        path: "/presets/load"
-        type: WPN114.Type.String
-        onValueReceived:
-        {
-            query_server.loadPreset(newValue);
-
-            var nodes = query_server.collectNodes("dBlevel")
-            nodes.forEach(function(node) {
-                node.value = node.defaultValue;
-            });
-        }
-    }
-
-    WPN114.RoomSetup //---------------------------------------------------------------- ROOM_SETUP
-    {
-        id: rooms_setup;
-
+        id: roomsetup;
         // octophonic ring setup for quarrè-angoulême
         WPN114.SpeakerRing { nspeakers: 8; offset: -Math.PI/8; influence: 0.707 }
     }
 
-    WPN114.AudioStream //------------------------------------------------------------- AUDIO
+    WPN114.AudioStream //=============================================================== AUDIO
     {
-        id:             audio_stream
+        id:             audiostream
 
         outDevice:      "Scarlett 18i20 USB"
         exposePath:     "/master"
@@ -110,7 +52,7 @@ Rectangle
         inserts: WPN114.PeakRMS
         {
             id:      vu_master
-            source:  audio_stream
+            source:  audiostream
             active:  true
 
             onRms:   mainview.vumeters.processRms  ( value )

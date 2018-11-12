@@ -12,9 +12,9 @@ Item
     {
         id: effects_rooms
         active: true
-        parentStream: audio_stream
-        setup: rooms_setup
-        exposePath: "/effects/rooms"
+        parentStream: audiostream
+        setup: roomsetup
+        exposePath: "/scenario/effects/rooms"
 
         WPN114.StereoSource //----------------------------------------------------- ALTIVERB
         {
@@ -24,30 +24,30 @@ Item
 
             y: 0.5
 
-            exposePath: "/effects/reverb/source"
+            exposePath: "/scenario/effects/reverb/source"
 
-            WPN114.Convolver
+            WPN114.Convolver //============================================== 921
             {                
                 id: reverb
                 active: true
                 irPath: "audio/impulse-responses/921MST.wav"
-                exposePath: "/effects/reverb/921"
+                exposePath: "/scenario/effects/reverb/921"
             }
 
-            WPN114.Convolver
+            WPN114.Convolver //============================================== LAVAUR
             {
                 id: reverb_lavaur
                 active: false
                 irPath: "audio/impulse-responses/LAVAUR22ST.wav"
-                exposePath: "/effects/reverb/lavaur"
+                exposePath: "/scenario/effects/reverb/lavaur"
             }
 
-            WPN114.Convolver
+            WPN114.Convolver //============================================== AMPLITUBE
             {
                 id: amplitube
                 active: false
                 irPath: "audio/impulse-responses/AMPDEFAULT.wav"
-                exposePath: "/effects/amplitube"
+                exposePath: "/scenario/effects/amplitube"
             }
         }
     }

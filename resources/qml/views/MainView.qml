@@ -3,8 +3,6 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.11
 import WPN114 1.0 as WPN114
-import "views/NodeView.js" as NodeView
-import "views"
 
 Item
 {
@@ -18,6 +16,7 @@ Item
     property alias vumeters: vumeters
     property alias timer: timer_label
     property alias scene_view: sceneview
+
     property var target
 
     function impulse  ( )  { target.value = 0 }
@@ -37,7 +36,7 @@ Item
         MultiVUMeter
         {
             id: vumeters
-            nchannels: audio_stream.numOutputs
+            nchannels: audiostream.numOutputs
             anchors.centerIn: parent
             height: 150
         }
@@ -58,8 +57,8 @@ Item
         color: "black"
         visible: false
 
-        setup:   rooms_setup
-        target:  scenario.woodpath.maaaet.rooms
+        setup:   roomsetup
+//        target:  scenario.introduction
 
         width: parent.width - tree.width
         height: width
@@ -75,10 +74,12 @@ Item
         visible: false
         path: "/introduction"
 
-        width: parent.width - tree.width
-        height: parent.height
+        WPN114.Node on path { path: "/views/mix/scene" }
+
         x: tree.width
         y: tabbar.height
+        width: parent.width - tree.width
+        height: parent.height
     }
 
     Rectangle // --------------------------------------------------------------- FOOTER
@@ -90,7 +91,7 @@ Item
         height:     root.height - sceneview.height - tabbar.height
         color:      "dimgrey"
 
-        Loader { id: loader } // <------ FOR INDIVIDUAL NODE CONTROL
+        Loader { id: loader }
     }
 
     TabBar // ----------------------------------------------------------------- TABS
@@ -138,6 +139,7 @@ Item
         id: tree
         height: parent.height
         width: parent.width*0.4
+        model: net.server.nodeTree();
 
         TableViewColumn
         {
@@ -155,12 +157,12 @@ Item
 
         onDoubleClicked:
         {
-            var node = query_server.nodeTree().get(index);
+            var node = net.server.nodeTree().get(index);
             root.target = node;
 
             if ( node.type === WPN114.Type.Impulse )
             {
-                loader.source = "views/Button.qml";
+                loader.source = "items/Button.qml";
                 loader.item.text = node.name;
                 loader.item.checkable = false;
                 loader.item.checked = false;
@@ -170,7 +172,7 @@ Item
 
             else if ( node.type === WPN114.Type.Bool )
             {
-                loader.source = "views/Button.qml";
+                loader.source = "items/Button.qml";
                 loader.item.text = node.name;
                 loader.item.checkable = true;
                 loader.item.checked = node.value;
@@ -180,14 +182,15 @@ Item
 
             else if ( node.type === WPN114.Type.Float )
             {
-                loader.source = "views/Slider.qml";
+                loader.source = "items/Slider.qml";
                 loader.item.label = node.name;
-                loader.item.valueChanged.connect(node.setValue);
+                loader.item.valueChanged.connect(node.setValue);                
+                loader.item.defaultValue = node.value;
 
                 if ( node.name === "dBlevel" )
                 {
-                    loader.item.slider.from = -96
-                    loader.item.slider.to = 12;
+                    loader.item.min = -96
+                    loader.item.max = 12;
                 }
             }
 
@@ -198,7 +201,7 @@ Item
 
             else if ( node.type === WPN114.Type.String )
             {
-                loader.source = "views/TextField.qml";
+                loader.source = "items/TextField.qml";
                 loader.item.onAccepted.connect(root.text);
             }
         }

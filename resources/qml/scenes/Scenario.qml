@@ -3,65 +3,39 @@ import WPN114 1.0 as WPN114
 
 import "stonepath"
 import "woodpath"
-import "mix"
+import ".."
 
-Item
+Scene
 {
     id: root
-    property alias introduction: introduction;
-    property alias woodpath: woodpath;
-    property alias stonepath: stonepath;
-    property alias wpn214: wpn214;
+    path: "/scenario"
 
-    Introduction     { id: introduction }
-    WoodPath         { id: woodpath  }
-    StonePath        { id: stonepath }
-    WPN214           { id: wpn214  }
+    property Scene runningScene
 
-    Instruments      { id: instruments }
-    Effects          { id: effects }
-
-    WPN114.Node //----------------------------------------------------------- AUDIO_RESET
+    scenario: WPN114.TimeNode
     {
-        id:     audio_reset
-        path:   "/scenario/reset"
-        type:   WPN114.Type.Impulse
+        source: audiostream
+        duration: WPN114.TimeNode.Infinite
 
-        critical: true
-
-        onValueReceived:
+        onStart:
         {
-            introduction.rooms.active    = false
-            instruments.rooms.active     = false
-            instruments.kaivo_1.active   = false
-            instruments.kaivo_2.active   = false
-
-            stonepath.reset ( );
-            woodpath.reset  ( );
+            introduction.start();
+            timer.count = 0;
+            runningScene = introduction;
         }
     }
 
-    function start() //----------------------------------------------------------- MAIN_START
-    {
-        if ( !audio_stream.active )
-              audio_stream.active = true;
+    Interactions     { id: interactions }
+    Instruments      { id: instruments }
+    Effects          { id: effects }
 
-        introduction.scenario.start();
-        timer.count = 0;
+    Introduction     { id: introduction; path: root.fmt( "introduction" ) }
 
-        if ( !timer.running ) timer.start();
-    }
+//    Woodpath         { id: woodpath  }
+//    Stonepath        { id: stonepath }
+//    WPN214           { id: wpn214  }
 
-    WPN114.Node
-    {
-        id: scenario_start
-        path: "/scenario/start"
-        type: WPN114.Type.Impulse
-
-        onValueReceived: root.start();
-    }
-
-    Item //----------------------------------------------------------------- TIMER
+    Item //====================================================================== TIMER
     {
         id: timer
 
@@ -73,7 +47,7 @@ Item
 
         function start()
         {
-            audio_stream.tick.connect(timer.update)
+            audiostream.tick.connect(timer.update)
             running = true;
         }
 
@@ -85,7 +59,7 @@ Item
         }
     }
 
-    Connections // --------------------------------------------------------- CROSSROADS_CONNECTIONS
+   /* Connections // --------------------------------------------------------- CROSSROADS_CONNECTIONS
     {
         target: introduction
         onEnd:
@@ -120,4 +94,6 @@ Item
         target: wpn214
         onEnd: scenario_start.value = 1;
     }
+
+    */
 }

@@ -32,6 +32,21 @@ Item
             if ( !timer.running ) timer.start();
         }
 
+        onEnd:
+        {
+            snowfall.stop();
+            ambient.stop();
+
+            instruments.kaivo_1.allNotesOff();
+            instruments.kaivo_2.allNotesOff();
+
+            functions.setTimeout(function() {
+                vare_rooms.active = false;
+                instruments.kaivo_1.active = false;
+                instruments.kaivo_2.active = false;
+            }, 2000)
+        }
+
         InteractionExecutor
         {
             id:         rainbells_ex

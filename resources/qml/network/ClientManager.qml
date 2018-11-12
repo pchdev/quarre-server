@@ -6,7 +6,7 @@ Item
     property int maxClients;
     property alias clients: clients
 
-    function dispatch(target, interaction)
+    function dispatch(target, interaction) // ======================================== DISPATCH_ALGORITHM
     {
         var candidates = [ ];
         var priorities = [ ];
@@ -72,7 +72,7 @@ Item
         }
     }
 
-    function notifyStart()
+    function notifyStart() // ======================================== START_SCENARIO
     {
         for ( var c = 0; c < maxClients; ++c )
         {
@@ -82,7 +82,7 @@ Item
         }
     }
 
-    function notifyEnd()
+    function notifyEnd() // ======================================== END_SCENARIO
     {
         for ( var c = 0; c < maxClients; ++c )
         {
@@ -92,7 +92,7 @@ Item
         }
     }
 
-    function notifyScene(name)
+    function notifyScene(name) // ======================================== SCENE_CHANGE
     {
         for ( var c = 0; c < maxClients; ++c )
         {
@@ -102,7 +102,7 @@ Item
         }
     }
 
-    WPN114.Node // ------------------------------------------------- INTERACTIONS_RESET
+    WPN114.Node // ======================================== RESET_INTERACTIONS
     {
         path: "/global/interactions/reset"
         type: WPN114.Type.Impulse
@@ -142,7 +142,6 @@ Item
                     client.connected = true;
                     client.remote.connect(hostaddr);
                     nclients.value = nclients.value+1
-                    pushctl.notifyNewConnection(c);
                     break;
                 }
             }
@@ -154,7 +153,7 @@ Item
         id: clients
         model: maxClients
 
-        QuarreClient { number: index }
+        Client { number: index }
     }
 
     WPN114.Node

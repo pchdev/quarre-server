@@ -33,7 +33,7 @@ Rectangle
                     "width": influence_width })
         }
 
-        var target_node = query_server.get("/woodpath/carre/audio");
+        var target_node = net.server.get("/woodpath/carre/audio");
         var sources = target_node.collect( "source" );
 
         for ( var s = 0; s < sources.length; ++s )

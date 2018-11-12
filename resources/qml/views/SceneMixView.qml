@@ -3,7 +3,7 @@ import QtQuick 2.0
 Rectangle
 {
     id: root
-    property var path
+    property string path
     property var items: [ ]
     property int ypos: 30
 
@@ -12,16 +12,17 @@ Rectangle
         for ( var i = 0; i < items.length; ++i )
         {
             var item = items[i];
-            item.deleteLater();
+            item.destroy();
         }
 
         items.length = 0;
+        root.ypos = 30;
     }
 
     onPathChanged:
     {
         root.clear();
-        var node = query_server.get(path).subnode("audio");
+        var node = net.server.get(path).subnode("audio");
 
         for ( var i = 0; i < node.nsubnodes(); ++i )
         {
@@ -41,7 +42,6 @@ Rectangle
             ypos += 30;
             items.push( slider );
         }
-
     }
 
 }
