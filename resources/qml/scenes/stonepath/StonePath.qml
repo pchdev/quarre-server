@@ -1,77 +1,54 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
+import ".."
 
-Item
+Scene
 {
     id: root
 
+    notify: false
     property alias cendres: cendres
     property alias diaclases: diaclases
     property alias deidarabotchi: deidarabotchi
     property alias markhor: markhor
     property alias ammon: ammon    
-    property alias scenario: scenario
 
-    signal end()
+    Cendres         { id: cendres; path: root.fmt("cendres")}
+    Diaclases       { id: diaclases; path: root.fmt("diaclases")}
+    Deidarabotchi   { id: deidarabotchi; path: root.fmt("deidarabotchi")}
+    Markhor         { id: markhor; path: root.fmt("markhor")}
+    Ammon           { id: ammon; path: root.fmt("ammon")}
 
-    Cendres         { id: cendres }
-    Diaclases       { id: diaclases }
-    Deidarabotchi   { id: deidarabotchi }
-    Markhor         { id: markhor }
-    Ammon           { id: ammon }
-
-    WPN114.TimeNode
+    scenario: WPN114.TimeNode
     {
-        id:      scenario
-        source:  audio_stream
-
-        onStart:
-        {
-            console.log("starting stonepath scenario");
-            cendres.scenario.start();
-        }
-    }
-
-    function initialize(setup)
-    {
-        cendres.rooms.setup    = setup
-        diaclases.rooms.setup  = setup
-        deidarabotchi.rooms.setup  = setup
-        markhor.rooms.setup    = setup
-        ammon.rooms.setup      = setup
-    }
-
-    function reset()
-    {
-        cendres.rooms.active          = false
-        diaclases.rooms.active        = false
-        deidarabotchi.rooms.active    = false
-        markhor.rooms.active          = false
-        ammon.rooms.active            = false
+        source: audiostream
+        parentNode: parent.scenario
+        duration: WPN114.TimeNode.Infinite
+        onStart: cendres.start()
     }
 
     Connections //---------------------------------------------------------- SCENARIO_CONNECTIONS
     {
         target: cendres
-        onNext: diaclases.scenario.start();
+        onNext: diaclases.start();
     }
 
     Connections
     {
         target: diaclases
-        onNext: deidarabotchi.scenario.start();
+        onNext: deidarabotchi.start();
     }
 
     Connections
     {
         target: deidarabotchi
-        onEnd:  markhor.scenario.start();
+        onEnd:  markhor.start();
     }
 
     Connections
     {
         target: markhor
-        onEnd:  ammon.scenario.start();
+        onEnd:  ammon.start();
     }
 
     Connections

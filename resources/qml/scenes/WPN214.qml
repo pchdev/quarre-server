@@ -7,7 +7,7 @@ Scene
 {
     id: root
 
-    property var fade_target
+    property var fade_target: woodpath.jomon
 
     scenario: WPN114.TimeNode
     {
@@ -32,8 +32,7 @@ Scene
             property: "level"
             duration: sec( 10 )
 
-            from: fade_target.rooms.level
-            to: 0;
+            from: fade_target.rooms.level; to: 0;
 
             onEnd:
             {

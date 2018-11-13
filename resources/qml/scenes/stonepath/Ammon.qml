@@ -1,28 +1,22 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
-import "../.."
+import "../../engine"
 import ".."
 
-Item
+Scene
 {
     id: root
-    property alias rooms: ammon_rooms
-    property alias scenario: scenario
-    signal end()
+    endShutdown: false
 
-    WPN114.TimeNode
+    scenario: WPN114.TimeNode
     {
-        id:          scenario
-        source:      audio_stream
-        exposePath:  "/stonepath/ammon/scenario"
-
-        duration: -1
+        source:      audiostream
+        parentNode:  parent.scenario
+        duration:    WPN114.TimeNode.Infinite
 
         onStart:
         {
-            ammon_rooms.active = true
-            ammon_rooms.level = 1;
-            wind.play()       
+            wind.play()
 
             instruments.kaivo_1.active = true;
             instruments.kaivo_2.active = true;
@@ -46,9 +40,6 @@ Item
 
             instruments.kaivo_2.dBlevel = -20;
             instruments.k2_fork_lavaur.dBlevel  = -18
-
-            client_manager.notifyScene("ammon");
-            if ( !timer.running ) timer.start();
         }
 
         onEnd:
@@ -57,9 +48,6 @@ Item
             instruments.kaivo_1.active = false;
             instruments.kaivo_2.active = false;
             instruments.rooms.active = false;
-
-            wpn214.fade_target = root;
-            if ( !timer.running ) timer.start();
         }
 
         WPN114.TimeNode { date: sec(6); onStart: footsteps.play() }
@@ -77,7 +65,7 @@ Item
         }
 
         InteractionExecutor
-        {            
+        {
             target:         interaction_bells
             endExpression:  ammon_score.index === 100
             onStart:        ;
@@ -86,14 +74,6 @@ Item
             countdown:  sec( 10 )
             length:     sec( 360 )
         }
-
-//        InteractionExecutor
-//        {
-//            target: interaction_inharm_synth
-
-//            startExpression: ( interaction_string_sweep.index === 38 );
-//            endExpression: ( interaction_string_sweep.index === 100 );
-//        }
 
         InteractionExecutor
         {
@@ -156,18 +136,13 @@ Item
         WPN114.Automation
         {
             after: broken_radio_fade_out
-            target: ammon_rooms
+            target: rooms
             property: "dBlevel"
-            from: ammon_rooms.dBlevel
+            from: rooms.dBlevel
             to: -6;
 
             duration: sec( 10 )
-
-            onEnd:
-            {
-                scenario.end();
-                root.end();
-            }
+            onEnd: scenario.end();
         }
     }
 
@@ -180,9 +155,7 @@ Item
         Interaction //--------------------------------------------- STRING_SWEEP
         {
             id:     interaction_string_sweep
-
             title:  "Cordes, déclenchement"
-            path:   "/stonepath/ammon/interactions/strings"
             module: "quarre/Strings.qml"
 
             description: "Frottez les cordes avec votre doigt au fur
@@ -200,45 +173,9 @@ Item
                 source: "/modules/strings/trigger"
                 expression: function(v) {
                     functions.processScoreIncrement( ammon_score,
-                                interaction_string_sweep,
-                                interaction_string_sweep,
-                                instruments.kaivo_1 );
-                }
-            }
-        }
-
-        Interaction //--------------------------------------------- INHARM_SYNTH
-        {
-            id:     interaction_inharm_synth
-
-            title:  "Inharmonie"
-            path:   "/stonepath/ammon/interactions/inharmonic"
-            module: "quarre/JomonPalmZ.qml"
-
-            description: "Approchez et maintenez la paume de votre main
- à quelques centimètres de l'écran pour produire une nappe inharmonique,
- retirez-la pour la faire disparaître. Préférez les notes longues."
-
-            length: 300
-            countdown: 10
-
-            property int current_note: 0
-
-            mappings: QuMapping
-            {
-                source: "/modules/jomon-palmz/cover"
-                expression: function(v) {
-                    if ( v )
-                    {
-                        var index       = Math.random()*40+40;
-                        current_note    = index;
-
-                    }
-                    else
-                    {
-                        instruments.absynth.noteOff(0, current_note, 100);
-                        instruments.absynth.noteOff(0, current_note+5, 100);
-                    }
+                                                    interaction_string_sweep,
+                                                    interaction_string_sweep,
+                                                    instruments.kaivo_1 );
                 }
             }
         }
@@ -248,7 +185,6 @@ Item
             id:     interaction_strings_timbre
 
             title:  "Guitare primitive, timbre"
-            path:   "/stonepath/ammon/interactions/strings-timbre"
             module: "basics/XYZRotation.qml"
 
             description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler
@@ -271,14 +207,13 @@ la brillance (axe Y) et la hauteur (axe X) de l'instrument"
             id:     interaction_bells
 
             title:  "Cloches, pré-rythmiques"
-            path:   "/stonepath/ammon/interactions/bells"
             module: "quarre/AmmonBells.qml"
 
             description: "Exécutez un geste de frappe verticale pour
  déclencher des sons de cloches"
 
             mappings:
-            [
+                [
                 QuMapping {
                     source: "/gestures/whip/trigger"
                     expression: function(v) {
@@ -302,72 +237,66 @@ la brillance (axe Y) et la hauteur (axe X) de l'instrument"
         }
     }
 
-    WPN114.Rooms
+    WPN114.StereoSource //----------------------------------------- 1.FOOTSTEPS (1-2)
     {
-        id: ammon_rooms
-        active: false
-        parentStream: audio_stream
-        setup: rooms_setup
+        parentStream: rooms
+        fixed: true
+        xspread: 0.3
+        diffuse: 0.1
+        y: 0.1
 
-        exposePath: "/stonepath/ammon/audio/rooms"
+        exposePath: fmt("audio/footsteps/source")
 
-        WPN114.StereoSource //----------------------------------------- 1.FOOTSTEPS (1-2)
-        {            
-            fixed: true
-            xspread: 0.3
-            diffuse: 0.1
-            y: 0.1
+        WPN114.Sampler { id: footsteps; loop: true; xfade: 2000
+            exposePath: fmt("audio/footsteps")
+            path: "audio/stonepath/ammon/footsteps.wav" }
+    }
 
-            exposePath: "/stonepath/ammon/audio/footsteps/source"
+    WPN114.StereoSource //----------------------------------------- 2.BROKEN-RADIO (3-4)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.05
+        y: 0.8
 
-            WPN114.Sampler { id: footsteps; loop: true; xfade: 2000
-                exposePath: "/stonepath/ammon/audio/footsteps"
-                path: "audio/stonepath/ammon/footsteps.wav" }
-        }
+        exposePath: fmt("audio/broken-radio/source")
 
-        WPN114.StereoSource //----------------------------------------- 2.BROKEN-RADIO (3-4)
-        {
-            fixed: true
-            xspread: 0.05
-            y: 0.8
+        WPN114.Sampler { id: broken_radio;
+            exposePath: fmt("audio/broken-radio")
+            path: "audio/stonepath/ammon/broken-radio.wav"
 
-            exposePath: "/stonepath/ammon/audio/broken-radio/source"
-
-            WPN114.Sampler { id: broken_radio;
-                exposePath: "/stonepath/ammon/audio/broken-radio"
-                path: "audio/stonepath/ammon/broken-radio.wav"
-
-                WPN114.Fork { target: effects.lavaur; dBlevel: -6
-                    prefader: false
-                    exposePath: "/instruments/kaivo-1/forks/lavaur" }
-            }
-        }
-
-        WPN114.StereoSource //----------------------------------------- 3.HARMONICS (5-6)
-        {
-            fixed: true
-            xspread: 0.3
-            diffuse: 0.3
-            y: 0.75
-
-            exposePath: "/stonepath/ammon/audio/harmonics/source"
-
-            WPN114.StreamSampler { id: harmonics;
-                exposePath: "/stonepath/ammon/audio/harmonics"
-                path: "audio/stonepath/ammon/harmonics.wav" }
-        }
-
-        WPN114.StereoSource //----------------------------------------- 4.WIND (7-8)
-        {
-            fixed: true
-            xspread: 0.4
-            diffuse: 0.3
-
-            exposePath: "/stonepath/ammon/audio/wind/source"
-
-            WPN114.Sampler { id: wind; loop: true; dBlevel: -12; xfade: 2000
-                exposePath: "/stonepath/ammon/audio/wind"
-                path: "audio/stonepath/ammon/wind.wav" }
+            WPN114.Fork { target: effects.lavaur; dBlevel: -6; prefader: false
+                exposePath: fmt("audio/broken-radio/forks/lavaur") }
         }
     }
+
+    WPN114.StereoSource //----------------------------------------- 3.HARMONICS (5-6)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.3
+        diffuse: 0.3
+        y: 0.75
+
+        exposePath: fmt("audio/harmonics/source")
+
+        WPN114.StreamSampler { id: harmonics;
+            exposePath: fmt("audio/harmonics")
+            path: "audio/stonepath/ammon/harmonics.wav" }
+    }
+
+    WPN114.StereoSource //----------------------------------------- 4.WIND (7-8)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.4
+        diffuse: 0.3
+
+        exposePath: fmt("audio/wind/source")
+
+        WPN114.Sampler { id: wind; loop: true; dBlevel: -12; xfade: 2000
+            exposePath: fmt("audio/wind")
+            path: "audio/stonepath/ammon/wind.wav" }
+    }
 }
+

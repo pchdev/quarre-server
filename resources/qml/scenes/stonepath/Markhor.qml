@@ -1,23 +1,17 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
-import "../.."
+import "../../engine"
 import ".."
 
-Item
+Scene
 {    
     id: root
 
-    property alias rooms: markhor_rooms
-    property alias scenario: scenario
-    signal end()
-
-    WPN114.TimeNode
+    scenario: WPN114.TimeNode
     {
-        id: scenario
-        source: audio_stream
-        exposePath: "/stonepath/markhor/scenario"
-
-        duration: -1
+        source: audiostream
+        parentNode: parent.scenario
+        duration: WPN114.TimeNode.Infinite
 
         onStart:
         {
@@ -31,11 +25,6 @@ Item
             instruments.rooms.active    = true;
 
             soundscape.play();
-            markhor_rooms.active = true;
-            markhor_rooms.level = 1;
-
-            client_manager.notifyScene("markhor");
-            if ( !timer.running ) timer.start();
         }
 
         InteractionExecutor //----------------------------------------------------- BELLS
@@ -230,16 +219,8 @@ Item
 
             onEnd:
             {
-                ambient_light.stop();
-                soundscape.stop();
                 instruments.kaivo_2.allNotesOff()
-
-                functions.setTimeout(function() {
-                    markhor_rooms.active = false;
-                }, 2000 );
-
                 scenario.end();
-                root.end()
             }
         }
     }
@@ -253,7 +234,6 @@ Item
             id:     interaction_clock_bells
 
             title:  "Cloches, pré-rythmiques"
-            path:   "/stonepath/markhor/interactions/clock-bells"
             module: "quarre/VareRainbells.qml"
 
             description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
@@ -262,7 +242,7 @@ Item
             property int last_note: 0
 
             mappings:
-            [
+                [
                 QuMapping // ---------------------------------------------- proximity mapping
                 {
                     source: "/modules/bells/trigger"
@@ -270,7 +250,7 @@ Item
                         var rdm_note = 45 + Math.random()*30;
 
                         if ( interaction_clock_bells.last_note )
-                             instruments.kaivo_1.noteOff(0, interaction_clock_bells.last_note, 127 );
+                            instruments.kaivo_1.noteOff(0, interaction_clock_bells.last_note, 127 );
 
                         instruments.kaivo_1.noteOn  ( 0, rdm_note, 127 );
 
@@ -300,16 +280,14 @@ Item
         Interaction //--------------------------------------------- MARKHOR_GRANULAR
         {
             id:     interaction_granular_models
-
             title:  "Impulsions (essais)"
-            path:   "/stonepath/markhor/interactions/granular-1"
             module: "quarre/MarkhorGranular.qml"
 
             description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
  des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
-            [
+                [
                 QuMapping {
                     source: "/modules/markhor/granular/overlap"
                     expression: function(v) { instruments.kaivo_2.set("gran_density", v)}},
@@ -329,14 +307,13 @@ Item
             id:     interaction_resonators_1
 
             title:  "Résonances (essais)"
-            path:   "/stonepath/markhor/interactions/resonator-1"
             module: "quarre/MarkhorResonator.qml"
 
             description: "Manipulez les sliders afin d'altérer la résonance
 des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
-            [
+                [
                 QuMapping {
                     source: "/modules/markhor/resonator/brightness"
                     expression: function(v) { instruments.kaivo_2.set("res_brightness", v) }},
@@ -358,9 +335,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         Interaction //--------------------------------------------- MARKHOR_BODY
         {
             id:     interaction_body_1
-
             title:  "Corps de résonance (essais)"
-            path:   "/stonepath/markhor/interactions/body-1"
             module: "quarre/MarkhorBody.qml"
 
             description: "Manipulez les sliders afin d'altérer le corps de résonance
@@ -387,9 +362,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         Interaction //--------------------------------------------- MARKHOR_PADS
         {
             id:     interaction_pads_1
-
             title:  "Temps et Contretemps (essais)"
-            path:   "/stonepath/markhor/interactions/pads-1"
             module: "quarre/MarkhorPads.qml"
 
             description: "Appuyez et maintenez l'un des pads (un seul à la fois)
@@ -415,7 +388,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_granular_models_2
 
             title:  "Impulsions (tutti)"
-            path:   "/stonepath/markhor/interactions/granular-2"
             module: "quarre/MarkhorGranular.qml"
 
             description: "Vous jouez maintenant tous ensemble, collaborez,
@@ -429,7 +401,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_resonators_2
 
             title:  "Résonances (tutti)"
-            path:   "/stonepath/markhor/interactions/resonator-2"
             module: "quarre/MarkhorResonator.qml"
 
             description: interaction_granular_models_2.description
@@ -441,7 +412,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_body_2
 
             title:  "Corps de résonance (tutti)"
-            path:   "/stonepath/markhor/interactions/body-2"
             module: "quarre/MarkhorBody.qml"
 
             description: interaction_granular_models_2.description
@@ -453,7 +423,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_pads_2
 
             title:  "Temps et Contretemps (tutti)"
-            path:   "/stonepath/markhor/interactions/pads-2"
             module: "quarre/MarkhorPads.qml"
 
             description: interaction_granular_models_2.description
@@ -461,82 +430,77 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         }
     }
 
-    WPN114.Rooms
+    WPN114.StereoSource //----------------------------------------- 1.DOOMSDAY (1-2)
     {
-        id: markhor_rooms
-        active: false
-        parentStream: audio_stream
-        setup: rooms_setup
+        parentStream: rooms
+        fixed: true
+        xspread: 0.25
+        diffuse: 0.55
 
-        exposePath: "/stonepath/markhor/audio/rooms"
+        exposePath: fmt("audio/doomsday/source")
 
-        WPN114.StereoSource //----------------------------------------- 1.DOOMSDAY (1-2)
-        {
-            fixed: true
-            xspread: 0.25
-            diffuse: 0.55
+        WPN114.MultiSampler { id: doomsday;
+            exposePath: fmt("audio/doomsday")
+            path: "audio/stonepath/markhor/doomsday" }
+    }
 
-            exposePath: "/stonepath/markhor/audio/doomsday/source"
+    WPN114.StereoSource //----------------------------------------- 2.AMBIENT-LIGHT (3-4)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.15
+        diffuse: 0.3
+        y: 0.85
 
-            WPN114.MultiSampler { id: doomsday;
-                exposePath: "/stonepath/markhor/audio/doomsday"
-                path: "audio/stonepath/markhor/doomsday" }
-        }
+        exposePath: fmt("audio/ambient-light/source")
 
-        WPN114.StereoSource //----------------------------------------- 2.AMBIENT-LIGHT (3-4)
-        {
-            fixed: true
-            xspread: 0.15
-            diffuse: 0.3
-            y: 0.85
+        WPN114.Sampler { id: ambient_light; loop: true
+            exposePath: fmt("audio/ambient-light")
+            path: "audio/stonepath/markhor/ambient-light.wav" }
+    }
 
-            exposePath: "/stonepath/markhor/audio/ambient-light/source"
+    WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.35
+        diffuse: 0.65
+        y: 0.7
 
-            WPN114.Sampler { id: ambient_light; loop: true
-                exposePath: "/stonepath/markhor/audio/ambient-light"
-                path: "audio/stonepath/markhor/ambient-light.wav" }
-        }
+        exposePath: fmt("audio/paroral/source")
 
-        WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
-        {
-            fixed: true
-            xspread: 0.35
-            diffuse: 0.65
-            y: 0.7
+        WPN114.Sampler { id: paroral;
+            exposePath: fmt("audio/paroral")
+            path: "audio/stonepath/markhor/paroral.wav" }
+    }
 
-            exposePath: "/stonepath/markhor/audio/paroral/source"
+    WPN114.StereoSource //----------------------------------------- 4.SOUNDSCAPE (7-8)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.25
+        diffuse: 1.0
+        y: 0.4
 
-            WPN114.Sampler { id: paroral;
-                exposePath: "/stonepath/markhor/audio/paroral"
-                path: "audio/stonepath/markhor/paroral.wav" }
-        }
+        exposePath: fmt("audio/soundscape/source")
 
-        WPN114.StereoSource //----------------------------------------- 4.SOUNDSCAPE (7-8)
-        {
-            fixed: true
-            xspread: 0.25
-            diffuse: 1.0
-            y: 0.4
+        WPN114.Sampler { id: soundscape; loop: true; xfade: 2000
+            exposePath: fmt("audio/soundscape")
+            path: "audio/stonepath/markhor/soundscape.wav" }
+    }
 
-            exposePath: "/stonepath/markhor/audio/soundscape/source"
+    WPN114.StereoSource //----------------------------------------- 5.BELL_HIT (9-10)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.05
+        diffuse: 0.2
+        y: 0.55
 
-            WPN114.Sampler { id: soundscape; loop: true; xfade: 2000
-                exposePath: "/stonepath/markhor/audio/soundscape"
-                path: "audio/stonepath/markhor/soundscape.wav" }
-        }
+        exposePath: fmt("audio/bell-hit/source")
 
-        WPN114.StereoSource //----------------------------------------- 5.BELL_HIT (9-10)
-        {
-            fixed: true
-            xspread: 0.05
-            diffuse: 0.2
-            y: 0.55
-
-            exposePath: "/stonepath/markhor/audio/bell-hit/source"
-
-            WPN114.Sampler { id: bell_hit;
-                exposePath: "/stonepath/markhor/audio/bell-hit"
-                path: "audio/stonepath/markhor/bell-hit.wav" }
-        }
+        WPN114.Sampler { id: bell_hit;
+            exposePath: fmt("audio/bell-hit")
+            path: "audio/stonepath/markhor/bell-hit.wav" }
     }
 }

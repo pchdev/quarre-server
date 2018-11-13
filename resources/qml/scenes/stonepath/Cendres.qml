@@ -1,36 +1,21 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
-import "../.."
+import "../../engine"
 import ".."
 
-Item
+Scene
 {
     id: root
-
-    property alias rooms: cendres_rooms
-    property alias scenario: scenario
-
-    signal next()
     property var target_thunder_executor: thunder_executor
     property var target_boiling_executor: boiling_executor
 
-    WPN114.TimeNode
+    scenario: WPN114.TimeNode
     {
-        id: scenario
-        source: audio_stream
-        exposePath: "/stonepath/cendres/scenario"
+        source: audiostream
+        parentNode: parent.scenario
+        duration: WPN114.TimeNode.Infinite
 
-        duration: -1
-
-        onStart:
-        {
-            instruments.rooms.active = false;
-            client_manager.notifyScene("cendres");
-            cendres_rooms.active = true
-            cendres_rooms.level = 1;
-
-            if ( !timer.running ) timer.start();
-        }
+        onStart:;
 
         InteractionExecutor //----------------------------------------------------- THUNDER
         {
@@ -126,21 +111,21 @@ Item
 
             WPN114.TimeNode
             {
-                after: parentNode; date: sec(15)
+                after: parentNode; date: sec( 15 )
                 onStart: necks.play();
             }
 
             WPN114.TimeNode
             {
                 id: next_node
-                after: parentNode; date: sec(25)
+                after: parentNode; date: sec( 25 )
                 onStart: root.next();
             }
         }
 
         InteractionExecutor //--------------------------------------------------- DRAGON_GROUNDWALK
         {
-            id:         dragon_execution            
+            id:         dragon_execution
             target:     interaction_dragon
 
             date:       sec( 55 );
@@ -153,7 +138,7 @@ Item
 
         InteractionExecutor
         {
-            after:      dragon_execution            
+            after:      dragon_execution
             target:     interaction_groundwalk
 
             date:       sec( 20 );
@@ -200,27 +185,12 @@ Item
 
             WPN114.Automation
             {
-                target:     cendres_rooms
-                property:   "level"
-                duration:   min( 1.30 )
+                target: rooms
+                property: "level"
+                duration: min( 1.30 )
+                from: rooms.level; to: 0;
 
-                from: 1; to: 0;
-
-                onEnd:
-                {
-                    necks.stop       ( );
-                    ashes.stop       ( );
-                    quarre.stop      ( );
-                    redbirds_1.stop  ( );
-                    redbirds_2.stop  ( );
-                    waves.stop       ( );
-                    burn.stop        ( );
-
-                    functions.setTimeout(function() {
-                        cendres_rooms.active = false
-                    }, 3000 );
-
-                }
+                onEnd: scenario.end()
             }
         }
     }
@@ -234,7 +204,6 @@ Item
             id:     interaction_thunder
 
             title:  "Orage, déclenchement"
-            path:   "/stonepath/cendres/interactions/orage"
             module: "basics/GestureHammer.qml"
 
             description: "Executez le geste décrit ci-dessous pour déclencher un son d'orage."
@@ -254,7 +223,6 @@ Item
             id:     interaction_boiling
 
             title:  "Source volcanique, déclenchement"
-            path:   "/stonepath/cendres/interactions/boiling"
             module: "basics/GesturePalm.qml"
 
             description: "Executez le geste décrit ci-dessous pour déclencher un son."
@@ -274,7 +242,6 @@ Item
             id:     interaction_marmottes
 
             title:  "Paysages, marmottes"
-            path:   "/stonepath/cendres/interactions/marmottes"
             module: "basics/XYTouch.qml"
 
             description: "Touchez du doigt un endroit de la sphère afin de déclencher
@@ -295,7 +262,6 @@ Item
             id:     interaction_dragon
 
             title:  "Dragon, mise en espace"
-            path:   "/stonepath/cendres/interactions/dragon"
             module: "basics/ZRotation.qml"
 
             description: "Orientez votre appareil horizontalement, à 360 degrés
@@ -315,7 +281,6 @@ Item
             id:     interaction_groundwalk
 
             title:  "Bruits de pas, mise en espace"
-            path:   "/stonepath/cendres/interactions/groundwalk"
             module: "basics/ZRotation.qml"
 
             description: "Orientez votre appareil horizontalement, à 360 degrés
@@ -335,7 +300,6 @@ Item
             id: interaction_flying_birds
 
             title:  "Oiseaux en vol, trajectoires"
-            path:   "/stonepath/cendres/interactions/birds"
             module: "quarre/Trajectories.qml"
 
             description: "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
@@ -356,220 +320,221 @@ Item
         }
     }
 
-    WPN114.Rooms //-------------------------------------------------------------------- AUDIO
+    WPN114.StereoSource //----------------------------------------- 1.ASHES (1-2)
     {
-        id: cendres_rooms
-        active: false
-        parentStream: audio_stream
-        setup: rooms_setup
+        parentStream: rooms
+        fixed:   true
+        xspread: 0.25
+        yspread: 0.2
+        diffuse: 0.47
 
-        exposePath: "/stonepath/cendres/audio/rooms"
+        exposePath: fmt("audio/ashes/source");
 
-        WPN114.StereoSource //----------------------------------------- 1.ASHES (1-2)
-        {
-            exposePath: "/stonepath/cendres/audio/ashes/source"
-
-            fixed:   true
-            xspread: 0.25
-            yspread: 0.2
-            diffuse: 0.47
-
-            WPN114.StreamSampler { id: ashes; loop: true; xfade: 2000
-                dBlevel: -2
-                exposePath: "/stonepath/cendres/audio/ashes"
-                path: "audio/stonepath/cendres/ashes.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
-            }
+        WPN114.StreamSampler { id: ashes; dBlevel: -2
+            loop: true; xfade: 2000
+            exposePath: fmt("audio/ashes");
+            path: "audio/stonepath/cendres/ashes.wav"
+            WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 2.REBIRDS_1 (3-4)
-        {
-            exposePath: "/stonepath/cendres/audio/redbirds-1/source"
+    WPN114.StereoSource //----------------------------------------- 2.REBIRDS_1 (3-4)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.3
+        y: 0.9
 
-            fixed:      true
-            xspread:    0.3
-            y:          0.9
+        exposePath: fmt("audio/redbirds-1/source");
 
-            WPN114.StreamSampler { id: redbirds_1; loop: true
-                exposePath: "/stonepath/cendres/audio/redbirds-1"
-                path: "audio/stonepath/cendres/redbirds-1.wav"
-            }
+        WPN114.StreamSampler { id: redbirds_1; loop: true
+            exposePath: fmt("audio/redbirds-1");
+            path: "audio/stonepath/cendres/redbirds-1.wav"
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 3.REBIRDS_2 (5-6)
-        {
-            exposePath: "/stonepath/cendres/audio/redbirds-2/source"
+    WPN114.StereoSource //----------------------------------------- 3.REBIRDS_2 (5-6)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.3
+        y: 0.1
 
-            fixed:      true
-            xspread:    0.3
-            y:          0.1
+        exposePath: fmt("audio/redbirds-2/source");
 
-            WPN114.StreamSampler { id: redbirds_2; loop: true
-                exposePath: "/stonepath/cendres/audio/redbirds-2"
-                path: "audio/stonepath/cendres/redbirds-2.wav" }
+        WPN114.StreamSampler { id: redbirds_2; loop: true
+            exposePath: fmt("audio/redbirds-2");
+            path: "audio/stonepath/cendres/redbirds-2.wav" }
+    }
+
+    WPN114.StereoSource //----------------------------------------- 4.LIGHT-BACKGROUND (7-8)
+    {
+        parentStream: rooms
+        xspread: 0.25
+        yspread: 0.25
+        diffuse: 0.5
+        fixed: true
+
+        exposePath: fmt("audio/light-background/source")
+
+        WPN114.Sampler { id: light_background; dBlevel: -3
+            exposePath: fmt("audio/light-background");
+            path: "audio/stonepath/cendres/light-background.wav" }
+    }
+
+    WPN114.StereoSource //----------------------------------------- 5.BURN (9-10)
+    {
+        parentStream: rooms
+        xspread: 0.3
+        diffuse: 0.7
+        fixed: true
+        y: 0.1
+
+        exposePath: fmt("audio/burn/source");
+
+        WPN114.StreamSampler { id: burn; attack: 1000
+            exposePath: fmt("audio/burn");
+            path: "audio/stonepath/cendres/burn.wav"
+            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 4.LIGHT-BACKGROUND (7-8)
-        {
-            exposePath: "/stonepath/cendres/audio/light-background/source"
+    WPN114.StereoSource //----------------------------------------- 6.WAVES (11-12)
+    {
+        parentStream: rooms
+        xspread: 0.42
+        diffuse: 0.35
+        fixed: true
 
-            xspread: 0.25
-            yspread: 0.25
-            diffuse: 0.5
-            fixed: true
+        exposePath: fmt("audio/waves/source");
 
-            WPN114.Sampler { id: light_background;
-                dBlevel: -3
-                exposePath: "/stonepath/cendres/audio/light-background"
-                path: "audio/stonepath/cendres/light-background.wav" }
+        WPN114.Sampler { id: waves; dBlevel: 6
+            loop: true; xfade: 2000
+            exposePath: fmt("audio/waves");
+            path: "audio/stonepath/cendres/waves.wav"
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 5.BURN (9-10)
-        {
-            exposePath: "/stonepath/cendres/audio/burn/source"
+    WPN114.StereoSource //----------------------------------------- 7.THUNDER (13-14)
+    {
+        parentStream: rooms
+        xspread: 0.25
+        diffuse: 0.6
+        fixed: true
+        y: 0.75
 
-            xspread: 0.3
-            diffuse: 0.7
-            fixed: true
-            y: 0.1
+        exposePath: fmt("audio/thunder/source");
 
-            WPN114.StreamSampler { id: burn; attack: 1000
-                dBlevel: 0
-                exposePath: "/stonepath/cendres/audio/burn"
-                path: "audio/stonepath/cendres/burn.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -9 }
-            }
+        WPN114.MultiSampler { id: thunder; dBlevel: 7
+            exposePath: fmt("audio/thunder");
+            path: "audio/stonepath/cendres/thunder"
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 6.WAVES (11-12)
-        {
-            exposePath: "/stonepath/cendres/audio/waves/source"
+    WPN114.MonoSource //----------------------------------------- 8.MARMOTS (15-16)
+    {
+        id: marmots_source;
+        parentStream: rooms
 
-            xspread: 0.42
-            diffuse: 0.35
-            fixed: true
+        exposePath: fmt("audio/marmots/source");
 
-            WPN114.Sampler { id: waves; loop: true; xfade: 2000
-                dBlevel: 6
-                exposePath: "/stonepath/cendres/audio/waves"
-                path: "audio/stonepath/cendres/waves.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
-            }
+        WPN114.MultiSampler { id: marmots; dBlevel: 6
+            exposePath: fmt("audio/marmots");
+            path: "audio/stonepath/cendres/marmots"
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 7.THUNDER (13-14)
-        {
-            exposePath: "/stonepath/cendres/audio/thunder/source"
+    WPN114.StereoSource //----------------------------------------- 9.BOILING (17-18)
+    {
+        parentStream: rooms
+        xspread: 0.5
+        fixed: true
+        y: 0.55
 
-            xspread: 0.25
-            diffuse: 0.6
-            fixed: true
-            y: 0.75
+        exposePath: fmt("audio/boiling/source");
 
-            WPN114.MultiSampler { id: thunder;
-                dBlevel: 7
-                exposePath: "/stonepath/cendres/audio/thunder"
-                path: "audio/stonepath/cendres/thunder"
-                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
-            }
+        WPN114.Sampler { id: boiling; dBlevel: 8
+            exposePath: fmt("audio/boiling");
+            path: "audio/stonepath/cendres/boiling.wav" }
+    }
+
+    WPN114.StereoSource //----------------------------------------- 10.QUARRE (19-20)
+    {
+        parentStream: rooms
+        xspread: 0.42
+        diffuse: 0.2
+        bias: 0.82
+        fixed: true
+        y: 0.45
+
+        exposePath: fmt("audio/quarre/source")
+
+        WPN114.Sampler { id: quarre; attack: 10000; release: 2000;
+            exposePath: fmt("audio/quarre")
+            path: "audio/stonepath/cendres/quarre.wav"
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
         }
+    }
 
-        WPN114.MonoSource //----------------------------------------- 8.MARMOTS (15-16)
-        {
-            id:         marmots_source;
-            exposePath: "/stonepath/cendres/audio/marmots/source"
+    WPN114.MonoSource //----------------------------------------- 11.GROUNDWALK (21-22)
+    {
+        id: groundwalk_source
+        parentStream: rooms
 
-            WPN114.MultiSampler { id: marmots;
-                dBlevel: 6
-                exposePath: "/stonepath/cendres/audio/marmots"
-                path: "audio/stonepath/cendres/marmots"
-                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
-            }
+        exposePath: fmt("audio/groundwalk/source");
+
+        WPN114.StreamSampler { id: groundwalk; dBlevel: 14
+            exposePath: fmt("audio/groundwalk");
+            path: "audio/stonepath/cendres/groundwalk.wav"
+            WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 9.BOILING (17-18)
-        {
-            exposePath: "/stonepath/cendres/audio/boiling/source"
+    WPN114.StereoSource //----------------------------------------- 12.NECKS (25-26)
+    {
+        parentStream: rooms
+        xspread: 0.15
+        fixed: true
+        y: 0.6
 
-            xspread: 0.5
-            fixed: true
-            y: 0.55
+        exposePath: fmt("audio/necks/source");
 
-            WPN114.Sampler { id: boiling;
-                dBlevel: 8
-                exposePath: "/stonepath/cendres/audio/boiling"
-                path: "audio/stonepath/cendres/boiling.wav" }
+        WPN114.Sampler { id: necks; dBlevel: 12
+            exposePath: fmt("audio/necks");
+            path: "audio/stonepath/cendres/necks.wav"
+            WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 10.QUARRE (19-20)
-        {
-            exposePath: "/stonepath/cendres/audio/quarre/source"
+    WPN114.MonoSource //----------------------------------------- 13.DRAGON (27-28)
+    {
+        id: dragon_source
+        parentStream: rooms
 
-            xspread: 0.42
-            diffuse: 0.2
-            bias: 0.82
-            fixed: true
-            y: 0.45
+        exposePath: fmt("audio/dragon/source");
 
-            WPN114.Sampler { id: quarre; attack: 10000; release: 2000;
-                dBlevel: 0
-                exposePath: "/stonepath/cendres/audio/quarre"
-                path: "audio/stonepath/cendres/quarre.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -6 }
-            }
+        WPN114.StreamSampler { id: dragon; dBlevel: 10.7
+            release: 10000;
+            exposePath: fmt("audio/dragon");
+            path: "audio/stonepath/cendres/dragon.wav"
+            WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
         }
+    }
 
-        WPN114.MonoSource //----------------------------------------- 11.GROUNDWALK (21-22)
-        {
-            id:         groundwalk_source
-            exposePath: "/stonepath/cendres/audio/groundwalk/source"
+    WPN114.MonoSource //----------------------------------------- 14.BIRDS (29-30)
+    {
+        id: birds_source
+        parentStream: rooms
 
-            WPN114.StreamSampler { id: groundwalk; dBlevel: 14
-                exposePath: "/stonepath/cendres/audio/groundwalk"
-                path: "audio/stonepath/cendres/groundwalk.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
-            }
-        }
+        exposePath: fmt("audio/birds/source");
 
-        WPN114.StereoSource //----------------------------------------- 12.NECKS (25-26)
-        {
-            exposePath: "/stonepath/cendres/audio/necks/source"
-
-            xspread: 0.15
-            fixed: true
-            y: 0.6
-
-            WPN114.Sampler { id: necks;
-                dBlevel: 12
-                exposePath: "/stonepath/cendres/audio/necks"
-                path: "audio/stonepath/cendres/necks.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
-            }
-        }
-
-        WPN114.MonoSource //----------------------------------------- 13.DRAGON (27-28)
-        {
-            id:         dragon_source
-            exposePath: "/stonepath/cendres/audio/dragon/rooms"
-
-            WPN114.StreamSampler { id: dragon; release: 10000
-                dBlevel: 10.7
-                exposePath: "/stonepath/cendres/audio/dragon"
-                path: "audio/stonepath/cendres/dragon.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }
-            }
-        }
-
-        WPN114.MonoSource //----------------------------------------- 14.BIRDS (29-30)
-        {
-            id:         birds_source
-            exposePath: "/stonepath/cendres/audio/birds/rooms"
-
-            WPN114.MultiSampler { id: birds;
-                exposePath: "/stonepath/cendres/audio/birds"
-                path: "audio/stonepath/cendres/birds"
-                WPN114.Fork { target: effects.reverb; dBlevel: 3 }
-            }
+        WPN114.MultiSampler { id: birds;
+            exposePath: fmt("audio/birds");
+            path: "audio/stonepath/cendres/birds"
+            WPN114.Fork { target: effects.reverb; dBlevel: 3 }
         }
     }
 }

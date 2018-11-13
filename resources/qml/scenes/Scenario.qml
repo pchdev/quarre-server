@@ -31,7 +31,7 @@ Scene
 
     Introduction     { id: introduction; path: root.fmt( "introduction" ) }
     Woodpath         { id: woodpath; path: root.fmt("woodpath") }
-    //    Stonepath        { id: stonepath }
+    Stonepath        { id: stonepath; path: root.fmt("stonepath") }
     WPN214           { id: wpn214; path: root.fmt("wpn214") }
 
     Item //====================================================================== TIMER

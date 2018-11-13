@@ -13,6 +13,7 @@ Item
     property bool notify: true
     property bool endShutdown: true
     property int shutdown_after: 3000
+
     signal next ( );
     signal end  ( );
 
