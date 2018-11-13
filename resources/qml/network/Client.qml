@@ -10,8 +10,8 @@ Item
     property string status: "disconnected"
     property alias remote: remote
 
-    WPN114.Node on interaction_count { path: "/clients/"+number+"/n_interactions" }
-    WPN114.Node on status { path: "/clients/"+number+"/status" }
+    WPN114.Node on interaction_count { device: net.server; path: "/clients/"+number+"/n_interactions" }
+    WPN114.Node on status { device: net.server; path: "/clients/"+number+"/status" }
 
     function getInteractionMessage(interaction)
     {
@@ -81,8 +81,6 @@ Item
         {
             root.status = "disconnected"
             root.connected = false;
-            pushctl.notifyDisconnection(number);
         }
     }
-
 }

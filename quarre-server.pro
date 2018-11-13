@@ -17,7 +17,8 @@ SOURCES += \
     source/wpnconsoleinput.cpp
 
 RESOURCES += resources/qml/qml.qrc \
-    resources/qml/modules/modules.qrc
+    resources/qml/modules/modules.qrc \
+    resources/images/images.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

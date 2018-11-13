@@ -1,53 +1,44 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
-import "../.."
+import "../../engine"
 import ".."
 
-Item
+Scene
 {
     id: root
-    property alias scenario: scenario
-    property alias rooms: vare_rooms
-    signal next()
 
-    WPN114.TimeNode
+    scenario: WPN114.TimeNode
     {
-        id:             scenario
-        source:         audio_stream
-        exposePath:     "/woodpath/vare/scenario"
-        duration:       -1
+        parentNode:  parent.scenario
+        source:      audiostream
+        duration:    WPN114.TimeNode.Infinite
 
         onStart:
         {
-            vare_rooms.active           = true;
             instruments.kaivo_1.active  = true;
+            instruments.kaivo_1.dBlevel = -6
+            instruments.kaivo_2.dBlevel = -6
+
+            instruments.k1_fork_921.dBlevel = -12
+            instruments.k2_fork_921.dBlevel = -9
+
             instruments.kaivo_2.active  = true;
             instruments.rooms.active    = true;
-
             snowfall.play();
-
-            vare_rooms.level = 1;
-
-            client_manager.notifyScene("vare");
-            if ( !timer.running ) timer.start();
         }
 
         onEnd:
         {
-            snowfall.stop();
-            ambient.stop();
-
             instruments.kaivo_1.allNotesOff();
             instruments.kaivo_2.allNotesOff();
 
             functions.setTimeout(function() {
-                vare_rooms.active = false;
                 instruments.kaivo_1.active = false;
                 instruments.kaivo_2.active = false;
             }, 2000)
         }
 
-        InteractionExecutor
+        InteractionExecutor //===================================================== RAINBELLS
         {
             id:         rainbells_ex
             target:     interaction_rainbells
@@ -61,40 +52,41 @@ Item
                 instruments.kaivo_2.setPreset( instruments.varerhythm );
             }
 
-            WPN114.Automation
+            onEnd:
+            {
+                // speed-up rhythm
+                instruments.kaivo_2.noteOff ( 0, 63, 127 );
+                instruments.kaivo_2.noteOn  ( 0, 73, 127 );
+            }
+
+            WPN114.Automation // --------------------------------------- rainbells_rhythmic_fade_in
             {
                 target:     instruments.kaivo_1
                 property:   "level"
                 date:       sec( 15 )
                 duration:   sec( 60 )
 
-                from: 0; to: 1;
-            }
+                from: 0; to: instruments.kaivo_1.level;
 
-            WPN114.Automation
-            {
-                target:     instruments.kaivo_2
-                property:   "level"
-                date:       sec( 25 );
-                duration:   sec( 50 );
-
-                from: 0; to: 1;
-
-                onStart:
+                WPN114.Automation //--------------------------------------- rhythmic_fade_in
                 {
-                    instruments.kaivo_2.noteOn( 0, 63, 127 );
-                    instruments.kaivo_2.noteOn( 0, 68, 127 );
-                }
-            }
+                    target:     instruments.kaivo_2
+                    property:   "level"
+                    date:       sec( 10 );
+                    duration:   sec( 50 );
 
-            onEnd:
-            {
-                instruments.kaivo_2.noteOff ( 0, 63, 127 );
-                instruments.kaivo_2.noteOn  ( 0, 73, 127 );
+                    from: 0; to: instruments.kaivo_2.level;
+
+                    onStart:
+                    {
+                        instruments.kaivo_2.noteOn( 0, 63, 127 );
+                        instruments.kaivo_2.noteOn( 0, 68, 127 );
+                    }
+                }
             }
         }
 
-        WPN114.Automation
+        WPN114.Automation //======================================== RAINBELLS_FADE_OUT
         {
             id: rainbells_fade_out
             after: rainbells_ex
@@ -112,11 +104,11 @@ Item
             }
         }
 
-        InteractionExecutor
+        InteractionExecutor //======================================= FIRST_BATCH_INTERACTIONS
         {
-            id:     resonators_1_ex
-            after:  rainbells_ex
-            target: interaction_resonators_1
+            id:      resonators_1_ex
+            after:   rainbells_ex
+            target:  interaction_resonators_1
 
             countdown:  sec( 15 )
             length:     sec( 60 )
@@ -227,45 +219,28 @@ Item
 
             target: instruments.kaivo_1
             property: "level"
-            from: instruments.kaivo_1.level
-            to: 0;
-
+            from: instruments.kaivo_1.level; to: 0;
             duration: sec( 40 )
 
             WPN114.Automation
             {
                 target: instruments.kaivo_2
                 property: "level"
-                from: instruments.kaivo_2.level
-                to: 0;
-
+                from: instruments.kaivo_2.level; to: 0;
                 duration: sec( 40 )
             }
 
             WPN114.Automation
             {
                 after:   parentNode
-                target:  vare_rooms
+                target:  rooms
                 property: "level"
-                from: vare_rooms.level
-                to: 0;
+                from: rooms.level; to: 0;
 
                 duration: sec( 20 )
+                onStart: next();
 
-                onStart: root.next();
-
-                onEnd:
-                {
-                    snowfall.stop();
-                    ambient.stop();
-
-                    instruments.kaivo_2.allNotesOff();
-
-                    functions.setTimeout(function(){
-                        vare_rooms.active = false;
-                        instruments.kaivo_2.active = false;
-                    }, 1000 );
-                }
+                onEnd: scenario.end();
             }
         }
     }
@@ -279,7 +254,6 @@ Item
             id:     interaction_rainbells
 
             title:  "Cloches, pré-rythmiques"
-            path:   "/woodpath/vare/interactions/rainbells"
             module: "quarre/VareRainbells.qml"
 
             description: "Passez la main devant l'appareil pour ajouter et changer
@@ -332,7 +306,6 @@ Item
             id:     interaction_granular_models
 
             title:  "Impulsions (essais)"
-            path:   "/woodpath/vare/interactions/granular-1"
             module: "quarre/VareGranular.qml"
 
             description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
@@ -367,7 +340,6 @@ Item
             id:     interaction_resonators_1
 
             title:  "Résonances (essais)"
-            path:   "/woodpath/vare/interactions/resonator-1"
             module: "quarre/VareResonator.qml"
 
             description: "Manipulez les sliders afin d'altérer la résonance
@@ -398,7 +370,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_body_1
 
             title:  "Corps de résonance (essais)"
-            path:   "/woodpath/vare/interactions/body-1"
             module: "quarre/VareBody.qml"
 
             description: "Manipulez les sliders afin d'altérer le corps de résonance
@@ -427,7 +398,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_pads_1
 
             title:  "Temps et Contretemps (essais)"
-            path:   "/woodpath/vare/interactions/pads-1"
             module: "quarre/VarePercs.qml"
 
             description: "Appuyez et maintenez l'un des pads (un seul à la fois)
@@ -465,7 +435,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_granular_models_2
 
             title:  "Impulsions (tutti)"
-            path:   "/woodpath/vare/interactions/granular-2"
             module: "quarre/VareGranular.qml"
 
             description: "Vous jouez maintenant tous ensemble, collaborez,
@@ -479,7 +448,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_resonators_2
 
             title:  "Résonances (tutti)"
-            path:   "/woodpath/vare/interactions/resonator-2"
             module: "quarre/VareResonator.qml"
 
             description: interaction_granular_models_2.description
@@ -491,7 +459,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_body_2
 
             title:  "Corps de résonance (tutti)"
-            path:   "/woodpath/vare/interactions/body-2"
             module: "quarre/VareBody.qml"
 
             description: interaction_granular_models_2.description
@@ -503,7 +470,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_pads_2
 
             title:  "Temps et Contretemps (tutti)"
-            path:   "/woodpath/vare/interactions/pads-2"
             module: "quarre/VarePercs.qml"
 
             description: interaction_granular_models_2.description
@@ -511,44 +477,38 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         }
     }
 
-    WPN114.Rooms
+
+    WPN114.StereoSource //----------------------------------------- 1.SNOWFALL (1-2)
     {
-        id: vare_rooms
-        active: false
-        parentStream: audio_stream
-        setup: rooms_setup
+        parentStream: rooms
+        xspread: 0.25
+        diffuse: 0.2
+        fixed: true
 
-        exposePath: "/woodpath/vare/audio/rooms"
+        exposePath: fmt("audio/snowfall/source")
 
-        WPN114.StereoSource //----------------------------------------- 1.SNOWFALL (1-2)
-        {
-            xspread: 0.25
-            diffuse: 0.2
-            fixed: true
+        WPN114.StreamSampler { id: snowfall;
+            loop: true; xfade: 3000; attack: 2000
 
-            exposePath: "/woodpath/vare/audio/snowfall/source"
-
-            WPN114.StreamSampler { id: snowfall; loop: true; xfade: 3000; attack: 2000
-                dBlevel: 6
-                exposePath: "/woodpath/vare/audio/snowfall"
-                path: "audio/woodpath/vare/snowfall.wav"
-                WPN114.Fork { target: effects.reverb; dBlevel: -9 }
-            }
+            exposePath: fmt("audio/snowfall")
+            path: "audio/woodpath/vare/snowfall.wav"
+            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
         }
+    }
 
-        WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
-        {
-            fixed: true
-            xspread: 0.45
+    WPN114.StereoSource //----------------------------------------- 3.PARORAL (5-6)
+    {
+        parentStream: rooms
+        fixed: true
+        xspread: 0.45
 
-            exposePath: "/woodpath/vare/audio/ambient/source"
+        exposePath: fmt("audio/ambient/source")
 
-            WPN114.StreamSampler { id: ambient;
-                dBlevel: -7
-                exposePath: "/woodpath/vare/audio/ambient"
-                path: "audio/woodpath/vare/vare-ambient.wav"
-                WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: -2 }
-            }
+        WPN114.StreamSampler { id: ambient; dBlevel: -7
+            exposePath: fmt("audio/ambient")
+            path: "audio/woodpath/vare/vare-ambient.wav"
+            WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: -2 }
         }
     }
 }
+

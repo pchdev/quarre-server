@@ -5,13 +5,11 @@ Rectangle
 {
     id: root
     property var setup
-    property WPN114.Rooms target
+    property string target
     property var currentSources: [ ]
-
     color: "black"
-    antialiasing: true
 
-    Component.onCompleted:
+    function drawSetup()
     {
         var positions = setup.nodes[0].position;
         var infl = setup.nodes[0].influence;
@@ -32,8 +30,11 @@ Rectangle
                     "y":  pos.y*root.height - root.height*infl,
                     "width": influence_width })
         }
+    }
 
-        var target_node = net.server.get("/woodpath/carre/audio");
+    function drawScene()
+    {
+        var target_node = net.server.get(target);
         var sources = target_node.collect( "source" );
 
         for ( var s = 0; s < sources.length; ++s )

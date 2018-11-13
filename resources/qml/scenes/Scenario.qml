@@ -21,7 +21,6 @@ Scene
         {
             introduction.start();
             timer.count = 0;
-            runningScene = introduction;
         }
     }
 
@@ -30,10 +29,9 @@ Scene
     Effects          { id: effects }
 
     Introduction     { id: introduction; path: root.fmt( "introduction" ) }
-
-//    Woodpath         { id: woodpath  }
-//    Stonepath        { id: stonepath }
-//    WPN214           { id: wpn214  }
+    Woodpath         { id: woodpath; path: root.fmt("woodpath") }
+    //    Stonepath        { id: stonepath }
+    //    WPN214           { id: wpn214  }
 
     Item //====================================================================== TIMER
     {
@@ -59,41 +57,32 @@ Scene
         }
     }
 
-   /* Connections // --------------------------------------------------------- CROSSROADS_CONNECTIONS
+    Connections // --------------------------------------------------------- CROSSROADS_CONNECTIONS
     {
         target: introduction
-        onEnd:
+        onNext:
         {
-            if ( introduction.xroads_result === 0 )
-            {
-                woodpath.scenario.start();
-                wpn214.fade_target = woodpath.jomon
-            }
-            else
-            {
-                stonepath.scenario.start();
-                wpn214.fade_target = stonepath.ammon
-            }
+            if ( interactions.xroads_result === 0 )
+                 woodpath.start();
+//            else stonepath.start();
         }
     }
 
-    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
-    {
-        target: stonepath
-        onEnd: wpn214.scenario.start();
-    }
+//    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
+//    {
+//        target: stonepath
+//        onEnd: wpn214.scenario.start();
+//    }
 
-    Connections
-    {
-        target: woodpath
-        onEnd: wpn214.scenario.start();
-    }
+//    Connections
+//    {
+//        target: woodpath
+//        onEnd: wpn214.scenario.start();
+//    }
 
-    Connections
-    {
-        target: wpn214
-        onEnd: scenario_start.value = 1;
-    }
-
-    */
+//    Connections
+//    {
+//        target: wpn214
+//        onEnd: scenario_start.value = 1;
+//    }
 }

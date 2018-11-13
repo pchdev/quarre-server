@@ -1,42 +1,39 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
 import ".."
-import "../.."
+import "../../engine"
 
-Item
+Scene
 {
     id: root
-    property alias scenario: scenario
-    property alias rooms: carre_rooms
     property real env_attack: 0
-    signal next();
+    onEnv_attackChanged: instruments.kaivo_1.set("env1_attack", env_attack);
 
-    onEnv_attackChanged:
-        instruments.kaivo_1.set("env1_attack", env_attack);
-
-    WPN114.TimeNode
+    scenario: WPN114.TimeNode
     {
-        id:             scenario
-        source:         audio_stream
-        exposePath:     "/woodpath/carre/scenario"
-        duration:       -1
+        source: audiostream
+        parentNode: parent.scenario
+        duration: WPN114.TimeNode.Infinite
 
         onStart:
         {
-            instruments.kaivo_1.active  = true;
             instruments.kaivo_1.dBlevel = -4
-
+            instruments.kaivo_1.active = true
             instruments.kaivo_2.active = false;
             instruments.rooms.active = true;
-            carre_rooms.active = true;
-            carre_rooms.level = 1;
-
             alpine_swift.play();
 
-            client_manager.notifyScene("carre");
+        }
+        onEnd:
+        {
+            instruments.kaivo_1.allNotesOff();
+            functions.setTimeout(function() {
+                instruments.kaivo_1.active = false;
+                instruments.rooms.active = false;
+            }, 1000 );
         }
 
-        // 1.SOFT ------------------------------------------------------------
+        // ================================================================= 1.SOFT
 
         InteractionExecutor
         {
@@ -46,7 +43,7 @@ Item
             countdown:  sec( 15 )
             length:     min( 1.20 )
 
-            WPN114.TimeNode { date: sec(45); onStart: harmonics.play() }
+            WPN114.TimeNode { date: sec( 45 ); onStart: harmonics.play() }
 
             onStart:
             {
@@ -55,8 +52,6 @@ Item
                 spring.play();
                 groundnoise.play();
                 insects.play();
-
-                if ( !timer.running ) timer.start();
             }
 
             InteractionExecutor
@@ -74,7 +69,7 @@ Item
                     // TODO: only stop if not dispatched
 
                     onBegin: alpine_swift.stop();
-//                    onEnd: alpine_swift.play();
+                    //                    onEnd: alpine_swift.play();
                 }
             }
 
@@ -119,7 +114,7 @@ Item
                 }
             }
 
-            WPN114.TimeNode { date: sec( 82 ); onStart: root.next(); }
+            WPN114.TimeNode { date: sec( 82 ); onStart: next(); }
 
             WPN114.Automation
             {
@@ -145,29 +140,12 @@ Item
         WPN114.Automation
         {
             after:      interaction_bell_hi_2_ex
-            target:     carre_rooms
+            target:     rooms
             property:   "level"
             duration:   sec( 45 )
 
-            from: carre_rooms.level; to: 0;
-
-            onEnd:
-            {
-                groundnoise.stop  ( );
-                quarre.stop       ( );
-                insects.stop      ( );
-                harmonics.stop    ( );
-                spring.stop       ( );
-                alpine_swift.stop ( );
-
-                instruments.kaivo_1.allNotesOff();
-
-                functions.setTimeout(function() {
-                    carre_rooms.active = false;
-                    instruments.kaivo_1.active = false;
-                    instruments.rooms.active = false;
-                }, 1000 );
-            }
+            from: rooms.level; to: 0;
+            onEnd: scenario.end();
         }
     }
 
@@ -179,7 +157,6 @@ Item
         {
             id: interaction_bell_low_1
             title: "Cloches primitives, déclenchements (1)"
-            path:   "/woodpath/carre/interactions/niwood-low-1"
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
@@ -203,7 +180,6 @@ Item
         {
             id: interaction_bell_low_2
             title: "Cloches primitives, percussif (1)"
-            path:   "/woodpath/carre/interactions/niwood-low-2"
             module: "basics/GestureHammer.qml"
 
             description: interaction_bell_low_1.description;
@@ -226,7 +202,6 @@ Item
         {
             id: interaction_bell_hi_1
             title: "Cloches primitives, déclenchements (2)"
-            path:   "/woodpath/carre/interactions/niwood-hi-1"
             module: "basics/GesturePalm.qml"
 
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
@@ -249,7 +224,6 @@ Item
         {
             id: interaction_bell_hi_2
             title: "Cloches primitives, percussif (2)"
-            path:   "/woodpath/carre/interactions/niwood-hi-2"
             module: "basics/GestureHammer.qml"
 
             description: interaction_bell_hi_1.description;
@@ -272,7 +246,6 @@ Item
             id: interaction_swifts
 
             title: "Martinets, trajectoires"
-            path:   "/woodpath/carre/interactions/swifts"
             module: "quarre/Trajectories.qml"
 
             description:
@@ -291,7 +264,7 @@ Item
                     }
                 }
             ]
-        }       
+        }
 
         Interaction //------------------------------------------------- INSECTS
         {
@@ -305,12 +278,12 @@ Item
  tout autour de vous pour identifier et déplacer un son dans l'espace sonore."
 
             mappings: QuMapping
-                {
-                    source: "/modules/zrotation/position2D"
-                    expression: function(v) {
-                        insects_source.position  = Qt.vector3d(v[0], v[1], 0.5);
-                    }
+            {
+                source: "/modules/zrotation/position2D"
+                expression: function(v) {
+                    insects_source.position  = Qt.vector3d(v[0], v[1], 0.5);
                 }
+            }
         }
 
         Interaction
@@ -330,134 +303,133 @@ Item
             }
 
         }
+    }
 
-        WPN114.Rooms
-        {
-            id: carre_rooms
-            active: false
-            parentStream: audio_stream
-            setup: rooms_setup
+    WPN114.StereoSource //----------------------------------------- SPRING
+    {
+        parentStream: rooms
+        fixed: true
+        diffuse: 0.5
+        yspread: 0.25
 
-            WPN114.StereoSource //----------------------------------------- SPRING
-            {
-                fixed: true
-                diffuse: 0.5
-                yspread: 0.25
+        exposePath: fmt("audio/spring/source")
 
-                exposePath: "/woodpath/carre/audio/spring/source"
+        WPN114.StreamSampler { id: spring; loop: true; xfade: 3000
+            exposePath: fmt("audio/spring")
+            path: "audio/introduction/spring.wav"
 
-                WPN114.StreamSampler { id: spring; loop: true; xfade: 3000
-                    exposePath: "/woodpath/carre/audio/spring"
-                    path: "audio/introduction/spring.wav"
-
-                    WPN114.Fork { target: effects.reverb; dBlevel: -9 }
-                }
-            }
-
-            WPN114.MonoSource // ------------------------------------------ MULTISWIFTS
-            {
-                id: multiswifts_source
-
-                WPN114.MultiSampler
-                {
-                    id: multiswifts
-                    exposePath: "/woodpath/carre/audio/multiswifts"
-                    path: "audio/woodpath/carre/swifts"
-
-                    WPN114.Fork { target: effects.reverb; dBlevel: -9 }
-                }
-            }
-
-            WPN114.StereoSource //----------------------------------------- ALPINE_SWIFT
-            {
-                fixed: true
-                diffuse: 0.5
-                yspread: 0.25
-
-                exposePath: "/woodpath/carre/audio/swift/source"
-
-                WPN114.StreamSampler { id: alpine_swift;
-                    loop: true; xfade: 3000; release: 3000
-                    exposePath: "/woodpath/carre/audio/swift"
-                    path: "audio/woodpath/carre/swift.wav"
-
-                    WPN114.Fork { target: effects.reverb; dBlevel: -9 }
-                }
-            }
-
-            WPN114.StereoSource //----------------------------------------- GROUNDNOISE
-            {
-                fixed: true
-                diffuse: 0.5
-                xspread: 0.25
-
-                exposePath: "/woodpath/carre/audio/groundnoise/source"
-
-                WPN114.StreamSampler { id: groundnoise; loop: true; xfade: 3000
-                    exposePath: "/woodpath/carre/audio/groundnoise"
-                    path: "audio/woodpath/carre/groundnoise.wav"
-
-                    WPN114.Fork { target: effects.reverb; dBlevel: -6 }
-                }
-            }
-
-            WPN114.StereoSource //----------------------------------------- QUARRE
-            {
-                fixed: true
-                diffuse: 0.25
-                xspread: 0.5
-
-                exposePath: "/woodpath/carre/audio/quarre/source"
-
-                WPN114.StreamSampler { id: quarre; loop: true; xfade: 4000
-                    exposePath: "/woodpath/carre/audio/quarre"
-                    path: "audio/woodpath/carre/quarre.wav"
-
-                    WPN114.Fork { target: effects.reverb; dBlevel: -6 }
-                }
-            }
-
-            WPN114.MonoSource //----------------------------------------- INSECTS
-            {
-                id: insects_source
-                exposePath: "/woodpath/carre/audio/insects/source"
-
-                WPN114.StreamSampler { id: insects; loop: true; xfade: 3000
-                    dBlevel: 6
-                    exposePath: "/woodpath/carre/audio/insects"
-                    path: "audio/woodpath/carre/insects.wav"
-
-                    WPN114.Fork { target: effects.reverb; dBlevel: -6 }
-                }
-            }
-
-            WPN114.StereoSource //----------------------------------------- HARMONICS
-            {
-                fixed: true
-                yspread: 0.4
-
-                id: harmonics_source
-                exposePath: "/woodpath/carre/audio/harmonics/source"
-
-                WPN114.StreamSampler { id: harmonics; loop: true; xfade: 3000
-                    exposePath: "/woodpath/carre/audio/harmonics"
-                    path: "audio/woodpath/carre/harmonics.wav"
-
-                    WPN114.Fork { target: effects.reverb; dBlevel: -3 }
-                }
-            }
-
-//            WPN114.MonoSource //----------------------------------------- RAVENS
-//            {
-//                id:         ravens_source
-//                exposePath: "/woodpath/carre/audio/ravens/rooms"
-
-//                WPN114.MultiSampler { id: ravens;
-//                    exposePath: "/woodpath/carre/audio/ravens"
-//                    path: "audio/woodpath/carre/ravens"
-//                    WPN114.Fork { target: effects.reverb; dBlevel: 3 }
-//                }
-//            }
+            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
         }
     }
+
+    WPN114.MonoSource // ------------------------------------------ MULTISWIFTS
+    {
+        id: multiswifts_source
+        parentStream: rooms
+
+        WPN114.MultiSampler
+        {
+            id: multiswifts
+            exposePath: fmt("audio/multiswifts")
+            path: "audio/woodpath/carre/swifts"
+
+            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
+        }
+    }
+
+    WPN114.StereoSource //----------------------------------------- ALPINE_SWIFT
+    {
+        parentStream: rooms
+        fixed: true
+        diffuse: 0.5
+        yspread: 0.25
+
+        exposePath: fmt("audio/swift/source")
+
+        WPN114.StreamSampler { id: alpine_swift;
+            loop: true; xfade: 3000; release: 3000
+            exposePath: fmt("audio/swift")
+            path: "audio/woodpath/carre/swift.wav"
+
+            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
+        }
+    }
+
+    WPN114.StereoSource //----------------------------------------- GROUNDNOISE
+    {
+        parentStream: rooms
+        fixed: true
+        diffuse: 0.5
+        xspread: 0.25
+
+        exposePath: fmt("audio/groundnoise/source")
+
+        WPN114.StreamSampler { id: groundnoise; loop: true; xfade: 3000
+            exposePath: fmt("audio/groundnoise")
+            path: "audio/woodpath/carre/groundnoise.wav"
+
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+        }
+    }
+
+    WPN114.StereoSource //----------------------------------------- QUARRE
+    {
+        parentStream: rooms
+        fixed: true
+        diffuse: 0.25
+        xspread: 0.5
+
+        exposePath: fmt("audio/quarre/source")
+
+        WPN114.StreamSampler { id: quarre; loop: true; xfade: 4000
+            exposePath: fmt("audio/quarre")
+            path: "audio/woodpath/carre/quarre.wav"
+
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+        }
+    }
+
+    WPN114.MonoSource //----------------------------------------- INSECTS
+    {
+        id: insects_source
+        parentStream: rooms
+        exposePath: fmt("audio/insects/source")
+
+        WPN114.StreamSampler { id: insects; loop: true; xfade: 3000
+            dBlevel: 6
+            exposePath: fmt("audio/insects")
+            path: "audio/woodpath/carre/insects.wav"
+
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+        }
+    }
+
+    WPN114.StereoSource //----------------------------------------- HARMONICS
+    {
+        id: harmonics_source
+        parentStream: rooms
+        fixed: true
+        yspread: 0.4
+
+        exposePath: fmt("audio/harmonics/source")
+
+        WPN114.StreamSampler { id: harmonics; loop: true; xfade: 3000
+            exposePath: fmt("audio/harmonics")
+            path: "audio/woodpath/carre/harmonics.wav"
+
+            WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+        }
+    }
+
+    //            WPN114.MonoSource //----------------------------------------- RAVENS
+    //            {
+    //                id:         ravens_source
+    //                exposePath: fmt("audio/ravens/rooms"
+
+    //                WPN114.MultiSampler { id: ravens;
+    //                    exposePath: fmt("audio/ravens"
+    //                    path: "audio/woodpath/carre/ravens"
+    //                    WPN114.Fork { target: effects.reverb; dBlevel: 3 }
+    //                }
+    //            }
 }

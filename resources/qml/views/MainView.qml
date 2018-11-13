@@ -33,6 +33,56 @@ Item
 
         visible: true
 
+        FontLoader
+        {
+            id: font_lato_light
+            source: "file:///Users/pchd/Repositories/quarre2/resources/fonts/Lato-Light.ttf"
+        }
+
+        Image //----------------------------------------------------------------- GUI
+        {
+            // note that having low & high-dpi separate files would be a good idea
+            id: quarre_background
+            antialiasing: true
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectCrop
+            source: "file:///Users/pchd/Repositories/quarre-server/resources/images/quarre.jpg"
+
+            Rectangle
+            {
+                anchors.fill: parent
+                color: "black"
+                opacity: 0.6
+
+                Rectangle
+                {
+                    anchors.fill: parent
+                    radius: width/2
+                    color: "black"
+                    opacity: 0.7
+                }
+            }
+        }
+
+        Text
+        {
+            id: scene_label
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "quarrè"
+            font.pointSize: 40
+            y: parent.height * 0.15
+            color: "white"
+            font.family: font_lato_light.name
+        }
+
+        Connections
+        {
+            target: main_scenario
+            onRunningSceneChanged:
+                scene_label.text = main_scenario.runningScene.name();
+
+        }
+
         MultiVUMeter
         {
             id: vumeters
@@ -47,7 +97,9 @@ Item
             anchors.horizontalCenter: parent.horizontalCenter
             text: "00:00"
             font.pointSize: 40
-            y: parent.height * 0.75
+            y: parent.height * 0.7
+            color: "white"
+            font.family: font_lato_light.name
         }
     }
 
@@ -58,7 +110,7 @@ Item
         visible: false
 
         setup:   roomsetup
-//        target:  scenario.introduction
+        target:  "/scenario/introduction"
 
         width: parent.width - tree.width
         height: width
@@ -72,7 +124,7 @@ Item
     {
         id: mixview
         visible: false
-        path: "/introduction"
+        path: "/scenario/introduction"
 
         WPN114.Node on path { path: "/views/mix/scene" }
 
@@ -89,7 +141,8 @@ Item
         y:          sceneview.height + tabbar.height
         width:      sceneview.width
         height:     root.height - sceneview.height - tabbar.height
-        color:      "dimgrey"
+        color:      "black"
+        opacity:    0.6
 
         Loader { id: loader }
     }
@@ -139,7 +192,6 @@ Item
         id: tree
         height: parent.height
         width: parent.width*0.4
-        model: net.server.nodeTree();
 
         TableViewColumn
         {

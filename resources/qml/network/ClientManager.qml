@@ -105,6 +105,7 @@ Item
     WPN114.Node // ======================================== RESET_INTERACTIONS
     {
         path: "/global/interactions/reset"
+        device: net.server
         type: WPN114.Type.Impulse
 
         critical: true
@@ -159,6 +160,7 @@ Item
     WPN114.Node
     {
         id: nclients
+        device: net.server
         path: "/clients/nclients"
         type: WPN114.Type.Int
         value: 0

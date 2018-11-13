@@ -6,6 +6,8 @@ Item
 {
     id: root
 
+    property list<WPN114.AudioPlugin> instr
+
     property string path
     property bool running: false
     property int shutdown_after: 3000
@@ -28,21 +30,22 @@ Item
 
     function start() // ===================================== START_SCENE
     {
-        rooms.active = true;
-        net.clients.notifyScene( name() );
-
         if ( !audiostream.active )
               audiostream.active = true;
+
+        rooms.active = true;
+        net.clients.notifyScene( name() );
 
         if ( !timer.running ) timer.start();
 
         scenario.start();
         running = true;
+
+        main_scenario.runningScene = this;
     }
 
-    function stop() // ===================================== STOP_SCENE
+    function stop() // ====================================== STOP_SCENE
     {
-        onEnd();
         scenario.end();
     }
 
@@ -62,6 +65,7 @@ Item
         }, shutdown_after )
 
         running = false
+        end();
     }
 
     function reset() // ===================================== RESET_SCENE

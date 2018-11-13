@@ -19,7 +19,7 @@ Rectangle
         root.ypos = 30;
     }
 
-    onPathChanged:
+    function display()
     {
         root.clear();
         var node = net.server.get(path).subnode("audio");
@@ -43,5 +43,4 @@ Rectangle
             items.push( slider );
         }
     }
-
 }

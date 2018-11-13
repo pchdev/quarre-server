@@ -28,6 +28,7 @@ Item
         {
             anchors.verticalCenter: parent.verticalCenter
             x: index*width-index
+            color: "transparent"
 
             height: 150
             width: 25

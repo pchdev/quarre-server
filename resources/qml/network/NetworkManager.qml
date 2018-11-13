@@ -6,7 +6,24 @@ Item
     property alias server:  query_server
     property alias clients: client_manager
 
-    WPN114.FolderNode
+    WPN114.OSCQueryServer //================================================= MAIN_SERVER
+    {
+        id: query_server
+        singleDevice: true
+        name: "quarre-server"
+        tcpPort: 5678
+        udpPort: 1234
+
+        Component.onCompleted: mainview.tree.model = nodeTree();
+    }
+
+    ClientManager //========================================================= REMOTES
+    {
+        id: client_manager
+        maxClients: 4
+    }
+
+    WPN114.FolderNode //==================================================== MODULES
     {
         device: module_server
         recursive: true
@@ -15,26 +32,11 @@ Item
         filters: ["*.qml"]
     }
 
-    WPN114.OSCQueryServer
+    WPN114.OSCQueryServer //================================================ MODULE_SERVER
     {
         id: module_server
         name: "quarre-modules"
         tcpPort: 8576
         udpPort: 4132
-    }
-
-    WPN114.OSCQueryServer
-    {
-        id: query_server
-        singleDevice: true
-        name: "quarre-server"
-        tcpPort: 5678
-        udpPort: 1234
-    }
-
-    ClientManager
-    {
-        id: client_manager
-        maxClients: 4
     }
 }

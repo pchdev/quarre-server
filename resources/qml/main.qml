@@ -22,13 +22,14 @@ Rectangle
     width:      640
     height:     480
 
-    // ================================================================================ CORE
+    // ================================================================================== CORE
 
     NetworkManager          { id: net  }
     PresetsManager          { id: presets }
     Functions               { id: functions }
-    Scenario                { id: scenario }
+    Scenario                { id: main_scenario }
     MainView                { id: mainview }
+
 //    PushApplicationControl  { id: push }
 
     WPN114.RoomSetup //================================================================= ROOM_SETUP
