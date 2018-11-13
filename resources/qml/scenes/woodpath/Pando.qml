@@ -7,6 +7,7 @@ Scene
 {
     id: root;
 
+
     scenario: InteractionExecutor
     {
         target:       interaction_transition
@@ -22,6 +23,8 @@ Scene
             woodworks.play   ( );
             insects.play     ( );
             digigreen.play   ( );
+
+            rooms.dBlevel = 3;
         }
 
         WPN114.Automation
@@ -44,7 +47,6 @@ Scene
         description: "transition, veuillez patienter..."
     }
 
-
     WPN114.StereoSource //----------------------------------------- 1.FLUTE (1-2)
     {
         parentStream: rooms
@@ -56,6 +58,7 @@ Scene
         exposePath: fmt("audio/flute/source")
 
         WPN114.StreamSampler { id: flute;
+            exposePath: fmt("audio/flute")
             path: "audio/woodpath/pando/flute.wav"
             WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: 6 }
         }
@@ -69,6 +72,7 @@ Scene
         exposePath: fmt("audio/leaves/source")
 
         WPN114.StreamSampler { id: leaves; dBlevel: 3
+            exposePath: fmt("audio/leaves")
             path: "audio/woodpath/pando/leaves.wav"
             WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: 0 }
         }
@@ -84,6 +88,7 @@ Scene
         exposePath: fmt("audio/woodworks/source")
 
         WPN114.StreamSampler { id: woodworks; dBlevel: 3
+            exposePath: fmt("audio/woodworks")
             path: "audio/woodpath/pando/woodworks.wav"
             WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: -6 }
         }
@@ -98,6 +103,7 @@ Scene
         exposePath: fmt("audio/insects/source")
 
         WPN114.StreamSampler { id: insects; dBlevel: 6
+            exposePath: fmt("audio/insects")
             path: "audio/woodpath/pando/insects.wav"
             WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: -3 }
         }
@@ -111,9 +117,10 @@ Scene
         diffuse: 0.25
 
         fixed: true
-        exposePath: fmt("audio/sources/digigreen")
+        exposePath: fmt("audio/digigreen/source")
 
         WPN114.StreamSampler { id: digigreen; dBlevel: 3
+            exposePath: fmt("audio/digigreen");
             path: "audio/woodpath/pando/digigreen.wav"
             WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: -3 }
         }

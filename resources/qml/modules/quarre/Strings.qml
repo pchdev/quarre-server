@@ -72,6 +72,7 @@ Rectangle
                 if ( origin <= string_canvas.left_edge &&
                         mouse.x >= string_canvas.right_edge )
                 {
+                    if ( !node_strings.value ) return;
                     system.vibrate(100);
                     node_trigger.value = 0;
                     origin = string_canvas.width;
@@ -80,6 +81,7 @@ Rectangle
                 else if ( origin >= string_canvas.right_edge &&
                          mouse.x <= string_canvas.left_edge )
                 {
+                    if ( !node_strings.value ) return;
                     system.vibrate(100);
                     node_trigger.value = 0;
                     origin = 0;

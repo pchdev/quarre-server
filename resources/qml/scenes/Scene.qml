@@ -10,6 +10,8 @@ Item
 
     property string path
     property bool running: false
+    property bool notify: true
+    property bool endShutdown: true
     property int shutdown_after: 3000
     signal next ( );
     signal end  ( );
@@ -34,14 +36,15 @@ Item
               audiostream.active = true;
 
         rooms.active = true;
-        net.clients.notifyScene( name() );
-
         if ( !timer.running ) timer.start();
-
         scenario.start();
         running = true;
 
-        main_scenario.runningScene = this;
+        if ( notify )
+        {
+            net.clients.notifyScene( name() );
+            main_scenario.runningScene = this;
+        }
     }
 
     function stop() // ====================================== STOP_SCENE
@@ -53,16 +56,19 @@ Item
     {
         var main = net.server.get(path);
 
-        // stop all samplers
-        var stopnodes = main.collect( "stop" );
-        stopnodes.forEach(function(node){
-            node.value = 0;
-        })
+        if ( endShutdown )
+        {
+            // stop all samplers
+            var stopnodes = main.collect( "stop" );
+            stopnodes.forEach(function(node){
+                node.value = 0;
+            })
 
-        // set rooms inactive a while later
-        functions.setTimeout(function(){
-            rooms.active = false;
-        }, shutdown_after )
+            // set rooms inactive a while later
+            functions.setTimeout(function(){
+                rooms.active = false;
+            }, shutdown_after )
+        }
 
         running = false
         end();

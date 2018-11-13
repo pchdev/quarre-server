@@ -6,6 +6,8 @@ import ".."
 Scene
 {
     id: root
+    notify: false
+
     property alias maaaet:      maaaet
     property alias carre:       carre
     property alias pando:       pando

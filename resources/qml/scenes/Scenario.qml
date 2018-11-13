@@ -11,6 +11,7 @@ Scene
     path: "/scenario"
 
     property Scene runningScene
+    notify: false
 
     scenario: WPN114.TimeNode
     {
@@ -19,7 +20,7 @@ Scene
 
         onStart:
         {
-            introduction.start();
+            introduction.start()
             timer.count = 0;
         }
     }
@@ -31,7 +32,7 @@ Scene
     Introduction     { id: introduction; path: root.fmt( "introduction" ) }
     Woodpath         { id: woodpath; path: root.fmt("woodpath") }
     //    Stonepath        { id: stonepath }
-    //    WPN214           { id: wpn214  }
+    WPN214           { id: wpn214; path: root.fmt("wpn214") }
 
     Item //====================================================================== TIMER
     {
@@ -74,11 +75,15 @@ Scene
 //        onEnd: wpn214.scenario.start();
 //    }
 
-//    Connections
-//    {
-//        target: woodpath
-//        onEnd: wpn214.scenario.start();
-//    }
+    Connections
+    {
+        target: woodpath
+        onEnd:
+        {
+            wpn214.fade_target = woodpath.jomon
+            wpn214.start();
+        }
+    }
 
 //    Connections
 //    {

@@ -34,4 +34,10 @@ Item
             width: 25
         }
     }
+
+    function reset()
+    {
+        for ( var i = 0; i < nchannels; ++i )
+            repeater.itemAt(i).reset();
+    }
 }

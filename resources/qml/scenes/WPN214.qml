@@ -1,22 +1,19 @@
 import QtQuick 2.0
 import WPN114 1.0 as WPN114
 import ".."
+import "../engine"
 
-Item
+Scene
 {
     id: root
-    property alias scenario: scenario
-    property alias rooms: wpn214_rooms
-    property var fade_target: woodpath.jomon
 
-    signal end();
+    property var fade_target
 
-    WPN114.TimeNode
+    scenario: WPN114.TimeNode
     {
-        id:         scenario
-        exposePath: "/wpn214/scenario"
-        source:     audio_stream
-        duration:   -1
+        source: audiostream
+        parentNode: parent.scenario
+        duration: WPN114.TimeNode.Infinite
 
         InteractionExecutor
         {
@@ -25,13 +22,7 @@ Item
             countdown:  sec( 10 )
             length:     min( 4.30 )
 
-            onStart:
-            {
-                wpn214_rooms.active = true;
-                wpn214_rooms.level = 1;
-                sampler.play();
-                client_manager.notifyScene("wpn214")
-            }
+            onStart:    sampler.play();
         }
 
         WPN114.Automation
@@ -46,10 +37,8 @@ Item
 
             onEnd:
             {
-                fade_target.rooms.active = false
-                wpn214_rooms.active = false
                 scenario.end();
-                root.end();
+                fade_target.rooms.active = false
             }
         }
     }
@@ -66,27 +55,20 @@ Item
         description: "Merci pour votre participation"
     }
 
-    WPN114.Rooms
+
+    WPN114.StereoSource //----------------------------------------- SAMPLER
     {
-        id: wpn214_rooms
-        active: false
-        parentStream: audio_stream
-        setup: rooms_setup
-        exposePath: "/wpn214/rooms"
+        parentStream: rooms
+        fixed: true
+        diffuse: 0.2
+        xspread: 0.25
+        y: 0.75
 
-        WPN114.StereoSource //----------------------------------------- SAMPLER
-        {
-            fixed: true
-            diffuse: 0.2
-            xspread: 0.25
-            y: 0.75
+        exposePath: fmt("audio/sampler/source")
 
-            exposePath: "/wpn214/sampler/source"
-
-            WPN114.StreamSampler { id: sampler
-                dBlevel: -3
-                exposePath: "/wpn214/sampler"
-                path: "audio/wpn214/wpn214.wav" }
-        }
+        WPN114.StreamSampler { id: sampler; dBlevel: -3
+            exposePath: fmt("audio/sampler")
+            path: "audio/wpn214/wpn214.wav" }
     }
 }
+

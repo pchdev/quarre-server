@@ -18,9 +18,8 @@ Scene
             instruments.kaivo_1.active  = true;
             instruments.kaivo_1.dBlevel = -6
             instruments.kaivo_2.dBlevel = -6
-
-            instruments.k1_fork_921.dBlevel = -12
-            instruments.k2_fork_921.dBlevel = -9
+            instruments.k1_fork_921.dBlevel = -3
+            instruments.k2_fork_921.dBlevel = -6
 
             instruments.kaivo_2.active  = true;
             instruments.rooms.active    = true;
@@ -33,7 +32,6 @@ Scene
             instruments.kaivo_2.allNotesOff();
 
             functions.setTimeout(function() {
-                instruments.kaivo_1.active = false;
                 instruments.kaivo_2.active = false;
             }, 2000)
         }

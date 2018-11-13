@@ -7,6 +7,7 @@ Scene
 {
     id: root
 
+    endShutdown: false
     JomonScore { id: jomon_score }
 
     scenario: WPN114.TimeNode
@@ -20,9 +21,9 @@ Scene
             instruments.rooms.active         = true;
             instruments.kaivo_1.active       = true;
             instruments.kaivo_1.dBlevel      = -3;
-            instruments.k1_fork_921.dBlevel  = -3;
+            instruments.k1_fork_921.dBlevel  = -5;
             instruments.k1_fork_amp.active   = true;
-            instruments.k1_fork_amp.dBlevel  = -6;
+            instruments.k1_fork_amp.dBlevel  = -9;
 
             effects.amplitube.active = true;
             instruments.kaivo_2.active  = false;
@@ -36,7 +37,7 @@ Scene
             effects.amplitube.active         = false
         }
 
-        // AKATSUKI ------------------------------------------------------------
+        // ======================================================================= DAWN
 
         InteractionExecutor
         {
@@ -97,7 +98,7 @@ Scene
             }
         }
 
-        //        // JOMON_SUGI ------------------------------------------------------------
+        // =================================================================== FINAL
 
         WPN114.TimeNode
         {
@@ -482,7 +483,8 @@ centimètres de l'écran de l'appareil pour produire du son"
 
         exposePath: fmt("audio/dmsynth/source")
 
-        WPN114.Sampler { id: dmsynth; attack: 1500
+        WPN114.Sampler { id: dmsynth; dBlevel: -6
+            attack: 1500
             exposePath: fmt("audio/dmsynth")
             path: "audio/woodpath/jomon/dmsynth.wav"
 
@@ -510,10 +512,11 @@ centimètres de l'écran de l'appareil pour produire du son"
 
         exposePath: fmt("audio/leaves/source")
 
-        WPN114.StreamSampler { id: leaves; loop: true; xfade: 2000;
+        WPN114.StreamSampler { id: leaves; dBlevel: -2
+            loop: true; xfade: 2000;
             exposePath: fmt("audio/leaves")
             path: "audio/woodpath/jomon/leaves.wav"
-            WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
         }
     }
 
@@ -525,7 +528,7 @@ centimètres de l'écran de l'appareil pour produire du son"
 
         exposePath: fmt("audio/fsynths/source")
 
-        WPN114.StreamSampler { id: fsynths; dBlevel: 3
+        WPN114.StreamSampler { id: fsynths; dBlevel: 0
             attack: 2000
             exposePath: fmt("audio/fsynths")
             path: "audio/woodpath/jomon/fsynths.wav" }

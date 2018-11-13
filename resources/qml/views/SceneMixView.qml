@@ -1,11 +1,20 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.4
 
-Rectangle
+ScrollView
 {
     id: root
-    property string path
     property var items: [ ]
     property int ypos: 30
+
+    Rectangle
+    {
+        id: rect
+        anchors.fill: parent
+
+    }
+
+    ScrollBar.vertical.policy: ScrollBar.AlwaysOn
 
     function clear()
     {
@@ -19,8 +28,10 @@ Rectangle
         root.ypos = 30;
     }
 
-    function display()
+    function display(path)
     {
+        if ( path ===  "") return;
+
         root.clear();
         var node = net.server.get(path).subnode("audio");
 
@@ -29,8 +40,8 @@ Rectangle
             var subnode = node.subnodeAt(i);
             var dblevel_n = subnode.subnode("stream/dBlevel");
 
-            var component = Qt.createComponent("Slider.qml");
-            var slider = component.createObject(root, { "y": ypos })
+            var component = Qt.createComponent("items/Slider.qml");
+            var slider = component.createObject(rect, { "y": ypos })
 
             slider.label = subnode.name;
             slider.min = -96;

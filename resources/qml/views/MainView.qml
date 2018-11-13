@@ -101,6 +101,13 @@ Item
             color: "white"
             font.family: font_lato_light.name
         }
+
+        Component.onCompleted:
+        {
+            functions.setTimeout(function(){
+                vumeters.reset();
+            }, 125 )
+        }
     }
 
     RoomsView // --------------------------------------------------------------- ROOMS_VIEW
@@ -110,13 +117,13 @@ Item
         visible: false
 
         setup:   roomsetup
-        target:  "/scenario/introduction"
-
         width: parent.width - tree.width
         height: width
 
         x: tree.width
         y: tabbar.height
+
+        Component.onCompleted: sceneview.drawSetup();
 
     }
 
@@ -124,14 +131,30 @@ Item
     {
         id: mixview
         visible: false
-        path: "/scenario/introduction"
-
-        WPN114.Node on path { path: "/views/mix/scene" }
 
         x: tree.width
         y: tabbar.height
         width: parent.width - tree.width
-        height: parent.height
+        height: parent.height - footer_rect.height - tabbar.height
+
+        property string path
+        WPN114.Node on path { path: "/views/mix/display" }
+
+        onPathChanged:
+        {
+            mixview.display(path);
+            sceneview.drawScene(path);
+        }
+
+        Connections
+        {
+            target: main_scenario
+            onRunningSceneChanged:
+            {
+                mixview.display( main_scenario.runningScene.path );
+                sceneview.drawScene( main_scenario.runningScene.path );
+            }
+        }
     }
 
     Rectangle // --------------------------------------------------------------- FOOTER
@@ -144,7 +167,12 @@ Item
         color:      "black"
         opacity:    0.6
 
-        Loader { id: loader }
+        Loader
+        {
+            id: loader
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+        }
     }
 
     TabBar // ----------------------------------------------------------------- TABS

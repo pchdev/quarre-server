@@ -13,7 +13,11 @@ Scene
         source: audiostream
         parentNode: parent.scenario
         duration: WPN114.TimeNode.Infinite
-        onStart: wind.play();
+        onStart:
+        {
+            wind.play();
+            rooms.dBlevel = -3
+        }
 
         //=============================================================== AMBIENT
 

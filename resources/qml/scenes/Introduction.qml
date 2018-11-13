@@ -25,6 +25,7 @@ Scene
             river.play          ( );
             verb.play           ( );
 
+            rooms.dBlevel = -3
             net.clients.notifyStart( );
         }
 
