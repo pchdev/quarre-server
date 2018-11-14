@@ -10,28 +10,34 @@ Rectangle
 
     QuarreSlider
     {
-        name: "drive"
-
-        WPN114.Node on value { path: "/modules/mangler/drive" }
+        name: "resampler"
+        min: 125; max: 15000;
+        WPN114.Node on value { path: "/modules/mangler/resampler" }
         y: parent.height*0.2
     }
 
     QuarreSlider
     {
-        name: "crush"
-        max: 0.85
-
-        WPN114.Node on value { path: "/modules/mangler/crush" }
+        name: "bitcrusher"
+        min: 0; max: 2.1
+        WPN114.Node on value { path: "/modules/mangler/bitcrusher" }
         y: parent.height*0.2 * 2
     }
 
     QuarreSlider
     {
-        name: "resampler"
-        min: 0; max: 0.8;
-
-        WPN114.Node on value { path: "/modules/mangler/resampler" }
+        name: "bitdepth"
+        min: 3; max: 10;
+        WPN114.Node on value { path: "/modules/mangler/bitdepth" }
         y: parent.height*0.2 * 3
+    }
+
+    QuarreSlider
+    {
+        name: "thermonuclear"
+        min: 0; max: 16;
+        WPN114.Node on value { path: "/modules/mangler/thermonuclear" }
+        y: parent.height*0.2 * 4
     }
 
 }

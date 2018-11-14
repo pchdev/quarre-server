@@ -9,7 +9,6 @@ import "engine"
 import "network"
 import "control"
 
-// TODO: Pink Noise setup testing module
 // TODO: volume and spatialization presets
 // TODO: FLAC audio
 // TODO: tempoclock

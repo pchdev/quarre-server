@@ -11,37 +11,25 @@ Rectangle
 
     QuarreSlider
     {
-        name: "fréquence filtre"
-
-        WPN114.Node on value { path: "/modules/mangler/filter/freq" }
+        name: "attitude"
+        min: 0; max: 3.1;
+        WPN114.Node on value { path: "/modules/mangler/attitude" }
         y: parent.height*0.2
     }
 
     QuarreSlider
     {
-        name: "résonance filtre"
-
-        WPN114.Node on value { path: "/modules/mangler/filter/res" }
+        name: "love"
+        min: 0; max: 100;
+        WPN114.Node on value { path: "/modules/mangler/love" }
         y: parent.height*0.2 * 2
     }
 
-    WPN114.Node
+    QuarreSlider
     {
-        id:     attitude
-        path:   "/modules/mangler/filter/type"
-        type:   WPN114.Type.Int
+        name: "jive"
+        min: 0; max: 150;
+        WPN114.Node on value { path: "/modules/mangler/jive" }
+        y: parent.height*0.2 * 3
     }
-
-    ComboBox
-    {
-        id: cb
-        y: parent.height*0.2 *3
-        height: parent.height*0.1
-        width: parent.width*0.65
-        anchors.horizontalCenter: parent.horizontalCenter
-        model: [ "Passe-bas", "Passe-haut" ]
-
-        onActivated: attitude.value = index;
-    }
-
 }

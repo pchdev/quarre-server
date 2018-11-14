@@ -106,7 +106,7 @@ Scene
             id: jomon_scenario
             after: akatsuki
             date: sec( 5 )
-            duration: min( 2.30 )
+            duration: min( 2.46 )
 
             onStart:
             {
@@ -120,16 +120,16 @@ Scene
             WPN114.Automation
             {
                 target: mangler
-                property: "wet"
-                duration: sec( 5 )
-                from: 0; to: 0.75;
+                property: "wetOut"
+                duration: sec( 10 )
+                from: -36; to: -3;
 
                 WPN114.Automation
                 {
                     target: mangler
-                    property: "dry"
-                    duration: sec( 37 )
-                    from: mangler.dry; to: 0.65;
+                    property: "dryOut"
+                    duration: sec( 15 )
+                    from: -3; to: -9;
                 }
             }
 
@@ -146,21 +146,16 @@ Scene
                     target:     interaction_mangler_2
                     countdown:  sec( 15 )
                     length:     min( 1.20 )
-
-                    InteractionExecutor
-                    {
-                        target:     interaction_mangler_3
-                        countdown:  sec( 15 )
-                        length:     min( 1.20 )
-
-                        InteractionExecutor
-                        {
-                            target:     interaction_mangler_4
-                            countdown:  sec( 15 )
-                            length:     min( 1.20 )
-                        }
-                    }
                 }
+            }
+
+            WPN114.Automation
+            {
+                date: min( 2.20 )
+                target: mangler
+                property: "wetOut"
+                from: -3; to: -48;
+                duration: sec( 20 )
             }
         }
 
@@ -172,7 +167,6 @@ Scene
             from: leaves.level; to: 0
 
             duration: sec( 20 )
-
             onEnd: leaves.stop()
         }
 
@@ -184,7 +178,6 @@ Scene
 
             from: rooms.level; to: 0.25
             duration: sec( 30 )
-
             onEnd: scenario.end()
         }
     }
@@ -271,7 +264,6 @@ centimètres de l'écran de l'appareil pour produire du son"
                 expression: function(v) {
 
                     var ndur = jomon_score.score[jomon_score.index]['duration'];
-
                     functions.processScoreIncrement( jomon_score,
                                                     interaction_strings_1,
                                                     interaction_strings_2,
@@ -300,7 +292,6 @@ centimètres de l'écran de l'appareil pour produire du son"
                 expression: function(v) {
 
                     var ndur = jomon_score.score[jomon_score.index]['duration'];
-
                     functions.processScoreIncrement( jomon_score,
                                                     interaction_strings_2,
                                                     interaction_strings_1,
@@ -320,26 +311,21 @@ centimètres de l'écran de l'appareil pour produire du son"
             id:     interaction_mangler_1
             title:  "Destructurations (1)"
             module: "quarre/JomonMangler.qml"
-
             description: "Parasitez, détruisez le signal"
 
-            // DRIVE: 0 - 1
-            // CRUSH: 0 - 0.85
-            // DWSP:  0 - 0.8
-
             mappings:
-                [
-                QuMapping { source: "/modules/mangler/drive"
-                    expression: function(v) { mangler.set("Drive", v) }
-                },
+            [
+                QuMapping { source: "/modules/mangler/thermonuclear"
+                    expression: function(v) { mangler.thermonuclear = v }},
 
-                QuMapping { source: "/modules/mangler/crush"
-                    expression: function(v) { mangler.set("Crush", v) }
-                },
+                QuMapping { source: "/modules/mangler/bitcrusher"
+                    expression: function(v) { mangler.bitcrusher = v }},
+
+                QuMapping { source: "/modules/mangler/bitdepth"
+                    expression: function(v) { mangler.bitdepth = v }},
 
                 QuMapping { source: "/modules/mangler/resampler"
-                    expression: function(v) { mangler.set("Downsamp", v) }
-                }
+                    expression: function(v) { mangler.badResampler = v }}
             ]
         }
 
@@ -348,116 +334,21 @@ centimètres de l'écran de l'appareil pour produire du son"
             id:     interaction_mangler_2
             title:  "Destructurations (2)"
             module: "quarre/JomonMangler2.qml"
-
             description: "Parasitez, détruisez le signal"
 
-            // FILTER: 0 - 1
-            // RESFILTER: 0 - 1
-            // FILTER-TYPE : 0 OR 1 (bool)
-
             mappings:
-                [
-                QuMapping
-                {
-                    source: "/modules/mangler/filter/freq"
-                    expression: function(v) {
-                        mangler.set("Lowpass Freq", v);
-                        mangler.set("Hipass Freq", v);
-                    }
-                },
+            [
+                QuMapping { source: "/modules/mangler/attitude"
+                    expression: function(v) { mangler.attitude = v }},
 
-                QuMapping
-                {
-                    source: "/modules/mangler/filter/res"
-                    expression: function(v) {
-                        mangler.set("Lowpass Res", v);
-                        mangler.set("Hipass Res", v);
-                    }
-                },
+                QuMapping { source: "/modules/mangler/love"
+                    expression: function(v) { mangler.love = v }},
 
-                QuMapping
-                {
-                    source: "/modules/mangler/filter/type"
-                    expression: function(v) { mangler.set("Filter Type", v) }
-                }
-            ]
-        }
-        Interaction //-------------------------------------------------------------------------- MANGLER_2
-        {
-            id:     interaction_mangler_3
-            title:  "Destructurations (3)"
-            module: "quarre/JomonMangler3.qml"
-
-            description: "Parasitez, détruisez le signal"
-
-            // LFO-RATE: 0 - 1
-            // LFO-WAVEFORM: 0 - 1
-            // LFO-DRIVE: 0 - 1
-
-            mappings:
-                [
-                QuMapping
-                {
-                    source: "/modules/mangler/lfo/rate"
-                    expression: function(v) { mangler.set("LFO Free Rate", v) }
-                },
-
-                QuMapping
-                {
-                    source: "/modules/mangler/lfo/waveform"
-                    expression: function(v) { mangler.set("LFO Waveform", v) }
-                },
-
-                QuMapping
-                {
-                    source: "/modules/mangler/lfo/drive"
-                    expression: function(v) { mangler.set("Drive Mod Depth", v) }
-                }
-            ]
-        }
-
-        Interaction //-------------------------------------------------------------------------- MANGLER_2
-        {
-            id:     interaction_mangler_4
-            title:  "Destructurations (4)"
-            module: "quarre/JomonMangler4.qml"
-
-            description: "Parasitez, détruisez le signal"
-
-            // LFO-CRUSH : 0 - 1
-            // LFO-DWSP: 0 - 1
-            // LFO-FREQ: 0 - 1
-            // LFO-RES: 0 - 1
-
-            mappings:
-                [
-                QuMapping
-                {
-                    source: "/modules/mangler/lfo/crush"
-                    expression: function(v) { mangler.set("Crush Mod Depth", v) }
-                },
-
-                QuMapping
-                {
-                    source: "/modules/mangler/lfo/resampler"
-                    expression: function(v) { mangler.set("Downsamp Mod Depth", v) }
-                },
-
-                QuMapping
-                {
-                    source: "/modules/mangler/lfo/freq"
-                    expression: function(v) { mangler.set("Filter Freq Mod Depth", v) }
-                },
-
-                QuMapping
-                {
-                    source: "/modules/mangler/lfo/res"
-                    expression: function(v) { mangler.set("Filter Res Mod Depth", v) }
-                }
+                QuMapping { source: "/modules/mangler/jive"
+                    expression: function(v) { mangler.jive = v  }}
             ]
         }
     }
-
 
     WPN114.StereoSource //----------------------------------------- 1.CICADAS (1-2)
     {
@@ -484,22 +375,26 @@ centimètres de l'écran de l'appareil pour produire du son"
 
         exposePath: fmt("audio/dmsynth/source")
 
-        WPN114.Sampler { id: dmsynth; dBlevel: -6
+        WPN114.StreamSampler { id: dmsynth; dBlevel: -6
             attack: 1500
             exposePath: fmt("audio/dmsynth")
             path: "audio/woodpath/jomon/dmsynth.wav"
 
-            WPN114.AudioPlugin
+            WPN114.Mangler
             {
                 id: mangler
-                property real dry: 0.6
-                property real wet: 0.0
-
-                onDryChanged: mangler.set("Dry", mangler.dry);
-                onWetChanged: mangler.set("Wet", mangler.wet);
-
-                exposePath: fmt("audio/krush")
-                path: "/Library/Audio/Plug-Ins/VST/Krush.vst"
+                exposePath: fmt("audio/mangler")
+                dryOut: -3
+                wetOut: -3
+                //--------- 1
+                badResampler: 10000
+                bitdepth: 8
+                bitcrusher: 0
+                thermonuclear: 2
+                // -------- 2
+                attitude: 1
+                love: 62
+                jive: 100
             }
         }
     }
