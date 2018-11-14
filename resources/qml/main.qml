@@ -39,6 +39,14 @@ Rectangle
         WPN114.SpeakerRing { nspeakers: 8; offset: -Math.PI/8; influence: 0.707 }
     }
 
+    WPN114.PinkAudio
+    {
+        nchannels: 8
+        duration: 0.5
+        stream: audiostream;
+        path: "/utilities/tester"
+    }
+
     WPN114.AudioStream //=============================================================== AUDIO
     {
         id:             audiostream

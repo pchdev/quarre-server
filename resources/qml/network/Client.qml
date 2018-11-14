@@ -79,6 +79,12 @@ Item
 
             remote.listen( "/interactions/next/countdown" );
             remote.listen( "/interactions/current/countdown" );
+
+            if ( main_scenario.running )
+            {
+                remote.sendMessage("/scenario/running", true, true);
+                remote.sendMessage("/scenario/scene/name", main_scenario.runningScene.name(), true);
+            }
         }
 
         onDisconnected:

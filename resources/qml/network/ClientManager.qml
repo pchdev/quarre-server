@@ -93,6 +93,16 @@ Item
         }
     }
 
+    function notifyReset()
+    {
+        for ( var c = 0; c < maxClients; ++c )
+        {
+            var client = clients.itemAt(c);
+            if ( client.connected )
+                 client.remote.sendMessage("/scenario/reset", 0, true);
+        }
+    }
+
     function notifyScene(name) // ======================================== SCENE_CHANGE
     {
         for ( var c = 0; c < maxClients; ++c )
@@ -143,7 +153,7 @@ Item
                     // preventing client to connect multiple times to different remotes
                     client.connected = true;
                     client.remote.connect(hostaddr);
-                    nclients.value = nclients.value+1
+                    nclients.value = nclients.value+1;
                     break;
                 }
             }
