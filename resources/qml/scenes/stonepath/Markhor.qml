@@ -15,10 +15,10 @@ Scene
 
         onStart:
         {
-            instruments.k1_fork_921.prefader = true;
-            instruments.k1_fork_921.dBlevel = -6;
-
             instruments.kaivo_1.dBlevel = -24
+            instruments.k1_fork_921.dBlevel = -6;
+            instruments.kaivo_2.dBlevel = -6
+            instruments.k2_fork_921.dBlevel = -6;
 
             instruments.kaivo_1.active  = true;
             instruments.kaivo_2.active  = true;
@@ -66,7 +66,22 @@ Scene
                 target: instruments.kaivo_1
                 property: "dBlevel"
                 duration: sec( 22 )
-                from: instruments.kaivo_1.dBlevel; to: 0;
+                from: instruments.kaivo_1.dBlevel; to: -6;
+            }
+
+            WPN114.Automation
+            {
+                date: sec( 15 )
+                target: instruments.kaivo_2
+                property: "dBlevel"
+                duration: sec( 45 )
+                from: -48; to: instruments.kaivo_2.dBlevel;
+
+                onStart:
+                {
+                    instruments.kaivo_2.noteOn(0, 65, 127)
+                    instruments.kaivo_2.noteOn(0, 70, 127)
+                }
             }
         }
 
@@ -82,9 +97,9 @@ Scene
             {
                 ambient_light.play();
 
-                instruments.kaivo_2.noteOn(0, 70, 127);
+                instruments.kaivo_2.noteOff(0, 65, 127);
                 instruments.kaivo_2.noteOn(0, 75, 127);
-                instruments.kaivo_2.noteOn(0, 80, 127);
+//                instruments.kaivo_2.noteOn(0, 80, 127);
             }
         }
 
@@ -131,6 +146,8 @@ Scene
             date:       sec( 20 )
             countdown:  sec( 15 )
             length:     sec( 175 )
+
+            onStart:  instruments.kaivo_2.noteOn(0, 80, 127);
 
             onEnd:
             {
@@ -328,7 +345,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
                 QuMapping {
                     source: "/modules/markhor/resonator/sustain"
-                    expression: function(v) { instruments.kaivo_2.set("res_sustain", v) }}
+                    expression: function(v) { instruments.kaivo_2.set("res_sustain", v*0.5) }}
             ]
         }
 
@@ -434,8 +451,9 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
     {
         parentStream: rooms
         fixed: true
-        xspread: 0.25
-        diffuse: 0.55
+        xspread: 0.35
+        diffuse: 0.20
+        y: 0.15
 
         exposePath: fmt("audio/doomsday/source")
 

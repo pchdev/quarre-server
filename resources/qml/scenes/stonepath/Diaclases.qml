@@ -295,9 +295,9 @@ Scene
     {
         parentStream: rooms
         fixed: true
-        xspread: 0.25
-        diffuse: 0.5
-        y: 0.25
+        xspread: 0.4
+        diffuse: 0.2
+        y: 0.5
 
         exposePath: fmt("audio/stonewater/source");
 
@@ -311,7 +311,7 @@ Scene
         parentStream: rooms
         fixed: true
         xspread: 0.25
-        diffuse: 0.5
+        diffuse: 0.2
         y: 0.25
 
         exposePath: fmt("audio/harmonics/source")
@@ -326,7 +326,7 @@ Scene
         parentStream: rooms
         fixed: true
         xspread: 0.25
-        diffuse: 0.6
+        diffuse: 0.2
         y: 0.85
 
         exposePath: fmt("audio/drone/source")

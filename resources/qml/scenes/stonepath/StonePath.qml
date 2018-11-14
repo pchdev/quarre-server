@@ -7,6 +7,8 @@ Scene
     id: root
 
     notify: false
+    audio: false
+
     property alias cendres: cendres
     property alias diaclases: diaclases
     property alias deidarabotchi: deidarabotchi

@@ -6,8 +6,6 @@ import ".."
 Scene
 {
     id: root;
-
-
     scenario: InteractionExecutor
     {
         target:       interaction_transition

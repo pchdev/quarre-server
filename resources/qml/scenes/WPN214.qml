@@ -36,8 +36,15 @@ Scene
 
             onEnd:
             {
-                scenario.end();
-                fade_target.rooms.active = false
+                if ( fade_target === woodpath.jomon )
+                     woodpath.jomon.cicadas.stop()
+                else if ( fade_target === stonepath.ammon )
+                     stonepath.ammon.wind.stop();
+
+                functions.setTimeout(function(){
+                    fade_target.rooms.active = false
+                    scenario.end();
+                }, 2000 )
             }
         }
     }
@@ -45,15 +52,11 @@ Scene
     Interaction //----------------------------------------------------- INTERACTION
     {
         id: interaction_ending
-
-        title: "Fin, WPN214"
-        path:   "/wpn214/interactions/wpn214"
-
+        title: "Fin, crédits"
         module: "quarre/WPN214.qml"
-        broadcast: true
         description: "Merci pour votre participation"
+        broadcast: true
     }
-
 
     WPN114.StereoSource //----------------------------------------- SAMPLER
     {

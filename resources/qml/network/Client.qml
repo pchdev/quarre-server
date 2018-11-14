@@ -46,7 +46,10 @@ Item
     {
         var interaction_arr = getInteractionMessage(interaction);
         remote.sendMessage("/interactions/next/begin", interaction_arr, true);
-        root.status = "active";
+
+        if ( interaction.length === WPN114.TimeNode.Infinite )
+             root.status = "active_infinite";
+        else root.status = "active";
     }
 
     function endInteraction(interaction)
@@ -54,6 +57,7 @@ Item
         remote.sendMessage("/interactions/current/end", 0, true);
         if ( status === "active_incoming" ) status = "incoming";
         else if ( status === "active" ) status = "idle";
+        else if ( status === "active_infinite" ) status = "idle";
         else if ( status === "incoming" ) status = "idle";
     }
 

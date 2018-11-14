@@ -7,6 +7,7 @@ Scene
 {
     id: root
     endShutdown: false
+    property alias wind: wind
 
     scenario: WPN114.TimeNode
     {
@@ -48,6 +49,13 @@ Scene
             instruments.kaivo_1.active = false;
             instruments.kaivo_2.active = false;
             instruments.rooms.active = false;
+
+            instruments.k1_fork_921.active      = true
+            instruments.k1_fork_lavaur.active   = false
+            instruments.k2_fork_921.active      = true
+            instruments.k2_fork_lavaur.active   = false
+
+            ammon_score.index = 0;
         }
 
         WPN114.TimeNode { date: sec(6); onStart: footsteps.play() }
@@ -61,7 +69,7 @@ Scene
 
             date:       sec( 10 )
             countdown:  sec( 10 )
-            length:     sec( 360 )
+            length:     WPN114.TimeNode.Infinite
         }
 
         InteractionExecutor

@@ -6,6 +6,7 @@ import ".."
 Scene
 {
     id: root
+    property alias cicadas: cicadas
 
     endShutdown: false
     JomonScore { id: jomon_score }
@@ -512,11 +513,11 @@ centimètres de l'écran de l'appareil pour produire du son"
 
         exposePath: fmt("audio/leaves/source")
 
-        WPN114.StreamSampler { id: leaves; dBlevel: -2
+        WPN114.StreamSampler { id: leaves; dBlevel: -6
             loop: true; xfade: 2000;
             exposePath: fmt("audio/leaves")
             path: "audio/woodpath/jomon/leaves.wav"
-            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
         }
     }
 

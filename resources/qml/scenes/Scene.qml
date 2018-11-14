@@ -11,6 +11,7 @@ Item
     property string path
     property bool running: false
     property bool notify: true
+    property bool audio: true
     property bool endShutdown: true
     property int shutdown_after: 3000
 
@@ -81,14 +82,12 @@ Item
         var dbnodes = net.server.collectNodes("dBlevel");
 
         dbnodes.forEach(function(node){
-            node.value = node.defaultValue;
+            node.resetValue()
         });
     }
 
     property WPN114.Rooms rooms: WPN114.Rooms
     {
-        parentStream: audiostream
-        exposePath: fmt("audio/rooms")
         setup:  roomsetup
         active: false
     }
@@ -97,6 +96,11 @@ Item
     Component.onCompleted:
     {
         scenario.end.connect(root.onEnd);
+        if ( audio )
+        {
+            rooms.parentStream = audiostream
+            rooms.exposePath = fmt("audio/rooms")
+        }
     }
 
 }

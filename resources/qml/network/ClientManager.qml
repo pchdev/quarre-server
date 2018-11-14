@@ -27,6 +27,7 @@ Item
             if      ( !client.connected )                    continue;
             if      ( client.status === "incoming" )         continue;
             else if ( client.status === "active_incoming" )  continue;
+            else if ( client.status === "active_infinite" )  continue;
             else if ( client.status === "active" )
             {
                 var acd = client.getActiveCountdown();

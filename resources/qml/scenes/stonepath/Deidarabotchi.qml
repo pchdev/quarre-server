@@ -12,7 +12,6 @@ Scene
         target:      interaction_transition
         source:      audiostream
         parentNode:  parent.scenario
-        duration:    WPN114.TimeNode.Infinite
 
         length:      min( 2.44 )
         countdown:   sec( 20 )
@@ -25,6 +24,9 @@ Scene
             wind.play        ();
             background.play  ();
         }
+
+        // weird, there would normally be no need for this
+        onEnd: console.log("deidarabotchi end");
     }
 
     Interaction //----------------------------------------------------- TUTORIAL
@@ -33,7 +35,6 @@ Scene
         title: "Transition, ダイダラボッチ "
         module: "quarre/Transitions.qml"
         broadcast: true
-
         description: "transition, veuillez patienter..."
     }
 

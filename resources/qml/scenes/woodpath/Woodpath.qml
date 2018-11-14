@@ -7,6 +7,7 @@ Scene
 {
     id: root
     notify: false
+    audio: false
 
     property alias maaaet:      maaaet
     property alias carre:       carre

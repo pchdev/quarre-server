@@ -12,6 +12,7 @@ Scene
 
     property Scene runningScene
     notify: false
+    audio: false
 
     scenario: WPN114.TimeNode
     {
@@ -25,16 +26,18 @@ Scene
         }
     }
 
+    //================================================================================ SCENES
+
     Interactions     { id: interactions }
     Instruments      { id: instruments }
     Effects          { id: effects }
 
-    Introduction     { id: introduction; path: root.fmt( "introduction" ) }
-    Woodpath         { id: woodpath; path: root.fmt("woodpath") }
-    Stonepath        { id: stonepath; path: root.fmt("stonepath") }
-    WPN214           { id: wpn214; path: root.fmt("wpn214") }
+    Introduction     { id: introduction; path: root.fmt( "scenes/introduction" ) }
+    Woodpath         { id: woodpath; path: root.fmt("scenes/woodpath") }
+    Stonepath        { id: stonepath; path: root.fmt("scenes/stonepath") }
+    WPN214           { id: wpn214; path: root.fmt("scenes/wpn214") }
 
-    Item //====================================================================== TIMER
+    Item //=========================================================================== TIMER
     {
         id: timer
 
@@ -65,15 +68,19 @@ Scene
         {
             if ( interactions.xroads_result === 0 )
                  woodpath.start();
-//            else stonepath.start();
+            else stonepath.start();
         }
     }
 
-//    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
-//    {
-//        target: stonepath
-//        onEnd: wpn214.scenario.start();
-//    }
+    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
+    {
+        target: stonepath
+        onEnd:
+        {
+            wpn214.fade_target = stonepath.ammon
+            wpn214.start();
+        }
+    }
 
     Connections
     {
@@ -85,9 +92,13 @@ Scene
         }
     }
 
-//    Connections
-//    {
-//        target: wpn214
-//        onEnd: scenario_start.value = 1;
-//    }
+    Connections
+    {
+        target: wpn214
+        onEnd:
+        {
+            reset();
+            scenario.start();
+        }
+    }
 }

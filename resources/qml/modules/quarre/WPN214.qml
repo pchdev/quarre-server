@@ -25,7 +25,7 @@ Rectangle
         "Christian Faurens",
         "Donatien Garnier",
         "Antoine Hubineau",
-        "Guzel K.",
+        "Guzel Bretzel",
         "György et Isabelle Kurtag",
         "Arthur Liefhooghe",
         "Raphaël Marczak",
@@ -36,7 +36,7 @@ Rectangle
         "Jean-Michel Rivet",
         "Antoine Villeret",
         "Nicolas Vuaille",
-        "Merci de votre participation...",
+        "Merci pour votre participation...",
         "La suite prochainement sur https://www.facebook.com/wpn214",
         "et sur https://www.facebook.com/quarremusic",
     ]

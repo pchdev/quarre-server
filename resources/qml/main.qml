@@ -10,10 +10,10 @@ import "network"
 import "control"
 
 // TODO: Pink Noise setup testing module
-// TODO: Mixing module for every scene (including forks)
-// TODO: Spatialization for every scene
 // TODO: volume and spatialization presets
 // TODO: FLAC audio
+// TODO: tempoclock
+// TODO: MIDIFile reader
 
 Rectangle
 {
@@ -24,11 +24,11 @@ Rectangle
 
     // ================================================================================== CORE
 
-    NetworkManager          { id: net  }
-    PresetsManager          { id: presets }
-    Functions               { id: functions }
-    Scenario                { id: main_scenario }
-    MainView                { id: mainview }
+    NetworkManager   { id: net  }
+    PresetsManager   { id: presets }
+    Functions        { id: functions }
+    Scenario         { id: main_scenario }
+    MainView         { id: mainview }
 
 //    PushApplicationControl  { id: push }
 
