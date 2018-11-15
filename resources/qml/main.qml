@@ -29,7 +29,7 @@ Rectangle
     Scenario         { id: main_scenario }
     MainView         { id: mainview }
 
-//    PushApplicationControl  { id: push }
+    //    PushApplicationControl  { id: push }
 
     WPN114.RoomSetup //================================================================= ROOM_SETUP
     {
@@ -57,16 +57,25 @@ Rectangle
         blockSize:      512
         active:         false
 
-        inserts: WPN114.PeakRMS
-        {
-            id:      vu_master
-            source:  audiostream
-            active:  true
+        inserts:
+        [
+            WPN114.MasterLimiter
+            {
+                id: limiter
+                numOutputs: 8
+            },
 
-            onRms:   mainview.vumeters.processRms  ( value )
-            onPeak:  mainview.vumeters.processPeak ( value )
+            WPN114.PeakRMS
+            {
+                id:      vu_master
+                source:  audiostream
+                active:  true
 
-            refreshRate: 15 // Hz
-        }
+                onRms:   mainview.vumeters.processRms  ( value )
+                onPeak:  mainview.vumeters.processPeak ( value )
+
+                refreshRate: 15 // Hz
+            }
+        ]
     }
 }

@@ -7,8 +7,8 @@ Scene
 {
     id: root
     property alias cicadas: cicadas
-
     endShutdown: false
+
     JomonScore { id: jomon_score }
 
     scenario: WPN114.TimeNode
@@ -51,7 +51,6 @@ Scene
             onStart:
             {
                 instruments.kaivo_1.setPreset( instruments.jguitar );
-
                 functions.setTimeout(function() {
                     instruments.kaivo_1.set( "env1_attack", 0.25 )
                 }, 3000 );

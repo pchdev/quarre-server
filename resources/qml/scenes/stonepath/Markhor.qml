@@ -18,7 +18,7 @@ Scene
             instruments.kaivo_1.dBlevel = -24
             instruments.k1_fork_921.dBlevel = -6;
             instruments.kaivo_2.dBlevel = -6
-            instruments.k2_fork_921.dBlevel = -6;
+            instruments.k2_fork_921.dBlevel = -12;
 
             instruments.kaivo_1.active  = true;
             instruments.kaivo_2.active  = true;
@@ -48,10 +48,9 @@ Scene
             onEnd:
             {
                 instruments.kaivo_1.allNotesOff();
-
                 functions.setTimeout(function(){
                     instruments.kaivo_1.active = false;
-                }, 2000);
+                }, 100 );
             }
 
             WPN114.TimeNode
@@ -68,28 +67,13 @@ Scene
                 duration: sec( 22 )
                 from: instruments.kaivo_1.dBlevel; to: -6;
             }
-
-            WPN114.Automation
-            {
-                date: sec( 15 )
-                target: instruments.kaivo_2
-                property: "dBlevel"
-                duration: sec( 45 )
-                from: -48; to: instruments.kaivo_2.dBlevel;
-
-                onStart:
-                {
-                    instruments.kaivo_2.noteOn(0, 65, 127)
-                    instruments.kaivo_2.noteOn(0, 70, 127)
-                }
-            }
         }
 
         InteractionExecutor //---------------------------------------------------- MARKHOR_DANCE
         {
             id:         granular_models_1_executor
             after:      bells_executor
-            target:     interaction_granular_models
+            target:     interaction_resonators_1
             countdown:  sec( 15 )
             length:     sec( 60 )
 
@@ -97,9 +81,14 @@ Scene
             {
                 ambient_light.play();
 
-                instruments.kaivo_2.noteOff(0, 65, 127);
+                instruments.kaivo_2.noteOn(0, 70, 127)
                 instruments.kaivo_2.noteOn(0, 75, 127);
-//                instruments.kaivo_2.noteOn(0, 80, 127);
+            }
+
+            WPN114.TimeNode
+            {
+                date: sec( 18 );
+                onStart: instruments.kaivo_2.noteOn(0, 80, 127);
             }
         }
 
@@ -122,7 +111,7 @@ Scene
         {
             id:         resonator_executor
             after:      bells_executor
-            target:     interaction_resonators_1
+            target:     interaction_granular_models
             date:       min( 1.08 )
             countdown:  sec( 15 )
             length:     sec( 60 )
@@ -146,8 +135,6 @@ Scene
             date:       sec( 20 )
             countdown:  sec( 15 )
             length:     sec( 175 )
-
-            onStart:  instruments.kaivo_2.noteOn(0, 80, 127);
 
             onEnd:
             {
@@ -256,7 +243,7 @@ Scene
             description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
             //afin de changer leurs propriétés."
 
-            property int last_note: 0
+            property var notes: [ ]
 
             mappings:
                 [
@@ -264,14 +251,19 @@ Scene
                 {
                     source: "/modules/bells/trigger"
                     expression: function(v) {
-                        var rdm_note = 45 + Math.random()*30;
 
-                        if ( interaction_clock_bells.last_note )
-                            instruments.kaivo_1.noteOff(0, interaction_clock_bells.last_note, 127 );
+                        if ( interaction_clock_bells.notes.length === 4 )
+                        {
+                            var note = interaction_clock_bells.notes[ 0 ];
+                            instruments.kaivo_1.noteOff(0, note, 100 )
+                            interaction_clock_bells.notes.splice(0, 1);
+                        }
 
-                        instruments.kaivo_1.noteOn  ( 0, rdm_note, 127 );
+                        var rdm_note = 50 + Math.random()*20;
+                        var rdm_p = 127;
 
-                        interaction_clock_bells.last_note = rdm_note;
+                        instruments.kaivo_1.noteOn(0, rdm_note, rdm_p);
+                        interaction_clock_bells.notes.push(rdm_note);
                     }
                 },
 
@@ -280,15 +272,13 @@ Scene
                     source: "/modules/xyzrotation/data"
                     expression: function(v) {
 
-                        var x = (v[0]+90)/180;
-                        var y = (v[1]+180)/360;
+                        var cc1 = Math.min(Math.abs(v[0]), 85)/85*127;
+                        var cc2 = Math.min(Math.abs(v[1]), 90)/90*127;
+                        var cc3 = (v[2]+180)/360*127;
 
-                        instruments.kaivo_1.set(" body_pitch", x );
-                        instruments.kaivo_1.set( "body_position_x", x );
-                        instruments.kaivo_1.set( "res_brightness", y );
-                        instruments.kaivo_1.set( "body_position_y", y );
-
-                        instruments.kaivo_1.set("body_tone", (v[2]+180)/360)
+                        instruments.kaivo_1.control(0, 1, cc1);
+                        instruments.kaivo_1.control(0, 2, cc2);
+                        instruments.kaivo_1.control(0, 3, cc3);
                     }
                 }
             ]
