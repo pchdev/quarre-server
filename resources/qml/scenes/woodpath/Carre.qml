@@ -30,7 +30,7 @@ Scene
             functions.setTimeout(function() {
                 instruments.kaivo_1.active = false;
                 instruments.rooms.active = false;
-            }, 1000 );
+            }, 2000 );
         }
 
         // ================================================================= 1.SOFT
@@ -130,10 +130,10 @@ Scene
             {
                 date:       sec( 65 )
                 target:     instruments.kaivo_1
-                property:   "level"
+                property:   "dBlevel"
                 duration:   sec( 25 )
 
-                from: instruments.kaivo_1.level; to: 0
+                from: instruments.kaivo_1.dBlevel; to: -48
             }
         }
 

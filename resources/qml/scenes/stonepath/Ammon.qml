@@ -37,7 +37,7 @@ Scene
             instruments.k2_fork_lavaur.active   = true
 
             instruments.kaivo_1.dBlevel = -4;
-            instruments.k1_fork_lavaur.dBlevel = -10;
+            instruments.k1_fork_lavaur.dBlevel = -18;
 
             instruments.kaivo_2.dBlevel = -20;
             instruments.k2_fork_lavaur.dBlevel  = -18
@@ -45,17 +45,7 @@ Scene
 
         onEnd:
         {
-            // do not deactivate rooms, wind has to keep playing during wpn214
-            instruments.kaivo_1.active = false;
-            instruments.kaivo_2.active = false;
-            instruments.rooms.active = false;
 
-            instruments.k1_fork_921.active      = true
-            instruments.k1_fork_lavaur.active   = false
-            instruments.k2_fork_921.active      = true
-            instruments.k2_fork_lavaur.active   = false
-
-            ammon_score.index = 0;
         }
 
         WPN114.TimeNode { date: sec(6); onStart: footsteps.play() }
@@ -80,7 +70,7 @@ Scene
 
             date:       sec( 15 )
             countdown:  sec( 10 )
-            length:     sec( 360 )
+            length:     WPN114.TimeNode.Infinite
         }
 
         InteractionExecutor
@@ -89,7 +79,7 @@ Scene
             startExpression:    ammon_score.index === 7
             endExpression:      ammon_score.index === 100
             countdown:          sec( 10 )
-            length:             sec( 360 )
+            length:             WPN114.TimeNode.Infinite
         }
 
         WPN114.Automation //--------------------------------------------- HARMONICS_SAMPLE
@@ -150,7 +140,21 @@ Scene
             to: -6;
 
             duration: sec( 10 )
-            onEnd: scenario.end();
+            onEnd:
+            {
+                // do not deactivate rooms, wind has to keep playing during wpn214
+                instruments.kaivo_1.active = false;
+                instruments.kaivo_2.active = false;
+                instruments.rooms.active = false;
+
+                instruments.k1_fork_921.active      = true
+                instruments.k1_fork_lavaur.active   = false
+                instruments.k2_fork_921.active      = true
+                instruments.k2_fork_lavaur.active   = false
+
+                ammon_score.index = 0;
+                scenario.end();
+            }
         }
     }
 

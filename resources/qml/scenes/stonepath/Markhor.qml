@@ -199,7 +199,7 @@ Scene
                 property:   "dBlevel"
                 duration:   sec( 50 );
 
-                from: instruments.kaivo_2.level; to: -48;
+                from: -6; to: -48;
 
                 WPN114.Automation
                 {

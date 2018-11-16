@@ -6,7 +6,11 @@ import ".."
 Scene
 {
     id: root
+
     property real spring_attack: 0
+    property alias interaction_spring_low : interaction_spring_low
+    property alias interaction_spring_timbre: interaction_spring_timbre_1
+
     onSpring_attackChanged: instruments.kaivo_1.set("env1_attack", spring_attack);
 
     scenario: WPN114.TimeNode

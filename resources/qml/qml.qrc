@@ -42,5 +42,6 @@
         <file>views/SceneView.qml</file>
         <file>network/NetworkManager.qml</file>
         <file>control/PresetsManager.qml</file>
+        <file>scenes/demos/Demos.qml</file>
     </qresource>
 </RCC>

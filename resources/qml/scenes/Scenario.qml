@@ -3,6 +3,7 @@ import WPN114 1.0 as WPN114
 
 import "stonepath"
 import "woodpath"
+import "demos"
 import ".."
 
 Scene
@@ -36,6 +37,8 @@ Scene
     Woodpath         { id: woodpath; path: root.fmt("scenes/woodpath") }
     Stonepath        { id: stonepath; path: root.fmt("scenes/stonepath") }
     WPN214           { id: wpn214; path: root.fmt("scenes/wpn214") }
+
+    Demos            { id: demos; path: root.fmt("demos");
 
     Item //=========================================================================== TIMER
     {
