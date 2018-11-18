@@ -202,10 +202,8 @@ Scene
         Interaction //--------------------------------------------- ORAGE_HAMMER
         {
             id:     interaction_thunder
-
             title:  "Orage, déclenchement"
             module: "basics/GestureHammer.qml"
-
             description: "Executez le geste décrit ci-dessous pour déclencher un son d'orage."
 
             mappings: QuMapping
@@ -221,10 +219,8 @@ Scene
         Interaction //--------------------------------------------- BOILING_PALM
         {
             id:     interaction_boiling
-
             title:  "Source volcanique, déclenchement"
             module: "basics/GesturePalm.qml"
-
             description: "Executez le geste décrit ci-dessous pour déclencher un son."
 
             mappings: QuMapping
@@ -240,12 +236,9 @@ Scene
         Interaction //--------------------------------------------- MARMOTTES
         {
             id:     interaction_marmottes
-
             title:  "Paysages, marmottes"
             module: "basics/XYTouch.qml"
-
-            description: "Touchez du doigt un endroit de la sphère afin de déclencher
- et de mettre en espace un cri de marmotte."
+            description: "Touchez du doigt un endroit de la sphère afin de déclencher et de mettre en espace un cri de marmotte."
 
             mappings: QuMapping
             {
@@ -260,12 +253,9 @@ Scene
         Interaction //--------------------------------------------- DRAGON_SPAT
         {
             id:     interaction_dragon
-
             title:  "Dragon, mise en espace"
             module: "basics/ZRotation.qml"
-
-            description: "Orientez votre appareil horizontalement, à 360 degrés
- autour de vous pour identifier et déplacer le son dans l'espace."
+            description: "Orientez votre appareil horizontalement, à 360 degrés autour de vous pour identifier et déplacer le son dans l'espace."
 
             mappings: QuMapping
             {
@@ -279,12 +269,9 @@ Scene
         Interaction //--------------------------------------------- GROUNDWALK
         {
             id:     interaction_groundwalk
-
             title:  "Bruits de pas, mise en espace"
             module: "basics/ZRotation.qml"
-
-            description: "Orientez votre appareil horizontalement, à 360 degrés
- autour de vous pour identifier et déplacer le son dans l'espace."
+            description: "Orientez votre appareil horizontalement, à 360 degrés autour de vous pour identifier et déplacer le son dans l'espace."
 
             mappings: QuMapping
             {
@@ -298,12 +285,9 @@ Scene
         Interaction //--------------------------------------------- BIRDS_TRAJECTORIES
         {
             id: interaction_flying_birds
-
             title:  "Oiseaux en vol, trajectoires"
             module: "quarre/Trajectories.qml"
-
-            description: "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
- pendant quelques secondes, puis relachez pour déclencher"
+            description: "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt, pendant quelques secondes, puis relachez pour déclencher"
 
             mappings: [
                 QuMapping {

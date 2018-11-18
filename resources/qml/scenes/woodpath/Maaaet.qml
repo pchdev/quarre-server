@@ -145,8 +145,7 @@ Scene
             module: "quarre/Birds.qml"
 
             description:
-                "Touchez un oiseau lorsqu'il est arrêté pour déclencher son chant,
-                 sa position sera retransmise dans l'espace sonore."
+                "Touchez un oiseau lorsqu'il est arrêté pour déclencher son chant, sa position sera retransmise dans l'espace sonore."
 
             property var sources:  [ blackcap_source, woodpecker_source,
                                      oriole_source, nightingale_source ];
@@ -171,8 +170,7 @@ Scene
             module: "quarre/Trajectories.qml"
 
             description:
-                "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
-                 pendant quelques secondes, puis relachez pour déclencher"
+                "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt, pendant quelques secondes, puis relachez pour déclencher"
 
             mappings: [
                 QuMapping {
@@ -195,8 +193,7 @@ Scene
             path:   "/woodpath/maaaet/interactions/woodenbirds"
             module: "basics/ZRotation.qml"
 
-            description: "Gardez votre appareil à plat, horizontalement, puis orientez-le
- tout autour de vous pour identifier et déplacer un son dans l'espace sonore."
+            description: "Gardez votre appareil à plat, horizontalement, puis orientez-le tout autour de vous pour identifier et déplacer un son dans l'espace sonore."
 
             mappings: QuMapping
             {

@@ -7,7 +7,10 @@ Scene
 {
     id: root
     endShutdown: false
+
     property alias wind: wind
+    property alias interaction_strings: interaction_string_sweep
+    property alias interaction_strings_timbre: interaction_strings_timbre
 
     scenario: WPN114.TimeNode
     {
@@ -169,9 +172,7 @@ Scene
             id:     interaction_string_sweep
             title:  "Cordes, déclenchement"
             module: "quarre/Strings.qml"
-
-            description: "Frottez les cordes avec votre doigt au fur
- et à mesure de leur apparition"
+            description: "Frottez les cordes avec votre doigt au fur et à mesure de leur apparition"
 
             onInteractionBegin:
             {
@@ -195,12 +196,9 @@ Scene
         Interaction //--------------------------------------------- STRINGS_TIMBRE
         {
             id:     interaction_strings_timbre
-
             title:  "Guitare primitive, timbre"
             module: "basics/XYZRotation.qml"
-
-            description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler
-la brillance (axe Y) et la hauteur (axe X) de l'instrument"
+            description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler la brillance (axe Y) et la hauteur (axe X) de l'instrument"
             //déclenché par votre partenaire."
 
             mappings: QuMapping
@@ -217,12 +215,9 @@ la brillance (axe Y) et la hauteur (axe X) de l'instrument"
         Interaction //--------------------------------------------- BELLS
         {
             id:     interaction_bells
-
             title:  "Cloches, pré-rythmiques"
             module: "quarre/AmmonBells.qml"
-
-            description: "Exécutez un geste de frappe verticale pour
- déclencher des sons de cloches"
+            description: "Exécutez un geste de frappe verticale pour déclencher des sons de cloches"
 
             mappings:
                 [

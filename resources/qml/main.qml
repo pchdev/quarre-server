@@ -50,7 +50,10 @@ Rectangle
     {
         id:             audiostream
 
-        outDevice:      "Scarlett 18i20 USB"
+//        outDevice:      "Scarlett 18i20 USB"
+//        outDevice:      "Soundflower (64ch)"
+
+        outDevice:      "MOTU UltraLite mk3"
         exposePath:     "/master"
         numOutputs:     8
         sampleRate:     44100

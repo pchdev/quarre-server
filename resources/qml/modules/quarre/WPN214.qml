@@ -7,7 +7,7 @@ Rectangle
     color: "transparent"
 
     property var texts: [
-        "à la mémoire de Simone David...",
+        "à la mémoire de Simone David",
         "De grands remerciements à Nadine, Philippe, Vincent et Paule Cochard,",
         "à Jean-Michaël Celerier",
         "à François-Xavier Féron",
@@ -19,6 +19,7 @@ Rectangle
         "Simon Archipoff",
         "Pascal Baltazar",
         "Julien Conan",
+        "Gaëtan Chambres",
         "Laurent Davaille",
         "Myriam Desainte-Catherine",
         "Gaël Domenger",

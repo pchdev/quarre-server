@@ -43,5 +43,10 @@
         <file>network/NetworkManager.qml</file>
         <file>control/PresetsManager.qml</file>
         <file>scenes/demos/Demos.qml</file>
+        <file>scenes/Interactions.qml</file>
+        <file>scenes/demos/Temples.qml</file>
+        <file>scenes/demos/DiaclasesGong.qml</file>
+        <file>scenes/demos/Rainbells.qml</file>
+        <file>scenes/demos/Insects.qml</file>
     </qresource>
 </RCC>

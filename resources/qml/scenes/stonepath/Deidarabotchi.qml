@@ -24,9 +24,6 @@ Scene
             wind.play        ();
             background.play  ();
         }
-
-        // weird, there would normally be no need for this
-        onEnd: console.log("deidarabotchi end");
     }
 
     Interaction //----------------------------------------------------- TUTORIAL

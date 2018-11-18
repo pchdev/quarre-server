@@ -6,7 +6,10 @@ import "../../engine"
 Scene
 {
     id: root
+    property alias interaction_insects: interaction_insects
+    property alias insects: insects
     property real env_attack: 0
+
     onEnv_attackChanged: instruments.kaivo_1.set("env1_attack", env_attack);
 
     scenario: WPN114.TimeNode
@@ -249,8 +252,7 @@ Scene
             module: "quarre/Trajectories.qml"
 
             description:
-                "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt,
-                 pendant quelques secondes, puis relachez pour déclencher"
+                "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt, pendant quelques secondes, puis relachez pour déclencher"
 
             mappings: [
                 QuMapping {
@@ -274,8 +276,7 @@ Scene
             path:   "/woodpath/carre/interactions/insects"
             module: "basics/ZRotation.qml"
 
-            description: "Gardez votre appareil à plat, horizontalement, puis orientez-le
- tout autour de vous pour identifier et déplacer un son dans l'espace sonore."
+            description: "Gardez votre appareil à plat, horizontalement, puis orientez-le tout autour de vous pour identifier et déplacer un son dans l'espace sonore."
 
             mappings: QuMapping
             {
@@ -395,8 +396,8 @@ Scene
         parentStream: rooms
         exposePath: fmt("audio/insects/source")
 
-        WPN114.StreamSampler { id: insects; loop: true; xfade: 3000
-            dBlevel: 6
+        WPN114.StreamSampler { id: insects; dBlevel: 6
+            loop: true; xfade: 3000
             exposePath: fmt("audio/insects")
             path: "audio/woodpath/carre/insects.wav"
 

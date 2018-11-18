@@ -6,14 +6,19 @@ Item
 {
     id: root
 
-    property list<WPN114.AudioPlugin> instr
-
     property string path
     property bool running: false
     property bool notify: true
     property bool audio: true
     property bool endShutdown: true
     property int shutdown_after: 3000
+
+    /*
+        a scene consists in a bi/tridimensional audiospace and a scenario
+        it has a 'next' and an 'end' signal
+        'next' signal means that next scene (if there is one) can be safely started
+        'end' signal means that there's no more audio about to come out of this scene
+    */
 
     signal next ( );
     signal end  ( );

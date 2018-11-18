@@ -7,6 +7,8 @@ Scene
 {
     id: root
 
+    property alias interaction_rainbells: interaction_rainbells
+
     scenario: WPN114.TimeNode
     {
         parentNode:  parent.scenario
@@ -254,8 +256,7 @@ Scene
             title:  "Cloches, pré-rythmiques"
             module: "quarre/VareRainbells.qml"
 
-            description: "Passez la main devant l'appareil pour ajouter et changer
- les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
+            description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
             //afin de changer leurs propriétés."
 
             property var notes: [ ]
@@ -287,13 +288,15 @@ Scene
                     source: "/modules/xyzrotation/data"
                     expression: function(v) {
 
-                        var cc1 = Math.min(Math.abs(v[0]), 85)/85*127;
-                        var cc2 = Math.min(Math.abs(v[1]), 90)/90*127;
-                        var cc3 = (v[2]+180)/360*127;
+                        // 0.186 to
+                        var cc1 = Math.min(Math.abs(v[0]), 85)/85*0.2+0.186;
+                        var cc2 = Math.min(Math.abs(v[1]), 90)/90;
+                        var cc3 = (v[2]+180)/360;
 
-                        instruments.kaivo_1.control(0, 1, cc1);
-                        instruments.kaivo_1.control(0, 2, cc2);
-                        instruments.kaivo_1.control(0, 3, cc3);
+                        instruments.kaivo_1.set("gran_rate", cc1 );
+                        instruments.kaivo_1.set("gran_pitch", 0.833+cc1*0.5 );
+                        instruments.kaivo_1.set("res_position", cc2);
+                        instruments.kaivo_1.set("res_brightness", cc3);
                     }
                 }
             ]
@@ -306,8 +309,7 @@ Scene
             title:  "Impulsions (essais)"
             module: "quarre/VareGranular.qml"
 
-            description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
- des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
+            description: "Manipulez les sliders afin d'altérer les propriétés d'excitation des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
                 [
@@ -340,8 +342,7 @@ Scene
             title:  "Résonances (essais)"
             module: "quarre/VareResonator.qml"
 
-            description: "Manipulez les sliders afin d'altérer la résonance
-des percussions. Choisissez le son qui vous convient. Attention au temps !"
+            description: "Manipulez les sliders afin d'altérer la résonance des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
                 [
@@ -370,8 +371,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             title:  "Corps de résonance (essais)"
             module: "quarre/VareBody.qml"
 
-            description: "Manipulez les sliders afin d'altérer le corps de résonance
- des percussions. Choisissez le son qui vous convient. Attention au temps !"
+            description: "Manipulez les sliders afin d'altérer le corps de résonance des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
                 [
@@ -398,11 +398,9 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             title:  "Temps et Contretemps (essais)"
             module: "quarre/VarePercs.qml"
 
-            description: "Appuyez et maintenez l'un des pads (un seul à la fois)
- pour ajouter des compléments rythmiques."
+            description: "Appuyez et maintenez l'un des pads (un seul à la fois) pour ajouter des compléments rythmiques."
 
             property var pads: [ 86, 87, 88, 89, 81, 82, 84, 85, 71, 73, 76, 80 ]
-
             property int last_note: 0
 
             mappings: QuMapping
@@ -435,8 +433,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             title:  "Impulsions (tutti)"
             module: "quarre/VareGranular.qml"
 
-            description: "Vous jouez maintenant tous ensemble, collaborez,
- laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+            description: "Vous jouez maintenant tous ensemble, collaborez, laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
 
             mappings: interaction_granular_models.mappings
         }

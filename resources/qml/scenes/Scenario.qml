@@ -38,7 +38,7 @@ Scene
     Stonepath        { id: stonepath; path: root.fmt("scenes/stonepath") }
     WPN214           { id: wpn214; path: root.fmt("scenes/wpn214") }
 
-    Demos            { id: demos; path: root.fmt("demos");
+    Demos            { id: demos; path: root.fmt("demos") }
 
     Item //=========================================================================== TIMER
     {

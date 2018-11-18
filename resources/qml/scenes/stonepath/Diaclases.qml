@@ -9,6 +9,7 @@ Scene
 
     property real spring_attack: 0
     property alias interaction_spring_low : interaction_spring_low
+    property alias interaction_spring_low_2: interaction_spring_low_2
     property alias interaction_spring_timbre: interaction_spring_timbre_1
 
     onSpring_attackChanged: instruments.kaivo_1.set("env1_attack", spring_attack);
@@ -145,11 +146,9 @@ Scene
         Interaction //--------------------------------------------- SPRING_LOW
         {
             id:     interaction_spring_low
-
             title:  "Gong primitif, déclenchements (1)"
             path:   "/stonepath/diaclases/interactions/spring-low"
             module: "basics/GesturePalm.qml"
-
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
 
             mappings: QuMapping
@@ -172,7 +171,6 @@ Scene
             id:     interaction_spring_high
             title:  "Gong primitif, déclenchements (2)"
             module: "basics/GesturePalm.qml"
-
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
 
             mappings: QuMapping
@@ -194,9 +192,7 @@ Scene
             id:     interaction_spring_timbre_1
             title:  "Gong primitif, timbre"
             module: "basics/XYZRotation.qml"
-
-            description: "Faites pivoter l'appareil dans ses axes de rotation
- pour manipuler la brillance (Y) et la hauteur (X) de l'instrument déclenché par vos partenaires."
+            description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler la brillance (Y) et la hauteur (X) de l'instrument déclenché par vos partenaires."
 
             mappings: QuMapping
             {
@@ -237,7 +233,6 @@ Scene
             id:     interaction_spring_high_2
             title:  "Gong primitif, percussif (2)"
             module: "basics/GestureHammer.qml"
-
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
 
             mappings: QuMapping
@@ -257,12 +252,9 @@ Scene
         Interaction //--------------------------------------------- SPRING_TIMBRE_1
         {
             id:     interaction_spring_timbre_2
-
             title:  "Gong primitif, timbre (2)"
             module: "basics/XYZRotation.qml"
-
-            description: "Faites pivoter l'appareil dans ses axes de rotation pour
- manipuler la brillance (Y) et la hauteur (X) de l'instrument déclenché par vos partenaires."
+            description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler la brillance (Y) et la hauteur (X) de l'instrument déclenché par vos partenaires."
 
             mappings: QuMapping
             {
@@ -281,7 +273,6 @@ Scene
             id:     interaction_smoke_spat
             title:  "Combustions, mise en espace"
             module: "basics/ZRotation.qml"
-
             description: "Orientez votre appareil horizontalement, à 360 degrés autour de vous pour identifier et déplacer le son de combustion dans l'espace."
 
             mappings: QuMapping

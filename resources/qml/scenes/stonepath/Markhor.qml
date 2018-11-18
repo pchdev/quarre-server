@@ -236,10 +236,8 @@ Scene
         Interaction //--------------------------------------------- CLOCK_BELLS
         {
             id:     interaction_clock_bells
-
             title:  "Cloches, pré-rythmiques"
             module: "quarre/VareRainbells.qml"
-
             description: "Passez la main devant l'appareil pour ajouter et changer les notes des cloches, pivotez-le doucement dans n'importe quel axe de rotation"
             //afin de changer leurs propriétés."
 
@@ -272,13 +270,15 @@ Scene
                     source: "/modules/xyzrotation/data"
                     expression: function(v) {
 
-                        var cc1 = Math.min(Math.abs(v[0]), 85)/85*127;
-                        var cc2 = Math.min(Math.abs(v[1]), 90)/90*127;
-                        var cc3 = (v[2]+180)/360*127;
+                        // 0.186 to
+                        var cc1 = Math.min(Math.abs(v[0]), 85)/85*0.15+0.186;
+                        var cc2 = Math.min(Math.abs(v[1]), 90)/90;
+                        var cc3 = (v[2]+180)/360;
 
-                        instruments.kaivo_1.control(0, 1, cc1);
-                        instruments.kaivo_1.control(0, 2, cc2);
-                        instruments.kaivo_1.control(0, 3, cc3);
+                        instruments.kaivo_1.set("gran_rate", cc1 );
+                        instruments.kaivo_1.set("gran_pitch", 0.833+cc1*0.5 );
+                        instruments.kaivo_1.set("res_position", cc2);
+                        instruments.kaivo_1.set("res_brightness", cc3);
                     }
                 }
             ]
@@ -289,9 +289,7 @@ Scene
             id:     interaction_granular_models
             title:  "Impulsions (essais)"
             module: "quarre/MarkhorGranular.qml"
-
-            description: "Manipulez les sliders afin d'altérer les propriétés d'excitation
- des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
+            description: "Manipulez les sliders afin d'altérer les propriétés d'excitation des résonateurs. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
                 [
@@ -312,12 +310,9 @@ Scene
         Interaction //--------------------------------------------- MARKHOR_RESONATORS
         {
             id:     interaction_resonators_1
-
             title:  "Résonances (essais)"
             module: "quarre/MarkhorResonator.qml"
-
-            description: "Manipulez les sliders afin d'altérer la résonance
-des percussions. Choisissez le son qui vous convient. Attention au temps !"
+            description: "Manipulez les sliders afin d'altérer la résonance des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
                 [
@@ -344,9 +339,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_body_1
             title:  "Corps de résonance (essais)"
             module: "quarre/MarkhorBody.qml"
-
-            description: "Manipulez les sliders afin d'altérer le corps de résonance
- des percussions. Choisissez le son qui vous convient. Attention au temps !"
+            description: "Manipulez les sliders afin d'altérer le corps de résonance des percussions. Choisissez le son qui vous convient. Attention au temps !"
 
             mappings:
                 [
@@ -371,9 +364,7 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
             id:     interaction_pads_1
             title:  "Temps et Contretemps (essais)"
             module: "quarre/MarkhorPads.qml"
-
-            description: "Appuyez et maintenez l'un des pads (un seul à la fois)
- pour ajouter des compléments rythmiques."
+            description: "Appuyez et maintenez l'un des pads (un seul à la fois) pour ajouter des compléments rythmiques."
 
             property var pads: [ 81, 82, 83, 85, 73, 77, 78, 79, 65, 67, 68, 72 ]
 
@@ -393,12 +384,9 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         Interaction //--------------------------------------------- MARKHOR_GRANULAR_2
         {
             id:     interaction_granular_models_2
-
             title:  "Impulsions (tutti)"
             module: "quarre/MarkhorGranular.qml"
-
-            description: "Vous jouez maintenant tous ensemble, collaborez,
- laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
+            description: "Vous jouez maintenant tous ensemble, collaborez, laissez-vous des temps à chacun, et trouvez des rythmiques intéressantes!"
 
             mappings: interaction_granular_models.mappings
         }
@@ -406,7 +394,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         Interaction //--------------------------------------------- MARKHOR_RESONATORS_2
         {
             id:     interaction_resonators_2
-
             title:  "Résonances (tutti)"
             module: "quarre/MarkhorResonator.qml"
 
@@ -417,7 +404,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         Interaction //--------------------------------------------- MARKHOR_BODY_2
         {
             id:     interaction_body_2
-
             title:  "Corps de résonance (tutti)"
             module: "quarre/MarkhorBody.qml"
 
@@ -428,7 +414,6 @@ des percussions. Choisissez le son qui vous convient. Attention au temps !"
         Interaction //--------------------------------------------- MARKHOR_PADS_2
         {
             id:     interaction_pads_2
-
             title:  "Temps et Contretemps (tutti)"
             module: "quarre/MarkhorPads.qml"
 

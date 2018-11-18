@@ -21,7 +21,6 @@ Item
             xspread: 0.25
             diffuse: 0.55
             fixed: true
-
             y: 0.5
 
             exposePath: "/scenario/effects/reverb/source"

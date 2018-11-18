@@ -5,85 +5,20 @@ import "../../engine"
 
 Scene
 {
+    id: root
     notify: true
     audio: false
+    scenario: WPN114.TimeNode { onStart: insects.start() }
+    property bool follow: false
 
-    scenario: WPN114.TimeNode
-    {
-        source:      audiostream
-        parentNode:  parent.scenario
-        duration:    WPN114.TimeNode.Infinite
+    WPN114.Node on follow { path: "/scenario/demos/follow" }
 
-        onStart:
-        {
-            instruments.kaivo_1.active = true;
-            instruments.rooms.active = true;
-        }
+    Insects { id: insects; path: root.fmt("insects") }
+    DiaclasesGong { id: diaclases; path: root.fmt("diaclases") }
+    Rainbells { id: rainbells; path: root.fmt("rainbells") }
+    Temples { id: temples; path: root.fmt("temples") }
 
-        onEnd:
-        {
-            instruments.kaivo_1.active = false;
-            instruments.rooms.active = false;
-        }
-
-        InteractionExecutor // ========================================== DIACLASES_GONG
-        {
-            id: demos_diaclases
-            exposePath: fmt( "diaclases" )
-            target: stonepath.diaclases.interaction_spring_low
-            countdown: sec( 5 )
-            length: WPN114.TimeNode.Infinite
-
-            onStart:
-            {
-                instruments.kaivo_1.setPreset( instruments.spring );
-                instruments.kaivo_1.set("env1_attack", 0)
-            }
-
-            InteractionExecutor
-            {
-                target: stonepath.diaclases.interaction_spring_timbre
-                countdown: sec( 5 )
-                length: WPN114.TimeNode.Infinite
-            }
-        }
-
-        InteractionExecutor // ========================================== RAINBELLS
-        {
-            id: demos_rainbells
-            after: demos_diaclases
-            exposePath: fmt( "rainbells" )
-            target: woodpath.vare.interaction_rainbells
-            countdown: sec( 5 )
-            length: WPN114.TimeNode.Infinite
-
-            onStart: instruments.kaivo_1.setPreset( instruments.rainbells );
-            onEnd: instruments.kaivo_1.allNotesOff();
-        }
-
-        InteractionExecutor // ========================================== TEMPLES
-        {
-            id: demos_temples
-            after: demos_rainbells
-            exposePath: fmt( "temples" );
-            target: stonepath.ammon.interaction_strings
-            countdown: sec( 5 )
-            length: WPN114.TimeNode.Infinite
-
-            onStart:
-            {
-                instruments.kaivo_1.setPreset( instruments.tguitar );
-                // set lavaur verb
-            }
-
-            InteractionExecutor
-            {
-                target: stonepath.ammon.interaction_strings_timbre
-                countdown: sec( 5 )
-                length: WPN114.TimeNode.Infinite
-            }
-
-            onEnd: scenario.end();
-        }
-    }
+    Connections { target: insects; onEnd: if ( follow ) diaclases.start(); }
+    Connections { target: diaclases; onEnd: if ( follow ) rainbells.start() }
+    Connections { target: rainbells; onEnd: if ( follow )temples.start() }
 }

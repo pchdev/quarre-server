@@ -191,8 +191,7 @@ Scene
             title:  "Cloches de pluie (2)"
             module: "quarre/JomonPalm.qml"
 
-            description: "Approchez et maintenez la paume de votre main à quelques
-centimètres de l'écran de l'appareil pour produire du son"
+            description: "Approchez et maintenez la paume de votre main à quelques centimètres de l'écran de l'appareil pour produire du son"
 
             mappings:
                 [
