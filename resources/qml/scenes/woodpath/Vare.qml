@@ -429,7 +429,6 @@ Scene
         Interaction //--------------------------------------------- MARKHOR_GRANULAR_2
         {
             id:     interaction_granular_models_2
-
             title:  "Impulsions (tutti)"
             module: "quarre/VareGranular.qml"
 
@@ -441,7 +440,6 @@ Scene
         Interaction //--------------------------------------------- MARKHOR_RESONATORS_2
         {
             id:     interaction_resonators_2
-
             title:  "Résonances (tutti)"
             module: "quarre/VareResonator.qml"
 
@@ -452,7 +450,6 @@ Scene
         Interaction //--------------------------------------------- MARKHOR_BODY_2
         {
             id:     interaction_body_2
-
             title:  "Corps de résonance (tutti)"
             module: "quarre/VareBody.qml"
 
@@ -463,7 +460,6 @@ Scene
         Interaction //--------------------------------------------- MARKHOR_PADS_2
         {
             id:     interaction_pads_2
-
             title:  "Temps et Contretemps (tutti)"
             module: "quarre/VarePercs.qml"
 

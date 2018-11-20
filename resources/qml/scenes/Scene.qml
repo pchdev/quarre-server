@@ -23,8 +23,8 @@ Item
     signal next ( );
     signal end  ( );
 
-    WPN114.Node { path: fmt("end"); type: WPN114.Type.Impulse; onValueReceived: root.stop() }
-    WPN114.Node { path: fmt("begin"); type: WPN114.Type.Impulse; onValueReceived: root.start() }
+    WPN114.Node { path: fmt( "end" ); type: WPN114.Type.Impulse; onValueReceived: root.stop() }
+    WPN114.Node { path: fmt( "begin" ); type: WPN114.Type.Impulse; onValueReceived: root.start() }
 
     function fmt(str)
     {
@@ -39,6 +39,7 @@ Item
 
     function start() // ===================================== START_SCENE
     {
+        if ( running ) return;
         if ( !audiostream.active )
               audiostream.active = true;
 

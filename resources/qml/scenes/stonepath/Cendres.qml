@@ -14,7 +14,6 @@ Scene
         source: audiostream
         parentNode: parent.scenario
         duration: WPN114.TimeNode.Infinite
-
         onStart: rooms.dBlevel = 3;
 
         InteractionExecutor //----------------------------------------------------- THUNDER

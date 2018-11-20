@@ -23,10 +23,10 @@ Scene
 
     scenario: WPN114.TimeNode
     {
-        source:        audiostream
-        parentNode:  parent.scenario
-        duration:   WPN114.TimeNode.Infinite
-        onStart:    maaaet.start();
+        source:         audiostream
+        parentNode:     parent.scenario
+        duration:       WPN114.TimeNode.Infinite
+        onStart:        maaaet.start();
     }
 
     Connections // MAAAET TO CARRE

@@ -164,7 +164,6 @@ Item
     {
         id: clients
         model: maxClients
-
         Client { number: index }
     }
 

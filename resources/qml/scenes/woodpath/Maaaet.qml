@@ -125,7 +125,6 @@ Scene
             id:      shake_leaves_interaction
             title:   "Feuillages, déclenchement"
             module:  "basics/GestureShake.qml"
-
             description: "Executez le geste décrit ci-dessous"
 
             mappings: QuMapping
@@ -143,9 +142,7 @@ Scene
             id: static_birds_interaction
             title: "Chants d'oiseaux, déclenchements"
             module: "quarre/Birds.qml"
-
-            description:
-                "Touchez un oiseau lorsqu'il est arrêté pour déclencher son chant, sa position sera retransmise dans l'espace sonore."
+            description: "Touchez un oiseau lorsqu'il est arrêté pour déclencher son chant, sa position sera retransmise dans l'espace sonore."
 
             property var sources:  [ blackcap_source, woodpecker_source,
                                      oriole_source, nightingale_source ];
@@ -156,7 +153,7 @@ Scene
             {
                 source: "/modules/birds/trigger"
                 expression: function(v) {
-                    static_birds_interaction.sources[v[0]].position = Qt.vector3d(v[1], v[2], 0.5);
+                    static_birds_interaction.sources[v[0]].position = Qt.vector3d(v[1], 1-v[2], 0.5);
                     static_birds_interaction.samplers[v[0]].playRandom();
                 }
             }
@@ -180,7 +177,7 @@ Scene
                 QuMapping {
                     source: "/modules/trajectories/position2D"
                     expression: function(v) {
-                        flying_birds_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                        flying_birds_source.position = Qt.vector3d(v[0], 1-v[1], 0.5);
                     }
                 }
             ]
@@ -334,7 +331,7 @@ Scene
             exposePath: fmt("audio/blackcap")
             path: "audio/woodpath/maaaet/blackcap"
 
-            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -12 }
         }
     }
 
@@ -348,7 +345,7 @@ Scene
             exposePath: fmt("audio/woodpecker")
             path: "audio/woodpath/maaaet/woodpecker"
 
-            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -12 }
         }
     }
 
@@ -361,7 +358,7 @@ Scene
         WPN114.MultiSampler { id: oriole;
             exposePath: fmt("audio/oriole")
             path: "audio/woodpath/maaaet/oriole"
-            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -12 }
         }
     }
 
@@ -375,7 +372,7 @@ Scene
             exposePath: fmt("audio/nightingale")
             path: "audio/woodpath/maaaet/nightingale"
 
-            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -12 }
         }
     }
 
@@ -388,7 +385,7 @@ Scene
         WPN114.MultiSampler { id: flying_birds;
             exposePath: fmt("audio/flying-birds")
             path: "audio/woodpath/maaaet/flying-birds"
-            WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
         }
     }
 
@@ -402,7 +399,7 @@ Scene
             exposePath: fmt("audio/woodenbirds")
             path: "audio/woodpath/maaaet/woodenbirds.wav"
 
-            WPN114.Fork { target: effects.reverb; dBlevel: -3 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
         }
     }
 }

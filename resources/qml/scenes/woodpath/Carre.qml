@@ -299,10 +299,8 @@ Scene
             mappings: QuMapping
             {
                 source: "/gestures/whip/trigger"
-                expression: function(v) {
-                }
+                expression: function(v) { }
             }
-
         }
     }
 
@@ -334,7 +332,7 @@ Scene
             exposePath: fmt("audio/multiswifts")
             path: "audio/woodpath/carre/swifts"
 
-            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -12 }
         }
     }
 
@@ -345,7 +343,7 @@ Scene
         diffuse: 0.5
         yspread: 0.25
 
-        exposePath: fmt("audio/swift/source")
+        exposePath: fmt( "audio/swift/source" )
 
         WPN114.StreamSampler { id: alpine_swift;
             loop: true; xfade: 3000; release: 3000
@@ -399,9 +397,9 @@ Scene
         WPN114.StreamSampler { id: insects; dBlevel: 6
             loop: true; xfade: 3000
             exposePath: fmt("audio/insects")
-            path: "audio/woodpath/carre/insects.wav"
+            path: "audio/woodpath/carre/insects-verb.wav"
 
-            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
+//            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
         }
     }
 

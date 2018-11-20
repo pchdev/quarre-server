@@ -19,7 +19,7 @@ Item
         WPN114.StereoSource //----------------------------------------------------- ALTIVERB
         {
             xspread: 0.25
-            diffuse: 0.55
+            diffuse: 0.2
             fixed: true
             y: 0.5
 
