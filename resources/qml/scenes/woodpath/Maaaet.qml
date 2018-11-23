@@ -208,8 +208,8 @@ Scene
     {
         parentStream: rooms
         fixed: true
-        diffuse: 0.2
         yspread: 0.25
+        z: 0.0
 
         exposePath: fmt("audio/spring/source")
 
@@ -226,6 +226,7 @@ Scene
         fixed: true
         diffuse: 0.1
         xspread: 0.25
+        z: 0.8
 
         exposePath: fmt("audio/windleaves/source")
 
@@ -243,6 +244,7 @@ Scene
         fixed: true
         diffuse: 0.5
         yspread: 0.25
+        z: 0.2
 
         exposePath: fmt("audio/grove/source")
 
@@ -260,6 +262,7 @@ Scene
         fixed: true
         diffuse: 0.5
         yspread: 0.25
+        z: 0.7
 
         exposePath: fmt("audio/wind/source")
 
@@ -275,6 +278,7 @@ Scene
         fixed: true
         diffuse: 0.1
         xspread: 0.25
+        z: 0.5
 
         exposePath: fmt("audio/woodworks/source")
 
@@ -292,6 +296,7 @@ Scene
         fixed: true
         diffuse: 0.2
         yspread: 0.25
+        z: 0.25
 
         exposePath: fmt("audio/woodworks2/source")
 
@@ -310,6 +315,7 @@ Scene
         diffuse: 0.2
         xspread: 0.25
         y: 0.75
+        z: 0.35
 
         exposePath: fmt("audio/leaves/source")
 
@@ -326,6 +332,8 @@ Scene
         id: blackcap_source
         parentStream: rooms
         exposePath: fmt("audio/blackcap/source")
+
+        position: Qt.vector3d(0.5, 0.5, 0.99)
 
         WPN114.MultiSampler { id: blackcap;
             exposePath: fmt("audio/blackcap")

@@ -11,11 +11,8 @@ Scene
 
     scenario: WPN114.TimeNode
     {
-        onStart:
-        {
-            console.log("starting demos")
-            insectspat.start()
-        }
+        source: audiostream
+        onStart: insectspat.start()
     }
 
     property bool follow: false

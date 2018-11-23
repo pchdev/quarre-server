@@ -4,7 +4,7 @@ import WPN114 1.0 as WPN114
 Item
 {
     property int nchannels: 2
-    width: nchannels*25-nchannels
+    width: nchannels*15-nchannels
 
     function processPeak(v)
     {
@@ -31,7 +31,7 @@ Item
             color: "transparent"
 
             height: 150
-            width: 25
+            width: 15
         }
     }
 

@@ -55,10 +55,10 @@ Scene
 
     WPN114.StereoSource //=========================================== DIGIBIRDS
     {
+        fixed: true
         parentStream: rooms
         xspread: 0.35
-        diffuse: 0.49
-        fixed: true
+        z: 0.5
 
         exposePath: fmt( "audio/digibirds/source" )
 
@@ -71,7 +71,6 @@ Scene
     {
         parentStream: rooms
         xspread: 0.27
-        diffuse: 0.17
         fixed: true
         y: 0.9
 
@@ -88,6 +87,7 @@ Scene
         xspread: 0.28
         fixed: true
         y: 0.65
+        z: 0.7
 
         exposePath: fmt("audio/dragon-hi/source")
 
@@ -102,6 +102,7 @@ Scene
         xspread: 0.28
         fixed: true
         y: 0.25
+        z: 0.4
 
         exposePath: fmt("audio/dragon-lo/source")
 
@@ -115,6 +116,7 @@ Scene
         parentStream: rooms
         xspread: 0.2
         fixed: true
+        z: 0.2
 
         exposePath: fmt("audio/walking-1/source")
 
@@ -129,6 +131,7 @@ Scene
         xspread: 0.15
         fixed: true
         y: 0.43
+        z: 0.2
 
         exposePath: fmt("audio/walking-2/source")
 
@@ -143,6 +146,7 @@ Scene
         xspread: 0.25
         fixed: true
         y: 0.85
+        z: 0.3
 
         exposePath: fmt("audio/synth/source")
 
@@ -155,9 +159,8 @@ Scene
     {
         parentStream: rooms
         yspread: 0.25
-        diffuse: 0.7
-        bias: 0.85
-        fixed: true
+        z: 0.0
+//        fixed: true
 
         exposePath: fmt("audio/spring/source")
 
@@ -170,8 +173,8 @@ Scene
     {
         parentStream: rooms
         yspread: 0.25
-        diffuse: 0.55
         fixed: true
+        z: 0.0
 
         exposePath: fmt("audio/river/source")
 
@@ -184,8 +187,8 @@ Scene
     {
         parentStream: rooms
         xspread: 0.25
-        diffuse: 0.6
         fixed: true
+        z: 0.5
 
         exposePath: fmt("audio/verb/source")
 

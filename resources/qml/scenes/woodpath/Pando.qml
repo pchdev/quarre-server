@@ -52,6 +52,7 @@ Scene
         xspread: 0.25
         diffuse: 0.2
         y: 0.9
+        z: 0.7
 
         exposePath: fmt("audio/flute/source")
 
@@ -67,6 +68,7 @@ Scene
         parentStream: rooms
         fixed: true
         xspread: 0.4
+        z: 0.6
         exposePath: fmt("audio/leaves/source")
 
         WPN114.StreamSampler { id: leaves; dBlevel: 3
@@ -82,6 +84,7 @@ Scene
         fixed: true
         xspread: 0.25
         diffuse: 0.2
+        z: 0.35
 
         exposePath: fmt("audio/woodworks/source")
 
@@ -97,6 +100,7 @@ Scene
         parentStream: rooms
         fixed: true
         yspread: 0.25
+        z: 0.15
 
         exposePath: fmt("audio/insects/source")
 
@@ -112,7 +116,7 @@ Scene
         parentStream: rooms
         xspread: 0.35
         y: 0.2
-        diffuse: 0.25
+        z: 0.4
 
         fixed: true
         exposePath: fmt("audio/digigreen/source")

@@ -473,7 +473,7 @@ Scene
     {
         parentStream: rooms
         xspread: 0.25
-        diffuse: 0.2
+        z: 0.65
         fixed: true
 
         exposePath: fmt("audio/snowfall/source")
@@ -492,6 +492,7 @@ Scene
         parentStream: rooms
         fixed: true
         xspread: 0.45
+        z: 0.5
 
         exposePath: fmt("audio/ambient/source")
 

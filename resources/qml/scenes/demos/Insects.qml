@@ -17,7 +17,6 @@ Scene
 
         onStart:
         {
-            console.log("starting insects");
             woodpath.carre.rooms.active = true
             woodpath.carre.insects.play();
         }

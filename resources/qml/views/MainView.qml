@@ -86,7 +86,7 @@ Item
         MultiVUMeter
         {
             id: vumeters
-            nchannels: audiostream.numOutputs
+            nchannels: vu_master.numOutputs
             anchors.centerIn: parent
             height: 150
         }

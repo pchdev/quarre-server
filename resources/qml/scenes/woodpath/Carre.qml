@@ -310,6 +310,7 @@ Scene
         fixed: true
         diffuse: 0.5
         yspread: 0.25
+        z: 0.0
 
         exposePath: fmt("audio/spring/source")
 
@@ -342,6 +343,7 @@ Scene
         fixed: true
         diffuse: 0.5
         yspread: 0.25
+        z: 0.9
 
         exposePath: fmt( "audio/swift/source" )
 
@@ -360,6 +362,7 @@ Scene
         fixed: true
         diffuse: 0.5
         xspread: 0.25
+        z: 0.1
 
         exposePath: fmt("audio/groundnoise/source")
 
@@ -377,6 +380,7 @@ Scene
         fixed: true
         diffuse: 0.25
         xspread: 0.5
+        z: 0.5
 
         exposePath: fmt("audio/quarre/source")
 
@@ -393,6 +397,7 @@ Scene
         id: insects_source
         parentStream: rooms
         exposePath: fmt("audio/insects/source")
+        z: 0.0
 
         WPN114.StreamSampler { id: insects; dBlevel: 6
             loop: true; xfade: 3000
@@ -409,6 +414,7 @@ Scene
         parentStream: rooms
         fixed: true
         yspread: 0.4
+        z: 0.75
 
         exposePath: fmt("audio/harmonics/source")
 

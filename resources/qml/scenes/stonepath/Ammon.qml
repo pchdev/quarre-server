@@ -199,7 +199,6 @@ Scene
             title:  "Guitare primitive, timbre"
             module: "basics/XYZRotation.qml"
             description: "Faites pivoter l'appareil dans ses axes de rotation pour manipuler la brillance (axe Y) et la hauteur (axe X) de l'instrument"
-            //déclenché par votre partenaire."
 
             mappings: QuMapping
             {

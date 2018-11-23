@@ -47,6 +47,7 @@ Item
             xspread: 0.25
             diffuse: 0.55
             y: 0.75
+            z: 0.4
 
             exposePath: fmt("kaivo-1/source")
 
@@ -96,7 +97,8 @@ Item
 
             xspread: 0.25
             diffuse: 0.55
-            y: 0.75            
+            y: 0.75
+            z: 0.4
 
             WPN114.AudioPlugin //==============================================
             {
