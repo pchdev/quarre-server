@@ -428,7 +428,8 @@ Scene
         fixed: true
         xspread: 0.35
         diffuse: 0.20
-        y: 0.15
+        y: 0.4
+        z: 0.8
 
         exposePath: fmt("audio/doomsday/source")
 
@@ -444,6 +445,7 @@ Scene
         xspread: 0.15
         diffuse: 0.3
         y: 0.85
+        z: 0.25
 
         exposePath: fmt("audio/ambient-light/source")
 
@@ -474,6 +476,7 @@ Scene
         xspread: 0.25
         diffuse: 1.0
         y: 0.4
+        z: 0.35
 
         exposePath: fmt("audio/soundscape/source")
 
@@ -488,7 +491,8 @@ Scene
         fixed: true
         xspread: 0.05
         diffuse: 0.2
-        y: 0.55
+        y: 0.5
+        z: 0.9
 
         exposePath: fmt("audio/bell-hit/source")
 

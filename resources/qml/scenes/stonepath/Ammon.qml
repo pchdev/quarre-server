@@ -283,6 +283,7 @@ Scene
         xspread: 0.3
         diffuse: 0.3
         y: 0.75
+        z: 0.25
 
         exposePath: fmt("audio/harmonics/source")
 
@@ -297,6 +298,7 @@ Scene
         fixed: true
         xspread: 0.4
         diffuse: 0.3
+        z: 0.35
 
         exposePath: fmt("audio/wind/source")
 

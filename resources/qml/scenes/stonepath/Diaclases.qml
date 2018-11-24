@@ -293,6 +293,7 @@ Scene
         xspread: 0.4
         diffuse: 0.2
         y: 0.5
+        z: 0.0
 
         exposePath: fmt("audio/stonewater/source");
 
@@ -308,6 +309,7 @@ Scene
         xspread: 0.25
         diffuse: 0.2
         y: 0.25
+        z: 0.75
 
         exposePath: fmt("audio/harmonics/source")
 
@@ -323,6 +325,7 @@ Scene
         xspread: 0.25
         diffuse: 0.2
         y: 0.85
+        z: 0.4
 
         exposePath: fmt("audio/drone/source")
 

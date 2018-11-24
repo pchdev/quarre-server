@@ -395,9 +395,9 @@ Scene
         id: insects_source
         parentStream: rooms
         exposePath: fmt("audio/insects/source")
-        x: 0.52
-        y: 0.5
-        z: 1.0
+        x: 0.5
+        y: 1.0
+        z: 0.0
 
         WPN114.StreamSampler { id: insects; dBlevel: 6
             loop: true; xfade: 3000

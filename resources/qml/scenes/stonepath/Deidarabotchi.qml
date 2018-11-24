@@ -42,6 +42,7 @@ Scene
         xspread: 0.2
         diffuse: 0.55
         y: 0.55
+        z: 0.75
 
         exposePath: fmt("audio/kaivo/source")
 
@@ -57,6 +58,7 @@ Scene
         xspread: 0.15
         diffuse: 0.3
         y: 0.9
+        z: 0.25
 
         exposePath: fmt("audio/synth/source")
 
@@ -71,6 +73,7 @@ Scene
         fixed: true
         xspread: 0.35
         diffuse: 0.9
+        z: 0.25
 
         exposePath: fmt("audio/background/source")
 
@@ -86,6 +89,7 @@ Scene
         xspread: 0.1
         diffuse: 0.25
         y: 0.55
+        z: 0.8
 
         exposePath: fmt("audio/breath/source")
 
@@ -101,6 +105,7 @@ Scene
         xspread: 0.25
         diffuse: 0.5
         y: 0.25
+        z: 0.6
 
         exposePath: fmt("audio/wind/source")
 

@@ -312,7 +312,7 @@ Scene
         fixed:   true
         xspread: 0.25
         yspread: 0.2
-        diffuse: 0.47
+        z: 0.7
 
         exposePath: fmt("audio/ashes/source");
 
@@ -330,6 +330,7 @@ Scene
         fixed: true
         xspread: 0.3
         y: 0.9
+        z: 0.4
 
         exposePath: fmt("audio/redbirds-1/source");
 
@@ -345,6 +346,7 @@ Scene
         fixed: true
         xspread: 0.3
         y: 0.1
+        z: 0.4
 
         exposePath: fmt("audio/redbirds-2/source");
 
@@ -357,9 +359,9 @@ Scene
     {
         parentStream: rooms
         xspread: 0.25
-        yspread: 0.25
-        diffuse: 0.5
+        yspread: 0.25        
         fixed: true
+        z: 0.5
 
         exposePath: fmt("audio/light-background/source")
 
@@ -375,6 +377,7 @@ Scene
         diffuse: 0.7
         fixed: true
         y: 0.1
+        z: 0.0
 
         exposePath: fmt("audio/burn/source");
 
@@ -391,6 +394,7 @@ Scene
         xspread: 0.42
         diffuse: 0.35
         fixed: true
+        z: 0.0
 
         exposePath: fmt("audio/waves/source");
 
@@ -409,6 +413,7 @@ Scene
         diffuse: 0.6
         fixed: true
         y: 0.75
+        z: 0.8
 
         exposePath: fmt("audio/thunder/source");
 
@@ -439,6 +444,7 @@ Scene
         xspread: 0.5
         fixed: true
         y: 0.55
+        z: 0.0
 
         exposePath: fmt("audio/boiling/source");
 
@@ -455,6 +461,7 @@ Scene
         bias: 0.82
         fixed: true
         y: 0.45
+        z: 0.25
 
         exposePath: fmt("audio/quarre/source")
 
@@ -469,6 +476,7 @@ Scene
     {
         id: groundwalk_source
         parentStream: rooms
+        z: 0.0
 
         exposePath: fmt("audio/groundwalk/source");
 
@@ -485,6 +493,7 @@ Scene
         xspread: 0.15
         fixed: true
         y: 0.6
+        z: 0.5
 
         exposePath: fmt("audio/necks/source");
 
