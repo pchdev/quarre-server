@@ -188,15 +188,15 @@ Scene
             id:     woodenbirds_spat_interaction
             title:  "Oiseaux de bois, mise en espace"
             path:   "/woodpath/maaaet/interactions/woodenbirds"
-            module: "basics/ZRotation.qml"
+            module: "basics/XYZRotation3D.qml"
 
             description: "Gardez votre appareil à plat, horizontalement, puis orientez-le tout autour de vous pour identifier et déplacer un son dans l'espace sonore."
 
             mappings: QuMapping
             {
-                source: "/modules/zrotation/position2D"
+                source: "/modules/rotation3D/position"
                 expression: function(v) {
-                    woodenbirds_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                    woodenbirds_source.position = Qt.vector3d(v[0], v[1], v[2])
                 }
             }
         }

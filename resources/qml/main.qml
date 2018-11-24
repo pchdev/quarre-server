@@ -39,7 +39,7 @@ Rectangle
             // z: 0.423
             nspeakers: 4
             offset: Math.PI/4
-            horizontalInfluence: 0.406
+            horizontalInfluence: 0.3
             verticalInfluence: 0.5
             elevation: 1
             radius: 0.33
@@ -51,7 +51,7 @@ Rectangle
             // z: 0.249
             nspeakers: 6
             offset: Math.PI/6
-            horizontalInfluence: 0.570
+            horizontalInfluence: 0.4
             verticalInfluence: 0.5
             elevation: 0.5
             radius: 0.66
@@ -83,7 +83,7 @@ Rectangle
         id:             audiostream
 
 //        outDevice:      "Scarlett 18i20 USB"
-        dBlevel:        -12
+        dBlevel:        0
         outDevice:      "Soundflower (64ch)"
         exposePath:     "/master"
         numOutputs:     46
@@ -93,13 +93,6 @@ Rectangle
 
         inserts:
         [
-            WPN114.MasterLimiter //========================================= LIMITER
-            {
-                id: limiter
-                numInputs:  18
-                numOutputs: 18
-            },
-
             WPN114.Downmix // ================================================ SUBWOOFER_DOWNMIX
             {
                 // for subwoofers
@@ -109,6 +102,13 @@ Rectangle
                 numOutputs: 20
                 channels: [ 18, 19 ]
             },
+
+//            WPN114.MasterLimiter //========================================= LIMITER
+//            {
+//                id: limiter
+//                numInputs:  20
+//                numOutputs: 20
+//            },
 
             WPN114.PeakRMS // =============================================== VU_METER
             {

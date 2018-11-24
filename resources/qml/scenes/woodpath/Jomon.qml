@@ -352,7 +352,7 @@ Scene
     {
         parentStream: rooms
         xspread: 0.2
-        diffuse: 0.8
+        z: 0.65
         fixed:  true
 
         exposePath: fmt("audio/cicadas/source")
@@ -367,8 +367,8 @@ Scene
     {
         parentStream: rooms
         xspread: 0.3
-        diffuse: 0.5
         y: 0.9
+        z: 0.4
         fixed:  true
 
         exposePath: fmt("audio/dmsynth/source")
@@ -401,7 +401,7 @@ Scene
     {
         parentStream: rooms
         yspread: 0.25
-        diffuse: 0.2
+        z: 0.8
         fixed: true
 
         exposePath: fmt("audio/leaves/source")
@@ -418,7 +418,7 @@ Scene
     {
         parentStream: rooms
         xspread: 0.35
-        diffuse: 0.2
+        z: 0.65
 
         exposePath: fmt("audio/fsynths/source")
 
@@ -434,7 +434,7 @@ Scene
         parentStream: rooms
 
         xspread: 0.3
-        diffuse: 0.3
+        z: 0.4
         y: 0.1
         fixed:  true
         exposePath: fmt("audio/jsynths/source")

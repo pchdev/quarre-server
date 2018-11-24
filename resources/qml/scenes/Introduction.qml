@@ -72,7 +72,8 @@ Scene
         parentStream: rooms
         xspread: 0.27
         fixed: true
-        y: 0.9
+        y: 0.55
+        z: 0.75
 
         exposePath: fmt("audio/swarms/source")
 
@@ -86,8 +87,8 @@ Scene
         parentStream: rooms
         xspread: 0.28
         fixed: true
-        y: 0.65
-        z: 0.7
+        y: 0.55
+        z: 0.85
 
         exposePath: fmt("audio/dragon-hi/source")
 

@@ -272,14 +272,14 @@ Scene
         {
             id:     interaction_smoke_spat
             title:  "Combustions, mise en espace"
-            module: "basics/ZRotation.qml"
+            module: "basics/XYZRotation3D.qml"
             description: "Orientez votre appareil horizontalement, à 360 degrés autour de vous pour identifier et déplacer le son de combustion dans l'espace."
 
             mappings: QuMapping
             {
-                source: "/modules/zrotation/position2D"
+                source: "/modules/rotation3D/position"
                 expression: function(v) {
-                    smoke_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                    smoke_source.position = Qt.vector3d(v[0], v[1], v[2]);
                 }
             }
         }

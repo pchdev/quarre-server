@@ -274,15 +274,14 @@ Scene
 
             title: "Insectes, mise en espace"
             path:   "/woodpath/carre/interactions/insects"
-            module: "basics/ZRotation.qml"
-
+            module: "basics/XYZRotation3D.qml"
             description: "Gardez votre appareil à plat, horizontalement, puis orientez-le tout autour de vous pour identifier et déplacer un son dans l'espace sonore."
 
             mappings: QuMapping
             {
-                source: "/modules/zrotation/position2D"
+                source: "/modules/rotation3D/position"
                 expression: function(v) {
-                    insects_source.position  = Qt.vector3d(v[0], v[1], 0.5);
+                    insects_source.position  = Qt.vector3d(v[0], v[1], v[2]);
                 }
             }
         }
@@ -293,7 +292,6 @@ Scene
             title:      "Carres, déclenchement"
             module:     "basics/GestureHammer.qml"
             path:       "/woodpath/carre/interactions/carres"
-
             description: "Executez le geste décrit ci-dessous pour déclencher un son"
 
             mappings: QuMapping
@@ -397,14 +395,14 @@ Scene
         id: insects_source
         parentStream: rooms
         exposePath: fmt("audio/insects/source")
-        z: 0.0
+        x: 0.52
+        y: 0.5
+        z: 1.0
 
         WPN114.StreamSampler { id: insects; dBlevel: 6
             loop: true; xfade: 3000
             exposePath: fmt("audio/insects")
             path: "audio/woodpath/carre/insects-verb.wav"
-
-//            WPN114.Fork { target: effects.reverb; dBlevel: -6 }
         }
     }
 

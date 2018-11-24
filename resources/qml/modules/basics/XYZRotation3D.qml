@@ -46,19 +46,19 @@ Rectangle
             z_offset /= 360;
             z_offset *= Math.PI*2
 
-            x = ( Math.sin(z_offset)+1 )/2;
-            y = ( Math.cos(z_offset)+1 )/2;
+            x = Math.sin(z_offset);
+            y = Math.cos(z_offset);
 
             // X_POSITION ================================
             // limit to 0-90 (don't go under 0)
             // this will set the amplitude of the circle
             // and the z elevation
-            var zph = Math.max( sx/90, 0 )/2 + 0.5;
-            z = Math.sin( zph * Math.PI*2 );
-            x = x*z + ((1-z)/2);
-            y = y*z + ((1-z)/2);
+            var zph = Math.max(sx/90, 0);
+            z = Math.sin(zph*Math.PI/2);
+            x = x+(x*-z);
+            y = y+(y*-z);
 
-            node.value = Qt.vector3d( x, y, z );
+            node.value = Qt.vector3d( Math.abs((x+1)/2), (y+1)/2, z );
         }
     }
 

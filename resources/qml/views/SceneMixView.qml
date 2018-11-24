@@ -33,7 +33,8 @@ ScrollView
         if ( path ===  "") return;
 
         root.clear();
-        var node = net.server.get(path).subnode("audio");
+        var node = net.server.get(path).subnode("audio");        
+        if ( node === null ) return;
 
         for ( var i = 0; i < node.nsubnodes(); ++i )
         {

@@ -9,6 +9,9 @@ Scene
     property var target_thunder_executor: thunder_executor
     property var target_boiling_executor: boiling_executor
 
+    property alias interaction_dragon: interaction_dragon
+    property alias dragon: dragon
+
     scenario: WPN114.TimeNode
     {
         source: audiostream
@@ -253,14 +256,14 @@ Scene
         {
             id:     interaction_dragon
             title:  "Dragon, mise en espace"
-            module: "basics/ZRotation.qml"
+            module: "basics/XYZRotation3D.qml"
             description: "Orientez votre appareil horizontalement, à 360 degrés autour de vous pour identifier et déplacer le son dans l'espace."
 
             mappings: QuMapping
             {
-                source: "/modules/zrotation/position2D"
+                source: "/modules/rotation3D/position"
                 expression: function(v) {
-                    dragon_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                    dragon_source.position = Qt.vector3d(v[0], v[1], v[2]);
                 }
             }
         }
@@ -276,7 +279,7 @@ Scene
             {
                 source: "/modules/zrotation/position2D"
                 expression: function(v) {
-                    groundwalk_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                    groundwalk_source.position = Qt.vector3d(v[0], v[1], 0);
                 }
             }
         }
