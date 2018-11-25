@@ -153,7 +153,7 @@ Scene
             {
                 source: "/modules/birds/trigger"
                 expression: function(v) {
-                    static_birds_interaction.sources[v[0]].position = Qt.vector3d(v[1], 1-v[2], 0.5);
+                    static_birds_interaction.sources[v[0]].position = Qt.vector3d(v[1], 1-v[2], v[3]);
                     static_birds_interaction.samplers[v[0]].playRandom();
                 }
             }
@@ -175,9 +175,9 @@ Scene
                     expression: function(v) { flying_birds.playRandom() }},
 
                 QuMapping {
-                    source: "/modules/trajectories/position2D"
+                    source: "/modules/trajectories/position3D"
                     expression: function(v) {
-                        flying_birds_source.position = Qt.vector3d(v[0], 1-v[1], 0.5);
+                        flying_birds_source.position = Qt.vector3d(v[0], 1-v[1], v[2]);
                     }
                 }
             ]

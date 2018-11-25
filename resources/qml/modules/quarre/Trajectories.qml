@@ -25,10 +25,10 @@ Rectangle
 
     WPN114.Node
     {
-        id:     node_position2D
-        path:   "/modules/trajectories/position2D"
-        type:   WPN114.Type.Vec2f
-        value:  Qt.vector2d(0.5, 0.5)
+        id:     node_position3D
+        path:   "/modules/trajectories/position3D"
+        type:   WPN114.Type.Vec3f
+        value:  Qt.vector3d(0.5, 0.5, 0.5)
     }
 
     Timer
@@ -60,7 +60,14 @@ Rectangle
 
         onTriggered:
         {
-            node_position2D.value = trajectory[sending_phase];
+            var x = trajectory[sending_phase][0];
+            var y = trajectory[sending_phase][1];
+            var dx = Math.abs(0.5-x);
+            var dy = Math.abs(0.5-y);
+            var dh = Math.sqrt((dx*dx)+(dy*dy));
+            var z = Math.max(1-(dh/0.5), 0);
+
+            node_position3D.value = Qt.vector3d(x,y,z);
             sending_phase++;
 
             trajectory_canvas.requestPaint();

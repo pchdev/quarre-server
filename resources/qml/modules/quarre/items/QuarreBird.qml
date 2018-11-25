@@ -34,11 +34,14 @@ Rectangle
             {
                 if ( !bird_rect.paused ) return;
 
-                birds_node.value = Qt.vector3d(
-                            number_id,
-                            (bird_rect.x + bird_rect.width/2)/touchbirds_root.width,
-                            (bird_rect.y + bird_rect.height/2)/touchbirds_root.height );
+                var x = (bird_rect.x + bird_rect.width/2)/touchbirds_root.width;
+                var y = (bird_rect.y + bird_rect.height/2)/touchbirds_root.height;
+                var dx = Math.abs(0.5-x);
+                var dy = Math.abs(0.5-y);
+                var dh = Math.sqrt((dx*dx)+(dy*dy));
+                var z = 1-(dh/0.5);
 
+                birds_node.value = Qt.vector4d(number_id, x, y, z);
                 bird_rect.color = "gray";
             }
 

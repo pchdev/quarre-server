@@ -12,8 +12,8 @@ Rectangle
     {
         id:     birds_node
         path:   "/modules/birds/trigger"
-        type:   WPN114.Type.Vec3f
-        value:  Qt.vector3d(0,0,0)
+        type:   WPN114.Type.Vec4f
+        value:  Qt.vector4d(0, 0, 0, 0)
     }
 
     property var birds: ["fauvette", "pic-vert", "loriot", "rossignol"]

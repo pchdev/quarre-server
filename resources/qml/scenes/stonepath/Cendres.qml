@@ -247,7 +247,7 @@ Scene
                 source: "/modules/xytouch/position2D"
                 expression: function(v) {
                     marmots.playRandom();
-                    marmots_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                    marmots_source.position = Qt.vector3d(v[0], v[1], 0.75);
                 }
             }
         }
@@ -297,9 +297,9 @@ Scene
                     expression: function(v) { birds.playRandom() }},
 
                 QuMapping {
-                    source: "/modules/trajectories/position2D"
+                    source: "/modules/trajectories/position3D"
                     expression: function(v) {
-                        birds_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                        birds_source.position = Qt.vector3d(v[0], v[1], v[2]);
                     }
                 }
             ]
