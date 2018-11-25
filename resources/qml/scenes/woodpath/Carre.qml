@@ -250,9 +250,7 @@ Scene
 
             title: "Martinets, trajectoires"
             module: "quarre/Trajectories.qml"
-
-            description:
-                "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt, pendant quelques secondes, puis relachez pour déclencher"
+            description: "Tracez une trajectoire sur la sphère ci-dessous avec votre doigt, pendant quelques secondes, puis relachez pour déclencher"
 
             mappings: [
                 QuMapping {
@@ -260,9 +258,9 @@ Scene
                     expression: function(v) { multiswifts.playRandom() }},
 
                 QuMapping {
-                    source: "/modules/trajectories/position2D"
+                    source: "/modules/trajectories/position3D"
                     expression: function(v) {
-                        multiswifts_source.position = Qt.vector3d(v[0], v[1], 0.5);
+                        multiswifts_source.position = Qt.vector3d(v[0], v[1], v[2]);
                     }
                 }
             ]

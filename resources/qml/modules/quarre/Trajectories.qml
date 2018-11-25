@@ -60,8 +60,8 @@ Rectangle
 
         onTriggered:
         {
-            var x = trajectory[sending_phase][0];
-            var y = trajectory[sending_phase][1];
+            var x = trajectory[sending_phase].x;
+            var y = trajectory[sending_phase].y;
             var dx = Math.abs(0.5-x);
             var dy = Math.abs(0.5-y);
             var dh = Math.sqrt((dx*dx)+(dy*dy));
@@ -128,8 +128,8 @@ Rectangle
                 else
                 {
                     ctx.strokeStyle = "#ffffff";
-                    x = node_position2D.value.x * trajectory_canvas.width - w;
-                    y = node_position2D.value.y * trajectory_canvas.height - w;
+                    x = node_position3D.value.x * trajectory_canvas.width - w;
+                    y = node_position3D.value.y * trajectory_canvas.height - w;
                 }
                 ctx.ellipse(x,y,w,w);
                 ctx.stroke();

@@ -39,7 +39,7 @@ Rectangle
                 var dx = Math.abs(0.5-x);
                 var dy = Math.abs(0.5-y);
                 var dh = Math.sqrt((dx*dx)+(dy*dy));
-                var z = 1-(dh/0.5);
+                var z = Math.max(1-(dh/0.5), 0);
 
                 birds_node.value = Qt.vector4d(number_id, x, y, z);
                 bird_rect.color = "gray";
