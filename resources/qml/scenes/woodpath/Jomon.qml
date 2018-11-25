@@ -401,7 +401,7 @@ Scene
     {
         parentStream: rooms
         yspread: 0.25
-        z: 0.8
+        z: 0.85
         fixed: true
 
         exposePath: fmt("audio/leaves/source")
@@ -418,7 +418,7 @@ Scene
     {
         parentStream: rooms
         xspread: 0.35
-        z: 0.65
+        z: 0.75
 
         exposePath: fmt("audio/fsynths/source")
 

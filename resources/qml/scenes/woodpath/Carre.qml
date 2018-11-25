@@ -161,7 +161,6 @@ Scene
             id: interaction_bell_low_1
             title: "Cloches primitives, déclenchements (1)"
             module: "basics/GesturePalm.qml"
-
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (graves)."
 
             mappings: QuMapping
@@ -184,7 +183,6 @@ Scene
             id: interaction_bell_low_2
             title: "Cloches primitives, percussif (1)"
             module: "basics/GestureHammer.qml"
-
             description: interaction_bell_low_1.description;
 
             mappings: QuMapping
@@ -206,7 +204,6 @@ Scene
             id: interaction_bell_hi_1
             title: "Cloches primitives, déclenchements (2)"
             module: "basics/GesturePalm.qml"
-
             description: "Exécutez le geste décrit ci-dessous afin de déclencher des notes (aigues)."
 
             mappings: QuMapping
@@ -228,7 +225,6 @@ Scene
             id: interaction_bell_hi_2
             title: "Cloches primitives, percussif (2)"
             module: "basics/GestureHammer.qml"
-
             description: interaction_bell_hi_1.description;
             mappings: QuMapping
             {

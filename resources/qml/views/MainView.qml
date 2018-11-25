@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
-import QtQuick.Controls 1.4
+import QtQuick.Controls 1.4 as QQC14
 import QtQuick.Layouts 1.11
 import WPN114 1.0 as WPN114
 
@@ -89,6 +89,16 @@ Item
             nchannels: vu_master.numOutputs
             anchors.centerIn: parent
             height: 150
+        }
+
+        Slider
+        {
+            orientation: Qt.Vertical
+            anchors.left: vumeters.right
+            anchors.verticalCenter: parent.verticalCenter
+            from: -64; to: 0
+
+            onValueChanged: audiostream.dBlevel = value;
         }
 
         Text
@@ -215,20 +225,20 @@ Item
         }
     }
 
-    TreeView //---------------------------------------------------------------------- TREE_VIEW
+    QQC14.TreeView //---------------------------------------------------------------------- TREE_VIEW
     {
         id: tree
         height: parent.height
         width: parent.width*0.4
 
-        TableViewColumn
+        QQC14.TableViewColumn
         {
             title: "name"
             role: "NodeName"
             width: 200
         }
 
-        TableViewColumn
+        QQC14.TableViewColumn
         {
             title: "value"
             role: "NodeValue"
