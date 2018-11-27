@@ -313,9 +313,9 @@ Scene
         parentStream: rooms
         fixed: true
         diffuse: 0.2
-        xspread: 0.25
-        y: 0.75
-        z: 0.35
+        xspread: 0.35
+        y: 0.55
+        z: 0
 
         exposePath: fmt("audio/leaves/source")
 
@@ -403,7 +403,7 @@ Scene
         parentStream: rooms
         exposePath: fmt("audio/woodenbirds/source")
 
-        WPN114.Sampler { id: woodenbirds; dBlevel: 6
+        WPN114.Sampler { id: woodenbirds; dBlevel: 9
             exposePath: fmt("audio/woodenbirds")
             path: "audio/woodpath/maaaet/woodenbirds.wav"
 

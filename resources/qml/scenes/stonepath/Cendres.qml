@@ -480,7 +480,8 @@ Scene
 
         exposePath: fmt("audio/groundwalk/source");
 
-        WPN114.StreamSampler { id: groundwalk; dBlevel: 14
+        WPN114.StreamSampler { id: groundwalk; dBlevel: 14;
+            release: 50;
             exposePath: fmt("audio/groundwalk");
             path: "audio/stonepath/cendres/groundwalk.wav"
             WPN114.Fork { target: effects.reverb; dBlevel: -4.47 }

@@ -68,7 +68,7 @@ Scene
 
         exposePath: fmt("audio/sampler/source")
 
-        WPN114.StreamSampler { id: sampler; dBlevel: -3
+        WPN114.StreamSampler { id: sampler; dBlevel: -9
             exposePath: fmt("audio/sampler")
             path: "audio/wpn214/wpn214.wav" }
     }

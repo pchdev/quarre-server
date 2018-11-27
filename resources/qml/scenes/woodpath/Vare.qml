@@ -18,10 +18,10 @@ Scene
         onStart:
         {
             instruments.kaivo_1.active  = true;
-            instruments.kaivo_1.dBlevel = -6
-            instruments.kaivo_2.dBlevel = -6
-            instruments.k1_fork_921.dBlevel = -3
-            instruments.k2_fork_921.dBlevel = -6
+            instruments.kaivo_1.dBlevel = -12
+            instruments.k1_fork_921.dBlevel = -16;
+            instruments.kaivo_2.dBlevel = -9
+            instruments.k2_fork_921.dBlevel = -9
 
             instruments.kaivo_2.active  = true;
             instruments.rooms.active    = true;
@@ -473,12 +473,12 @@ Scene
     {
         parentStream: rooms
         xspread: 0.25
-        z: 0.65
+        z: 0.7
         fixed: true
 
         exposePath: fmt("audio/snowfall/source")
 
-        WPN114.StreamSampler { id: snowfall;
+        WPN114.StreamSampler { id: snowfall; dBlevel: 3
             loop: true; xfade: 3000; attack: 2000
 
             exposePath: fmt("audio/snowfall")

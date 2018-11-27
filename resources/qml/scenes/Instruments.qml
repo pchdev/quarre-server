@@ -62,6 +62,14 @@ Item
                     kaivo_1.programChange(0, enm);
                 }
 
+                WPN114.HLPFilter
+                {
+                    numInputs:  2
+                    numOutputs: 2
+                    hpf: 150
+                    lpf: 22000
+                }
+
                 WPN114.Fork // =============================================== FORK_921
                 {
                     id: k1_fork_921
@@ -109,6 +117,14 @@ Item
 
                 function setPreset(enm) {
                     kaivo_2.programChange(0, enm);
+                }
+
+                WPN114.HLPFilter
+                {
+                    numInputs:  2
+                    numOutputs: 2
+                    hpf: 150
+                    lpf: 22000
                 }
 
                 WPN114.Fork // =============================================== FORK_921

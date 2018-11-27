@@ -21,10 +21,10 @@ Scene
         {
             instruments.rooms.active         = true;
             instruments.kaivo_1.active       = true;
-            instruments.kaivo_1.dBlevel      = -3;
-            instruments.k1_fork_921.dBlevel  = -5;
+            instruments.kaivo_1.dBlevel      = -9;
+            instruments.k1_fork_921.dBlevel  = -12;
             instruments.k1_fork_amp.active   = true;
-            instruments.k1_fork_amp.dBlevel  = -9;
+            instruments.k1_fork_amp.dBlevel  = -12;
 
             effects.amplitube.active = true;
             instruments.kaivo_2.active  = false;
@@ -121,7 +121,7 @@ Scene
                 target: mangler
                 property: "wetOut"
                 duration: sec( 10 )
-                from: -36; to: -3;
+                from: -36; to: -6;
 
                 WPN114.Automation
                 {
@@ -153,7 +153,7 @@ Scene
                 date: min( 2.20 )
                 target: mangler
                 property: "wetOut"
-                from: -3; to: -48;
+                from: -6; to: -48;
                 duration: sec( 20 )
             }
         }
@@ -352,12 +352,12 @@ Scene
     {
         parentStream: rooms
         xspread: 0.2
-        z: 0.65
+        z: 0.75
         fixed:  true
 
         exposePath: fmt("audio/cicadas/source")
 
-        WPN114.StreamSampler { id: cicadas;
+        WPN114.StreamSampler { id: cicadas; dBlevel: 3
             loop: true; xfade: 2000; attack: 3000
             exposePath: fmt("audio/cicadas")
             path: "audio/woodpath/jomon/cicadas.wav" }
@@ -383,7 +383,7 @@ Scene
                 id: mangler
                 exposePath: fmt("audio/mangler")
                 dryOut: -3
-                wetOut: -3
+                wetOut: -6
                 //--------- 1
                 badResampler: 10000
                 bitdepth: 8
@@ -406,11 +406,11 @@ Scene
 
         exposePath: fmt("audio/leaves/source")
 
-        WPN114.StreamSampler { id: leaves; dBlevel: -6
+        WPN114.StreamSampler { id: leaves; dBlevel: -3
             loop: true; xfade: 2000;
             exposePath: fmt("audio/leaves")
             path: "audio/woodpath/jomon/leaves.wav"
-            WPN114.Fork { target: effects.reverb; dBlevel: -9 }
+            WPN114.Fork { target: effects.reverb; dBlevel: -16 }
         }
     }
 

@@ -9,6 +9,7 @@ Scene
     property alias interaction_insects: interaction_insects
     property alias insects: insects
     property real env_attack: 0
+    shutdown_after: 5000
 
     onEnv_attackChanged: instruments.kaivo_1.set("env1_attack", env_attack);
 
@@ -29,11 +30,10 @@ Scene
         }
         onEnd:
         {
-            instruments.kaivo_1.allNotesOff();
             functions.setTimeout(function() {
                 instruments.kaivo_1.active = false;
                 instruments.rooms.active = false;
-            }, 2000 );
+            }, 6000 );
         }
 
         // ================================================================= 1.SOFT
@@ -144,10 +144,10 @@ Scene
         {
             after:      interaction_bell_hi_2_ex
             target:     rooms
-            property:   "level"
+            property:   "dBlevel"
             duration:   sec( 45 )
 
-            from: rooms.level; to: 0;
+            from: rooms.dBlevel; to: -64;
             onEnd: scenario.end();
         }
     }
@@ -340,7 +340,7 @@ Scene
         exposePath: fmt( "audio/swift/source" )
 
         WPN114.StreamSampler { id: alpine_swift;
-            loop: true; xfade: 3000; release: 3000
+            loop: true; xfade: 3000; //release: 3000
             exposePath: fmt("audio/swift")
             path: "audio/woodpath/carre/swift.wav"
 

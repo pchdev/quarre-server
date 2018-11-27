@@ -82,9 +82,9 @@ Rectangle
     {
         id:             audiostream
 
-//        outDevice:      "Scarlett 18i20 USB"
-        dBlevel:        0
-        outDevice:      "Soundflower (64ch)"
+        outDevice:      "RME-DOME"
+        dBlevel:        -36
+//        outDevice:      "Soundflower (64ch)"
         exposePath:     "/master"
         numOutputs:     46
         sampleRate:     44100

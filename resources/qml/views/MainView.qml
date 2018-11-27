@@ -96,7 +96,8 @@ Item
             orientation: Qt.Vertical
             anchors.left: vumeters.right
             anchors.verticalCenter: parent.verticalCenter
-            from: -64; to: 0
+            from: -96; to: -33
+            value: audiostream.dBlevel
 
             onValueChanged: audiostream.dBlevel = value;
         }

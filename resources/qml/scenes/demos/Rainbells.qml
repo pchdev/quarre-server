@@ -18,8 +18,8 @@ Scene
 
         onStart:
         {
-            instruments.kaivo_1.dBlevel = -4
-            instruments.k1_fork_921.dBlevel = -6;
+            instruments.kaivo_1.dBlevel = -18
+            instruments.k1_fork_921.dBlevel = -24;
             instruments.rooms.active = true;
             instruments.kaivo_1.active = true;
             functions.setTimeout(function(){

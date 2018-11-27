@@ -18,6 +18,7 @@ Scene
         onStart:
         {
             woodpath.carre.rooms.active = true
+            woodpath.carre.insects.dBlevel = 0
             woodpath.carre.insects.play();
         }
 
