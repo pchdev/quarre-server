@@ -10,23 +10,12 @@
         <file>network/ClientManager.qml</file>
         <file>network/Client.qml</file>
         <file>scenes/Effects.qml</file>
-        <file>scenes/Instruments.qml</file>
         <file>scenes/Introduction.qml</file>
         <file>scenes/WPN214.qml</file>
         <file>scenes/stonepath/Stonepath.qml</file>
-        <file>scenes/stonepath/Cendres.qml</file>
-        <file>scenes/stonepath/Diaclases.qml</file>
-        <file>scenes/stonepath/Deidarabotchi.qml</file>
-        <file>scenes/stonepath/Markhor.qml</file>
-        <file>scenes/stonepath/Ammon.qml</file>
-        <file>scenes/stonepath/AmmonScore.qml</file>
+        <file>scenes/stonepath/Cendres.qml</file>        
         <file>scenes/woodpath/Woodpath.qml</file>
         <file>scenes/woodpath/Maaaet.qml</file>
-        <file>scenes/woodpath/Carre.qml</file>
-        <file>scenes/woodpath/Pando.qml</file>
-        <file>scenes/woodpath/Vare.qml</file>
-        <file>scenes/woodpath/Jomon.qml</file>
-        <file>scenes/woodpath/JomonScore.qml</file>
         <file>scenes/Scenario.qml</file>
         <file>scenes/Scene.qml</file>
         <file>views/items/Button.qml</file>
@@ -42,11 +31,6 @@
         <file>views/SceneView.qml</file>
         <file>network/NetworkManager.qml</file>
         <file>control/PresetsManager.qml</file>
-        <file>scenes/demos/Demos.qml</file>
         <file>scenes/Interactions.qml</file>
-        <file>scenes/demos/Temples.qml</file>
-        <file>scenes/demos/DiaclasesGong.qml</file>
-        <file>scenes/demos/Rainbells.qml</file>
-        <file>scenes/demos/Insects.qml</file>
     </qresource>
 </RCC>

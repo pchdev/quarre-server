@@ -28,8 +28,6 @@ Rectangle
             var h_area = speaker.horizontalArea;
             var influence = h_area.radius;
 
-            console.log(position);
-
             var component = Qt.createComponent("items/Speaker.qml");
             var obj = component.createObject(root, {
                         "x": position.x*root.width - 5,

@@ -24,29 +24,6 @@ Scene
 
             onStart:    sampler.play();
         }
-
-        WPN114.Automation
-        {
-            after: interaction_ending_ex;
-            target: fade_target.rooms
-            property: "level"
-            duration: sec( 10 )
-
-            from: fade_target.rooms.level; to: 0;
-
-            onEnd:
-            {
-                if ( fade_target === woodpath.jomon )
-                     woodpath.jomon.cicadas.stop()
-                else if ( fade_target === stonepath.ammon )
-                     stonepath.ammon.wind.stop();
-
-                functions.setTimeout(function(){
-                    fade_target.rooms.active = false
-                    scenario.end();
-                }, 2000 )
-            }
-        }
     }
 
     Interaction //----------------------------------------------------- INTERACTION

@@ -9,11 +9,6 @@ import "engine"
 import "network"
 import "control"
 
-// TODO: volume and spatialization presets
-// TODO: FLAC audio
-// TODO: tempoclock
-// TODO: MIDIFile reader
-
 Rectangle
 {
     id:         application
@@ -84,7 +79,6 @@ Rectangle
 
         outDevice:      "RME-DOME"
         dBlevel:        -36
-//        outDevice:      "Soundflower (64ch)"
         exposePath:     "/master"
         numOutputs:     46
         sampleRate:     44100
@@ -102,13 +96,6 @@ Rectangle
                 numOutputs: 20
                 channels: [ 18, 19 ]
             },
-
-//            WPN114.MasterLimiter //========================================= LIMITER
-//            {
-//                id: limiter
-//                numInputs:  20
-//                numOutputs: 20
-//            },
 
             WPN114.PeakRMS // =============================================== VU_METER
             {
