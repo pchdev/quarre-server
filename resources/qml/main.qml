@@ -34,8 +34,14 @@ Rectangle
     WPN114.RoomSetup //================================================================= ROOM_SETUP
     {
         id: roomsetup;
-        // octophonic ring setup for quarrè-angoulême
-        WPN114.SpeakerRing { nspeakers: 8; offset: -Math.PI/8; influence: 0.707 }
+        WPN114.SpeakerRing
+        {
+            nspeakers: 8;
+            horizontalInfluence: 0.707
+            elevation: 0.5
+            offset: -Math.PI/8;
+            radius: 1
+        }
     }
 
     WPN114.PinkAudio
@@ -62,16 +68,12 @@ Rectangle
 
         inserts:
         [
-            WPN114.MasterLimiter
-            {
-                id: limiter
-                numOutputs: 8
-            },
-
             WPN114.PeakRMS
             {
                 id:      vu_master
                 source:  audiostream
+                numInputs: 8
+                numOutputs: 8
                 active:  true
 
                 onRms:   mainview.vumeters.processRms  ( value )

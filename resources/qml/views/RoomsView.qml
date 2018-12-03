@@ -21,25 +21,25 @@ Rectangle
 
     function drawSetup()
     {
-        var positions = setup.nodes[0].position;
-        var infl = setup.nodes[0].influence;
+        var speakers = setup.speakerList();
 
-        for ( var s = 0; s < positions.length; ++s )
-        {
-            var pos = positions[ s ];
+        speakers.forEach(function(speaker){
+            var position = speaker.position;
+            var h_area = speaker.horizontalArea;
+            var influence = h_area.radius;
+
             var component = Qt.createComponent("items/Speaker.qml");
-            var speaker = component.createObject(root, {
-                    "x": pos.x*root.width - 5,
-                    "y": pos.y*root.height - 5 })
+            var obj = component.createObject(root, {
+                        "x": position.x*root.width - 5,
+                        "y": position.y*root.height -5 })
 
-            var influence_width = root.width*infl*2;
-
-            var inflcomponent = Qt.createComponent("items/SpeakerInfluence.qml");
-            var influence_ring = inflcomponent.createObject(root, {
-                    "x":  pos.x*root.width - root.width*infl,
-                    "y":  pos.y*root.height - root.height*infl,
-                    "width": influence_width })
-        }
+            var influence_width = root.width*influence*2;
+            var infcomponent = Qt.createComponent("items/SpeakerInfluence.qml");
+            var infobj = infcomponent.createObject(root, {
+                        "x": position.x*root.width - root.width*influence,
+                        "y": position.y*root.height - root.height*influence,
+                        "width": influence_width })
+        });
     }
 
     function drawScene(scene)
