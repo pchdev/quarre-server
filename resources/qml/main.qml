@@ -77,10 +77,12 @@ Rectangle
     {
         id:             audiostream
 
+        api:            "JACK"
         outDevice:      ""
         dBlevel:        -36
         exposePath:     "/master"
         numOutputs:     20
+        offset:         4
         sampleRate:     44100
         blockSize:      512
         active:         false
