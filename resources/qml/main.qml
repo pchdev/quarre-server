@@ -77,10 +77,10 @@ Rectangle
     {
         id:             audiostream
 
-        outDevice:      "RME-DOME"
+        outDevice:      ""
         dBlevel:        -36
         exposePath:     "/master"
-        numOutputs:     46
+        numOutputs:     20
         sampleRate:     44100
         blockSize:      512
         active:         false
@@ -110,17 +110,6 @@ Rectangle
                 onPeak:  mainview.vumeters.processPeak ( value )
 
                 refreshRate: 15 // Hz
-            },
-
-            WPN114.ChannelMapper //=========================================== OUT MAPPING
-            {
-                id: outmapper
-                numInputs:  20
-                numOutputs: 46
-
-                map: [ 14, 15, 16, 17, 18, 19, 20, 21, // UFX-ADAT-1
-                       22, 23, 24, 25, 26, 27, 28, 29, // UFX-ADAT-2
-                       42, 43, 44, 45 ] // 800-ADAT-1
             }
         ]
     }
