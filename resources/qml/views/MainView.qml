@@ -36,7 +36,7 @@ Item
         FontLoader
         {
             id: font_lato_light
-            source: "file:///Users/pchd/Repositories/quarre2/resources/fonts/Lato-Light.ttf"
+            source: "qrc:///lato/Lato-Light.ttf"
         }
 
         Image //----------------------------------------------------------------- GUI
@@ -46,7 +46,7 @@ Item
             antialiasing: true
             anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
-            source: "file:///Users/pchd/Repositories/quarre-server/resources/images/quarre.jpg"
+            source: "qrc:///background/quarre.jpg"
 
             Rectangle
             {
