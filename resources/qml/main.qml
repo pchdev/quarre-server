@@ -9,11 +9,6 @@ import "engine"
 import "network"
 import "control"
 
-// TODO: volume and spatialization presets
-// TODO: FLAC audio
-// TODO: tempoclock
-// TODO: MIDIFile reader
-
 Rectangle
 {
     id:         application
@@ -33,18 +28,15 @@ Rectangle
     {
         id: roomsetup; // JIM, Bayonne
 
-        WPN114.SpeakerRing //---------------------------- MIDDLE_RING(6)
+        WPN114.SpeakerRing //---------------------------- UPPER_RING
         {
             nspeakers: 8
             offset: 0
             horizontalInfluence: 0.505
+
             verticalInfluence: 0.5
             elevation: 0.5
             radius: 0.66
-
-            Component.onCompleted: {
-
-            }
         }
 
         WPN114.SpeakerRing //---------------------------- LOWER_RING(8)
@@ -69,8 +61,6 @@ Rectangle
     WPN114.AudioStream //=============================================================== AUDIO
     {
         id:             audiostream
-
-//        outDevice:      "RME-DOME"
         dBlevel:        -12
         outDevice:      "Soundflower (64ch)"
         exposePath:     "/master"
