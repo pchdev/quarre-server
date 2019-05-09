@@ -36,7 +36,7 @@ Item
     {
         device: module_server
         recursive: true
-        folderPath: "/Users/pchd/Repositories/quarre-server/resources/qml/modules"
+        folderPath: "/Users/pchd/Desktop/quarre-bayonne/quarre-server/resources/qml/modules"
         path: "/modules"
         filters: ["*.qml"]
     }

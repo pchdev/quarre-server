@@ -7,7 +7,7 @@ Rectangle
     color: "transparent"
 
     property var texts: [
-        "à la mémoire de Simone David",
+        "à la mémoire de Simone David et de Paule Cochard",
         "De grands remerciements à Nadine, Philippe, Vincent et Paule Cochard,",
         "à Jean-Michaël Celerier",
         "à François-Xavier Féron",
@@ -26,7 +26,7 @@ Rectangle
         "Christian Faurens",
         "Donatien Garnier",
         "Antoine Hubineau",
-        "Guzel Bretzel",
+        "Guzel K.",
         "György et Isabelle Kurtag",
         "Arthur Liefhooghe",
         "Raphaël Marczak",
@@ -38,8 +38,7 @@ Rectangle
         "Antoine Villeret",
         "Nicolas Vuaille",
         "Merci pour votre participation...",
-        "La suite prochainement sur https://www.facebook.com/wpn214",
-        "et sur https://www.facebook.com/quarremusic",
+        "La suite prochainement sur wpn214.com"
     ]
 
     Text //------------------------------------------------ TUTORIAL_TEXT

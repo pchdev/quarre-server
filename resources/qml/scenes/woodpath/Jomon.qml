@@ -21,10 +21,10 @@ Scene
         {
             instruments.rooms.active         = true;
             instruments.kaivo_1.active       = true;
-            instruments.kaivo_1.dBlevel      = -9;
+            instruments.kaivo_1.dBlevel      = -6;
             instruments.k1_fork_921.dBlevel  = -12;
             instruments.k1_fork_amp.active   = true;
-            instruments.k1_fork_amp.dBlevel  = -12;
+            instruments.k1_fork_amp.dBlevel  = -16;
 
             effects.amplitube.active = true;
             instruments.kaivo_2.active  = false;
@@ -295,10 +295,10 @@ Scene
                                                     interaction_strings_1,
                                                     instruments.kaivo_1, ndur/2 );
 
-                    if ( jomon_score.index > 8 )
-                    {
+                    if ( jomon_score.index > 8 ) {
                         jsynths_1.play();
-                        if ( jsynths_1.active ) jsynths_2.stop();
+                        if ( jsynths_1.active )
+                             jsynths_2.stop();
                     }
                 }
             }

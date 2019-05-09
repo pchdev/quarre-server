@@ -26,7 +26,7 @@ Scene
 
         WPN114.Loop //=================================================== SHAKE_LEAVES
         {
-            date: sec( 10 )
+            date: sec( 13 )
             pattern.duration: sec( 50 )
             times: 4
 

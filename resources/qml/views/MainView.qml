@@ -96,7 +96,7 @@ Item
             orientation: Qt.Vertical
             anchors.left: vumeters.right
             anchors.verticalCenter: parent.verticalCenter
-            from: -96; to: -33
+            from: -96; to: 0
             value: audiostream.dBlevel
 
             onValueChanged: audiostream.dBlevel = value;
@@ -134,7 +134,9 @@ Item
         x: tree.width
         y: tabbar.height
 
-        Component.onCompleted: sceneview.drawSetup();
+        Component.onCompleted: {
+            drawSetup();
+        }
 
     }
 

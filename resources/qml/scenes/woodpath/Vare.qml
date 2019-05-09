@@ -173,11 +173,19 @@ Scene
             after: pads_ex_1
             target: ambient
             property: "dBlevel"
-            from: -48; to: ambient.dBlevel;
+            from: -64; to: ambient.dBlevel;
             duration: sec( 45 )
 
             onStart: ambient.play();
-        }
+
+            WPN114.Automation
+            {
+                target: ambient_verb
+                property: "dBlevel"
+                from: -64; to: ambient_verb.dBlevel
+                duration: sec( 45 )
+            }
+        }                
 
         InteractionExecutor
         {
@@ -241,6 +249,14 @@ Scene
                 onStart: next();
 
                 onEnd: scenario.end();
+
+                WPN114.Automation
+                {
+                    target: ambient_verb;
+                    property: "dBlevel"
+                    from: -2; to: -96;
+                    duration: sec( 20 )
+                }
             }
         }
     }
@@ -499,7 +515,8 @@ Scene
         WPN114.StreamSampler { id: ambient; dBlevel: -7
             exposePath: fmt("audio/ambient")
             path: "audio/woodpath/vare/vare-ambient.wav"
-            WPN114.Fork { target: effects.reverb; prefader: true; dBlevel: -2 }
+            WPN114.Fork { id: ambient_verb;
+                target: effects.reverb; prefader: true; dBlevel: -2 }
         }
     }
 }
