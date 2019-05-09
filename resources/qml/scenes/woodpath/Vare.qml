@@ -339,15 +339,7 @@ Scene
 
                 QuMapping {
                     source: "/modules/vare/granular/pitch-env"
-                    expression: function(v) { instruments.kaivo_2.set("gran_pitch_env", v) }},
-
-                QuMapping {
-                    source: "/modules/vare/granular/position"
-                    expression: function(v) { instruments.kaivo_2.set(95, v) }},
-
-                QuMapping {
-                    source: "/modules/vare/granular/position-mod"
-                    expression: function(v) { instruments.kaivo_2.set(106, v) }}
+                    expression: function(v) { instruments.kaivo_2.set("gran_pitch_env", v) }}
             ]
         }
 

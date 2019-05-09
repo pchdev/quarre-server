@@ -8,9 +8,7 @@ Rectangle
 
     property var texts: [
         "à la mémoire de Simone David et de Paule Cochard",
-        "De grands remerciements à Nadine, Philippe, Vincent et Paule Cochard,",
-        "à Jean-Michaël Celerier",
-        "à François-Xavier Féron",
+        "De grands remerciements à Nadine, Philippe et Vincent Cochard,",
         "ainsi qu'à Thibaud Keller",
         "à toute l'équipe du SCRIME, de l'Arbre intégral et du CRNA pour leur soutien",
         "par ordre alphabétique :",
@@ -18,12 +16,14 @@ Rectangle
         "Ivan Angelus - BCDA",
         "Simon Archipoff",
         "Pascal Baltazar",
+        "Jean-Michaël Celerier",
         "Julien Conan",
         "Gaëtan Chambres",
         "Laurent Davaille",
         "Myriam Desainte-Catherine",
         "Gaël Domenger",
         "Christian Faurens",
+        "François-Xavier Féron",
         "Donatien Garnier",
         "Antoine Hubineau",
         "Guzel K.",
@@ -38,7 +38,7 @@ Rectangle
         "Antoine Villeret",
         "Nicolas Vuaille",
         "Merci pour votre participation...",
-        "La suite prochainement sur wpn214.com"
+        "wpn214.com"
     ]
 
     Text //------------------------------------------------ TUTORIAL_TEXT

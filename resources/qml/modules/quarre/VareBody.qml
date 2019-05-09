@@ -45,12 +45,4 @@ Rectangle
         onValueChanged: xy.value.y = value;
         y: parent.height*0.5
     }
-
-    QuarreSlider
-    {
-        name: "résonance"
-
-        WPN114.Node on value { path: "/modules/vare/body/sustain" }
-        y: parent.height*0.65
-    }
 }

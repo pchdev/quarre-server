@@ -32,21 +32,4 @@ Rectangle
         WPN114.Node on value { path: "/modules/vare/granular/overlap" }
         y: parent.height*0.35
     }
-
-    QuarreSlider
-    {
-        name: "position"
-
-        WPN114.Node on value { path: "/modules/vare/granular/position" }
-        y: parent.height*0.5
-    }
-
-    QuarreSlider
-    {
-        name: "position_mod"
-
-        WPN114.Node on value { path: "/modules/vare/granular/position-mod" }
-        y: parent.height*0.65
-    }
-
 }

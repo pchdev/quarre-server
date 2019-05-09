@@ -52,7 +52,7 @@ Scene
     Interaction //----------------------------------------------------- INTERACTION
     {
         id: interaction_ending
-        title: "Fin, crédits"
+        title: "Crédits"
         module: "quarre/WPN214.qml"
         description: "Merci pour votre participation"
         broadcast: true
