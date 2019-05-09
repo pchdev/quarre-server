@@ -121,14 +121,14 @@ Scene
                 target: mangler
                 property: "wetOut"
                 duration: sec( 10 )
-                from: -36; to: -6;
+                from: -36; to: -9;
 
                 WPN114.Automation
                 {
                     target: mangler
                     property: "dryOut"
                     duration: sec( 15 )
-                    from: -3; to: -9;
+                    from: -3; to: 12;
                 }
             }
 
@@ -153,7 +153,7 @@ Scene
                 date: min( 2.20 )
                 target: mangler
                 property: "wetOut"
-                from: -6; to: -48;
+                from: -9; to: -48;
                 duration: sec( 20 )
             }
         }
@@ -382,7 +382,7 @@ Scene
             {
                 id: mangler
                 exposePath: fmt("audio/mangler")
-                dryOut: -3
+                dryOut: 0
                 wetOut: -6
                 //--------- 1
                 badResampler: 10000

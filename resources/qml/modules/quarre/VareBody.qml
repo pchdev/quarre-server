@@ -11,7 +11,6 @@ Rectangle
     QuarreSlider
     {
         name: "ton"
-
         WPN114.Node on value { path: "/modules/vare/body/tone" }
         y: parent.height*0.05
     }
@@ -19,7 +18,6 @@ Rectangle
     QuarreSlider
     {
         name: "fréquence de résonance"
-
         WPN114.Node on value { path: "/modules/vare/body/pitch" }
         y: parent.height*0.20
     }

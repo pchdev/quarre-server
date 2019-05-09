@@ -4,11 +4,11 @@ GestureViewer
 {
     id: root;
 
-    title:          "Agiter"
+    title:          "Agiter l'appareil"
     gestures:       [ "QtSensors.shake" ]
 
-    description:    "Agiter fermement votre téléphone de gauche à droite et inversement, de manière sèche et rapide"
-    anchors.fill:   parent    
+    description:    "Agiter fermement votre appareil de gauche à droite et inversement, de manière sèche et rapide"
+    anchors.fill:   parent
 
     Connections
     {
